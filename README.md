@@ -8,4 +8,4 @@ set DEBUG=libraryofficialwebsite:* & npm start
 
 ## heroku
 
-ensure that your application is using the heroku/nodejs buildpack:
+ensure that your application is using the heroku/nodejs buildpack
