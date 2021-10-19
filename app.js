@@ -10,6 +10,11 @@ var RateLimit = require('express-rate-limit');
 var session = require('express-session');
 var randomstring = require("randomstring");
 
+//add new module
+var flash = require('connect-flash');
+var mongo = require('mongodb');
+var mongoose = require('mongoose');
+
 var limiter = new RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 60 * 1000 * 1000 //1000*1000/1sec max
