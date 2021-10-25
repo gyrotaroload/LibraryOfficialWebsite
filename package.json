@@ -31,8 +31,6 @@
     "is-equal": "1.6.1",
     "is-empty": "^1.2.0",
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.19.0",
-    "express-validator": "*",
     "sanitizer": "*",
     "sharp": "^0.28.3"
   }

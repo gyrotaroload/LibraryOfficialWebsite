@@ -237,7 +237,7 @@ function add_new_user_test2() {
     img.src = './../images/o.png';
     /*}
 }*/
-    checkFlag();
+    //checkFlag();
 }
 
 if (document.getElementById("add_an_user")) {

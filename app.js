@@ -9,8 +9,6 @@ var LocalStrategy = require('passport-local').Strategy;
 var RateLimit = require('express-rate-limit');
 var session = require('express-session');
 var randomstring = require("randomstring");
-var bodyParser = require('body-parser');
-const { body, validationResult } = require('express-validator');
 
 //add new module
 var flash = require('connect-flash');
@@ -78,7 +76,7 @@ app.get('*', function(req, res, next) {
   next();
 });
 
-app.post(
+/*app.post(
   '/user',
   body('username').isEmail(),
   body('password').isLength({ min: 5 }),
@@ -93,6 +91,6 @@ app.post(
       }).then(user => res.json(user));
       console.log("???????");
   },
-);
+);*/
 
 module.exports = app;
