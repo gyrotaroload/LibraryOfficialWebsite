@@ -37,14 +37,12 @@ var User = module.exports = mongoose.model('User', UserSchema);
 
 //passport
 module.exports.getUserById = function (id, callback) {
-    console.log("------->findById");
     User.findById(id, callback);
     console.log(callback);
 }
 
 module.exports.getUserByUsername = function (username, callback) {
-    console.log("------->getUserByUsername");
-    var query = { username: username };
+    var query = { username: { $eq:username } };
     User.findOne(query, callback);
     console.log(callback);
 }
@@ -67,3 +65,23 @@ module.exports.createUser = function (newUser, callback) {
         });
     });
 };
+
+module.exports.findOrCreate = function (newUser, callback) {
+    console.log(newUser);
+    User.getUserByUsername(newUser.username, function (UsergetUserByUsernamenewUserusername) {
+        console.log(UsergetUserByUsernamenewUserusername);
+        if (!UsergetUserByUsernamenewUserusername) {
+            User.createUser(newUser, function (UsercreateUsernewUser) {
+                User.getUserByUsername(newUser.username,callback);
+            })
+        } else {
+            User.getUserByUsername(newUser.username,callback);
+        }
+    })
+};
+
+module.exports.getanotheruser = function (username, callback) {
+    var query = { username: { $eq: username }};
+    User.findOne(query, 'profileimage', callback);
+    console.log(callback);
+}

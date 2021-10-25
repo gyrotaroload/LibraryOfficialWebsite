@@ -211,6 +211,7 @@ router.post('/login',
     passport.authenticate('local', function (err, user, info) {
       if (err) { return next(err); }
       if (!user) { return res.redirect('/users/login'); }
+      console.log(user);
       req.logIn(user, function (err) {
         if (err) { return next(err); }
         return res.status(200).send("/main");
