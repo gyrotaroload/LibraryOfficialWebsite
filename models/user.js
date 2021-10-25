@@ -33,7 +33,7 @@ var UserSchema = mongoose.Schema({
 });
 
 //export User schema
-var User = module.exports = mongoose.model('User', UserSchema);console.log("WTF2????");
+var User = module.exports = mongoose.model('User', UserSchema);
 
 //passport
 module.exports.getUserById = function (id, callback) {
