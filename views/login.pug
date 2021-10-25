@@ -1,0 +1,56 @@
+extends layout
+
+block content
+  link(rel='stylesheet', href='/stylesheets/reg.css')
+  #error_msg_gui_init_msg_if_yes.loginAndRegistrationDataModule
+  canvas#justaimg.loginAndRegistrationDataModule(width='320' height='320')
+  #status.loginAndRegistrationDataModule(style="display:none;")
+  //button#test_err_msg test_err_msg
+  button#logout.loginAndRegistrationDataModule(style="display:none;") log_out
+  a#passworddriventimeoriented.loginAndRegistrationDataModule(style="display:none;") #{ successes }
+  button#add_an_user.loginAndRegistrationDataModule(style="display:none;") add_an_user
+  button#add_an_user2.loginAndRegistrationDataModule(style="display:none;") add_an_user2
+  input#fileinput.loginAndRegistrationDataModule(type='file' style="display:none;")
+  input#btnLoad.loginAndRegistrationDataModule(type='button' value='Load' onclick='handleFileSelect();' style="display:none;")
+  #editor.loginAndRegistrationDataModule(style="display:none;")
+  #editor_base64_fin.loginAndRegistrationDataModule(style="display:none;") -1
+  #window_clearInterval_timeoutID.loginAndRegistrationDataModule
+  #waiting_block.loginAndRegistrationDataModule(style='display:none;')
+    #waiting_gray.loginAndRegistrationDataModule
+    #waiting_logo.loginAndRegistrationDataModule
+      img.loginAndRegistrationDataModule(src='../login/if_you_donT_add_this_The_front_end_will_spray_wrong/loading.svg' height='100%')
+  #loading_logo.loginAndRegistrationDataModule
+    img.loginAndRegistrationDataModule(src='../login/if_you_donT_add_this_The_front_end_will_spray_wrong/loading.svg')
+  #login_page.loginAndRegistrationDataModule
+    // width="71.43%"
+    img#upload_img_using_logo.loginAndRegistrationDataModule(src='../login/if_you_donT_add_this_The_front_end_will_spray_wrong/logo.svg' style='position:relative; height:30vh; top: 0%;')
+    #gray_block.loginAndRegistrationDataModule
+      .login_bar.disp_for_mod.user_input.loginAndRegistrationDataModule
+        //img.loginAndRegistrationDataModule(src='../login/if_you_donT_add_this_The_front_end_will_spray_wrong/login_bar.svg')
+        input.input_type_text.loginAndRegistrationDataModule(type='text' name='user_name' placeholder='名稱' onfocus="this.placeholder = ''" onblur="this.placeholder = '名稱'")
+      .login_bar.user_input.loginAndRegistrationDataModule
+        //img.loginAndRegistrationDataModule(src='../login/if_you_donT_add_this_The_front_end_will_spray_wrong/login_bar.svg')
+        input.input_type_text.loginAndRegistrationDataModule(type='text' name='account' placeholder='帳號' onfocus="this.placeholder = ''" onblur="this.placeholder = '帳號'")
+      .login_bar.user_input.loginAndRegistrationDataModule
+        //img.loginAndRegistrationDataModule(src='../login/if_you_donT_add_this_The_front_end_will_spray_wrong/login_bar.svg')
+        input.input_type_text.loginAndRegistrationDataModule(type='password' name='password' placeholder='密碼' onfocus="this.placeholder = ''" onblur="this.placeholder = '密碼'")
+      .login_bar.disp_for_mod.user_input.loginAndRegistrationDataModule
+        //img.loginAndRegistrationDataModule(src='../login/if_you_donT_add_this_The_front_end_will_spray_wrong/login_bar.svg')
+        input.input_type_text.loginAndRegistrationDataModule(type='password' name='password_confirm' placeholder='再輸入一次密碼' onfocus="this.placeholder = ''" onblur="this.placeholder = '再輸入一次密碼'")
+      .login_bar.loginAndRegistrationDataModule
+        // value=""
+        button#login_button.button.loginAndRegistrationDataModule
+          img.loginAndRegistrationDataModule(src='../login/if_you_donT_add_this_The_front_end_will_spray_wrong/login_button.svg' width='100%' z-index='3')
+          #login_button_txt_fix.loginAndRegistrationDataModule(style='color:#FEFEFE;') 註冊
+    #community_login.loginAndRegistrationDataModule
+      #fb_login.button.loginAndRegistrationDataModule
+        img.loginAndRegistrationDataModule(href="/auth/facebook" src="../login/if_you_donT_add_this_The_front_end_will_spray_wrong/facebook_login.svg" border="0" alt="" width="100%" height="100%")
+      #line_login.button.loginAndRegistrationDataModule
+        img.loginAndRegistrationDataModule(src='../login/if_you_donT_add_this_The_front_end_will_spray_wrong/line_login.svg' width='100%' height='100%')
+    #cre_acc_log_fk_bton.loginAndRegistrationDataModule
+      #cre_acc_log_fk_bton_inner_txt.loginAndRegistrationDataModule 點我登入
+  #picture.loginAndRegistrationDataModule(style="display:none;")
+  #fb-root.loginAndRegistrationDataModule(style="display:none;")
+  button#disp_mod.loginAndRegistrationDataModule(style="display:none;") #{ do_you_want_to_log_in_or_register }
+  script(src='https://code.jquery.com/jquery-3.6.0.min.js' integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous')
+  script(src='./../javascripts/reg.js')
