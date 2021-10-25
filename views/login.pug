@@ -1,16 +1,54 @@
 extends layout
 
 block content
- h2.page-header Login
- p Please login below
- if errors
-  each error, i in errors
-   div.alert.alert-danger #{error.msg}
- form(method='post', action='/users/login')
-  .form-group   
-   label Username
-   input.form-control(name='username', type='text', placeholder='Enter username')
-  .form-group   
-   label Password
-   input.form-control(name='password', type='password', placeholder='Enter password')
-  input.btn.btn-primary(type='submit', name='submit', value='Login')
+  canvas#justaimg(width='320' height='320')
+  #status(style="display:none;")
+  //button#test_err_msg test_err_msg
+  button#logout(style="display:none;") log_out
+  a#passworddriventimeoriented(style="display:none;") #{ successes }
+  button#add_an_user(style="display:none;") add_an_user
+  button#add_an_user2(style="display:none;") add_an_user2
+  input#fileinput(type='file' style="display:none;")
+  input#btnLoad(type='button' value='Load' onclick='handleFileSelect();' style="display:none;")
+  #editor(style="display:none;")
+  #editor_base64_fin(style="display:none;") -1
+  #window_clearInterval_timeoutID
+  #waiting_block(style='display:none;')
+    #waiting_gray
+    #waiting_logo
+      img(src='../modular_folder/login/image/loading.svg' height='100%')
+  #loading_logo
+    img(src='../modular_folder/login/image/loading.svg')
+  #login_page
+    // width="71.43%"
+    img#upload_img_using_logo(src='../modular_folder/login/image/logo.svg' style='position:relative; height:30vh; top: 0%;')
+    #gray_block
+      .login_bar.disp_for_mod.user_input
+        img(src='../modular_folder/login/image/login_bar.svg')
+        input.input_type_text(type='text' name='user_name' placeholder='名稱' onfocus="this.placeholder = ''" onblur="this.placeholder = '名稱'")
+      .login_bar.user_input
+        img(src='../modular_folder/login/image/login_bar.svg')
+        input.input_type_text(type='text' name='account' placeholder='帳號' onfocus="this.placeholder = ''" onblur="this.placeholder = '帳號'")
+      .login_bar.user_input
+        img(src='../modular_folder/login/image/login_bar.svg')
+        input.input_type_text(type='password' name='password' placeholder='密碼' onfocus="this.placeholder = ''" onblur="this.placeholder = '密碼'")
+      .login_bar.disp_for_mod.user_input
+        img(src='../modular_folder/login/image/login_bar.svg')
+        input.input_type_text(type='password' name='password_confirm' placeholder='再輸入一次密碼' onfocus="this.placeholder = ''" onblur="this.placeholder = '再輸入一次密碼'")
+      .login_bar
+        // value=""
+        button#login_button.button
+          img(src='../modular_folder/login/image/login_button.svg' width='100%' z-index='3')
+          #login_button_txt_fix(style='color:#FEFEFE;') 註冊
+    #community_login
+      #fb_login.button
+        img(href="/auth/facebook" src="../modular_folder/login/image/facebook_login.svg" border="0" alt="" width="100%" height="100%")
+      #line_login.button
+        img(src='../modular_folder/login/image/line_login.svg' width='100%' height='100%')
+    #cre_acc_log_fk_bton
+      #cre_acc_log_fk_bton_inner_txt 點我登入
+  #picture(style="display:none;")
+  #fb-root(style="display:none;")
+  button#disp_mod(style="display:none;") #{ do_you_want_to_log_in_or_register }
+  script(src='https://code.jquery.com/jquery-3.6.0.min.js' integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous')
+  script(src='./../javascripts/reg.js')

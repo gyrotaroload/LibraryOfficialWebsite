@@ -9,6 +9,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var RateLimit = require('express-rate-limit');
 var session = require('express-session');
 var randomstring = require("randomstring");
+var bodyParser = require('body-parser');
+const { body, validationResult } = require('express-validator');
 
 //add new module
 var flash = require('connect-flash');
@@ -70,9 +72,27 @@ app.use(function(err, req, res, next) {
 });
 
 app.get('*', function(req, res, next) {
+  console.log("???????");
   console.log((!req.user)?"[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[nouser]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]":req.user);
   res.locals.user = req.user || null;
   next();
 });
+
+app.post(
+  '/user',
+  body('username').isEmail(),
+  body('password').isLength({ min: 5 }),
+  (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array() });
+      }
+      User.create({
+          username: req.body.username,
+          password: req.body.password,
+      }).then(user => res.json(user));
+      console.log("???????");
+  },
+);
 
 module.exports = app;
