@@ -30,30 +30,7 @@ router.get('/', function (req, res, next) {
 
 //加入login routing
 router.get('/login', function routergetlogin(req, res, next) {
-  var resok = true;
-  /*var randomstringgenerate100 = randomstring.generate(100);
-  var randomstringgenerate100tomongodb = new loginpageloadtimeoutverification({
-    time: Date(),
-    randomstringgenerate100: randomstringgenerate100
-  });
-  loginpageloadtimeoutverification.getloginpageloadtimeoutverification(randomstringgenerate100, function (err, randomstringgenerate100get) {
-    if (err) {
-      console.log(err);
-      throw err;
-    }
-    console.log(randomstringgenerate100get);
-    if (randomstringgenerate100get.length === 0) {
-      loginpageloadtimeoutverification.createloginpageloadtimeoutverification(randomstringgenerate100tomongodb, function (err, randomstringgenerate100tomongodb) {
-        if (err) throw err;
-        console.log(randomstringgenerate100tomongodb);
-      });
-    } else {
-      console.log("-----------------------------\nA serious conflict of random variables has occurred\n-----------------------------\n");
-      resok = false;
-      routergetlogin(req, res, next);
-    }
-  });*/
-  if (resok) {
+  if (!req.user) {
     res.render('login', {
       var_use_old_jquery: true,
       //successes: randomstringgenerate100,
@@ -62,6 +39,8 @@ router.get('/login', function routergetlogin(req, res, next) {
       var_jade_error_msg_gui_text_2: "X",
       do_you_want_to_log_in_or_register: "0"
     });
+  }else{
+    res.redirect('/main');
   }
 });
 
