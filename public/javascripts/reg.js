@@ -398,6 +398,7 @@ function reg_to_backend(pic_base64) {
                 clearInterval(document.getElementById("window_clearInterval_timeoutID").innerText);
             }
             document.getElementById('error_msg_gui_init_msg_if_yes').click();
+            console.log("debug..................................................");
         },
     });
     //});

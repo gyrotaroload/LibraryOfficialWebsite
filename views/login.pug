@@ -2,7 +2,36 @@ extends layout
 
 block content
   link(rel='stylesheet', href='/stylesheets/reg.css')
-  #error_msg_gui_init_msg_if_yes.loginAndRegistrationDataModule
+  #error_msg_obj.loginAndRegistrationDataModule
+  //There should be an integrated and automated error message rendering area, but it is currently in a manual format
+  //
+    #TSBAIAAEMRABIICIAMF.loginAndRegistrationDataModule
+      #error_msg_gui_start.loginAndRegistrationDataModule
+      ..............div, id=error_msg_gui_start, will be clicked, if error occurs, knows errors are: input acc/psw error
+      #error_msg_gui_word_part_color_1.loginAndRegistrationDataModule #{ var_jade_err_msg_show }
+      #error_msg_gui_word_part_color_2.loginAndRegistrationDataModule
+      #error_msg_gui_text_1.loginAndRegistrationDataModule
+      #error_msg_gui_text_2.loginAndRegistrationDataModule
+  header
+    #error_msg_gui_group.error_msg_gui_group_class.loginAndRegistrationDataModule(style='display: none;')
+      - if(var_jade_err_msg_show==true) {
+          #error_msg_gui_start.error_msg_gui_group_class.loginAndRegistrationDataModule(style='display: none;') yes
+          #error_msg_gui_text_1.error_msg_gui_group_class.loginAndRegistrationDataModule(style='display: none;') #{var_jade_error_msg_gui_text_1}
+          //#error_msg_gui_text_1(style='display: none;') 錯誤
+          #error_msg_gui_text_2.error_msg_gui_group_class.loginAndRegistrationDataModule(style='display: none;') #{var_jade_error_msg_gui_text_2}
+          #error_msg_gui_word_part_color_1.error_msg_gui_group_class.loginAndRegistrationDataModule(style='display: none;') red
+          #error_msg_gui_word_part_color_2.error_msg_gui_group_class.loginAndRegistrationDataModule(style='display: none;') black
+      - } else {
+          #error_msg_gui_start.error_msg_gui_group_class.loginAndRegistrationDataModule(style='display: none;') no
+          #error_msg_gui_word_part_color_1.error_msg_gui_group_class.loginAndRegistrationDataModule(style='display: none;') black
+          #error_msg_gui_word_part_color_2.error_msg_gui_group_class.loginAndRegistrationDataModule(style='display: none;') black
+          #error_msg_gui_text_1.error_msg_gui_group_class.loginAndRegistrationDataModule(style='display: none;') this is a error msg_1
+          #error_msg_gui_text_2.error_msg_gui_group_class.loginAndRegistrationDataModule(style='display: none;') this is a error msg_2
+      - }
+      #error_msg_gui_blank_part_color.error_msg_gui_group_class.loginAndRegistrationDataModule(style='display: none;') white
+      #error_msg_gui_close.error_msg_gui_group_class.loginAndRegistrationDataModule(style='display: none;')
+      #error_msg_gui_init_msg_if_yes.error_msg_gui_group_class.loginAndRegistrationDataModule(style='display: none;')
+  //#error_msg_gui_init_msg_if_yes.loginAndRegistrationDataModule
   canvas#justaimg.loginAndRegistrationDataModule(width='320' height='320')
   #status.loginAndRegistrationDataModule(style="display:none;")
   //button#test_err_msg test_err_msg
@@ -54,3 +83,4 @@ block content
   button#disp_mod.loginAndRegistrationDataModule(style="display:none;") #{ do_you_want_to_log_in_or_register }
   script(src='https://code.jquery.com/jquery-3.6.0.min.js' integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous')
   script(src='./../javascripts/reg.js')
+  script(src='./../javascripts/index_err_msg.js')
