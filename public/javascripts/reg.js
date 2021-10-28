@@ -173,14 +173,13 @@ jQuery(function dom_ready(dom_ready_params) {
             element.style.display = "none";
         }
         //$("#gray_block").height("18vh");
-        $("#gray_block").show().animate({ 'height': "18vh" }, 1000);
+        $("#gray_block").show().animate({ 'box-shadow': "2px 2px" }/*{ 'height': "18vh" }*/, 1000);
     });
     //The code below and the code above must maintain the current sequence
     document.getElementById("cre_acc_log_fk_bton_inner_txt").addEventListener("click", () => {
-        console.log(`document.getElementById("cre_acc_log_fk_bton_inner_txt").addEventListener("click", () => {`);
         if (document.getElementById("disp_mod").innerText === "1") {
             $("#waiting_block").css('display', "none")
-            $("#gray_block").show().animate({ 'height': "30vh" }, 1000);
+            $("#gray_block").show().animate({ 'box-shadow': "2px 2px" }/*{ 'height': "30vh" }*/, 1000);
             setTimeout(() => {
                 document.getElementById("login_button_txt_fix").innerText = "註冊";
                 document.getElementById("cre_acc_log_fk_bton_inner_txt").innerText = "點我登入";
@@ -204,8 +203,15 @@ jQuery(function dom_ready(dom_ready_params) {
     });
     //The code below and the code above must maintain the current sequence
     if (document.getElementById("disp_mod").innerText === "-1") {
+        //This code segment has existed since the opening of Pangu
+        //Unauthorized removal without knowing what will happen
         document.getElementById("cre_acc_log_fk_bton_inner_txt").click();
     }
+    if (document.getElementById("disp_mod").innerText === "0") {
+        //In order to give priority to the login screen, add this code
+        document.getElementById("cre_acc_log_fk_bton_inner_txt").click();
+    }
+
     /*document.getElementById("test_salt").addEventListener("click", () => {
         require(["bcrypt"], function (bcrypt) {
             bcrypt.genSalt(10, function (err, salt) {
