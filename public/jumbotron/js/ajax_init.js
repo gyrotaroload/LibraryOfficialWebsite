@@ -177,13 +177,65 @@ document.getElementById('openTimeChartLoaded_target').addEventListener('click', 
         ui_two_column_very_relaxed_grid5.appendChild(column_style_border_5px_FFAC55_solid_A5);
         ui_two_column_very_relaxed_grid5.appendChild(column_style_border_5px_FFAC55_solid_B5);
 
+        //w6
+        var ui_two_column_very_relaxed_grid6 = document.createElement('div');
+        ui_two_column_very_relaxed_grid6.classList.add('ui');
+        ui_two_column_very_relaxed_grid6.classList.add('two');
+        ui_two_column_very_relaxed_grid6.classList.add('column');
+        ui_two_column_very_relaxed_grid6.classList.add('very');
+        ui_two_column_very_relaxed_grid6.classList.add('relaxed');
+        ui_two_column_very_relaxed_grid6.classList.add('grid');
+        var column_style_border_5px_FFAC55_solid_A6 = document.createElement('div');
+        column_style_border_5px_FFAC55_solid_A6.classList.add('column'); column_style_border_5px_FFAC55_solid_A6.classList.add('RBD');
+
+        var p61 = document.createElement('p');
+        p61.innerText = chart_data.getElementsByTagName('td')[5 * 4 + 0].innerText;
+        console.log(p61.innerText);
+        column_style_border_5px_FFAC55_solid_A6.appendChild(p61);
+        var column_style_border_5px_FFAC55_solid_B6 = document.createElement('div');
+        column_style_border_5px_FFAC55_solid_B6.classList.add('column'); column_style_border_5px_FFAC55_solid_B6.classList.add('LBD');
+        var p62 = document.createElement('p');
+        p62.innerText = chart_data.getElementsByTagName('td')[5 * 4 + 1].innerText +
+            chart_data.getElementsByTagName('td')[5 * 4 + 2].innerText +
+            chart_data.getElementsByTagName('td')[5 * 4 + 3].innerText;
+        column_style_border_5px_FFAC55_solid_B6.appendChild(p62);
+        ui_two_column_very_relaxed_grid6.appendChild(column_style_border_5px_FFAC55_solid_A6);
+        ui_two_column_very_relaxed_grid6.appendChild(column_style_border_5px_FFAC55_solid_B6);
+
+        //w7
+        var ui_two_column_very_relaxed_grid7 = document.createElement('div');
+        ui_two_column_very_relaxed_grid7.classList.add('ui');
+        ui_two_column_very_relaxed_grid7.classList.add('two');
+        ui_two_column_very_relaxed_grid7.classList.add('column');
+        ui_two_column_very_relaxed_grid7.classList.add('very');
+        ui_two_column_very_relaxed_grid7.classList.add('relaxed');
+        ui_two_column_very_relaxed_grid7.classList.add('grid');
+        var column_style_border_5px_FFAC55_solid_A7 = document.createElement('div');
+        column_style_border_5px_FFAC55_solid_A7.classList.add('column'); column_style_border_5px_FFAC55_solid_A7.classList.add('RBD');
+
+        var p71 = document.createElement('p');
+        p71.innerText = chart_data.getElementsByTagName('td')[6 * 4 + 0].innerText;
+        console.log(p71.innerText);
+        column_style_border_5px_FFAC55_solid_A7.appendChild(p71);
+        var column_style_border_5px_FFAC55_solid_B7 = document.createElement('div');
+        column_style_border_5px_FFAC55_solid_B7.classList.add('column'); column_style_border_5px_FFAC55_solid_B7.classList.add('LBD');
+        var p72 = document.createElement('p');
+        p72.innerText = chart_data.getElementsByTagName('td')[6 * 4 + 1].innerText +
+            chart_data.getElementsByTagName('td')[6 * 4 + 2].innerText +
+            chart_data.getElementsByTagName('td')[6 * 4 + 3].innerText;
+        column_style_border_5px_FFAC55_solid_B7.appendChild(p72);
+        ui_two_column_very_relaxed_grid7.appendChild(column_style_border_5px_FFAC55_solid_A7);
+        ui_two_column_very_relaxed_grid7.appendChild(column_style_border_5px_FFAC55_solid_B7);
+
         var hor_sep = '<div class="ui horizontal divider">&ApplyFunction;</div>';
         ui_segment_mobile_only_inverted.appendChild(ui_two_column_very_relaxed_grid1);
         ui_segment_mobile_only_inverted.innerHTML += hor_sep;
         ui_segment_mobile_only_inverted.appendChild(ui_two_column_very_relaxed_grid2); ui_segment_mobile_only_inverted.innerHTML += hor_sep;
         ui_segment_mobile_only_inverted.appendChild(ui_two_column_very_relaxed_grid3); ui_segment_mobile_only_inverted.innerHTML += hor_sep;
         ui_segment_mobile_only_inverted.appendChild(ui_two_column_very_relaxed_grid4); ui_segment_mobile_only_inverted.innerHTML += hor_sep;
-        ui_segment_mobile_only_inverted.appendChild(ui_two_column_very_relaxed_grid5);
+        ui_segment_mobile_only_inverted.appendChild(ui_two_column_very_relaxed_grid5); ui_segment_mobile_only_inverted.innerHTML += hor_sep;
+        ui_segment_mobile_only_inverted.appendChild(ui_two_column_very_relaxed_grid6); ui_segment_mobile_only_inverted.innerHTML += hor_sep;
+        ui_segment_mobile_only_inverted.appendChild(ui_two_column_very_relaxed_grid7);
 
         var stuff_to_display_none = document.querySelectorAll('.opening-hours-table.ui.celled.table.center.aligned');
         stuff_to_display_none.forEach((element, number) => {
@@ -198,8 +250,5 @@ document.getElementById('openTimeChartLoaded_target').addEventListener('click', 
         colsole.log('[open time app] mobile copy failed!');
     }
 });
-/*TODO:
-除去tr td改成grid div
 
-*/
 //console.log("wtf+++++++");
