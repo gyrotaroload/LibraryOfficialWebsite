@@ -1,5 +1,570 @@
 extends layout
 
+block contentHEAD
+  meta(charset='utf-8')
+  meta(content='IE=edge,chrome=1' http-equiv='X-UA-Compatible')
+  meta(name='viewport' content='width=device-width, initial-scale=1, maximum-scale=2, user-scalable=no')
+  meta(name='description' content='修改的部分_描述文字')
+  meta(name='keywords' content='修改的部分_關鍵字1, 修改的部分_關鍵字2, 修改的部分_關鍵字3, 修改的部分_關鍵字4')
+  meta(name='author' content='修改的部分_作者1')
+  meta(name='theme-color' content='#DDB98B')
+  title #{ title }
+  link(rel='stylesheet' href='./jumbotron/stylesheets/normalize.css')
+  link(rel='stylesheet' href='./jumbotron/stylesheets/main.css')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css' type='text/css')
+  link(rel='stylesheet' href='./jumbotron/stylesheets/index.css')
+  style.
+    @import url('./jumbotron/stylesheets/customStyle.css');
+  link(rel='stylesheet' href='https://unpkg.com/swiper@7/swiper-bundle.min.css')
+  style.
+    @import url('./jumbotron/stylesheets/swipe.css');
+  style.
+    @import url('./jumbotron/stylesheets/open.css');
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.0/css/hover-min.css' integrity='sha512-glciccPoOqr5mfDGmlJ3bpbvomZmFK+5dRARpt62nZnlKwaYZSfFpFIgUoD8ujqBw4TmPa/F3TX28OctJzoLfg==' crossorigin='anonymous')
+
 block content
-  h1= title
-  p Welcome to #{title}
+  //
+    編輯人員注意:
+    水平尋覽條須於手機與電腦版分別設定!
+  .ui.tablet.computer.only.padded.grid
+    #headderBar.ui.top.fixed.borderless.inverted.fluid.menu
+      .ui.container
+        a.header.item.hvr-hang 成功大學數學系圖書室
+        .right.menu
+          a.item.hvr-hang 成大首頁
+          a.item.hvr-hang 數學系網站
+          a.item.hvr-hang 成大總圖
+          .item
+            form.ui.form
+              .inline.fields
+                .field
+                  .ui.icon.input
+                    input(type='text' placeholder='Search...')
+                    i.inverted.circular.search.link.icon
+  .ui.mobile.only.padded.grid
+    #headderBar.ui.top.fixed.borderless.fluid.inverted.huge.menu
+      a.header.item 成功大學數學系圖書室
+      .right.menu
+        .item
+          button.ui.icon.toggle.basic.inverted.button
+            i.content.icon
+      .ui.vertical.borderless.inverted.fluid.menu
+        a.item 成大首頁
+        a.item 數學系網站
+        a.item 成大總圖
+        .item
+          form.ui.form
+            .field
+              .ui.icon.input
+                input(type='text' placeholder='Search...')
+                i.inverted.circular.search.link.icon
+  // 投影片
+  .ui.grid
+    .sixteen.wide.column
+      // Slider main container
+      .swiper
+        // Additional required wrapper
+        .swiper-wrapper
+          // Slides
+          .swiper-slide
+            #img1.ui.massive.message.masterVision
+              .ui.container
+                h1.ui.huge.header 圖書服務1
+                p
+                  | This is a template for a simple marketing or informational website. It
+                  | includes a large callout called a jumbotron and three supporting
+                  | pieces of content. Use it as a starting point to create something more
+                  | unique.
+                button.ui.large.primary.button 瀏覽圖書目錄 »
+          .swiper-slide
+            #img2.ui.massive.message.masterVision
+              .ui.container
+                h1.ui.huge.header 圖書服務2
+                p
+                  | This is a template for a simple marketing or informational website. It
+                  | includes a large callout called a jumbotron and three supporting
+                  | pieces of content. Use it as a starting point to create something more
+                  | unique.
+                button.ui.large.primary.button 瀏覽圖書目錄 »
+          .swiper-slide
+            #img3.ui.massive.message.masterVision
+              .ui.container
+                h1.ui.huge.header 圖書服務3
+                p
+                  | This is a template for a simple marketing or informational website. It
+                  | includes a large callout called a jumbotron and three supporting
+                  | pieces of content. Use it as a starting point to create something more
+                  | unique.
+                button.ui.large.primary.button 瀏覽圖書目錄 »
+        // If we need pagination
+        .swiper-pagination
+        // If we need navigation buttons
+        .swiper-button-prev
+        .swiper-button-next
+        // If we need scrollbar
+        .swiper-scrollbar
+    .ten.wide.column
+    .six.wide.column
+  //
+    div class="ui container">
+    <div class="ui three column stackable grid">
+    <div class="column">
+    <h1 class="ui header">期刊服務</h1>
+    <p>
+    Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
+    tellus ac cursus commodo, tortor mauris condimentum nibh, ut
+    fermentum massa justo sit amet risus. Etiam porta sem malesuada
+    magna mollis euismod. Donec sed odio dui.
+    </p>
+    <div class="ui small basic button">瀏覽期刊目錄 &raquo;</div>
+    </div>
+    <div class="column">
+    <h1 class="ui header">館際合作</h1>
+    <p>
+    Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
+    tellus ac cursus commodo, tortor mauris condimentum nibh, ut
+    fermentum massa justo sit amet risus. Etiam porta sem malesuada
+    magna mollis euismod. Donec sed odio dui.
+    </p>
+    <div class="ui small basic button">線上申請 &raquo;</div>
+    </div>
+    <div class="column">
+    <h1 class="ui header">其他服務</h1>
+    <div class="ui relaxed divided list">
+    <div class="item">
+    <i class="large github middle aligned icon"></i>
+    <div class="content">
+    <a class="header">Semantic-Org/Semantic-UI</a>
+    <div class="description">10 分鐘前更新</div>
+    </div>
+    </div>
+    <div class="item">
+    <i class="large github middle aligned icon"></i>
+    <div class="content">
+    <a class="header">Semantic-Org/Semantic-UI-Docs</a>
+    <div class="description">22 分鐘前更新</div>
+    </div>
+    </div>
+    <div class="item">
+    <i class="large github middle aligned icon"></i>
+    <div class="content">
+    <a class="header">Semantic-Org/Semantic-UI-Meteor</a>
+    <div class="description">34 分鐘前更新</div>
+    </div>
+    </div>
+    </div>
+    <div class="ui small basic button">檢視更多 &raquo;</div>
+    </div>
+    </div>
+    <div class="ui hidden divider"></div>
+    <div class="ui divider"></div>
+    <footer>&copy; 2021 成功大學圖書館
+    <i class="phone icon"></i>
+    0987587487
+    <i class="building icon"></i>
+    台南市大學路1號某某大樓
+    <i class="envelope icon"></i>
+    <a href="mailto:mathlib@math.ncku.edu.tw">服務信箱</a>
+    </footer>
+    </div
+  .section.one
+    .ui.container
+      h1 Feature
+      .ui.four.column.stackable.doubling.grid
+        .column
+          .ui.segment
+            h2.ui.icon.header
+              i.lab.icon
+              .content
+                | Base in Semantic UI
+                .sub.header
+                  | Template ini dibuat dengan core dari framework CSS Semantic-UI
+        .column
+          .ui.segment
+            h2.ui.icon.header
+              i.block.layout.icon
+              .content
+                | Griding System
+                .sub.header
+                  | Template responsive dan akan menyesuaikan dengan ukuran device
+        .column
+          .ui.segment
+            h2.ui.icon.header
+              i.puzzle.icon
+              .content
+                | Interactive
+                .sub.header
+                  | Menggunakan plugin-plugin base JQuery seperti Owl Carousel.
+        .column
+          .ui.segment
+            h2.ui.icon.header
+              i.fork.icon
+              .content
+                | Fork Github
+                .sub.header
+                  | Anda dapat berkontribusi mengembangkan template ini untuk di jadikan template
+                  | Wordpress, Bloger dll.
+  //
+    div class="ui four statistics">
+    <div class="statistic">
+    <div class="value">
+    周一<br><i class="calendar check outline icon"></i><br>周五
+    </div>
+    <div class="label">開館 </div>
+    </div>
+    <div class="statistic">
+    <div class="value">
+    周六<br><i class="calendar times outline icon"></i><br>周日
+    </div>
+    <div class="label">休館 </div>
+    </div>
+    <div class="statistic">
+    <div class="value">
+    08:00<br><i class="clock outline icon"></i><br>17:00
+    </div>
+    <div class="label">學期中開放時間 </div>
+    </div>
+    <div class="statistic">
+    <div class="value">
+    08:00<br><i class="clock outline icon"></i><br>17:00
+    </div>
+    <div class="label">寒暑假開放時間 </div>
+    </div>
+    </div
+  .section.two
+    .ui.container
+      h1
+        i.location.arrow.icon
+        |  成功大學數學系 系館一樓
+      a#qrcode.ui.basic.massive.image.label.brown.hvr-grow-shadow(href='https://goo.gl/maps/bBXnC5XJRsmPSXUj6' target='_blank')
+        //
+          這是一個地圖按鈕
+          含有一個qrcode
+          請用qrcodeMapButton.js啟用他
+          需要semantic-ui與qrcode.js套件
+          屬性href就是按鈕的連結
+          內文是qrcode的內容
+          author:andythebreaker
+        | https://nckumap.ncku.edu.tw/map.php?type=activity&bid=B014&rid=B01401001&floor=1F
+  .section.three
+    .ui.container.content
+      .ui.stackable.doubling.grid
+        // Middle Content
+        .twelve.wide.column.mobile.only
+          .ui.relaxed.divided.list
+            .item(align='left')
+              .right.floated.content
+                .ui.button Add
+              img.ui.avatar.image.middle.aligned(src='./jumbotron/assets/img/400x400.png')
+              .content
+                a.header Semantic-Org/Semantic-UI
+                .description 10 分鐘前更新
+            .item(align='left')
+              .right.floated.content
+                .ui.button Add
+              img.ui.avatar.image.middle.aligned(src='./jumbotron/assets/img/400x400.png')
+              .content
+                a.header Semantic-Org/Semantic-UI
+                .description 10 分鐘前更新
+            .item(align='left')
+              .right.floated.content
+                .ui.button Add
+              img.ui.avatar.image.middle.aligned(src='./jumbotron/assets/img/400x400.png')
+              .content
+                a.header Semantic-Org/Semantic-UI
+                .description 10 分鐘前更新
+        .twelve.wide.column.tablet.computer.only
+          div(align='center')
+            .ui.divider
+            .ui.items
+              .item(align='left')
+                .ui.tiny.image
+                  img(src='./jumbotron/assets/img/400x400.png')
+                .content
+                  a.header Introduction About System JS
+                  .meta
+                    span
+                      i.calendar.icon
+                      |  10/04/2016 
+                      i.tag.icon
+                      |                                             Javascript
+                      i.user.icon
+                      |  Muhibbudin Suretno
+                  .description(align='justify')
+                    p
+                      | Loremquatur! Vero illum illo, nesciunt, tempora accusamus praesentium
+                      | sunt...
+                  .extra
+                    .ui.blue.right.floated.button Read More
+              .ui.divider
+              .item(align='left')
+                .ui.tiny.image
+                  img(src='./jumbotron/assets/img/400x400.png')
+                .content
+                  a.header Learn About Angular 2 - Part 1
+                  .meta
+                    span
+                      i.calendar.icon
+                      |  10/04/2016 
+                      i.tag.icon
+                      |                                             Javascript
+                      i.user.icon
+                      |  Muhibbudin Suretno
+                  .description(align='justify')
+                    p
+                      | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi vel, itaque
+                  .extra
+                    .ui.blue.right.floated.button Read More
+              .ui.divider
+              .item(align='left')
+                .ui.tiny.image
+                  img(src='./jumbotron/assets/img/400x400.png')
+                .content
+                  a.header How to make Chat App
+                  .meta
+                    span
+                      i.calendar.icon
+                      |  10/04/2016 
+                      i.tag.icon
+                      |                                             Javascript
+                      i.user.icon
+                      |  Muhibbudin Suretno
+                  .description(align='justify')
+                    p
+                      | Lor
+                  .extra
+                    .ui.blue.right.floated.button Read More
+              .ui.divider
+              .item(align='left')
+                .ui.tiny.image
+                  img(src='./jumbotron/assets/img/400x400.png')
+                .content
+                  a.header Learn About Angular 2 - Part 3
+                  .meta
+                    span
+                      i.calendar.icon
+                      |  10/04/2016 
+                      i.tag.icon
+                      |                                             Javascript
+                      i.user.icon
+                      |  Muhibbudin Suretno
+                  .description(align='justify')
+                    p
+                      | Lore
+                  .extra
+                    .ui.blue.right.floated.button Read More
+            .ui.divider
+            .ui.buttons
+              button.ui.button.disabled Previous
+              button.ui.blue.button 1
+              button.ui.button 2
+              button.ui.button 3
+              button.ui.button ...
+              button.ui.button n
+              button.ui.button Next
+        // Right Sidebar
+        .four.wide.column.mobile.only
+          #copyRightSidebar_mobile2desktop.ui.fluid.vertical.menu.moderns
+            a.header.item(href='') Category
+            a.item(href='') Javascript
+            a.item(href='') PHP
+            a.item(href='') Angular
+            a.item(href='') Semantic-UI
+          #copyRightSidebar_opentime_cli
+            //
+              佔位，勿移除
+              需要有ajax init .js
+              與下方表格中的id='openTimeChartLoaded_target'
+        .four.wide.column.computer.only
+          //
+            div class="ui fluid vertical menu moderns" id="copyRightSidebar_mobile2desktop">
+            <a href="" class="header item">Category</a>
+            <a href="" class="item">Javascript</a>
+            <a href="" class="item">PHP</a>
+            <a href="" class="item">Angular</a>
+            <a href="" class="item">Semantic-UI</a>
+            </div
+          #copyRightSidebar_mobile2desktop_cli
+            //
+              佔位，物移除
+              需要有ajax init .js
+          #copyRightSidebar_opentime.ui.segments.moderns
+            .ui.header.segment
+              section.openinghours
+                //
+                  https://codepen.io/bengoddard/pen/boeEy
+                  這是一個模組，修改自上方參考資料
+                  由andythebreaker修改
+                  須包含open.js、open.css
+                  使用semantic-ui
+                .openinghourscontent.section
+                  .header
+                    // h2>Opening hours</h2
+                    h2 開館時間
+                    #open-status.ui.segment
+                      small.openorclosed We are
+                  #openTimeChartLoaded_target.OpeningHoursChineseNameFormDefinitionCollection(style='display:none;')
+                    // 這裡不要動，這是"休館"字樣的中文字形，js沒有例外處理
+                    .shutdownName1(style='display:none;') 休
+                    .shutdownName2(style='display:none;') 館
+                  //
+                    div class="ui segment mobile only inverted">
+                    <div class="ui two column very relaxed grid">
+                    <div class="column" style="border:5px #FFAC55 solid;">
+                    <p>一</p>
+                    </div>
+                    <div class="column">
+                    <p>09:00</p>
+                    <p>-</p>
+                    <p>18:00</p>
+                    </div>
+                    </div>
+                    <div class="ui vertical divider">
+                    </div><div class="ui horizontal divider">
+                    Or
+                    </div>
+                    <div class="ui two column very relaxed grid">
+                    <div class="column">
+                    <p>一</p>
+                    </div>
+                    <div class="column">
+                    <p>09:00</p>
+                    <p>-</p>
+                    <p>18:00</p>
+                    </div>
+                    </div>
+                    <div class="ui vertical divider">
+                    </div><div class="ui horizontal divider">
+                    Or
+                    </div>
+                    <div class="ui two column very relaxed grid">
+                    <div class="column">
+                    <p>一</p>
+                    </div>
+                    <div class="column">
+                    <p>09:00</p>
+                    <p>-</p>
+                    <p>18:00</p>
+                    </div>
+                    </div>
+                    <div class="ui vertical divider">
+                    </div><div class="ui horizontal divider">
+                    Or
+                    </div>
+                    </div
+                  table#the_open_chart_data.opening-hours-table.ui.celled.table.center.aligned
+                    thead
+                      tr
+                        th.center.aligned 星期
+                        th(colspan='3') 開放時間
+                    tbody
+                      tr#Monday(itemprop='openingHours' title='Open Monday at 9am to 6pm')
+                        td#monday_chinese 一
+                        td.opens.no_right_border 09:00
+                        td.no_right_border.no_left_border -
+                        td.closes.no_left_border 18:00
+                      tr#Tuesday(itemprop='openingHours' title='Open Tuesday at 9am to 6pm')
+                        td#tuesday_chinese 二
+                        td.opens.no_right_border 09:00
+                        td.no_right_border.no_left_border -
+                        td.closes.no_left_border 18:00
+                      tr#Wednesday(itemprop='openingHours' title='Open Wednesday at 9am to 6pm')
+                        td#wednesday_chinese 三
+                        td.opens.no_right_border 09:00
+                        td.no_right_border.no_left_border -
+                        td.closes.no_left_border 18:00
+                      tr#Thursday(itemprop='openingHours' title='Open Thursday at 9am to 8pm')
+                        td#thursday_chinese 四
+                        td.opens.no_right_border 09:00
+                        td.no_right_border.no_left_border -
+                        td.closes.no_left_border 20:00
+                      tr#Friday(itemprop='openingHours' title='Open Friday at 9am to 6pm')
+                        td#friday_chinese 五
+                        td.opens.no_right_border 09:00
+                        td.no_right_border.no_left_border -
+                        td.closes.no_left_border 18:00
+                      //
+                        如果當日閉館
+                        class="no_right_border no_left_border"的地方
+                        要添加class:shutdown
+                        然後開館時間閉館時間就不重要了
+                      tr#Saturday(itemprop='openingHours' title='Open Saturday at 10am to 11pm')
+                        td#saturday_chinese 六
+                        td.opens.no_right_border 10:00
+                        td.shutdown.no_right_border.no_left_border -
+                        td.closes.no_left_border 23:00
+                      tr#Sunday(itemprop='openingHours' title='Open Sunday at 11am to 4pm')
+                        td#sunday_chinese 日
+                        td.opens.no_right_border 12:00
+                        td.shutdown.no_right_border.no_left_border -
+                        td.closes.no_left_border 16:00
+                  // 按鈕已廢止
+                  button(style='cursor: pointer;display:none;' title='Make an Apointment Online' data-appointlet='u387') Make an Apointment Online
+                  script.
+                    (function (e, t, n, r) {
+                    if (e) return;
+                    t._appt = true;
+                    var i = n.createElement(r),
+                    s = n.getElementsByTagName(r)[0];
+                    i.async = true;
+                    i.src = './jumbotron/js/https_dje0x8zlxc38k_cloudfront_net_loaders_s-min.js';
+                    s.parentNode.insertBefore(i, s)
+                    })(window._appt, window, document, "script")
+            //
+              div class="ui segment">
+              <div class="owl-carousel owl-theme owl-loaded" id="single-slider">
+              <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-968px, 0px, 0px); transition: all 0.25s ease 0s; width: 1452px;"><div class="owl-item cloned" style="width: 232px; margin-right: 10px;"><div class="item">
+              <p><img class="ui rounded image" src="assets/img/400x400.png"></p>
+              <div align="justify">
+              <div class="ui header">Learn About Angular 2</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et perspiciatis velit ducimus, reiciendis eius dolor culpa, laudantium modi minus voluptatum eveniet beatae, aperiam totam praesentium aut doloribus nemo minima a.</p>
+              </div>
+              </div></div><div class="owl-item cloned" style="width: 232px; margin-right: 10px;"><div class="item">
+              <p><img class="ui rounded image" src="assets/img/400x400.png"></p>
+              <div align="justify">
+              <div class="ui header">How to make Chat App</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus fugit nesciunt omnis impedit veniam. Inventore praesentium quas, rerum similique, voluptatibus sit dolorum, voluptatum, voluptate fugiat asperiores reprehenderit cupiditate unde quibusdam!</p>
+              </div>
+              </div></div><div class="owl-item" style="width: 232px; margin-right: 10px;"><div class="item">
+              <p><img class="ui rounded image" src="assets/img/400x400.png"></p>
+              <div align="justify">
+              <div class="ui header">Learn About Angular 2</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et perspiciatis velit ducimus, reiciendis eius dolor culpa, laudantium modi minus voluptatum eveniet beatae, aperiam totam praesentium aut doloribus nemo minima a.</p>
+              </div>
+              </div></div><div class="owl-item" style="width: 232px; margin-right: 10px;"><div class="item">
+              <p><img class="ui rounded image" src="assets/img/400x400.png"></p>
+              <div align="justify">
+              <div class="ui header">How to make Chat App</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus fugit nesciunt omnis impedit veniam. Inventore praesentium quas, rerum similique, voluptatibus sit dolorum, voluptatum, voluptate fugiat asperiores reprehenderit cupiditate unde quibusdam!</p>
+              </div>
+              </div></div><div class="owl-item cloned active" style="width: 232px; margin-right: 10px;"><div class="item">
+              <p><img class="ui rounded image" src="assets/img/400x400.png"></p>
+              <div align="justify">
+              <div class="ui header">Learn About Angular 2</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et perspiciatis velit ducimus, reiciendis eius dolor culpa, laudantium modi minus voluptatum eveniet beatae, aperiam totam praesentium aut doloribus nemo minima a.</p>
+              </div>
+              </div></div><div class="owl-item cloned" style="width: 232px; margin-right: 10px;"><div class="item">
+              <p><img class="ui rounded image" src="assets/img/400x400.png"></p>
+              <div align="justify">
+              <div class="ui header">How to make Chat App</div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus fugit nesciunt omnis impedit veniam. Inventore praesentium quas, rerum similique, voluptatibus sit dolorum, voluptatum, voluptate fugiat asperiores reprehenderit cupiditate unde quibusdam!</p>
+              </div>
+              </div></div></div></div><div class="owl-controls"><div class="owl-nav"><div class="owl-prev" style="display: none;">prev</div><div class="owl-next" style="display: none;">next</div></div><div class="owl-dots" style=""><div class="owl-dot active"><span></span></div><div class="owl-dot"><span></span></div></div></div></div>
+              </div>
+              <div class="ui secondary segment">
+              Other Content
+              </div>
+              </div
+    #aLotOFjs(style='display: none;')
+      // 請注意:所有script的順序都是嚴格要求的
+      script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+      script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
+      script(src='./jumbotron/js/index.js')
+      script(src='https://unpkg.com/swiper@7/swiper-bundle.min.js')
+      script(src='./jumbotron/js/swipe.js')
+      script(src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js' integrity='sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+      script(src='./jumbotron/js/qrcodeMapButton.js')
+      // 下2順序很重要
+      script(src='./jumbotron/js/ajax_init.js')
+      script(src='./jumbotron/js/open.js')
+
