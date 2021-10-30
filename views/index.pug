@@ -23,7 +23,21 @@ block contentHEAD
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.0/css/hover-min.css' integrity='sha512-glciccPoOqr5mfDGmlJ3bpbvomZmFK+5dRARpt62nZnlKwaYZSfFpFIgUoD8ujqBw4TmPa/F3TX28OctJzoLfg==' crossorigin='anonymous')
 
 block content
-  //
+  .ui.basic.modal
+    .ui.icon.header
+      i.archive.icon
+      |     敬請期待
+    .content
+      p
+        | 這個功能仍在開發中，將於不久後上線
+    .actions
+      .ui.red.basic.cancel.inverted.button
+        i.remove.icon
+        |       關閉
+      .ui.green.ok.inverted.button
+        i.checkmark.icon
+        |       好的
+  //-
     編輯人員注意:
     水平尋覽條須於手機與電腦版分別設定!
   .ui.tablet.computer.only.padded.grid
@@ -31,16 +45,16 @@ block content
       .ui.container
         a.header.item.hvr-hang 成功大學數學系圖書室
         .right.menu
-          a.item.hvr-hang 成大首頁
-          a.item.hvr-hang 數學系網站
-          a.item.hvr-hang 成大總圖
+          a.item.hvr-hang(href=`${browseHyperlinkedObjectsHorizontally1L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally1T }
+          a.item.hvr-hang(href=`${browseHyperlinkedObjectsHorizontally2L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally2T }
+          a.item.hvr-hang(href=`${browseHyperlinkedObjectsHorizontally3L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally3T }
           .item
             form.ui.form
               .inline.fields
                 .field
                   .ui.icon.input
                     input(type='text' placeholder='Search...')
-                    i.inverted.circular.search.link.icon
+                    i.inverted.circular.search.link.icon(onclick='console.log("search...");$(".ui.basic.modal").modal("show");')
   .ui.mobile.only.padded.grid
     #headderBar.ui.top.fixed.borderless.fluid.inverted.huge.menu
       a.header.item 成功大學數學系圖書室
@@ -49,15 +63,15 @@ block content
           button.ui.icon.toggle.basic.inverted.button
             i.content.icon
       .ui.vertical.borderless.inverted.fluid.menu
-        a.item 成大首頁
-        a.item 數學系網站
-        a.item 成大總圖
+        a.item(href=`${browseHyperlinkedObjectsHorizontally1L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally1T }
+        a.item(href=`${browseHyperlinkedObjectsHorizontally2L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally2T }
+        a.item(href=`${browseHyperlinkedObjectsHorizontally3L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally3T }
         .item
           form.ui.form
             .field
               .ui.icon.input
                 input(type='text' placeholder='Search...')
-                i.inverted.circular.search.link.icon
+                i.inverted.circular.search.link.icon(onclick='console.log("search...");$(".ui.basic.modal").modal("show");')
   // 投影片
   .ui.grid
     .sixteen.wide.column
@@ -105,7 +119,7 @@ block content
         .swiper-scrollbar
     .ten.wide.column
     .six.wide.column
-  //
+  //-
     div class="ui container">
     <div class="ui three column stackable grid">
     <div class="column">
@@ -175,36 +189,32 @@ block content
           .ui.segment
             h2.ui.icon.header
               i.lab.icon
-              .content
-                | Base in Semantic UI
+              .content #{ functionButtonMainText1 }
                 .sub.header
                   | Template ini dibuat dengan core dari framework CSS Semantic-UI
         .column
           .ui.segment
             h2.ui.icon.header
               i.block.layout.icon
-              .content
-                | Griding System
+              .content #{ functionButtonMainText2 }
                 .sub.header
                   | Template responsive dan akan menyesuaikan dengan ukuran device
         .column
           .ui.segment
             h2.ui.icon.header
               i.puzzle.icon
-              .content
-                | Interactive
+              .content #{ functionButtonMainText3 }
                 .sub.header
                   | Menggunakan plugin-plugin base JQuery seperti Owl Carousel.
         .column
           .ui.segment
             h2.ui.icon.header
               i.fork.icon
-              .content
-                | Fork Github
+              .content #{ functionButtonMainText4 }
                 .sub.header
                   | Anda dapat berkontribusi mengembangkan template ini untuk di jadikan template
                   | Wordpress, Bloger dll.
-  //
+  //-
     div class="ui four statistics">
     <div class="statistic">
     <div class="value">
@@ -376,7 +386,7 @@ block content
               需要有ajax init .js
               與下方表格中的id='openTimeChartLoaded_target'
         .four.wide.column.computer.only
-          //
+          //-
             div class="ui fluid vertical menu moderns" id="copyRightSidebar_mobile2desktop">
             <a href="" class="header item">Category</a>
             <a href="" class="item">Javascript</a>
@@ -407,7 +417,7 @@ block content
                     // 這裡不要動，這是"休館"字樣的中文字形，js沒有例外處理
                     .shutdownName1(style='display:none;') 休
                     .shutdownName2(style='display:none;') 館
-                  //
+                  //-
                     div class="ui segment mobile only inverted">
                     <div class="ui two column very relaxed grid">
                     <div class="column" style="border:5px #FFAC55 solid;">
@@ -510,7 +520,7 @@ block content
                     i.src = './jumbotron/js/https_dje0x8zlxc38k_cloudfront_net_loaders_s-min.js';
                     s.parentNode.insertBefore(i, s)
                     })(window._appt, window, document, "script")
-            //
+            //-
               div class="ui segment">
               <div class="owl-carousel owl-theme owl-loaded" id="single-slider">
               <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-968px, 0px, 0px); transition: all 0.25s ease 0s; width: 1452px;"><div class="owl-item cloned" style="width: 232px; margin-right: 10px;"><div class="item">
