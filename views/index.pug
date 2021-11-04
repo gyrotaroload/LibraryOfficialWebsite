@@ -21,6 +21,7 @@ block contentHEAD
   style.
     @import url('./jumbotron/stylesheets/open.css');
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.0/css/hover-min.css' integrity='sha512-glciccPoOqr5mfDGmlJ3bpbvomZmFK+5dRARpt62nZnlKwaYZSfFpFIgUoD8ujqBw4TmPa/F3TX28OctJzoLfg==' crossorigin='anonymous')
+  link(rel='stylesheet', href='/stylesheets/foot.css')
 
 block content
   .ui.basic.modal
@@ -83,27 +84,27 @@ block content
           .swiper-slide
             #img1.ui.massive.message.masterVision
               .ui.container
-                h1.ui.huge.header 圖書服務1
+                h1.ui.huge.header 最新消息
                 p
                   | This is a template for a simple marketing or informational website. It
                   | includes a large callout called a jumbotron and three supporting
                   | pieces of content. Use it as a starting point to create something more
                   | unique.
-                button.ui.large.primary.button 瀏覽圖書目錄 »
+                button.ui.large.primary.button 瀏覽最新消息 »
           .swiper-slide
             #img2.ui.massive.message.masterVision
               .ui.container
-                h1.ui.huge.header 圖書服務2
+                h1.ui.huge.header 常用連結
                 p
                   | This is a template for a simple marketing or informational website. It
                   | includes a large callout called a jumbotron and three supporting
                   | pieces of content. Use it as a starting point to create something more
                   | unique.
-                button.ui.large.primary.button 瀏覽圖書目錄 »
+                button.ui.large.primary.button 瀏覽常用連結 »
           .swiper-slide
             #img3.ui.massive.message.masterVision
               .ui.container
-                h1.ui.huge.header 圖書服務3
+                h1.ui.huge.header 服務項目及規則
                 p
                   | This is a template for a simple marketing or informational website. It
                   | includes a large callout called a jumbotron and three supporting
@@ -188,7 +189,7 @@ block content
         .column
           .ui.segment
             h2.ui.icon.header
-              i.lab.icon
+              i.book.icon
               .content #{ functionButtonMainText1 }
                 .sub.header
                   | Template ini dibuat dengan core dari framework CSS Semantic-UI
@@ -202,14 +203,14 @@ block content
         .column
           .ui.segment
             h2.ui.icon.header
-              i.puzzle.icon
+              i.handshake.outline.icon
               .content #{ functionButtonMainText3 }
                 .sub.header
                   | Menggunakan plugin-plugin base JQuery seperti Owl Carousel.
         .column
           .ui.segment
             h2.ui.icon.header
-              i.fork.icon
+              i.file.alternate.icon
               .content #{ functionButtonMainText4 }
                 .sub.header
                   | Anda dapat berkontribusi mengembangkan template ini untuk di jadikan template
@@ -256,6 +257,7 @@ block content
           內文是qrcode的內容
           author:andythebreaker
         | https://nckumap.ncku.edu.tw/map.php?type=activity&bid=B014&rid=B01401001&floor=1F
+  //TODO新增導向ID與最新消息標題
   .section.three
     .ui.container.content
       .ui.stackable.doubling.grid
@@ -375,11 +377,15 @@ block content
         // Right Sidebar
         .four.wide.column.mobile.only
           #copyRightSidebar_mobile2desktop.ui.fluid.vertical.menu.moderns
-            a.header.item(href='') Category
-            a.item(href='') Javascript
-            a.item(href='') PHP
-            a.item(href='') Angular
-            a.item(href='') Semantic-UI
+            a.header.item(href='') 常用連結
+            //
+              這裡要放中研院...甚麼的
+              要放多少東西TODO
+              如果太多就要開新頁/新視窗
+            a.item(href='http://www.ams.org/mathscinet/' target='_blank') MathSciNet
+            a.item(href='http://www.isiknowledge.com/' target='_blank') SCI (Science Citation Index Expanded)
+            a.item(href='http://www.emis.de/ZMATH/' target='_blank') Zentralblatt MATH
+            a.item(href='http://www.springerlink.com/content/110312/' target='_blank') Lecture Notes in Mathematics
           #copyRightSidebar_opentime_cli
             //
               佔位，勿移除
@@ -565,16 +571,56 @@ block content
               Other Content
               </div>
               </div
-    #aLotOFjs(style='display: none;')
-      // 請注意:所有script的順序都是嚴格要求的
-      script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
-      script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
-      script(src='./jumbotron/js/index.js')
-      script(src='https://unpkg.com/swiper@7/swiper-bundle.min.js')
-      script(src='./jumbotron/js/swipe.js')
-      script(src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js' integrity='sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==' crossorigin='anonymous' referrerpolicy='no-referrer')
-      script(src='./jumbotron/js/qrcodeMapButton.js')
-      // 下2順序很重要
-      script(src='./jumbotron/js/ajax_init.js')
-      script(src='./jumbotron/js/open.js')
-
+  .ui.hidden.divider
+  .ui.divider
+  footer.jsx-2061850338.ffoot
+    .ui.vertical.segment(style='padding-top: 4rem; padding-bottom: 4rem; background-color: rgb(245, 245, 245);')
+      .ui.container
+        .ui.stackable.grid
+          .row
+            .seven.wide.column
+              h2.ui.header &copy; 2021 成功大學圖書館
+              i.phone.icon
+              | 0987587487
+              i.building.icon
+              | 台南市大學路1號某某大樓
+            .three.wide.column
+              h4.ui.header(style='margin-bottom: 2px;') Powered By
+              .ui.list(role='list' style='margin-top: 2px;')
+                li(role='listitem')
+                  a.jsx-2061850338(href='https://semantic-ui.com') Semantic-UI
+                li(role='listitem')
+                  a.jsx-2061850338(href='https://react.semantic-ui.com') Semantic-UI-React
+                li(role='listitem')
+                  a.jsx-2061850338(href='https://nextjs.org/') Next.js
+            .three.wide.column
+              h4.ui.header(style='margin-bottom: 2px;') API
+              //TODO API還沒做
+              .ui.list(role='list' style='margin-top: 2px;')
+                li(role='listitem')
+                  a.jsx-2061850338(href='/themes') 最新消息
+                li(role='listitem')
+                  a.jsx-2061850338(href='/templates') 常用連結
+            .three.wide.column
+              h4.ui.header(style='margin-bottom: 2px;') 網站維護
+              .ui.list(role='list' style='margin-top: 2px;')
+                li(role='listitem')
+                  a.jsx-2061850338(href='https://github.com/semantic-ui-forest/semantic-ui-forest/graphs/contributors') 錯誤回報
+                  //TODO錯誤回報的網址要補充
+                li(role='listitem')
+                  a.jsx-2061850338(href='/main') 後台管理
+                li(role='listitem')
+                  a.jsx-2061850338(href='https://github.com/andythebreaker/LibraryOfficialWebsiteE') 程式開源
+                  //TODO open in new window
+  #aLotOFjs(style='display: none;')
+    // 請注意:所有script的順序都是嚴格要求的
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
+    script(src='./jumbotron/js/index.js')
+    script(src='https://unpkg.com/swiper@7/swiper-bundle.min.js')
+    script(src='./jumbotron/js/swipe.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js' integrity='sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='./jumbotron/js/qrcodeMapButton.js')
+    // 下2順序很重要
+    script(src='./jumbotron/js/ajax_init.js')
+    script(src='./jumbotron/js/open.js')
