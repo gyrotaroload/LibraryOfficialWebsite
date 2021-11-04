@@ -189,7 +189,7 @@ block content
         .column
           .ui.segment
             h2.ui.icon.header
-              i.lab.icon
+              i.book.icon
               .content #{ functionButtonMainText1 }
                 .sub.header
                   | Template ini dibuat dengan core dari framework CSS Semantic-UI
@@ -203,14 +203,14 @@ block content
         .column
           .ui.segment
             h2.ui.icon.header
-              i.puzzle.icon
+              i.handshake.outline.icon
               .content #{ functionButtonMainText3 }
                 .sub.header
                   | Menggunakan plugin-plugin base JQuery seperti Owl Carousel.
         .column
           .ui.segment
             h2.ui.icon.header
-              i.fork.icon
+              i.file.alternate.icon
               .content #{ functionButtonMainText4 }
                 .sub.header
                   | Anda dapat berkontribusi mengembangkan template ini untuk di jadikan template
@@ -257,6 +257,7 @@ block content
           內文是qrcode的內容
           author:andythebreaker
         | https://nckumap.ncku.edu.tw/map.php?type=activity&bid=B014&rid=B01401001&floor=1F
+  //TODO新增導向ID與最新消息標題
   .section.three
     .ui.container.content
       .ui.stackable.doubling.grid
@@ -376,11 +377,15 @@ block content
         // Right Sidebar
         .four.wide.column.mobile.only
           #copyRightSidebar_mobile2desktop.ui.fluid.vertical.menu.moderns
-            a.header.item(href='') Category
-            a.item(href='') Javascript
-            a.item(href='') PHP
-            a.item(href='') Angular
-            a.item(href='') Semantic-UI
+            a.header.item(href='') 常用連結
+            //
+              這裡要放中研院...甚麼的
+              要放多少東西TODO
+              如果太多就要開新頁/新視窗
+            a.item(href='http://www.ams.org/mathscinet/' target='_blank') MathSciNet
+            a.item(href='http://www.isiknowledge.com/' target='_blank') SCI (Science Citation Index Expanded)
+            a.item(href='http://www.emis.de/ZMATH/' target='_blank') Zentralblatt MATH
+            a.item(href='http://www.springerlink.com/content/110312/' target='_blank') Lecture Notes in Mathematics
           #copyRightSidebar_opentime_cli
             //
               佔位，勿移除
@@ -574,8 +579,11 @@ block content
         .ui.stackable.grid
           .row
             .seven.wide.column
-              h2.ui.header Semantic-UI-Forest
-              | © 2017–2019
+              h2.ui.header &copy; 2021 成功大學圖書館
+              i.phone.icon
+              | 0987587487
+              i.building.icon
+              | 台南市大學路1號某某大樓
             .three.wide.column
               h4.ui.header(style='margin-bottom: 2px;') Powered By
               .ui.list(role='list' style='margin-top: 2px;')
@@ -586,21 +594,24 @@ block content
                 li(role='listitem')
                   a.jsx-2061850338(href='https://nextjs.org/') Next.js
             .three.wide.column
-              h4.ui.header(style='margin-bottom: 2px;') Resources
+              h4.ui.header(style='margin-bottom: 2px;') API
+              //TODO API還沒做
               .ui.list(role='list' style='margin-top: 2px;')
                 li(role='listitem')
-                  a.jsx-2061850338(href='/themes') Themes
+                  a.jsx-2061850338(href='/themes') 最新消息
                 li(role='listitem')
-                  a.jsx-2061850338(href='/templates') Templates
-                li(role='listitem')
-                  a.jsx-2061850338(href='https://github.com/semantic-ui-forest/awesome-semantic-ui') Awesome
+                  a.jsx-2061850338(href='/templates') 常用連結
             .three.wide.column
-              h4.ui.header(style='margin-bottom: 2px;') About
+              h4.ui.header(style='margin-bottom: 2px;') 網站維護
               .ui.list(role='list' style='margin-top: 2px;')
                 li(role='listitem')
-                  a.jsx-2061850338(href='https://github.com/semantic-ui-forest/semantic-ui-forest/graphs/contributors') Author
+                  a.jsx-2061850338(href='https://github.com/semantic-ui-forest/semantic-ui-forest/graphs/contributors') 錯誤回報
+                  //TODO錯誤回報的網址要補充
                 li(role='listitem')
-                  a.jsx-2061850338(href='https://github.com/semantic-ui-forest/semantic-ui-forest/blob/master/LICENSE') License
+                  a.jsx-2061850338(href='/main') 後台管理
+                li(role='listitem')
+                  a.jsx-2061850338(href='https://github.com/andythebreaker/LibraryOfficialWebsiteE') 程式開源
+                  //TODO open in new window
   #aLotOFjs(style='display: none;')
     // 請注意:所有script的順序都是嚴格要求的
     script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
