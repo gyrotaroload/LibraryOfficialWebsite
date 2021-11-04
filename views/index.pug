@@ -21,6 +21,7 @@ block contentHEAD
   style.
     @import url('./jumbotron/stylesheets/open.css');
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.0/css/hover-min.css' integrity='sha512-glciccPoOqr5mfDGmlJ3bpbvomZmFK+5dRARpt62nZnlKwaYZSfFpFIgUoD8ujqBw4TmPa/F3TX28OctJzoLfg==' crossorigin='anonymous')
+  link(rel='stylesheet', href='/stylesheets/foot.css')
 
 block content
   .ui.basic.modal
@@ -565,16 +566,50 @@ block content
               Other Content
               </div>
               </div
-    #aLotOFjs(style='display: none;')
-      // 請注意:所有script的順序都是嚴格要求的
-      script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
-      script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
-      script(src='./jumbotron/js/index.js')
-      script(src='https://unpkg.com/swiper@7/swiper-bundle.min.js')
-      script(src='./jumbotron/js/swipe.js')
-      script(src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js' integrity='sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==' crossorigin='anonymous' referrerpolicy='no-referrer')
-      script(src='./jumbotron/js/qrcodeMapButton.js')
-      // 下2順序很重要
-      script(src='./jumbotron/js/ajax_init.js')
-      script(src='./jumbotron/js/open.js')
-
+  .ui.hidden.divider
+  .ui.divider
+  footer.jsx-2061850338.ffoot
+    .ui.vertical.segment(style='padding-top: 4rem; padding-bottom: 4rem; background-color: rgb(245, 245, 245);')
+      .ui.container
+        .ui.stackable.grid
+          .row
+            .seven.wide.column
+              h2.ui.header Semantic-UI-Forest
+              | © 2017–2019
+            .three.wide.column
+              h4.ui.header(style='margin-bottom: 2px;') Powered By
+              .ui.list(role='list' style='margin-top: 2px;')
+                li(role='listitem')
+                  a.jsx-2061850338(href='https://semantic-ui.com') Semantic-UI
+                li(role='listitem')
+                  a.jsx-2061850338(href='https://react.semantic-ui.com') Semantic-UI-React
+                li(role='listitem')
+                  a.jsx-2061850338(href='https://nextjs.org/') Next.js
+            .three.wide.column
+              h4.ui.header(style='margin-bottom: 2px;') Resources
+              .ui.list(role='list' style='margin-top: 2px;')
+                li(role='listitem')
+                  a.jsx-2061850338(href='/themes') Themes
+                li(role='listitem')
+                  a.jsx-2061850338(href='/templates') Templates
+                li(role='listitem')
+                  a.jsx-2061850338(href='https://github.com/semantic-ui-forest/awesome-semantic-ui') Awesome
+            .three.wide.column
+              h4.ui.header(style='margin-bottom: 2px;') About
+              .ui.list(role='list' style='margin-top: 2px;')
+                li(role='listitem')
+                  a.jsx-2061850338(href='https://github.com/semantic-ui-forest/semantic-ui-forest/graphs/contributors') Author
+                li(role='listitem')
+                  a.jsx-2061850338(href='https://github.com/semantic-ui-forest/semantic-ui-forest/blob/master/LICENSE') License
+  #aLotOFjs(style='display: none;')
+    // 請注意:所有script的順序都是嚴格要求的
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
+    script(src='./jumbotron/js/index.js')
+    script(src='https://unpkg.com/swiper@7/swiper-bundle.min.js')
+    script(src='./jumbotron/js/swipe.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js' integrity='sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='./jumbotron/js/qrcodeMapButton.js')
+    // 下2順序很重要
+    script(src='./jumbotron/js/ajax_init.js')
+    script(src='./jumbotron/js/open.js')
