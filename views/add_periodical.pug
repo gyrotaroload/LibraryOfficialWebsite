@@ -8,57 +8,111 @@ block content
   #jade_user_info_username #{var_jade_user_info_username}
   #jade_user_info_profileimage #{var_jade_user_info_profileimage}
   #jade_user_info_choosedanimal #{var_jade_user_info_choosedanimal}
-  .ui.labeled.input
-    .ui.label
-        | 架號
-    input(type='text' placeholder='Z9999')
-  .ui.labeled.input
-    .ui.label
-        | ISSN
-    input(type='text' placeholder='Z9999')
-  .ui.right.labeled.input
-    .ui.label
-        | 狀況
-    input(type='text' placeholder='尋找網域')
-    select.ui.dropdown.label
-      //這裡有問題，UI沒有叫到
-      option(value='') 其他
-      option(value='0') 現刊
-      option(value='1') 停訂
-      option(value='2') 改名
-  .ui.labeled.input
-    .ui.label
-        | 電子資源
-    input(type='text' placeholder='Z9999')
-  .ui.labeled.input
-    .ui.label
-        | 紙本資源
-    input(type='text' placeholder='Z9999')
-  .ui.labeled.input
-    .ui.label
-        | 卷期
-    input(type='text' placeholder='Z9999')
-  .ui.labeled.input
-    .ui.label
-        | 備註
-    input(type='text' placeholder='Z9999')
-  .ui.labeled.input
-    .ui.label
-        | 存在年分(起)[輸入-1代表「停用」存在年份表述]
-    input(type='text' placeholder='Z9999')
-  .ui.labeled.input
-    .ui.label
-        | 存在年分(訖)[輸入-1代表未停止]
-    input(type='text' placeholder='Z9999')
-  .ui.labeled.input
-    .ui.label
-        | 存在年分(排除)
-    input(type='text' placeholder='Z9999')
+  .ui.raised.very.padded.text.container.segment
+    .ui.divided.items
+      .item
+        a.ui.red.ribbon.label Overview
+        .ui.mini.image
+          //https://www.google.com/url?sa=i&url=https%3A%2F%2Ficonscout.com%2Ficon%2Freset-7&psig=AOvVaw1_kzZ6OklNiT5suU2cyplT&ust=1636981666842000&source=images&cd=vfe&ved=0CAwQjhxqFwoTCPj-1YH2l_QCFQAAAAAdAAAAABAD
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | 架號
+            input#frameNumber(type='text' placeholder='Z9999')
+      .item
+        .ui.mini.image
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | ISSN
+            input#ISSN(type='text' placeholder='1234-5678')
+      .item
+        .ui.mini.image
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | 刊名
+            input#bookName(type='text' placeholder='1234-5678')
+      .item
+        .ui.mini.image
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | 狀況
+            input#STAT(type='text' placeholder='請輸入文字或用快速選單')
+        select.ui.dropdown(onChange='DOCE(event)')
+          //TODO這裡有問題，UI沒有叫到
+          option(value='') 其他
+          option(value='0') 現刊
+          option(value='1') 停訂
+          option(value='2') 改名
+      .item
+        .ui.mini.image
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | 電子資源
+            input#ES(type='text' placeholder='某些資料...')
+      .item
+        .ui.mini.image
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | 紙本資源
+            input#PS(type='text' placeholder='某些資料...')
+      .item
+        .ui.mini.image
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | 卷期
+            input#Volume(type='text' placeholder='應該可以自動填入的')
+      .item
+        .ui.mini.image
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | 備註
+            input#REMK(type='text' placeholder='隨意打入一些資料吧')
+      .item
+        .ui.mini.image
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | 存在年分(起)[輸入-1代表「停用」存在年份表述]
+            input#LIVstart(type='number' placeholder='1997')
+      .item
+        .ui.mini.image
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | 存在年分(訖)[輸入-1代表未停止]
+            input#LIVend(type='number' placeholder='2022')
+      .item
+        .ui.mini.image
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | 存在年分(排除)
+            input#LIVx(type='text' placeholder='-1')
+          | &diams;以逗號分開多個年
   link(href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet')
   .flex.row
     .first-border.flex.color-3
-      #submit.button.flex
-        | SUBSCRIBE
+      //TODO這裡要處理提交的字沒有置中然後按下去的回饋
+      #submit.button.flex(align="center")
+        | &#9745;提交
         svg(width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg')
           path(d='M9.77623 4.61867C10.4796 4.99574 10.4796 6.00427 9.77623 6.38133L2.39266 10.3397C1.72648 10.6969 0.920166 10.2143 0.920167 9.45841L0.920167 1.54159C0.920167 0.785717 1.72648 0.30311 2.39266 0.660254L9.77623 4.61867Z' fill='#333')
     .Forced2Disappear.first-border.flex.color-1

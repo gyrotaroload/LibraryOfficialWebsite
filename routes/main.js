@@ -1,3 +1,4 @@
+//TODOindx要設定可以搜尋
 var express = require('express');
 var router = express.Router();
 
@@ -53,8 +54,9 @@ router.get('/add_periodical', ensureAuthenticated, function (req, res, next) {
 });
 
 router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
-    /*var INframeNumber = req.body.frameNumber;
+    var INframeNumber = req.body.frameNumber;
     var INISSN = req.body.ISSN;
+    var INbookName=req.body.bookName;
     var INSTAT = req.body.STAT;
     var INES = req.body.ES;
     var INPS = req.body.PS;
@@ -63,9 +65,20 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
     var INLIVstart = req.body.LIVstart;
     var INLIVend = req.body.LIVend;
     var INLIVx = req.body.LIVx;
-    var INhistory = [];*/
+    var INhistory = [];
+    console.log("dats->");
+    console.log(INframeNumber);
+    console.log(INISSN);
+    console.log(INSTAT);
+    console.log(INES);
+    console.log(INPS);
+    console.log(INVolume);
+    console.log(INREMK);
+    console.log(INLIVstart);
+    console.log(INLIVend);
+    console.log(INLIVx);
 
-    var DEFAULTframeNumber = 'Z99999';
+    /*var DEFAULTframeNumber = 'Z99999';
     var DEFAULTISSN = '12345-678910';
     var DEFAULTSTAT = '現刊';
     var DEFAULTES = 'WTF...';
@@ -75,25 +88,40 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
     var DEFAULTLIVstart = 1997;
     var DEFAULTLIVend = 2020;
     var DEFAULTLIVx = [2001, 2002];
-    var DEFAULThistory = [];
+    var DEFAULThistory = [];*/
+    var INLIVxARRAY;
+    var INLIVxARRAYfailed = false;
+    try {
+        INLIVxARRAY = JSON.parse('[' + INLIVx + ']');
+    } catch (error) {
+        INLIVxARRAYfailed = true;
+    }
 
     var newJournalInformation = new JournalInformation({
         new_date: Date.now(),
-        frameNumber: DEFAULTframeNumber,
-        ISSN: DEFAULTISSN,
-        STAT: DEFAULTSTAT,
-        ES: DEFAULTES,
-        PS: DEFAULTPS,
-        Volume: DEFAULTVolume,
-        REMK: DEFAULTREMK,
-        LIVstart: /*parseInt(*/DEFAULTLIVstart/*, 10)*/,
-        LIVend: /*parseInt(*/DEFAULTLIVend/*, 10)*/,
-        LIVx: DEFAULTLIVx,
-        history: DEFAULThistory
+        frameNumber: INframeNumber,
+        ISSN: INISSN,
+        bookName:INbookName,
+        STAT: INSTAT,
+        ES: INES,
+        PS: INPS,
+        Volume: INVolume,
+        REMK: INREMK,
+        LIVstart: /*parseInt(*/INLIVstart/*, 10)*/,
+        LIVend: /*parseInt(*/INLIVend/*, 10)*/,
+        LIVx: INLIVxARRAY,
+        history: INhistory
     });
     JournalInformation.addJournal(newJournalInformation, function (err) {
-        if (err) throw err;
-        res.status(200).send("success");
+        if (err) {
+            console.log(err);
+            res.status(200).send("fail");
+        } else if (INLIVxARRAYfailed) {
+            //TODOdont use 200
+            res.status(200).send("fail");
+        } else {
+            res.status(200).send("success");
+        }
     });
 });
 
