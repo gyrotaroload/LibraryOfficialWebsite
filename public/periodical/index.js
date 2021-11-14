@@ -1,4 +1,37 @@
+var INframeNumber;
+var INISSN;
+var INSTAT;
+var INES;
+var INPS;
+var INVolume;
+var INREMK;
+var INLIVstart;
+var INLIVend;
+var INLIVx;
+
 document.getElementById('submit').addEventListener('click', function () {
+    INframeNumber = document.getElementById('frameNumber').value;
+    INISSN = document.getElementById('ISSN').value;
+    INSTAT = document.getElementById('STAT').value;
+    INES = document.getElementById('ES').value;
+    INPS = document.getElementById('PS').value;
+    INVolume = document.getElementById('Volume').value;
+    INREMK = document.getElementById('REMK').value;
+    INLIVstart = document.getElementById('LIVstart').value;
+    INLIVend = document.getElementById('LIVend').value;
+    INLIVx = document.getElementById('LIVx').value;
+    console.log("dats->");
+    console.log(INframeNumber);
+    console.log(INISSN);
+    console.log(INSTAT);
+    console.log(INES);
+    console.log(INPS);
+    console.log(INVolume);
+    console.log(INREMK);
+    console.log(INLIVstart);
+    console.log(INLIVend);
+    console.log(INLIVx);
+    console.log("<-dats");
     $.post("/main/add_periodical", {
         a: 123
     }, (res) => {
