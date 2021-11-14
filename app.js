@@ -43,6 +43,12 @@ wss.on('connection', ws => {
   //連結時執行此 console 提示
   console.log('Client connected')
 
+  //對 message 設定監聽，接收從 Client 發送的訊息
+  ws.on('message', data => {
+    //data 為 Client 發送的訊息，現在將訊息原封不動發送出去
+    ws.send(data)
+  })
+
   //當 WebSocket 的連線關閉時執行
   ws.on('close', () => {
     console.log('Close connected')
