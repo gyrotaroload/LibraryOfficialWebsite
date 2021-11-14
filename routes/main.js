@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-//var Person = require('../models/Personal');
+var DEF_DEBUG = true;
+
+var JournalInformation = require('../models/JournalInformation');
 //var PostTmp = require('../models/PostTmp');
 //var Middatatmp = require('../models/Middatatmp');
 
@@ -47,6 +49,51 @@ router.get('/add_periodical', ensureAuthenticated, function (req, res, next) {
         var_jade_error_msg_gui_text_1: "X",
         var_jade_error_msg_gui_text_2: "X",
 
+    });
+});
+
+router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
+    /*var INframeNumber = req.body.frameNumber;
+    var INISSN = req.body.ISSN;
+    var INSTAT = req.body.STAT;
+    var INES = req.body.ES;
+    var INPS = req.body.PS;
+    var INVolume = req.body.Volume;
+    var INREMK = req.body.REMK;
+    var INLIVstart = req.body.LIVstart;
+    var INLIVend = req.body.LIVend;
+    var INLIVx = req.body.LIVx;
+    var INhistory = [];*/
+
+    var DEFAULTframeNumber = 'Z99999';
+    var DEFAULTISSN = '12345-678910';
+    var DEFAULTSTAT = '現刊';
+    var DEFAULTES = 'WTF...';
+    var DEFAULTPS = 'WTF...';
+    var DEFAULTVolume = 'WTF...';
+    var DEFAULTREMK = '沒有備註';
+    var DEFAULTLIVstart = 1997;
+    var DEFAULTLIVend = 2020;
+    var DEFAULTLIVx = [2001, 2002];
+    var DEFAULThistory = [];
+
+    var newJournalInformation = new JournalInformation({
+        new_date: Date.now(),
+        frameNumber: DEFAULTframeNumber,
+        ISSN: DEFAULTISSN,
+        STAT: DEFAULTSTAT,
+        ES: DEFAULTES,
+        PS: DEFAULTPS,
+        Volume: DEFAULTVolume,
+        REMK: DEFAULTREMK,
+        LIVstart: /*parseInt(*/DEFAULTLIVstart/*, 10)*/,
+        LIVend: /*parseInt(*/DEFAULTLIVend/*, 10)*/,
+        LIVx: DEFAULTLIVx,
+        history: DEFAULThistory
+    });
+    JournalInformation.addJournal(newJournalInformation, function (err) {
+        if (err) throw err;
+        res.status(200).send("success");
     });
 });
 
