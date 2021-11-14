@@ -1,5 +1,6 @@
 var INframeNumber;
 var INISSN;
+var INbookName;
 var INSTAT;
 var INES;
 var INPS;
@@ -12,6 +13,7 @@ var INLIVx;
 document.getElementById('submit').addEventListener('click', function () {
     INframeNumber = document.getElementById('frameNumber').value;
     INISSN = document.getElementById('ISSN').value;
+    INbookName=document.getElementById('bookName').value;
     INSTAT = document.getElementById('STAT').value;
     INES = document.getElementById('ES').value;
     INPS = document.getElementById('PS').value;
@@ -35,6 +37,7 @@ document.getElementById('submit').addEventListener('click', function () {
     $.post("/main/add_periodical", {
         frameNumber: INframeNumber,
         ISSN: INISSN,
+        bookName:INbookName,
         STAT: INSTAT,
         ES: INES,
         PS: INPS,

@@ -10,6 +10,8 @@ var JournalInformationSchema = mongoose.Schema({
     },
     ISSN: {
         type: String
+    }, bookName: {
+        type: String
     },
     STAT: {
         type: String

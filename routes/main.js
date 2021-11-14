@@ -56,6 +56,7 @@ router.get('/add_periodical', ensureAuthenticated, function (req, res, next) {
 router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
     var INframeNumber = req.body.frameNumber;
     var INISSN = req.body.ISSN;
+    var INbookName=req.body.bookName;
     var INSTAT = req.body.STAT;
     var INES = req.body.ES;
     var INPS = req.body.PS;
@@ -100,6 +101,7 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
         new_date: Date.now(),
         frameNumber: INframeNumber,
         ISSN: INISSN,
+        bookName:INbookName,
         STAT: INSTAT,
         ES: INES,
         PS: INPS,
