@@ -4,7 +4,6 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  console.log(nckulib.printMsg());
   res.render('index', {
     title: '成大數學系圖書館',
     functionButtonMainText1: '新書入庫',

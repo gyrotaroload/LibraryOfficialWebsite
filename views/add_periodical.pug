@@ -1,0 +1,57 @@
+extends layout
+
+block content
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css' type='text/css')
+  #jade_user_info
+  #jade_user_info_name #{var_jade_user_info_name}
+  #jade_user_info_username #{var_jade_user_info_username}
+  #jade_user_info_profileimage #{var_jade_user_info_profileimage}
+  #jade_user_info_choosedanimal #{var_jade_user_info_choosedanimal}
+  .ui.labeled.input
+    .ui.label
+        | 架號
+    input(type='text' placeholder='Z9999')
+  .ui.labeled.input
+    .ui.label
+        | ISSN
+    input(type='text' placeholder='Z9999')
+  .ui.right.labeled.input
+    .ui.label
+        | 狀況
+    input(type='text' placeholder='尋找網域')
+    select.ui.dropdown.label
+      //這裡有問題，UI沒有叫到
+      option(value='') 其他
+      option(value='0') 現刊
+      option(value='1') 停訂
+      option(value='2') 改名
+  .ui.labeled.input
+    .ui.label
+        | 電子資源
+    input(type='text' placeholder='Z9999')
+  .ui.labeled.input
+    .ui.label
+        | 紙本資源
+    input(type='text' placeholder='Z9999')
+  .ui.labeled.input
+    .ui.label
+        | 卷期
+    input(type='text' placeholder='Z9999')
+  .ui.labeled.input
+    .ui.label
+        | 備註
+    input(type='text' placeholder='Z9999')
+  .ui.labeled.input
+    .ui.label
+        | 存在年分(起)[輸入-1代表「停用」存在年份表述]
+    input(type='text' placeholder='Z9999')
+  .ui.labeled.input
+    .ui.label
+        | 存在年分(訖)[輸入-1代表未停止]
+    input(type='text' placeholder='Z9999')
+  .ui.labeled.input
+    .ui.label
+        | 存在年分(排除)
+    input(type='text' placeholder='Z9999')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
