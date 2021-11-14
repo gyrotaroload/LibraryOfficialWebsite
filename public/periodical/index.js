@@ -33,7 +33,16 @@ document.getElementById('submit').addEventListener('click', function () {
     console.log(INLIVx);
     console.log("<-dats");
     $.post("/main/add_periodical", {
-        a: 123
+        frameNumber: INframeNumber,
+        ISSN: INISSN,
+        STAT: INSTAT,
+        ES: INES,
+        PS: INPS,
+        Volume: INVolume,
+        REMK: INREMK,
+        LIVstart: INLIVstart,
+        LIVend: INLIVend,
+        LIVx: INLIVx
     }, (res) => {
         //empty
     });

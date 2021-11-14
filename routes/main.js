@@ -53,7 +53,7 @@ router.get('/add_periodical', ensureAuthenticated, function (req, res, next) {
 });
 
 router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
-    /*var INframeNumber = req.body.frameNumber;
+    var INframeNumber = req.body.frameNumber;
     var INISSN = req.body.ISSN;
     var INSTAT = req.body.STAT;
     var INES = req.body.ES;
@@ -63,7 +63,18 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
     var INLIVstart = req.body.LIVstart;
     var INLIVend = req.body.LIVend;
     var INLIVx = req.body.LIVx;
-    var INhistory = [];*/
+    var INhistory = [];
+    console.log("dats->");
+    console.log(INframeNumber);
+    console.log(INISSN);
+    console.log(INSTAT);
+    console.log(INES);
+    console.log(INPS);
+    console.log(INVolume);
+    console.log(INREMK);
+    console.log(INLIVstart);
+    console.log(INLIVend);
+    console.log(INLIVx);
 
     var DEFAULTframeNumber = 'Z99999';
     var DEFAULTISSN = '12345-678910';
