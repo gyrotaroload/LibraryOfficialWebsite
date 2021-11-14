@@ -38,6 +38,7 @@
     "nckulib": "2.0.0",
     "ws": "^6.1.4",
     "ncr-decode": "*",
-    "node-html-parser": "*"
+    "node-html-parser": "*",
+    "node-fetch": "*"
   }
 }

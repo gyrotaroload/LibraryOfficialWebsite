@@ -125,8 +125,8 @@ block content
         | ADD TO CARD
         svg(width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg')
           path(d='M11.3488 5.16279H6.83719V0.651191C6.83719 0.44567 6.55811 3.05176e-05 5.99998 3.05176e-05C5.44184 3.05176e-05 5.16276 0.445694 5.16276 0.651191V5.16282H0.651161C0.445663 5.16279 0 5.44187 0 5.99998C0 6.55809 0.445663 6.8372 0.651161 6.8372H5.16279V11.3488C5.16279 11.5543 5.44184 12 6 12C6.55816 12 6.83721 11.5543 6.83721 11.3488V6.8372H11.3488C11.5543 6.8372 12 6.55814 12 5.99998C12 5.44182 11.5543 5.16279 11.3488 5.16279Z' fill='#333')
-  .Forced2Disappear.flex.row
-    .first-border.flex.color-3
+  .flex.row
+    .Forced2Disappear.first-border.flex.color-3
       .round.flex
         svg(width='33' height='24' viewBox='0 0 33 24' fill='none' xmlns='http://www.w3.org/2000/svg')
           path(d='M32.25 0H0.75C0.33525 0 0 0.33525 0 0.75V23.25C0 23.6647 0.33525 24 0.75 24H32.25C32.664 24 33 23.6647 33 23.25V0.75C33 0.33525 32.664 0 32.25 0ZM31.5 20.6857L22.209 11.3955L21.1485 12.456L31.1925 22.5H1.8075L11.8515 12.456L10.791 11.3955L1.5 20.6857V1.5H31.5V20.6857Z' fill='#3494e6')
@@ -134,7 +134,7 @@ block content
       .button.flex.up
         | SEND MAIL
       .button
-    .first-border.flex.color-1
+    .Forced2Disappear.first-border.flex.color-1
       .round.flex
         svg(width='29' height='29' viewBox='0 0 29 29' fill='none' xmlns='http://www.w3.org/2000/svg')
           g(clip-path='url(#clip0)')
@@ -150,9 +150,9 @@ block content
       .round.flex
         svg(width='25' height='25' viewBox='0 0 25 25' fill='none' xmlns='http://www.w3.org/2000/svg')
           path(d='M24.2013 22.771L18.2512 16.5827C19.7811 14.7641 20.6193 12.4759 20.6193 10.0937C20.6193 4.52814 16.0912 0 10.5256 0C4.95996 0 0.431824 4.52814 0.431824 10.0937C0.431824 15.6593 4.95996 20.1875 10.5256 20.1875C12.615 20.1875 14.6061 19.5573 16.3084 18.361L22.3036 24.5963C22.5542 24.8565 22.8913 25 23.2525 25C23.5943 25 23.9186 24.8697 24.1648 24.6327C24.688 24.1293 24.7046 23.2946 24.2013 22.771ZM10.5256 2.63315C14.6394 2.63315 17.9862 5.97988 17.9862 10.0937C17.9862 14.2076 14.6394 17.5543 10.5256 17.5543C6.41171 17.5543 3.06497 14.2076 3.06497 10.0937C3.06497 5.97988 6.41171 2.63315 10.5256 2.63315Z' fill='#16a085')
-      .button.flex.up
+      #isbnjson.button.flex.up
         | SEARCH
-      .button
+      #isbnjsonCSS.button(onClick="document.getElementById('isbnjson').click();")
   .Forced2Disappear.flex.row
     .save-button.color-3.flex
       .save.flex
