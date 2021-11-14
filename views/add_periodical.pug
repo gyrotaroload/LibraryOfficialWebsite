@@ -23,55 +23,123 @@ block content
         .ui.mini.image
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
-          | Content B
+          .ui.labeled.input
+            .ui.label
+                | ISSN
+            input(type='text' placeholder='Z9999')
       .item
         .ui.mini.image
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
-          | Content C
-    .ui.labeled.input
+          .ui.right.labeled.input
+            .ui.label
+                | 狀況
+            input(type='text' placeholder='尋找網域')
+            select.ui.dropdown.label
+              //這裡有問題，UI沒有叫到
+              option(value='') 其他
+              option(value='0') 現刊
+              option(value='1') 停訂
+              option(value='2') 改名
+      .item
+        .ui.mini.image
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | 電子資源
+            input(type='text' placeholder='Z9999')
+      .item
+        .ui.mini.image
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | 紙本資源
+            input(type='text' placeholder='Z9999')
+      .item
+        .ui.mini.image
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | 卷期
+            input(type='text' placeholder='Z9999')
+      .item
+        .ui.mini.image
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | 備註
+            input(type='text' placeholder='Z9999')
+      .item
+        .ui.mini.image
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | 存在年分(起)[輸入-1代表「停用」存在年份表述]
+            input(type='text' placeholder='Z9999')
+      .item
+        .ui.mini.image
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | 存在年分(訖)[輸入-1代表未停止]
+            input(type='text' placeholder='Z9999')
+      .item
+        .ui.mini.image
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | 存在年分(排除)
+            input(type='text' placeholder='Z9999')
+    //.ui.labeled.input
       .ui.label
           | 架號
       input(type='text' placeholder='Z9999')
-    .ui.labeled.input
+    //.ui.labeled.input
       .ui.label
           | ISSN
       input(type='text' placeholder='Z9999')
-    .ui.right.labeled.input
+    //.ui.right.labeled.input
       .ui.label
           | 狀況
       input(type='text' placeholder='尋找網域')
       select.ui.dropdown.label
-        //這裡有問題，UI沒有叫到
+        //-這裡有問題，UI沒有叫到
         option(value='') 其他
         option(value='0') 現刊
         option(value='1') 停訂
         option(value='2') 改名
-    .ui.labeled.input
+    //.ui.labeled.input
       .ui.label
           | 電子資源
       input(type='text' placeholder='Z9999')
-    .ui.labeled.input
+    //.ui.labeled.input
       .ui.label
           | 紙本資源
       input(type='text' placeholder='Z9999')
-    .ui.labeled.input
+    //.ui.labeled.input
       .ui.label
           | 卷期
       input(type='text' placeholder='Z9999')
-    .ui.labeled.input
+    //.ui.labeled.input
       .ui.label
           | 備註
       input(type='text' placeholder='Z9999')
-    .ui.labeled.input
+    //.ui.labeled.input
       .ui.label
           | 存在年分(起)[輸入-1代表「停用」存在年份表述]
       input(type='text' placeholder='Z9999')
-    .ui.labeled.input
+    //.ui.labeled.input
       .ui.label
           | 存在年分(訖)[輸入-1代表未停止]
       input(type='text' placeholder='Z9999')
-    .ui.labeled.input
+    //.ui.labeled.input
       .ui.label
           | 存在年分(排除)
       input(type='text' placeholder='Z9999')
