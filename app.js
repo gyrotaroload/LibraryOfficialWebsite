@@ -26,6 +26,7 @@ var limiter = new RateLimit({
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var mainRouter = require('./routes/main');
+var toolRouter = require('./routes/tool')
 
 //////////////////////////////////ws//////////////////////////////////////////
 /*TODO完成伺服器端優先訊
@@ -89,6 +90,7 @@ app.use(limiter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/main', mainRouter);
+app.use('/tool', toolRouter);
 
 //get/post
 app.get('*', function (req, res, next) {
