@@ -34,6 +34,10 @@
     "sanitizer": "*",
     "sharp": "^0.28.3",
     "body-parser": "^1.19.0",
-    "express-validator": "*"
+    "express-validator": "*",
+    "nckulib": "2.0.0",
+    "ws": "^6.1.4",
+    "ncr-decode": "*",
+    "node-html-parser": "*"
   }
 }
