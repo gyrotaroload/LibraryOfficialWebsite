@@ -64,7 +64,7 @@ block content
       h6.execl_clear Use readAsBinaryString: (when available) 
       input.execl_clear(type='checkbox' name='userabs' checked='')
     pre#out.execl_clear
-    #htmlout
+    #htmlout.execl_clear
     #drop-zone.execl_clear
       svg.execl_clear(xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24')
         path.execl_clear(d='M17 13h-10v-1h10v1zm0-4h-10v1h10v-1zm0-3h-10v1h10v-1zm-15-1v-5h6v2h-4v3h-2zm8-5v2h4v-2h-4zm6 2h4v3h2v-5h-6v2zm6 5h-2v4h2v-4zm-20 10h2v-4h-2v4zm18-4v.543c0 4.107-6 2.457-6 2.457s1.518 6-2.638 6h-1.362v2h2.189c3.163 0 9.811-7.223 9.811-9.614v-1.386h-2zm-18-2h2v-4h-2v4zm2 11v-3h-2v5h6v-2h-4z')
@@ -83,7 +83,8 @@ block content
       /* worker message */
       msg: 'xlsx',
       /* worker scripts */
-      worker: '/newbookpage/xlsxworker.js'
+      worker: './xlsxworker.js'
+      /*上面那個路徑是excel根目錄*/
       };
       var global_wb;
       var process_wb = (function() {
@@ -307,42 +308,69 @@ block content
               //p Something else
               .ui.card
                 .content
-                    .header 專案時間軸
+                    .header 上傳excel檔案
                 .content
-                    h4.ui.sub.header 活動
+                    h4.ui.sub.header 點選下方按鈕以上傳檔案
                     .ui.small.feed
                     .event
                         .content
                         .summary
-                            a 艾略特福
-                            |  新增了 
-                            a 珍妮漢斯
-                            |  到專案中
-                    .event
-                        .content
-                        .summary
-                            a 史蒂夫 芬利西亞諾
-                            |  成為了 
-                            a 管理員
-                    .event
-                        .content
-                        .summary
-                            a 漢廉卓伊
-                            |  新增了 2 張照片
+                            p  按下去選檔案後，稍等一會兒，檔案處理需要一些時間。
+                            p  如果沒有反應，網頁關掉再重開。
+                            p  建議使用windows系統的電腦來進行上傳的動作。
+                            p  建議使用最新的chrome瀏覽器來上傳檔案。
+                    .ui.info.message
+                        .header 檔案名稱 
+                        ul.list
+                            li#the_file_name ...
                 .extra.content
-                    button.ui.button 參與專案
+                    button.ui.button(onClick="document.getElementById('xlf').click();") 上傳按鈕
             .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
-              img.ui.centered.small.circular.image(src='/newbookpage/static/images/wireframe/square-image.png')
-              .ui.large.basic.label 2021五月
-              p Something else
+              .ui.card
+                .content
+                    .header 使登錄號可以連結至總圖
+                .content
+                    h4.ui.sub.header 點選下方按鈕以自動化的產生(每筆資料)連結
+                    .ui.small.feed
+                    .event
+                        .content
+                        .summary
+                            p  對於較大的檔案，需要較長的處理時間。
+                            p  如果網頁沒有回應，請嘗試使用效能較好的電腦。
+                            p  此程式將視表格中的第一個行視為登錄號的格子。
+                            p  第一個行須存在一個格子其內容包含「登錄號」字樣。
+                            p  上述格子與其上方的格子將被視為標題而不被「超連結化」。
+                .extra.content
+                    button.ui.button#RegistrationNumberLinkAutomaticallyGenerated 登錄號連結(自動)產生
             .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
-              img.ui.centered.small.circular.image(src='/newbookpage/static/images/wireframe/square-image.png')
-              .ui.large.basic.label 2021四月
-              p Something else
+              //.ui.card
+                .content
+                    .header 
+                .content
+                    h4.ui.sub.header 非技術人員請勿操作此項目
+                    .ui.small.feed
+                    .ui.input
+                      input(type='text' placeholder='Search...')
+                .extra.content
+                    button.ui.button 登錄號連結(自動)產生
+              .ui.card
+                .content
+                    .header 選擇目標資料庫
+                    .meta
+                    span 非技術人員請勿操作此項目
+                    .ui.input
+                      input(type='text' placeholder='資料庫...')
             .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
-              img.ui.centered.small.circular.image(src='/newbookpage/static/images/wireframe/square-image.png')
-              .ui.large.basic.label Label
-              p Something else
+              .ui.card
+                .content
+                    .header 輸入標題並存檔
+                .content
+                    h4.ui.sub.header 在下方輸入框輸入標題，並且按下存檔
+                    .ui.small.feed
+                    .ui.input
+                      input(type='text' placeholder='標題...')
+                .extra.content
+                    button.ui.button#totalSave 存檔!
           .ui.hidden.section.divider
           .row
             h1.ui.huge.dividing.header 2021十二月
@@ -402,8 +430,12 @@ block content
                 i.fa.fa-trash
                 |  Delete
             table#table(data-toolbar='#toolbar' data-search='true' data-show-refresh='true' data-show-toggle='true' data-show-fullscreen='true' data-show-columns='true' data-show-columns-toggle-all='true' data-detail-view='true' data-show-export='true' data-click-to-select='true' data-detail-formatter='detailFormatter' data-minimum-count-columns='2' data-show-pagination-switch='true' data-pagination='true' data-id-field='id' data-page-list='[10, 25, 50, 100, all]' data-show-footer='true' data-side-pagination='server' data-url='https://examples.wenzhixin.net.cn/examples/bootstrap_table/data' data-response-handler='responseHandler')
-          .row(style='overflow-x: auto;')
-            table.ui.single.line.striped.selectable.unstackable.table(style='overflow-x: auto;')
+          .row#htmlOutCopy(style='overflow-x: auto;')
+            .ui.warning.message
+              i.icon.help
+              .header 這是等一下excel檔案載入後要預覽的地方 
+              | 請看看上面如何載入檔案的方式...
+            //table.ui.single.line.striped.selectable.unstackable.table(style='overflow-x: auto;')
               thead
                 tr
                   th #
