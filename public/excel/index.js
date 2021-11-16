@@ -48,3 +48,28 @@ $(function () {
         render_prism();
     });
 });
+
+$(function () {//一定要等document loaded
+    document.getElementById('RegistrationNumberLinkAutomaticallyGenerated').addEventListener('click', function () {
+        var start_do_urlER = false;
+        if (document.getElementById("htmlOutCopy")) {
+            if (document.getElementById("htmlOutCopy").getElementsByTagName('table').length>0) {
+                if (document.getElementById("htmlOutCopy").getElementsByTagName('table')[0].getElementsByTagName('tr').length>0) {
+                    for (let index = 0; index < document.getElementById("htmlOutCopy").getElementsByTagName('table')[0].getElementsByTagName('tr').length; index++) {
+                        const element = document.getElementById("htmlOutCopy").getElementsByTagName('table')[0].getElementsByTagName('tr')[index];
+                        if (element.getElementsByTagName('td').length>0) {
+                            if (start_do_urlER) {
+                                //https://weblis.lib.ncku.edu.tw/search*cht/g?searchtype=l&searcharg=2078318&searchscope=1
+                                element.getElementsByTagName('td')[0].innerHTML = `<a href="https://weblis.lib.ncku.edu.tw/search*cht/g?searchtype=l&searcharg=${element.getElementsByTagName('td')[0].innerText.trim()}&searchscope=1" target="_blank">${element.getElementsByTagName('td')[0].innerText.trim()}</a>`;
+                            }
+                            if (element.getElementsByTagName('td')[0].innerText.trim().includes('登錄號')) {
+                                console.log('saw 登錄號');
+                                start_do_urlER = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+});

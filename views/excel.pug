@@ -315,10 +315,10 @@ block content
                     .event
                         .content
                         .summary
-                            a 艾略特福
-                            |  新增了 
-                            a 珍妮漢斯
-                            |  到專案中
+                            p  按下去選檔案後，稍等一會兒，檔案處理需要一些時間。
+                            p  如果沒有反應，網頁關掉再重開。
+                            p  建議使用windows系統的電腦來進行上傳的動作。
+                            p  建議使用最新的chrome瀏覽器來上傳檔案。
                     .ui.info.message
                         .header 檔案名稱 
                         ul.list
@@ -326,9 +326,22 @@ block content
                 .extra.content
                     button.ui.button(onClick="document.getElementById('xlf').click();") 上傳按鈕
             .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
-              img.ui.centered.small.circular.image(src='/newbookpage/static/images/wireframe/square-image.png')
-              .ui.large.basic.label 2021五月
-              p Something else
+              .ui.card
+                .content
+                    .header 使登錄號可以連結至總圖
+                .content
+                    h4.ui.sub.header 點選下方按鈕以自動化的產生(每筆資料)連結
+                    .ui.small.feed
+                    .event
+                        .content
+                        .summary
+                            p  對於較大的檔案，需要較長的處理時間。
+                            p  如果網頁沒有回應，請嘗試使用效能較好的電腦。
+                            p  此程式將視表格中的第一個行視為登錄號的格子。
+                            p  第一個行須存在一個格子其內容包含「登錄號」字樣。
+                            p  上述格子與其上方的格子將被視為標題而不被「超連結化」。
+                .extra.content
+                    button.ui.button#RegistrationNumberLinkAutomaticallyGenerated 登錄號連結(自動)產生
             .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
               img.ui.centered.small.circular.image(src='/newbookpage/static/images/wireframe/square-image.png')
               .ui.large.basic.label 2021四月
