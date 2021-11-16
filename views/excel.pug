@@ -22,22 +22,41 @@ block contentHEAD
         }
         #drop-zone p, #drop-zone svg { pointer-events: none }
         #drop-zone svg { margin-right: 5px }
+        .execl_clear { display: none }
 
 block content
     // xlsx.js (C) 2013-present  SheetJS http://sheetjs.com
     // vim: set ts=2:
-    pre.
-      \n(Base64 text works back to IE6; drag and drop works back to IE10)
-      Output Format:       
-      Use Web Workers: (when available)       
-      Use readAsBinaryString: (when available)       
-    pre#out.
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css' type='text/css')
+    pre
+      a.execl_clear(href='http://sheetjs.com') SheetJS Data Preview Live Demo
+      h6.execl_clear (Base64 text works back to IE6; drag and drop works back to IE10)
+      a.execl_clear(href='https://github.com/SheetJS/js-xlsx') Source Code Repo
+      a.execl_clear(href='https://github.com/SheetJS/js-xlsx/issues') Issues?  Something look weird?  Click here and report an issue
+      h6.execl_clear Output Format: 
+      select#make_it_html.execl_clear(name='format' onchange='setfmt()')
+        option(value='csv' selected='')  CSV
+        option(value='json')  JSON
+        option(value='form')  FORMULAE
+        option(value='html')  HTML
+        option(value='xlsx')  XLSX
+      br.execl_clear
+      input#xlf(type='file' name='xlfile')
+      textarea#b64data.execl_clear ... or paste a base64-encoding here
+      input#dotext.execl_clear(type='button' value='Click here to process the base64 text' onclick='b64it();')
+      br.execl_clear
+      b.execl_clear Advanced Demo Options:
+      h6.execl_clear Use Web Workers: (when available) 
+      input.execl_clear(type='checkbox' name='useworker' checked='')
+      h6.execl_clear Use readAsBinaryString: (when available) 
+      input.execl_clear(type='checkbox' name='userabs' checked='')
+    pre#out.execl_clear
     #htmlout
-    #drop-zone
-      svg(xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24')
-        path(d='M17 13h-10v-1h10v1zm0-4h-10v1h10v-1zm0-3h-10v1h10v-1zm-15-1v-5h6v2h-4v3h-2zm8-5v2h4v-2h-4zm6 2h4v3h2v-5h-6v2zm6 5h-2v4h2v-4zm-20 10h2v-4h-2v4zm18-4v.543c0 4.107-6 2.457-6 2.457s1.518 6-2.638 6h-1.362v2h2.189c3.163 0 9.811-7.223 9.811-9.614v-1.386h-2zm-18-2h2v-4h-2v4zm2 11v-3h-2v5h6v-2h-4z')
-      p Drop a spreadsheet file here to see sheet data
-    br
+    #drop-zone.execl_clear
+      svg.execl_clear(xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24')
+        path.execl_clear(d='M17 13h-10v-1h10v1zm0-4h-10v1h10v-1zm0-3h-10v1h10v-1zm-15-1v-5h6v2h-4v3h-2zm8-5v2h4v-2h-4zm6 2h4v3h2v-5h-6v2zm6 5h-2v4h2v-4zm-20 10h2v-4h-2v4zm18-4v.543c0 4.107-6 2.457-6 2.457s1.518 6-2.638 6h-1.362v2h2.189c3.163 0 9.811-7.223 9.811-9.614v-1.386h-2zm-18-2h2v-4h-2v4zm2 11v-3h-2v5h6v-2h-4z')
+      p.execl_clear Drop a spreadsheet file here to see sheet data
+    br.execl_clear
     script(src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/shim.min.js' integrity='sha512-nPnkC29R0sikt0ieZaAkk28Ib7Y1Dz7IqePgELH30NnSi1DzG4x+envJAOHz8ZSAveLXAHTR3ai2E9DZUsT8pQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js' integrity='sha512-gtII6Z4fZyONX9GBrF28JMpodY4vIOI0lBjAtN/mcK7Pz19Mu1HHIRvXH6bmdChteGpEccxZxI0qxXl9anY60w==' crossorigin='anonymous' referrerpolicy='no-referrer')
     script.
@@ -212,3 +231,6 @@ block content
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       */
       })();
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
+    script(src='/excel/index.js')
