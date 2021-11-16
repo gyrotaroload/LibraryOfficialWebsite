@@ -2,6 +2,18 @@ extends layout
 
 block contentHEAD
     meta(http-equiv='Content-Type' content='text/html; charset=UTF-8')
+    meta(charset='utf-8')
+    meta(content='IE=edge,chrome=1' http-equiv='X-UA-Compatible')
+    meta(name='viewport' content='width=device-width, initial-scale=1, maximum-scale=2, user-scalable=no')
+    meta(name='description' content='Semantic-UI-Forest, collection of design, themes and templates for Semantic-UI.')
+    meta(name='keywords' content='Semantic-UI, Theme, Design, Template')
+    meta(name='author' content='PPType')
+    meta(name='theme-color' content='#ffffff')
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css' type='text/css')
+    link(rel='stylesheet' href='https://unpkg.com/bootstrap-table@1.18.3/dist/themes/semantic/bootstrap-table-semantic.min.css' type='text/css')
+    link(rel='stylesheet' href='/newbookpage/stylesheets/index.css' type='text/css')
+    style.
+        @import url('/newbookpage/stylesheets/customStyle.css');
     style.
         #b64data{
         width:100%;
@@ -27,7 +39,8 @@ block contentHEAD
 block content
     // xlsx.js (C) 2013-present  SheetJS http://sheetjs.com
     // vim: set ts=2:
-    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css' type='text/css')
+    //title Dashboard Template for Semantic-UI
+    //link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css' type='text/css')
     pre
       a.execl_clear(href='http://sheetjs.com') SheetJS Data Preview Live Demo
       h6.execl_clear (Base64 text works back to IE6; drag and drop works back to IE10)
@@ -41,7 +54,7 @@ block content
         option(value='html')  HTML
         option(value='xlsx')  XLSX
       br.execl_clear
-      input#xlf(type='file' name='xlfile')
+      input#xlf.execl_clear(type='file' name='xlfile')
       textarea#b64data.execl_clear ... or paste a base64-encoding here
       input#dotext.execl_clear(type='button' value='Click here to process the base64 text' onclick='b64it();')
       br.execl_clear
@@ -70,7 +83,7 @@ block content
       /* worker message */
       msg: 'xlsx',
       /* worker scripts */
-      worker: './xlsxworker.js'
+      worker: '/newbookpage/xlsxworker.js'
       };
       var global_wb;
       var process_wb = (function() {
@@ -234,3 +247,240 @@ block content
     script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
     script(src='/excel/index.js')
+    //上面是excel下面是ui
+    .ui.tablet.computer.only.padded.grid
+      #headderBar.ui.inverted.borderless.top.fixed.fluid.menu
+        a.header.item 新進圖書
+        .right.menu
+          .item
+            .ui.small.input
+              input(placeholder='Search...')
+            // TODO添加放大鏡、同步行動版
+          a.item 回首頁
+          a.item 期刊服務
+          a.item Profile
+          a.item Help
+    .ui.mobile.only.padded.grid
+      .ui.top.fixed.borderless.fluid.inverted.menu
+        a.header.item 期刊服務
+        .right.menu
+          .item
+            button.ui.icon.toggle.basic.inverted.button
+              i.content.icon
+        .ui.vertical.borderless.inverted.fluid.menu
+          a.item Dashboard
+          a.item Settings
+          a.item Profile
+          a.item Help
+          .ui.fitted.divider
+          .item
+            .ui.small.input
+              input(placeholder='Search...')
+    .ui.padded.grid
+      #sidebar.three.wide.tablet.only.three.wide.computer.only.column
+        .ui.vertical.borderless.fluid.text.menu
+          // show all...etc
+          a.active.item A
+          a.item B
+          a.item C
+          a.item D
+          .ui.hidden.divider
+          // show eng...etc
+          a.item E
+          a.item F
+          a.item G
+          a.item H
+          a.item I
+          .ui.hidden.divider
+          // show ch...etc
+          a.item J
+          a.item K
+          a.item L
+      #content.sixteen.wide.mobile.thirteen.wide.tablet.thirteen.wide.computer.right.floated.column
+        .ui.padded.grid
+          .row
+            h1.ui.huge.dividing.header 新進圖書資料紀錄
+          .center.aligned.row
+            .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
+              //img.ui.centered.small.circular.image(src='/newbookpage/static/images/wireframe/square-image.png')
+              //.ui.large.basic.label 最新上架
+              //p Something else
+              .ui.card
+                .content
+                    .header 專案時間軸
+                .content
+                    h4.ui.sub.header 活動
+                    .ui.small.feed
+                    .event
+                        .content
+                        .summary
+                            a 艾略特福
+                            |  新增了 
+                            a 珍妮漢斯
+                            |  到專案中
+                    .event
+                        .content
+                        .summary
+                            a 史蒂夫 芬利西亞諾
+                            |  成為了 
+                            a 管理員
+                    .event
+                        .content
+                        .summary
+                            a 漢廉卓伊
+                            |  新增了 2 張照片
+                .extra.content
+                    button.ui.button 參與專案
+            .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
+              img.ui.centered.small.circular.image(src='/newbookpage/static/images/wireframe/square-image.png')
+              .ui.large.basic.label 2021五月
+              p Something else
+            .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
+              img.ui.centered.small.circular.image(src='/newbookpage/static/images/wireframe/square-image.png')
+              .ui.large.basic.label 2021四月
+              p Something else
+            .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
+              img.ui.centered.small.circular.image(src='/newbookpage/static/images/wireframe/square-image.png')
+              .ui.large.basic.label Label
+              p Something else
+          .ui.hidden.section.divider
+          .row
+            h1.ui.huge.dividing.header 2021十二月
+          //.row
+            //- 底下這坨東西是設定表格應用程式的語言，消失吧!
+            .select
+              select#locale.ui.dropdown
+                option(value='af-ZA') af-ZA
+                option(value='ar-SA') ar-SA
+                option(value='ca-ES') ca-ES
+                option(value='cs-CZ') cs-CZ
+                option(value='da-DK') da-DK
+                option(value='de-DE') de-DE
+                option(value='el-GR') el-GR
+                option(value='en-US') en-US
+                option(value='es-AR') es-AR
+                option(value='es-CL') es-CL
+                option(value='es-CR') es-CR
+                option(value='es-ES') es-ES
+                option(value='es-MX') es-MX
+                option(value='es-NI') es-NI
+                option(value='es-SP') es-SP
+                option(value='et-EE') et-EE
+                option(value='eu-EU') eu-EU
+                option(value='fa-IR') fa-IR
+                option(value='fi-FI') fi-FI
+                option(value='fr-BE') fr-BE
+                option(value='fr-FR') fr-FR
+                option(value='he-IL') he-IL
+                option(value='hr-HR') hr-HR
+                option(value='hu-HU') hu-HU
+                option(value='id-ID') id-ID
+                option(value='it-IT') it-IT
+                option(value='ja-JP') ja-JP
+                option(value='ka-GE') ka-GE
+                option(value='ko-KR') ko-KR
+                option(value='ms-MY') ms-MY
+                option(value='nb-NO') nb-NO
+                option(value='nl-NL') nl-NL
+                option(value='pl-PL') pl-PL
+                option(value='pt-BR') pt-BR
+                option(value='pt-PT') pt-PT
+                option(value='ro-RO') ro-RO
+                option(value='ru-RU') ru-RU
+                option(value='sk-SK') sk-SK
+                option(value='sv-SE') sv-SE
+                option(value='th-TH') th-TH
+                option(value='tr-TR') tr-TR
+                option(value='uk-UA') uk-UA
+                option(value='ur-PK') ur-PK
+                option(value='uz-Latn-UZ') uz-Latn-UZ
+                option(value='vi-VN') vi-VN
+                option(value='zh-CN') zh-CN
+                option(value='zh-TW' selected='') zh-TW
+            #toolbar
+              button#remove.ui.red.button(disabled='')
+                i.fa.fa-trash
+                |  Delete
+            table#table(data-toolbar='#toolbar' data-search='true' data-show-refresh='true' data-show-toggle='true' data-show-fullscreen='true' data-show-columns='true' data-show-columns-toggle-all='true' data-detail-view='true' data-show-export='true' data-click-to-select='true' data-detail-formatter='detailFormatter' data-minimum-count-columns='2' data-show-pagination-switch='true' data-pagination='true' data-id-field='id' data-page-list='[10, 25, 50, 100, all]' data-show-footer='true' data-side-pagination='server' data-url='https://examples.wenzhixin.net.cn/examples/bootstrap_table/data' data-response-handler='responseHandler')
+          .row(style='overflow-x: auto;')
+            table.ui.single.line.striped.selectable.unstackable.table(style='overflow-x: auto;')
+              thead
+                tr
+                  th #
+                  th Header
+                  th Header
+                  th Header
+                  th Header
+              tbody
+                tr
+                  td 1,001
+                  td Lorem
+                  td ipsum
+                  td dolor
+                  td sit
+                tr
+                  td 1,002
+                  td amet
+                  td consectetur
+                  td adipiscing
+                  td elit
+                tr
+                  td 1,003
+                  td Integer
+                  td nec
+                  td odio
+                  td Praesent
+                tr
+                  td 1,003
+                  td libero
+                  td Sed
+                  td cursus
+                  td ante
+                tr
+                  td 1,004
+                  td dapibus
+                  td diam
+                  td Sed
+                  td nisi
+                tr
+                  td 1,005
+                  td Nulla
+                  td quis
+                  td sem
+                  td at
+                tr
+                  td 1,006
+                  td nibh
+                  td elementum
+                  td imperdiet
+                  td Duis
+                tr
+                  td 1,007
+                  td sagittis
+                  td ipsum
+                  td Praesent
+                  td mauris
+                tr
+                  td 1,008
+                  td Fusce
+                  td nec
+                  td tellus
+                  td sed
+                tr
+                  td 1,009
+                  td augue
+                  td semper
+                  td porta
+                  td Mauris
+    #aLotOFjs(style='display: none;')
+      // 請注意:所有script的順序都是嚴格要求的
+      script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+      script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
+      script(src='https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js')
+      script(src='https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js')
+      script(src='https://unpkg.com/bootstrap-table@1.18.3/dist/themes/semantic/bootstrap-table-semantic.min.js')
+      script(src='https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table-locale-all.min.js')
+      script(src='https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/export/bootstrap-table-export.min.js')
+      script(src='https://kit.fontawesome.com/8d41246ac0.js' crossorigin='anonymous')
+      script(src='/newbookpage/js/app_table.js')
+      script(src='/newbookpage/js/index.js')
