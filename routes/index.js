@@ -19,4 +19,10 @@ router.get('/', function (req, res, next) {
   });
 });
 
+router.get(('/excel'), function (req, res, next) {
+  res.render('excel', {
+    title: 'excel'
+  });
+});
+
 module.exports = router;
