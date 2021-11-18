@@ -5,8 +5,7 @@ var router = express.Router();
 var DEF_DEBUG = true;
 
 var JournalInformation = require('../models/JournalInformation');
-//var PostTmp = require('../models/PostTmp');
-//var Middatatmp = require('../models/Middatatmp');
+var excelDB = require('../models/excelDB');
 
 router.get('/', ensureAuthenticated, function (req, res, next) {
     //Person.getPersonal(req.user.username, function (err, Personget) {
@@ -119,6 +118,28 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
         } else if (INLIVxARRAYfailed) {
             //TODOdont use 200
             res.status(200).send("fail");
+        } else {
+            res.status(200).send("success");
+        }
+    });
+});
+
+router.post('/excel', ensureAuthenticated, function (req, res, next) {
+    var INexcelHTML = req.body.excelHTML;
+    var INbatabaseClass = req.body.batabaseClass;
+    var INtopic = req.body.topic;
+
+    var newexcelDB = new excelDB({
+        new_date: Date.now(),
+        batabaseClass: INbatabaseClass,
+        topic: INtopic,
+        payload:INexcelHTML,
+        ipaddress: req.ip,
+    });
+    excelDB.addexcelData(newexcelDB, function (err) {
+        if (err) {
+            console.log(err);
+            res.status(500).send("fail - database save error");
         } else {
             res.status(200).send("success");
         }

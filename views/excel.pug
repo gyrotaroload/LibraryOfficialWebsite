@@ -356,10 +356,17 @@ block content
               .ui.card
                 .content
                     .header 選擇目標資料庫
-                    .meta
-                    span 非技術人員請勿操作此項目
+                .content
+                    h4.ui.sub.header 非技術人員請勿操作此項目
+                    .ui.small.feed
                     .ui.input
-                      input(type='text' placeholder='資料庫...')
+                      input#batabaseClass(type='text' placeholder='資料庫...')
+                .extra.content
+                    | 資料庫輸入框安全鎖
+                    .ui.buttons
+                      button.ui.button(onClick="document.getElementById('batabaseClass').setAttribute('readOnly','true');") 停用
+                      .or
+                      button.ui.positive.button(onClick="document.getElementById('batabaseClass').removeAttribute('readOnly');") 啟用
             .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
               .ui.card
                 .content
@@ -368,7 +375,7 @@ block content
                     h4.ui.sub.header 在下方輸入框輸入標題，並且按下存檔
                     .ui.small.feed
                     .ui.input
-                      input(type='text' placeholder='標題...')
+                      input#INtopic(type='text' placeholder='標題...')
                 .extra.content
                     button.ui.button#totalSave 存檔!
           .ui.hidden.section.divider
