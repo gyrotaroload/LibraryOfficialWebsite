@@ -43,7 +43,7 @@ module.exports.countClass = function (excelclass, callback) {
 
 module.exports.arrayAllClass = function (excelclass, callback) {
     const filter = { user_name: { $eq: excelclass } };
-    excelData.find(filter, (err, SearchResult) => {
+    excelData.find(filter).sort({ ChansuNoJunban: 'ascending' }).exec((err, SearchResult) => {
         if (err) {
             console.log(err);
         }
@@ -59,19 +59,19 @@ module.exports.arrayAllClass = function (excelclass, callback) {
     });
 };
 
-module.exports.MODFup = function (MODid, callback) {
-    var ChansuNoJunban_tmp=-1;
+module.exports.MODFdn = function (MODid, callback) {
+    var ChansuNoJunban_tmp = -1;
     excelData.findById(MODid, function (err, stuff) {
         if (err) {
             console.log(err);
         }
-        ChansuNoJunban_tmp=stuff.ChansuNoJunban;
+        ChansuNoJunban_tmp = stuff.ChansuNoJunban;
         //logic:
-        if (ChansuNoJunban_tmp-1>=0){
-            ChansuNoJunban_tmp=ChansuNoJunban_tmp-1;
-        }else{
-            ChansuNoJunban_tmp=0;
+        if (ChansuNoJunban_tmp - 1 >= 0) {
+            ChansuNoJunban_tmp = ChansuNoJunban_tmp - 1;
+        } else {
+            ChansuNoJunban_tmp = 0;
         }
-        excelData.findByIdAndUpdate(MODid, { $set: { ChansuNoJunban: ChansuNoJunban_tmp }}, {}, callback);
+        excelData.findByIdAndUpdate(MODid, { $set: { ChansuNoJunban: ChansuNoJunban_tmp } }, {}, callback);
     });
 };

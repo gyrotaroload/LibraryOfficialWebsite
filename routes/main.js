@@ -158,14 +158,14 @@ router.get(('/addNewBooks'), ensureAuthenticated, function (req, res, next) {
                     var ELEid = listallid[index];
                     var ELEname = listallname[index];
                     innerHTMLofLlistSTRING = innerHTMLofLlistSTRING + `
-    <a class="item" id="${ELEid}" onclick="console.log(&quot;***!&quot;);">
+    <a class="item" id="${ELEid}">
     <button class="circular ui icon button" onclick="console.log(&quot;up&quot;);">
-    <i class="icon arrow up"></i></button><button class="circular ui icon button" onclick="console.log(&quot;dw&quot;);">
+    <i class="icon arrow up"></i></button>
+    <button class="circular ui icon button" onclick="$.post('/main/excelTransferOrder', { targetID: '${ELEid}', PLUSorMINSorDEL: 2 }, (res) => { /*empty*/ });">
     <i class="icon arrow down"></i></button><button class="circular ui icon button" onclick="console.log(&quot;dl&quot;);">
     <i class="icon trash alternate"></i></button>
     <h6 class="ui block header" onclick="console.log(&quot;np&quot;);">${ELEname}</h6></a>
-    `
-
+    `;
                 }
             } else {
                 innerHTMLofLlistSTRING = "<h1>[ERROR] DB Sequence length does not match!</h1>";
@@ -177,6 +177,21 @@ router.get(('/addNewBooks'), ensureAuthenticated, function (req, res, next) {
             });
         });
     });
+});
+
+router.post('/excelTransferOrder', ensureAuthenticated, function (req, res, next) {
+    var TID = req.body.targetID;
+    var PMDwtf = req.body.PLUSorMINSorDEL;//1or2or3
+    var PMD = parseInt(PMDwtf, 10);//他進來竟然是字串，傻眼
+    if (PMD === 1) {
+
+    } else if (PMD === 2) {
+        excelDB.MODFdn(TID, () => { res.status(202).send("F5"); });
+    } else if (PMD === 3) {
+
+    } else {
+        res.status(400).send("Illegal data manipulation!");
+    }
 });
 
 function ensureAuthenticated(req, res, next) {
