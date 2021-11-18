@@ -32,3 +32,7 @@ body {
 .ui.mobile.only.grid .ui.menu .ui.vertical.menu {
     display: none;
 }
+
+.aLikeMouse {
+    cursor: pointer;
+}
