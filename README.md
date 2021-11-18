@@ -10,4 +10,4 @@ set DEBUG=libraryofficialwebsite:* & npm start
 
 ensure that your application is using the heroku/nodejs buildpack
 
-TODO:後端的清單式列表
+TODO:後端的清單式列表,new book page activate items
