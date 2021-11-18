@@ -1,11 +1,11 @@
 extends layout_angular
 
 block content
-  #jade_user_info
-  #jade_user_info_name #{var_jade_user_info_name}
-  #jade_user_info_username #{var_jade_user_info_username}
-  #jade_user_info_profileimage #{var_jade_user_info_profileimage}
-  #jade_user_info_choosedanimal #{var_jade_user_info_choosedanimal}
+  #jade_user_info.quickDisplayNone
+  #jade_user_info_name.quickDisplayNone #{var_jade_user_info_name}
+  #jade_user_info_username.quickDisplayNone #{var_jade_user_info_username}
+  #jade_user_info_profileimage.quickDisplayNone #{var_jade_user_info_profileimage}
+  #jade_user_info_choosedanimal.quickDisplayNone #{var_jade_user_info_choosedanimal}
   script(src='/ws/index.js')
   link(rel='stylesheet', href='/stylesheets/FreebieInteractiveFlatDesignUIOnlyHTML5CSS3.css')
   link(rel='stylesheet', href='/stylesheets/https_codepen_io_maggiben_pen_OPmLBW.css')
@@ -13,27 +13,27 @@ block content
       // HEADER
       header.block
         ul.header-menu.horizontal-list
-          li
+          //li
             a.header-menu-tab(href='#1')
               span.icon.entypo-cog.scnd-font-color
               | Settings
           li
             a.header-menu-tab(href='#2')
               span.icon.fontawesome-user.scnd-font-color
-              | Account
+              | 管理員帳號管理
           li
             a.header-menu-tab(href='#3')
-              span.icon.fontawesome-envelope.scnd-font-color
-              | Messages
-            a.header-menu-number(href='#4') 5
-          li
+              span.icon.entypo-flow-tree.scnd-font-color
+              | 管理員登入紀錄
+            //a.header-menu-number(href='#4') 5
+          //li
             a.header-menu-tab(href='#5')
               span.icon.fontawesome-star-empty.scnd-font-color
               | Favorites
         .profile-menu
           p
             | Me 
-            a(href='#26')
+            //a(href='#26')
               span.entypo-down-open.scnd-font-color
           .profile-picture.small-profile-picture
             img(width='40px' alt='Anne Hathaway picture' src='http://upload.wikimedia.org/wikipedia/commons/e/e1/Anne_Hathaway_Face.jpg')
@@ -41,18 +41,19 @@ block content
       .left-container.container
         .menu-box.block
           // MENU BOX (LEFT-CONTAINER)
-          h2.titular MENU BOX
+          h2.titular 主功能表
           ul.menu-box-menu
+            //https://weloveiconfonts.com/
             li
-              a.menu-box-tab(href='#6')
-                span.icon.fontawesome-envelope.scnd-font-color
-                | Messages
-                .menu-box-number 24
+              a.menu-box-tab(href='/main/addNewBooks')
+                span.icon.entypo-brush.scnd-font-color
+                | 新增「新書通報」
+                //.menu-box-number 24
             li
-              a.menu-box-tab(href='#8')
-                span.icon.entypo-paper-plane.scnd-font-color
-                | Invites
-                .menu-box-number 3
+              a.menu-box-tab(href='/main/add_periodical')
+                span.icon.entypo-book-open.scnd-font-color
+                | 新增期刊
+                //.menu-box-number 3
             li
               a.menu-box-tab(href='#10')
                 span.icon.entypo-calendar.scnd-font-color
@@ -225,38 +226,38 @@ block content
         .weather.block.clear
           // WEATHER (MIDDLE-CONTAINER)
           h2.titular
-            span.icon.entypo-location
-            strong CLUJ-NAPOCA
-            | /RO
+            span.icon.entypo-rocket
+            strong 最新消息
+            | /由開發人員發佈
           .current-day
-            p.current-day-date FRI 29/06
+            p.current-day-date 編輯人員只要看
             p.current-day-temperature
-              | 24º
+              | 左邊
               span.icon-cloudy
           ul.next-days
             li
               a(href='#43')
                 p.next-days-date
-                  span.day SAT
-                  span.scnd-font-color 29/06
+                  span.day 功能
+                  span.scnd-font-color 新書通報
                 p.next-days-temperature
-                  | 25º
+                  | 完成
                   span.icon.icon-cloudy.scnd-font-color
             li
               a(href='#44')
                 p.next-days-date
-                  span.day SUN
-                  span.scnd-font-color 30/06
+                  span.day 外觀
+                  span.scnd-font-color 新書通報
                 p.next-days-temperature
-                  | 22º
+                  | 50%
                   span.icon.icon-cloudy2.scnd-font-color
             li
               a(href='#45')
                 p.next-days-date
-                  span.day MON
-                  span.scnd-font-color 01/07
+                  span.day 功能
+                  span.scnd-font-color 期刊服務
                 p.next-days-temperature
-                  | 24º
+                  | 只能新增
                   span.icon.icon-cloudy2.scnd-font-color
             li
               a(href='#46')

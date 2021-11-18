@@ -144,7 +144,8 @@
       background-color: #E9E9E9; }
   .otherplugincalendar .day.today {
     color: #428bca;
-    font-weight: normal; }
+    font-weight: normal;
+    background-color: #FFC0CB; }
   .otherplugincalendar .day .day-events {
     list-style: none;
     margin-top: 3px;
