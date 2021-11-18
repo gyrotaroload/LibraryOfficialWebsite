@@ -83,3 +83,28 @@ module.exports.MODFdn = function (MODid, callback) {
         }
     });
 };
+
+module.exports.MODFup = function (MODid, callback) {
+    var ChansuNoJunban_tmp = -1;
+    excelData.findById(MODid, function (err, stuff) {
+        if (err) {
+            console.log(err);
+        }
+        ChansuNoJunban_tmp = stuff.ChansuNoJunban;
+        //logic:
+        //if (ChansuNoJunban_tmp - 1 >= 0) {
+            const filter = { $and: [{ batabaseClass: { $eq: stuff.batabaseClass } }, { ChansuNoJunban: { $gt: ChansuNoJunban_tmp } }] };
+            excelData.find(filter).sort({ ChansuNoJunban: 'ascending' }).exec((err2, SearchResult) => {
+                if (err2) {
+                    console.log(err2);
+                }
+                if (SearchResult.length > 0) {
+                    ChansuNoJunban_tmp = SearchResult[0].ChansuNoJunban;
+                    excelData.findByIdAndUpdate(SearchResult[0].id, { $set: { ChansuNoJunban: stuff.ChansuNoJunban } }, {}, () => {
+                        excelData.findByIdAndUpdate(MODid, { $set: { ChansuNoJunban: ChansuNoJunban_tmp } }, {}, callback);
+                    });
+                }
+            });
+        //}
+    });
+};

@@ -159,9 +159,9 @@ router.get(('/addNewBooks'), ensureAuthenticated, function (req, res, next) {
                     var ELEname = listallname[index];
                     innerHTMLofLlistSTRING = innerHTMLofLlistSTRING + `
     <a class="item" id="${ELEid}">
-    <button class="circular ui icon button" onclick="console.log(&quot;up&quot;);">
-    <i class="icon arrow up"></i></button>
-    <button class="circular ui icon button" onclick="$.post('/main/excelTransferOrder', { targetID: '${ELEid}', PLUSorMINSorDEL: 2 }, (res) => { /*empty*/ });">
+    <button class="circular ui icon button" onclick="$.post('/main/excelTransferOrder', { targetID: '${ELEid}', PLUSorMINSorDEL: 2 }, (res) => { if (res==='F5') {location.reload();}else{$('.ui.basic.modal').modal('show');/*錯誤宣告*/} });">
+    <i class="icon arrow up"></i></button><!--備註:上升箭號在index是下降，反之亦然，logic do it in onclick js-->
+    <button class="circular ui icon button" onclick="$.post('/main/excelTransferOrder', { targetID: '${ELEid}', PLUSorMINSorDEL: 1 }, (res) => { if (res==='F5') {location.reload();}else{$('.ui.basic.modal').modal('show');/*錯誤宣告*/} });">
     <i class="icon arrow down"></i></button><button class="circular ui icon button" onclick="console.log(&quot;dl&quot;);">
     <i class="icon trash alternate"></i></button>
     <h6 class="ui block header" onclick="console.log(&quot;np&quot;);">${ELEname}</h6></a>
@@ -184,7 +184,7 @@ router.post('/excelTransferOrder', ensureAuthenticated, function (req, res, next
     var PMDwtf = req.body.PLUSorMINSorDEL;//1or2or3
     var PMD = parseInt(PMDwtf, 10);//他進來竟然是字串，傻眼
     if (PMD === 1) {
-
+        excelDB.MODFup(TID, () => { res.status(202).send("F5"); });
     } else if (PMD === 2) {
         excelDB.MODFdn(TID, () => { res.status(202).send("F5"); });
     } else if (PMD === 3) {

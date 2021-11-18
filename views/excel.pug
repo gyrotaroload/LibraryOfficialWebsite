@@ -37,6 +37,22 @@ block contentHEAD
         .execl_clear { display: none }
 
 block content
+    .ui.basic.modal
+      //TODO我也不知道未啥這個模組的好的按鈕與關閉按鈕啥都不用設定就可以關閉，傻眼
+      //叫用$(".ui.basic.modal").modal("show");
+      .ui.icon.header
+        i.archive.icon
+        |     錯誤
+      .content
+        p
+          | 資料操作錯誤
+      .actions
+        .ui.red.basic.cancel.inverted.button
+          i.remove.icon
+          |       關閉
+        .ui.green.ok.inverted.button
+          i.checkmark.icon
+          |       好的
     // xlsx.js (C) 2013-present  SheetJS http://sheetjs.com
     // vim: set ts=2:
     //title Dashboard Template for Semantic-UI
