@@ -21,6 +21,12 @@ router.get('/', function (req, res, next) {
   });
 });
 
+router.get('/journals', function (req, res, next) {
+  res.render('dashboard', {
+    title: '成大數學系圖書館',
+  });
+});
+
 router.get(('/newbooks'), function (req, res, next) {
   //////////////////////////這一段是從main.js copy來的/////////////////////////////////////
   excelDB.getMAXChansuNoJunban('newbooksdb', (VARcountClass) => {
