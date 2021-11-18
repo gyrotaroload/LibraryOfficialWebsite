@@ -9,7 +9,6 @@ var LocalStrategy = require('passport-local').Strategy;
 var RateLimit = require('express-rate-limit');
 var session = require('express-session');
 var randomstring = require("randomstring");
-var bodyParser = require('body-parser');
 const { body, validationResult } = require('express-validator');
 const SocketServer = require('ws').Server;
 
@@ -67,7 +66,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
-app.use(express.json());
+app.use(express.json({ limit: 10485760 }));//rest-payload-10mb-max
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(sassMiddleware({
