@@ -94,8 +94,6 @@ module.exports.getPayloadById = function (dbclassname, MODid, callback) {
     excelData.findById(MODid, function (err, stuff) {
         if (err) {
             console.log(err);
-        }
-        else {
             doAGAINwithDEFAULT = true;
         }
         if (stuff) {
@@ -103,7 +101,8 @@ module.exports.getPayloadById = function (dbclassname, MODid, callback) {
                 ST = stuff.topic;
             } else {
                 doAGAINwithDEFAULT = true;
-            } if (stuff.payload) {
+            }
+            if (stuff.payload) {
                 SP = stuff.payload;
             } else {
                 doAGAINwithDEFAULT = true;
@@ -112,6 +111,7 @@ module.exports.getPayloadById = function (dbclassname, MODid, callback) {
             doAGAINwithDEFAULT = true;
         }
         if (doAGAINwithDEFAULT) {
+            console.log("use min");
             excelData.getIDofMINChansuNoJunban(dbclassname, (min_id) => {
                 //這一段是用複製的，跑預設index最小
                 excelData.findById(min_id, function (err2, stuff2) {
