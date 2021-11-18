@@ -2,8 +2,14 @@ var express = require('express');
 var nckulib = require('nckulib');
 var router = express.Router();
 
+var excelDB = require('../models/excelDB');
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
+  excelDB.arrayAllClass('newbooksdb', (stuff1,stuff2) => {
+    console.log(stuff1,stuff2);
+    console.log('****************************')
+  });
   res.render('index', {
     title: '成大數學系圖書館',
     functionButtonMainText1: '新書入庫',

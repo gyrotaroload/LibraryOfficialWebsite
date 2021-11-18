@@ -97,10 +97,19 @@ $(function () {
                 INtopic = 'unnamed' + String(Date.now());
             }
         }
+        var INChansuNoJunban = '';
+        if (document.getElementById('ChansuNoJunban')) {
+            if (document.getElementById('ChansuNoJunban').value) {
+                INChansuNoJunban = parseInt(document.getElementById('ChansuNoJunban').value, 10);
+            } else {
+                INChansuNoJunban = -1;
+            }
+        }
         $.post("/main/excel", {
             batabaseClass: INbatabaseClass,
             topic: INtopic,
-            excelHTML: INexcelHTML
+            excelHTML: INexcelHTML,
+            ChansuNoJunban: INChansuNoJunban
         }, (res) => {
             //empty
         });

@@ -55,7 +55,7 @@ router.get('/add_periodical', ensureAuthenticated, function (req, res, next) {
 router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
     var INframeNumber = req.body.frameNumber;
     var INISSN = req.body.ISSN;
-    var INbookName=req.body.bookName;
+    var INbookName = req.body.bookName;
     var INSTAT = req.body.STAT;
     var INES = req.body.ES;
     var INPS = req.body.PS;
@@ -100,7 +100,7 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
         new_date: Date.now(),
         frameNumber: INframeNumber,
         ISSN: INISSN,
-        bookName:INbookName,
+        bookName: INbookName,
         STAT: INSTAT,
         ES: INES,
         PS: INPS,
@@ -128,13 +128,15 @@ router.post('/excel', ensureAuthenticated, function (req, res, next) {
     var INexcelHTML = req.body.excelHTML;
     var INbatabaseClass = req.body.batabaseClass;
     var INtopic = req.body.topic;
+    var INChansuNoJunban = req.body.ChansuNoJunban;
 
     var newexcelDB = new excelDB({
         new_date: Date.now(),
         batabaseClass: INbatabaseClass,
         topic: INtopic,
-        payload:INexcelHTML,
+        payload: INexcelHTML,
         ipaddress: req.ip,
+        ChansuNoJunban: INChansuNoJunban
     });
     excelDB.addexcelData(newexcelDB, function (err) {
         if (err) {
@@ -143,6 +145,37 @@ router.post('/excel', ensureAuthenticated, function (req, res, next) {
         } else {
             res.status(200).send("success");
         }
+    });
+});
+
+router.get(('/addNewBooks'), ensureAuthenticated, function (req, res, next) {
+    excelDB.countClass('newbooksdb', (VARcountClass) => {
+        excelDB.arrayAllClass('newbooksdb', (listallid, listallname) => {
+            var innerHTMLofLlistSTRING = "";
+            if (listallid.length === listallname.length) {
+                var LL = listallid.length;
+                for (let index = 0; index < LL; index++) {
+                    var ELEid = listallid[index];
+                    var ELEname = listallname[index];
+                    innerHTMLofLlistSTRING = innerHTMLofLlistSTRING + `
+    <a class="item" id="${ELEid}" onclick="console.log(&quot;***!&quot;);">
+    <button class="circular ui icon button" onclick="console.log(&quot;up&quot;);">
+    <i class="icon arrow up"></i></button><button class="circular ui icon button" onclick="console.log(&quot;dw&quot;);">
+    <i class="icon arrow down"></i></button><button class="circular ui icon button" onclick="console.log(&quot;dl&quot;);">
+    <i class="icon trash alternate"></i></button>
+    <h6 class="ui block header" onclick="console.log(&quot;np&quot;);">${ELEname}</h6></a>
+    `
+
+                }
+            } else {
+                innerHTMLofLlistSTRING = "<h1>[ERROR] DB Sequence length does not match!</h1>";
+            }
+            res.render('excel', {
+                title: 'excel',
+                VARcountClassJade: VARcountClass,
+                innerHTMLofLlist: innerHTMLofLlistSTRING
+            });
+        });
     });
 });
 

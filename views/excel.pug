@@ -83,7 +83,7 @@ block content
       /* worker message */
       msg: 'xlsx',
       /* worker scripts */
-      worker: './xlsxworker.js'
+      worker: '../excel/xlsxworker.js'
       /*上面那個路徑是excel根目錄*/
       };
       var global_wb;
@@ -249,6 +249,7 @@ block content
     script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
     script(src='/excel/index.js')
     //上面是excel下面是ui
+    //TODO excel and newbook...index.js整合
     .ui.tablet.computer.only.padded.grid
       #headderBar.ui.inverted.borderless.top.fixed.fluid.menu
         a.header.item 新進圖書
@@ -279,24 +280,36 @@ block content
               input(placeholder='Search...')
     .ui.padded.grid
       #sidebar.three.wide.tablet.only.three.wide.computer.only.column
-        .ui.vertical.borderless.fluid.text.menu
-          // show all...etc
-          a.active.item A
-          a.item B
-          a.item C
-          a.item D
-          .ui.hidden.divider
-          // show eng...etc
-          a.item E
-          a.item F
-          a.item G
-          a.item H
-          a.item I
-          .ui.hidden.divider
-          // show ch...etc
-          a.item J
-          a.item K
-          a.item L
+        .ui.vertical.borderless.fluid.text.menu!= innerHTMLofLlist
+          //-TODO要處裡看不到側欄的問題
+          //這底下的咚咚碼掉
+            //- show all...etc
+            a.active.item A
+            a#ididid.item(onClick='console.log("***!");')
+              //-!!!popup參考，但是參考是崩的。會噴錯
+              button.circular.ui.icon.button(onClick='console.log("up");')
+                i.icon.arrow.up
+              button.circular.ui.icon.button(onClick='console.log("dw");')
+                i.icon.arrow.down
+              button.circular.ui.icon.button(onClick='console.log("dl");')
+                i.icon.trash.alternate
+              //--button.circular.ui.icon.button(onClick="var myid='#'+String(event.target.parentElement.parentElement.id);event.target.parentElement.parentElement.setAttribute('data-content',event.target.parentElement.parentElement.innerText);$(myid).popup('toggle');")
+                i.icon.info
+              h6.ui.block.header(onClick='console.log("np");') DOCtopic xdcfvghbjnkml
+            a.item whatthefuck
+            a.item D
+            .ui.hidden.divider
+            //- show eng...etc
+            a.item E
+            a.item F
+            a.item G
+            a.item H
+            a.item I
+            .ui.hidden.divider
+            //- show ch...etc
+            a.item J
+            a.item K
+            a.item L
       #content.sixteen.wide.mobile.thirteen.wide.tablet.thirteen.wide.computer.right.floated.column
         .ui.padded.grid
           .row
@@ -367,6 +380,20 @@ block content
                       button.ui.button(onClick="document.getElementById('batabaseClass').setAttribute('readOnly','true');") 停用
                       .or
                       button.ui.positive.button(onClick="document.getElementById('batabaseClass').removeAttribute('readOnly');") 啟用
+              .ui.card
+                .content
+                    .header 給定順序編號
+                .content
+                    h4.ui.sub.header 非技術人員請勿操作此項目
+                    .ui.small.feed
+                    .ui.input
+                      input#ChansuNoJunban(type='text' placeholder='資料庫...' value=VARcountClassJade)
+                .extra.content
+                    | 排序編號輸入框安全鎖
+                    .ui.buttons
+                      button.ui.button(onClick="document.getElementById('ChansuNoJunban').setAttribute('readOnly','true');") 停用
+                      .or
+                      button.ui.positive.button(onClick="document.getElementById('ChansuNoJunban').removeAttribute('readOnly');") 啟用
             .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
               .ui.card
                 .content
