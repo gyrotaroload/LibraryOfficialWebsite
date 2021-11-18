@@ -31,7 +31,7 @@ module.exports.addexcelData = function (newexcelData, callback) {
 
 module.exports.countClass = function (excelclass, callback) {
     var stuf2return = -1;
-    const filter = { user_name: { $eq: excelclass } };
+    const filter = { batabaseClass: { $eq: excelclass } };
     excelData.count(filter, (err, SearchResult) => {
         if (err) {
             console.log(err);
@@ -42,7 +42,7 @@ module.exports.countClass = function (excelclass, callback) {
 };
 
 module.exports.arrayAllClass = function (excelclass, callback) {
-    const filter = { user_name: { $eq: excelclass } };
+    const filter = { batabaseClass: { $eq: excelclass } };
     excelData.find(filter).sort({ ChansuNoJunban: 'ascending' }).exec((err, SearchResult) => {
         if (err) {
             console.log(err);
@@ -68,10 +68,18 @@ module.exports.MODFdn = function (MODid, callback) {
         ChansuNoJunban_tmp = stuff.ChansuNoJunban;
         //logic:
         if (ChansuNoJunban_tmp - 1 >= 0) {
-            ChansuNoJunban_tmp = ChansuNoJunban_tmp - 1;
-        } else {
-            ChansuNoJunban_tmp = 0;
+            const filter = { $and: [{ batabaseClass: { $eq: stuff.batabaseClass } }, { ChansuNoJunban: { $lt: ChansuNoJunban_tmp } }] };
+            excelData.find(filter).sort({ ChansuNoJunban: 'descending' }).exec((err2, SearchResult) => {
+                if (err2) {
+                    console.log(err2);
+                }
+                if (SearchResult.length > 0) {
+                    ChansuNoJunban_tmp = SearchResult[0].ChansuNoJunban;
+                    excelData.findByIdAndUpdate(SearchResult[0].id, { $set: { ChansuNoJunban: stuff.ChansuNoJunban } }, {}, () => {
+                        excelData.findByIdAndUpdate(MODid, { $set: { ChansuNoJunban: ChansuNoJunban_tmp } }, {}, callback);
+                    });
+                }
+            });
         }
-        excelData.findByIdAndUpdate(MODid, { $set: { ChansuNoJunban: ChansuNoJunban_tmp } }, {}, callback);
     });
 };
