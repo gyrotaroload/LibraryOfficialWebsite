@@ -13,10 +13,10 @@ block content
       // HEADER
       header.block
         ul.header-menu.horizontal-list
-          //li
-            a.header-menu-tab(href='#1')
-              span.icon.entypo-cog.scnd-font-color
-              | Settings
+          li
+            a.header-menu-tab(href='/')
+              span.icon.fontawesome-home.scnd-font-color
+              | 回首頁
           li
             a.header-menu-tab(href='#2')
               span.icon.fontawesome-user.scnd-font-color
@@ -26,10 +26,10 @@ block content
               span.icon.entypo-flow-tree.scnd-font-color
               | 管理員登入紀錄
             //a.header-menu-number(href='#4') 5
-          //li
-            a.header-menu-tab(href='#5')
-              span.icon.fontawesome-star-empty.scnd-font-color
-              | Favorites
+          li
+            a.header-menu-tab(href='/users/logout')
+              span.icon.entypo-logout.scnd-font-color
+              | 登出
         .profile-menu
           p
             | Me 
