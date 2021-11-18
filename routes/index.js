@@ -2,6 +2,8 @@ var express = require('express');
 var nckulib = require('nckulib');
 var router = express.Router();
 
+var excelDB = require('../models/excelDB');
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('index', {
@@ -19,10 +21,38 @@ router.get('/', function (req, res, next) {
   });
 });
 
-router.get(('/excel'), function (req, res, next) {
-  res.render('excel', {
-    title: 'excel'
+router.get(('/newbooks'), function (req, res, next) {
+  //////////////////////////這一段是從main.js copy來的/////////////////////////////////////
+  excelDB.getMAXChansuNoJunban('newbooksdb', (VARcountClass) => {
+    excelDB.arrayAllClass('newbooksdb', (listallid, listallname) => {
+      var innerHTMLofLlistSTRING = "";
+      if (listallid.length === listallname.length) {
+        var LL = listallid.length;
+        for (let index = 0; index < LL; index++) {
+          var ELEid = listallid[index];
+          var ELEname = listallname[index];
+          innerHTMLofLlistSTRING = innerHTMLofLlistSTRING + `
+<a class="item" id="${ELEid}" href="/newbooks?pageid=${ELEid}">${ELEname}</a>
+`;
+        }
+      } else {
+        innerHTMLofLlistSTRING = "<h1>[ERROR] DB Sequence length does not match!</h1>";
+      }
+      //這裡有一段是這裡新加的
+      excelDB.getPayloadById('newbooksdb',req.query.pageid, (thistopic, HTMLpayload) => {
+        res.render('excel', {
+          title: 'newbooks',
+          VARcountClassJade: parseInt(VARcountClass, 10) + 1,
+          innerHTMLofLlist: innerHTMLofLlistSTRING,
+          VARdbname: "this_is_a_user",
+          isADMIN: false,
+          PUGVARHTMLpayload: HTMLpayload,
+          topicORwait2load: thistopic
+        });
+      });//在說你啦
+    });
   });
+  /////////////////////////////////////////////////////////////////////////////////
 });
 
 module.exports = router;

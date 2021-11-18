@@ -5,8 +5,7 @@ var router = express.Router();
 var DEF_DEBUG = true;
 
 var JournalInformation = require('../models/JournalInformation');
-//var PostTmp = require('../models/PostTmp');
-//var Middatatmp = require('../models/Middatatmp');
+var excelDB = require('../models/excelDB');
 
 router.get('/', ensureAuthenticated, function (req, res, next) {
     //Person.getPersonal(req.user.username, function (err, Personget) {
@@ -56,7 +55,7 @@ router.get('/add_periodical', ensureAuthenticated, function (req, res, next) {
 router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
     var INframeNumber = req.body.frameNumber;
     var INISSN = req.body.ISSN;
-    var INbookName=req.body.bookName;
+    var INbookName = req.body.bookName;
     var INSTAT = req.body.STAT;
     var INES = req.body.ES;
     var INPS = req.body.PS;
@@ -101,7 +100,7 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
         new_date: Date.now(),
         frameNumber: INframeNumber,
         ISSN: INISSN,
-        bookName:INbookName,
+        bookName: INbookName,
         STAT: INSTAT,
         ES: INES,
         PS: INPS,
@@ -123,6 +122,79 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
             res.status(200).send("success");
         }
     });
+});
+
+router.post('/excel', ensureAuthenticated, function (req, res, next) {
+    var INexcelHTML = req.body.excelHTML;
+    var INbatabaseClass = req.body.batabaseClass;
+    var INtopic = req.body.topic;
+    var INChansuNoJunban = req.body.ChansuNoJunban;
+
+    var newexcelDB = new excelDB({
+        new_date: Date.now(),
+        batabaseClass: INbatabaseClass,
+        topic: INtopic,
+        payload: INexcelHTML,
+        ipaddress: req.ip,
+        ChansuNoJunban: INChansuNoJunban
+    });
+    excelDB.addexcelData(newexcelDB, function (err) {
+        if (err) {
+            console.log(err);
+            res.status(500).send("fail - database save error");
+        } else {
+            res.status(200).send("success");
+        }
+    });
+});
+
+router.get(('/addNewBooks'), ensureAuthenticated, function (req, res, next) {
+    excelDB.getMAXChansuNoJunban('newbooksdb', (VARcountClass) => {
+        excelDB.arrayAllClass('newbooksdb', (listallid, listallname) => {
+            var innerHTMLofLlistSTRING = "";
+            if (listallid.length === listallname.length) {
+                var LL = listallid.length;
+                for (let index = 0; index < LL; index++) {
+                    var ELEid = listallid[index];
+                    var ELEname = listallname[index];
+                    innerHTMLofLlistSTRING = innerHTMLofLlistSTRING + `
+    <a class="item" id="${ELEid}">
+    <button class="circular ui icon button" onclick="$.post('/main/excelTransferOrder', { targetID: '${ELEid}', PLUSorMINSorDEL: 2 }, (res) => { if (res==='F5') {location.reload();}else{$('.ui.basic.modal').modal('show');/*錯誤宣告*/} });">
+    <i class="icon arrow up"></i></button><!--備註:上升箭號在index是下降，反之亦然，logic do it in onclick js-->
+    <button class="circular ui icon button" onclick="$.post('/main/excelTransferOrder', { targetID: '${ELEid}', PLUSorMINSorDEL: 1 }, (res) => { if (res==='F5') {location.reload();}else{$('.ui.basic.modal').modal('show');/*錯誤宣告*/} });">
+    <i class="icon arrow down"></i></button>
+    <button class="circular ui icon button" onclick="$.post('/main/excelTransferOrder', { targetID: '${ELEid}', PLUSorMINSorDEL: 3 }, (res) => { if (res==='F5') {location.reload();}else{$('.ui.basic.modal').modal('show');/*錯誤宣告*/} });">
+    <i class="icon trash alternate"></i></button>
+    <h6 class="ui block header" onclick=" window.open('/newbooks?pageid=${ELEid}', '_blank');">${ELEname}</h6></a>
+    `;
+                }
+            } else {
+                innerHTMLofLlistSTRING = "<h1>[ERROR] DB Sequence length does not match!</h1>";
+            }
+            res.render('excel', {
+                title: 'excel',
+                VARcountClassJade: parseInt(VARcountClass, 10) + 1,
+                innerHTMLofLlist: innerHTMLofLlistSTRING,
+                VARdbname: "newbooksdb",
+                isADMIN: true,
+            });
+        });
+    });
+});
+
+router.post('/excelTransferOrder', ensureAuthenticated, function (req, res, next) {
+    var TID = req.body.targetID;
+    var PMDwtf = req.body.PLUSorMINSorDEL;//1or2or3
+    var PMD = parseInt(PMDwtf, 10);//他進來竟然是字串，傻眼
+    if (PMD === 1) {
+        excelDB.MODFup(TID, () => { res.status(202).send("F5"); });
+    } else if (PMD === 2) {
+        excelDB.MODFdn(TID, () => { res.status(202).send("F5"); });
+    } else if (PMD === 3) {
+        excelDB.delById(TID, () => { res.status(202).send("F5"); });
+    } else {
+        res.status(400).send("Illegal data manipulation!");
+    }
 });
 
 function ensureAuthenticated(req, res, next) {

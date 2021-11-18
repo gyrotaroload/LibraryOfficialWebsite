@@ -53,11 +53,11 @@ $(function () {//一定要等document loaded
     document.getElementById('RegistrationNumberLinkAutomaticallyGenerated').addEventListener('click', function () {
         var start_do_urlER = false;
         if (document.getElementById("htmlOutCopy")) {
-            if (document.getElementById("htmlOutCopy").getElementsByTagName('table').length>0) {
-                if (document.getElementById("htmlOutCopy").getElementsByTagName('table')[0].getElementsByTagName('tr').length>0) {
+            if (document.getElementById("htmlOutCopy").getElementsByTagName('table').length > 0) {
+                if (document.getElementById("htmlOutCopy").getElementsByTagName('table')[0].getElementsByTagName('tr').length > 0) {
                     for (let index = 0; index < document.getElementById("htmlOutCopy").getElementsByTagName('table')[0].getElementsByTagName('tr').length; index++) {
                         const element = document.getElementById("htmlOutCopy").getElementsByTagName('table')[0].getElementsByTagName('tr')[index];
-                        if (element.getElementsByTagName('td').length>0) {
+                        if (element.getElementsByTagName('td').length > 0) {
                             if (start_do_urlER) {
                                 //https://weblis.lib.ncku.edu.tw/search*cht/g?searchtype=l&searcharg=2078318&searchscope=1
                                 element.getElementsByTagName('td')[0].innerHTML = `<a href="https://weblis.lib.ncku.edu.tw/search*cht/g?searchtype=l&searcharg=${element.getElementsByTagName('td')[0].innerText.trim()}&searchscope=1" target="_blank">${element.getElementsByTagName('td')[0].innerText.trim()}</a>`;
@@ -71,5 +71,54 @@ $(function () {//一定要等document loaded
                 }
             }
         }
+    });
+});
+
+//totalSave
+$(function () {
+    document.getElementById('totalSave').addEventListener('click', function (e) {
+        var INexcelHTML = '';
+        if (document.getElementById('htmlOutCopy')) {
+            INexcelHTML = document.getElementById('htmlOutCopy').innerHTML;
+        }
+        var INbatabaseClass = '';
+        if (document.getElementById('batabaseClass')) {
+            if (document.getElementById('batabaseClass').value) {
+                INbatabaseClass = document.getElementById('batabaseClass').value;
+            } else {
+                INbatabaseClass = 'NoCategory';
+            }
+        }
+        var INtopic = '';
+        if (document.getElementById('INtopic')) {
+            if (document.getElementById('INtopic').value) {
+                INtopic = document.getElementById('INtopic').value;
+            } else {
+                INtopic = 'unnamed' + String(Date.now());
+            }
+        }
+        var INChansuNoJunban = '';
+        if (document.getElementById('ChansuNoJunban')) {
+            if (document.getElementById('ChansuNoJunban').value) {
+                INChansuNoJunban = parseInt(document.getElementById('ChansuNoJunban').value, 10);
+            } else {
+                INChansuNoJunban = -1;
+            }
+        }
+        $.post("/main/excel", {
+            batabaseClass: INbatabaseClass,
+            topic: INtopic,
+            excelHTML: INexcelHTML,
+            ChansuNoJunban: INChansuNoJunban
+        }, (res) => {
+            if (res === 'success') { location.reload(); } else { $('.ui.basic.modal').modal('show');/*錯誤宣告*/ }
+        });
+    });
+});
+
+$(function () {
+    var clickonstart = document.getElementsByClassName('TRIGdissableOnStart');
+    clickonstart.forEach(element => {
+        element.click();
     });
 });

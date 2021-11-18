@@ -37,6 +37,23 @@ block contentHEAD
         .execl_clear { display: none }
 
 block content
+  - if(isADMIN==true) {
+    .ui.basic.modal
+      //TODO我也不知道未啥這個模組的好的按鈕與關閉按鈕啥都不用設定就可以關閉，傻眼
+      //叫用$(".ui.basic.modal").modal("show");
+      .ui.icon.header
+        i.archive.icon
+        |     錯誤
+      .content
+        p
+          | 資料操作錯誤
+      .actions
+        .ui.red.basic.cancel.inverted.button
+          i.remove.icon
+          |       關閉
+        .ui.green.ok.inverted.button
+          i.checkmark.icon
+          |       好的
     // xlsx.js (C) 2013-present  SheetJS http://sheetjs.com
     // vim: set ts=2:
     //title Dashboard Template for Semantic-UI
@@ -83,7 +100,7 @@ block content
       /* worker message */
       msg: 'xlsx',
       /* worker scripts */
-      worker: './xlsxworker.js'
+      worker: '../excel/xlsxworker.js'
       /*上面那個路徑是excel根目錄*/
       };
       var global_wb;
@@ -245,9 +262,12 @@ block content
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       */
       })();
+  - }
     script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
+  - if(isADMIN==true) {
     script(src='/excel/index.js')
+  - }
     //上面是excel下面是ui
     .ui.tablet.computer.only.padded.grid
       #headderBar.ui.inverted.borderless.top.fixed.fluid.menu
@@ -279,101 +299,136 @@ block content
               input(placeholder='Search...')
     .ui.padded.grid
       #sidebar.three.wide.tablet.only.three.wide.computer.only.column
-        .ui.vertical.borderless.fluid.text.menu
-          // show all...etc
-          a.active.item A
-          a.item B
-          a.item C
-          a.item D
-          .ui.hidden.divider
-          // show eng...etc
-          a.item E
-          a.item F
-          a.item G
-          a.item H
-          a.item I
-          .ui.hidden.divider
-          // show ch...etc
-          a.item J
-          a.item K
-          a.item L
+        .ui.vertical.borderless.fluid.text.menu!= innerHTMLofLlist
+          //-TODO要處裡看不到側欄的問題
+          //這底下的咚咚碼掉
+            //- show all...etc
+            a.active.item A
+            a#ididid.item(onClick='console.log("***!");')
+              //-!!!popup參考，但是參考是崩的。會噴錯
+              button.circular.ui.icon.button(onClick='console.log("up");')
+                i.icon.arrow.up
+              button.circular.ui.icon.button(onClick='console.log("dw");')
+                i.icon.arrow.down
+              button.circular.ui.icon.button(onClick='console.log("dl");')
+                i.icon.trash.alternate
+              //--button.circular.ui.icon.button(onClick="var myid='#'+String(event.target.parentElement.parentElement.id);event.target.parentElement.parentElement.setAttribute('data-content',event.target.parentElement.parentElement.innerText);$(myid).popup('toggle');")
+                i.icon.info
+              h6.ui.block.header(onClick='console.log("np");') DOCtopic xdcfvghbjnkml
+            a.item whatthefuck
+            a.item D
+            .ui.hidden.divider
+            //- show eng...etc
+            a.item E
+            a.item F
+            a.item G
+            a.item H
+            a.item I
+            .ui.hidden.divider
+            //- show ch...etc
+            a.item J
+            a.item K
+            a.item L
       #content.sixteen.wide.mobile.thirteen.wide.tablet.thirteen.wide.computer.right.floated.column
         .ui.padded.grid
-          .row
-            h1.ui.huge.dividing.header 新進圖書資料紀錄
-          .center.aligned.row
-            .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
-              //img.ui.centered.small.circular.image(src='/newbookpage/static/images/wireframe/square-image.png')
-              //.ui.large.basic.label 最新上架
-              //p Something else
-              .ui.card
-                .content
-                    .header 上傳excel檔案
-                .content
-                    h4.ui.sub.header 點選下方按鈕以上傳檔案
-                    .ui.small.feed
-                    .event
-                        .content
-                        .summary
-                            p  按下去選檔案後，稍等一會兒，檔案處理需要一些時間。
-                            p  如果沒有反應，網頁關掉再重開。
-                            p  建議使用windows系統的電腦來進行上傳的動作。
-                            p  建議使用最新的chrome瀏覽器來上傳檔案。
-                    .ui.info.message
-                        .header 檔案名稱 
-                        ul.list
-                            li#the_file_name ...
-                .extra.content
-                    button.ui.button(onClick="document.getElementById('xlf').click();") 上傳按鈕
-            .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
-              .ui.card
-                .content
-                    .header 使登錄號可以連結至總圖
-                .content
-                    h4.ui.sub.header 點選下方按鈕以自動化的產生(每筆資料)連結
-                    .ui.small.feed
-                    .event
-                        .content
-                        .summary
-                            p  對於較大的檔案，需要較長的處理時間。
-                            p  如果網頁沒有回應，請嘗試使用效能較好的電腦。
-                            p  此程式將視表格中的第一個行視為登錄號的格子。
-                            p  第一個行須存在一個格子其內容包含「登錄號」字樣。
-                            p  上述格子與其上方的格子將被視為標題而不被「超連結化」。
-                .extra.content
-                    button.ui.button#RegistrationNumberLinkAutomaticallyGenerated 登錄號連結(自動)產生
-            .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
-              //.ui.card
-                .content
-                    .header 
-                .content
-                    h4.ui.sub.header 非技術人員請勿操作此項目
-                    .ui.small.feed
-                    .ui.input
-                      input(type='text' placeholder='Search...')
-                .extra.content
-                    button.ui.button 登錄號連結(自動)產生
-              .ui.card
-                .content
-                    .header 選擇目標資料庫
-                    .meta
-                    span 非技術人員請勿操作此項目
-                    .ui.input
-                      input(type='text' placeholder='資料庫...')
-            .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
-              .ui.card
-                .content
-                    .header 輸入標題並存檔
-                .content
-                    h4.ui.sub.header 在下方輸入框輸入標題，並且按下存檔
-                    .ui.small.feed
-                    .ui.input
-                      input(type='text' placeholder='標題...')
-                .extra.content
-                    button.ui.button#totalSave 存檔!
+          - if(isADMIN==true) {
+            .row
+              h1.ui.huge.dividing.header 新進圖書資料紀錄
+            .center.aligned.row
+              .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
+                //img.ui.centered.small.circular.image(src='/newbookpage/static/images/wireframe/square-image.png')
+                //.ui.large.basic.label 最新上架
+                //p Something else
+                .ui.card
+                  .content
+                      .header 上傳excel檔案
+                  .content
+                      h4.ui.sub.header 點選下方按鈕以上傳檔案
+                      .ui.small.feed
+                      .event
+                          .content
+                          .summary
+                              p  按下去選檔案後，稍等一會兒，檔案處理需要一些時間。
+                              p  如果沒有反應，網頁關掉再重開。
+                              p  建議使用windows系統的電腦來進行上傳的動作。
+                              p  建議使用最新的chrome瀏覽器來上傳檔案。
+                      .ui.info.message
+                          .header 檔案名稱 
+                          ul.list
+                              li#the_file_name ...
+                  .extra.content
+                      button.ui.button(onClick="document.getElementById('xlf').click();") 上傳按鈕
+              .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
+                .ui.card
+                  .content
+                      .header 使登錄號可以連結至總圖
+                  .content
+                      h4.ui.sub.header 點選下方按鈕以自動化的產生(每筆資料)連結
+                      .ui.small.feed
+                      .event
+                          .content
+                          .summary
+                              p  對於較大的檔案，需要較長的處理時間。
+                              p  如果網頁沒有回應，請嘗試使用效能較好的電腦。
+                              p  此程式將視表格中的第一個行視為登錄號的格子。
+                              p  第一個行須存在一個格子其內容包含「登錄號」字樣。
+                              p  上述格子與其上方的格子將被視為標題而不被「超連結化」。
+                  .extra.content
+                      button.ui.button#RegistrationNumberLinkAutomaticallyGenerated 登錄號連結(自動)產生
+              .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
+                //.ui.card
+                  .content
+                      .header 
+                  .content
+                      h4.ui.sub.header 非技術人員請勿操作此項目
+                      .ui.small.feed
+                      .ui.input
+                        input(type='text' placeholder='Search...')
+                  .extra.content
+                      button.ui.button 登錄號連結(自動)產生
+                .ui.card
+                  .content
+                      .header 選擇目標資料庫
+                  .content
+                      h4.ui.sub.header 非技術人員請勿操作此項目
+                      .ui.small.feed
+                      .ui.input
+                        input#batabaseClass(type='text' placeholder='資料庫...' value=VARdbname)
+                  .extra.content
+                      | 資料庫輸入框安全鎖
+                      .ui.buttons
+                        button.ui.button.TRIGdissableOnStart(onClick="document.getElementById('batabaseClass').setAttribute('readOnly','true');") 停用
+                        .or
+                        button.ui.positive.button(onClick="document.getElementById('batabaseClass').removeAttribute('readOnly');") 啟用
+                .ui.card
+                  .content
+                      .header 給定順序編號
+                  .content
+                      h4.ui.sub.header 非技術人員請勿操作此項目
+                      .ui.small.feed
+                      .ui.input
+                        input#ChansuNoJunban(type='text' placeholder='順序編號...' value=VARcountClassJade)
+                  .extra.content
+                      | 排序編號輸入框安全鎖
+                      .ui.buttons
+                        button.ui.button.TRIGdissableOnStart(onClick="document.getElementById('ChansuNoJunban').setAttribute('readOnly','true');") 停用
+                        .or
+                        button.ui.positive.button(onClick="document.getElementById('ChansuNoJunban').removeAttribute('readOnly');") 啟用
+              .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
+                .ui.card
+                  .content
+                      .header 輸入標題並存檔
+                  .content
+                      h4.ui.sub.header 在下方輸入框輸入標題，並且按下存檔
+                      .ui.small.feed
+                      .ui.input
+                        input#INtopic(type='text' placeholder='標題...')
+                  .extra.content
+                      button.ui.button#totalSave 存檔!
           .ui.hidden.section.divider
+          - }
           .row
-            h1.ui.huge.dividing.header 2021十二月
+            h1.ui.huge.dividing.header #{ topicORwait2load }
           //.row
             //- 底下這坨東西是設定表格應用程式的語言，消失吧!
             .select
@@ -430,11 +485,15 @@ block content
                 i.fa.fa-trash
                 |  Delete
             table#table(data-toolbar='#toolbar' data-search='true' data-show-refresh='true' data-show-toggle='true' data-show-fullscreen='true' data-show-columns='true' data-show-columns-toggle-all='true' data-detail-view='true' data-show-export='true' data-click-to-select='true' data-detail-formatter='detailFormatter' data-minimum-count-columns='2' data-show-pagination-switch='true' data-pagination='true' data-id-field='id' data-page-list='[10, 25, 50, 100, all]' data-show-footer='true' data-side-pagination='server' data-url='https://examples.wenzhixin.net.cn/examples/bootstrap_table/data' data-response-handler='responseHandler')
-          .row#htmlOutCopy(style='overflow-x: auto;')
-            .ui.warning.message
-              i.icon.help
-              .header 這是等一下excel檔案載入後要預覽的地方 
-              | 請看看上面如何載入檔案的方式...
+          - if(isADMIN==true) {
+            .row#htmlOutCopy(style='overflow-x: auto;')
+              .ui.warning.message
+                i.icon.help
+                .header 這是等一下excel檔案載入後要預覽的地方 
+                | 請看看上面如何載入檔案的方式...
+          - } else {
+            .row#htmlOutCopy(style='overflow-x: auto;')!= PUGVARHTMLpayload
+          - }
             //table.ui.single.line.striped.selectable.unstackable.table(style='overflow-x: auto;')
               thead
                 tr
@@ -516,3 +575,4 @@ block content
       script(src='https://kit.fontawesome.com/8d41246ac0.js' crossorigin='anonymous')
       script(src='/newbookpage/js/app_table.js')
       script(src='/newbookpage/js/index.js')
+      //-存檔ok,db輸入框
