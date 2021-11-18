@@ -48,8 +48,22 @@ module.exports.getMAXChansuNoJunban = function (excelclass, callback) {
         if (err) {
             console.log(err);
         }
-        if(SearchResult[0]){
+        if (SearchResult[0]) {
             stuf2return = SearchResult[0].ChansuNoJunban;
+        }
+        callback(stuf2return);
+    });
+};
+
+module.exports.getIDofMINChansuNoJunban = function (excelclass, callback) {
+    var stuf2return = -1;
+    const filter = { batabaseClass: { $eq: excelclass } };
+    excelData.find(filter).sort({ ChansuNoJunban: 'ascending' }).exec((err, SearchResult) => {
+        if (err) {
+            console.log(err);
+        }
+        if (SearchResult[0]) {
+            stuf2return = SearchResult[0].id;
         }
         callback(stuf2return);
     });
@@ -70,6 +84,51 @@ module.exports.arrayAllClass = function (excelclass, callback) {
             RTid.push(element.id || "[ERROR] DB item is NULL");
         }
         callback(RTid, RTname);
+    });
+};
+
+module.exports.getPayloadById = function (dbclassname, MODid, callback) {
+    var ST = "Sorry, there seems to be something wrong!";
+    var SP = "Sorry, there seems to be something wrong!";
+    var doAGAINwithDEFAULT = false;
+    excelData.findById(MODid, function (err, stuff) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            doAGAINwithDEFAULT = true;
+        }
+        if (stuff) {
+            if (stuff.topic) {
+                ST = stuff.topic;
+            } else {
+                doAGAINwithDEFAULT = true;
+            } if (stuff.payload) {
+                SP = stuff.payload;
+            } else {
+                doAGAINwithDEFAULT = true;
+            }
+        } else {
+            doAGAINwithDEFAULT = true;
+        }
+        if (doAGAINwithDEFAULT) {
+            excelData.getIDofMINChansuNoJunban(dbclassname, (min_id) => {
+                //這一段是用複製的，跑預設index最小
+                excelData.findById(min_id, function (err2, stuff2) {
+                    if (err2) {
+                        console.log(err2);
+                    }
+                    if (stuff2) {
+                        if (stuff2.topic) {
+                            ST = stuff2.topic;
+                        } if (stuff2.payload) {
+                            SP = stuff2.payload;
+                        }
+                    }
+                    callback(ST, SP);
+                });
+            });
+        } else { callback(ST, SP); }
     });
 };
 

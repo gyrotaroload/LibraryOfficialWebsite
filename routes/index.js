@@ -32,19 +32,24 @@ router.get(('/newbooks'), function (req, res, next) {
           var ELEid = listallid[index];
           var ELEname = listallname[index];
           innerHTMLofLlistSTRING = innerHTMLofLlistSTRING + `
-<a class="item" id="${ELEid}">${ELEname}</a>
+<a class="item" id="${ELEid}" href="/newbooks?pageid=${ELEid}">${ELEname}</a>
 `;
         }
       } else {
         innerHTMLofLlistSTRING = "<h1>[ERROR] DB Sequence length does not match!</h1>";
       }
-      res.render('excel', {
-        title: 'excel',
-        VARcountClassJade: parseInt(VARcountClass, 10) + 1,
-        innerHTMLofLlist: innerHTMLofLlistSTRING,
-        VARdbname: "newbooks",
-        isADMIN: false,
-      });
+      //這裡有一段是這裡新加的
+      excelDB.getPayloadById('newbooksdb',req.query.pageid, (thistopic, HTMLpayload) => {
+        res.render('excel', {
+          title: 'newbooks',
+          VARcountClassJade: parseInt(VARcountClass, 10) + 1,
+          innerHTMLofLlist: innerHTMLofLlistSTRING,
+          VARdbname: "this_is_a_user",
+          isADMIN: false,
+          PUGVARHTMLpayload: HTMLpayload,
+          topicORwait2load: thistopic
+        });
+      });//在說你啦
     });
   });
   /////////////////////////////////////////////////////////////////////////////////

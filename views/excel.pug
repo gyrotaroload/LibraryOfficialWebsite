@@ -485,11 +485,15 @@ block content
                 i.fa.fa-trash
                 |  Delete
             table#table(data-toolbar='#toolbar' data-search='true' data-show-refresh='true' data-show-toggle='true' data-show-fullscreen='true' data-show-columns='true' data-show-columns-toggle-all='true' data-detail-view='true' data-show-export='true' data-click-to-select='true' data-detail-formatter='detailFormatter' data-minimum-count-columns='2' data-show-pagination-switch='true' data-pagination='true' data-id-field='id' data-page-list='[10, 25, 50, 100, all]' data-show-footer='true' data-side-pagination='server' data-url='https://examples.wenzhixin.net.cn/examples/bootstrap_table/data' data-response-handler='responseHandler')
-          .row#htmlOutCopy(style='overflow-x: auto;')
-            .ui.warning.message
-              i.icon.help
-              .header 這是等一下excel檔案載入後要預覽的地方 
-              | 請看看上面如何載入檔案的方式...
+          - if(isADMIN==true) {
+            .row#htmlOutCopy(style='overflow-x: auto;')
+              .ui.warning.message
+                i.icon.help
+                .header 這是等一下excel檔案載入後要預覽的地方 
+                | 請看看上面如何載入檔案的方式...
+          - } else {
+            .row#htmlOutCopy(style='overflow-x: auto;')!= PUGVARHTMLpayload
+          - }
             //table.ui.single.line.striped.selectable.unstackable.table(style='overflow-x: auto;')
               thead
                 tr

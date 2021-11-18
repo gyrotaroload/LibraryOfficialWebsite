@@ -165,7 +165,7 @@ router.get(('/addNewBooks'), ensureAuthenticated, function (req, res, next) {
     <i class="icon arrow down"></i></button>
     <button class="circular ui icon button" onclick="$.post('/main/excelTransferOrder', { targetID: '${ELEid}', PLUSorMINSorDEL: 3 }, (res) => { if (res==='F5') {location.reload();}else{$('.ui.basic.modal').modal('show');/*錯誤宣告*/} });">
     <i class="icon trash alternate"></i></button>
-    <h6 class="ui block header" onclick="console.log(&quot;np&quot;);">${ELEname}</h6></a>
+    <h6 class="ui block header" onclick=" window.open('/newbooks?pageid=${ELEid}', '_blank');">${ELEname}</h6></a>
     `;
                 }
             } else {
@@ -176,7 +176,7 @@ router.get(('/addNewBooks'), ensureAuthenticated, function (req, res, next) {
                 VARcountClassJade: parseInt(VARcountClass, 10) + 1,
                 innerHTMLofLlist: innerHTMLofLlistSTRING,
                 VARdbname: "newbooksdb",
-                isADMIN:true,
+                isADMIN: true,
             });
         });
     });
