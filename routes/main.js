@@ -149,7 +149,7 @@ router.post('/excel', ensureAuthenticated, function (req, res, next) {
 });
 
 router.get(('/addNewBooks'), ensureAuthenticated, function (req, res, next) {
-    excelDB.countClass('newbooksdb', (VARcountClass) => {
+    excelDB.getMAXChansuNoJunban('newbooksdb', (VARcountClass) => {
         excelDB.arrayAllClass('newbooksdb', (listallid, listallname) => {
             var innerHTMLofLlistSTRING = "";
             if (listallid.length === listallname.length) {
@@ -162,7 +162,8 @@ router.get(('/addNewBooks'), ensureAuthenticated, function (req, res, next) {
     <button class="circular ui icon button" onclick="$.post('/main/excelTransferOrder', { targetID: '${ELEid}', PLUSorMINSorDEL: 2 }, (res) => { if (res==='F5') {location.reload();}else{$('.ui.basic.modal').modal('show');/*錯誤宣告*/} });">
     <i class="icon arrow up"></i></button><!--備註:上升箭號在index是下降，反之亦然，logic do it in onclick js-->
     <button class="circular ui icon button" onclick="$.post('/main/excelTransferOrder', { targetID: '${ELEid}', PLUSorMINSorDEL: 1 }, (res) => { if (res==='F5') {location.reload();}else{$('.ui.basic.modal').modal('show');/*錯誤宣告*/} });">
-    <i class="icon arrow down"></i></button><button class="circular ui icon button" onclick="console.log(&quot;dl&quot;);">
+    <i class="icon arrow down"></i></button>
+    <button class="circular ui icon button" onclick="$.post('/main/excelTransferOrder', { targetID: '${ELEid}', PLUSorMINSorDEL: 3 }, (res) => { if (res==='F5') {location.reload();}else{$('.ui.basic.modal').modal('show');/*錯誤宣告*/} });">
     <i class="icon trash alternate"></i></button>
     <h6 class="ui block header" onclick="console.log(&quot;np&quot;);">${ELEname}</h6></a>
     `;
@@ -172,8 +173,10 @@ router.get(('/addNewBooks'), ensureAuthenticated, function (req, res, next) {
             }
             res.render('excel', {
                 title: 'excel',
-                VARcountClassJade: VARcountClass,
-                innerHTMLofLlist: innerHTMLofLlistSTRING
+                VARcountClassJade: parseInt(VARcountClass, 10) + 1,
+                innerHTMLofLlist: innerHTMLofLlistSTRING,
+                VARdbname: "newbooksdb",
+                isADMIN:true,
             });
         });
     });
@@ -188,7 +191,7 @@ router.post('/excelTransferOrder', ensureAuthenticated, function (req, res, next
     } else if (PMD === 2) {
         excelDB.MODFdn(TID, () => { res.status(202).send("F5"); });
     } else if (PMD === 3) {
-
+        excelDB.delById(TID, () => { res.status(202).send("F5"); });
     } else {
         res.status(400).send("Illegal data manipulation!");
     }

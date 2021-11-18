@@ -41,6 +41,20 @@ module.exports.countClass = function (excelclass, callback) {
     });
 };
 
+module.exports.getMAXChansuNoJunban = function (excelclass, callback) {
+    var stuf2return = -1;
+    const filter = { batabaseClass: { $eq: excelclass } };
+    excelData.find(filter).sort({ ChansuNoJunban: 'descending' }).exec((err, SearchResult) => {
+        if (err) {
+            console.log(err);
+        }
+        if(SearchResult[0]){
+            stuf2return = SearchResult[0].ChansuNoJunban;
+        }
+        callback(stuf2return);
+    });
+};
+
 module.exports.arrayAllClass = function (excelclass, callback) {
     const filter = { batabaseClass: { $eq: excelclass } };
     excelData.find(filter).sort({ ChansuNoJunban: 'ascending' }).exec((err, SearchResult) => {
@@ -59,7 +73,7 @@ module.exports.arrayAllClass = function (excelclass, callback) {
     });
 };
 
-module.exports.MODFdn = function (MODid, callback) {
+module.exports.MODFdn = function (MODid, callback) {//L側板下降
     var ChansuNoJunban_tmp = -1;
     excelData.findById(MODid, function (err, stuff) {
         if (err) {
@@ -84,7 +98,7 @@ module.exports.MODFdn = function (MODid, callback) {
     });
 };
 
-module.exports.MODFup = function (MODid, callback) {
+module.exports.MODFup = function (MODid, callback) {//L側板上升
     var ChansuNoJunban_tmp = -1;
     excelData.findById(MODid, function (err, stuff) {
         if (err) {
@@ -93,18 +107,22 @@ module.exports.MODFup = function (MODid, callback) {
         ChansuNoJunban_tmp = stuff.ChansuNoJunban;
         //logic:
         //if (ChansuNoJunban_tmp - 1 >= 0) {
-            const filter = { $and: [{ batabaseClass: { $eq: stuff.batabaseClass } }, { ChansuNoJunban: { $gt: ChansuNoJunban_tmp } }] };
-            excelData.find(filter).sort({ ChansuNoJunban: 'ascending' }).exec((err2, SearchResult) => {
-                if (err2) {
-                    console.log(err2);
-                }
-                if (SearchResult.length > 0) {
-                    ChansuNoJunban_tmp = SearchResult[0].ChansuNoJunban;
-                    excelData.findByIdAndUpdate(SearchResult[0].id, { $set: { ChansuNoJunban: stuff.ChansuNoJunban } }, {}, () => {
-                        excelData.findByIdAndUpdate(MODid, { $set: { ChansuNoJunban: ChansuNoJunban_tmp } }, {}, callback);
-                    });
-                }
-            });
+        const filter = { $and: [{ batabaseClass: { $eq: stuff.batabaseClass } }, { ChansuNoJunban: { $gt: ChansuNoJunban_tmp } }] };
+        excelData.find(filter).sort({ ChansuNoJunban: 'ascending' }).exec((err2, SearchResult) => {
+            if (err2) {
+                console.log(err2);
+            }
+            if (SearchResult.length > 0) {
+                ChansuNoJunban_tmp = SearchResult[0].ChansuNoJunban;
+                excelData.findByIdAndUpdate(SearchResult[0].id, { $set: { ChansuNoJunban: stuff.ChansuNoJunban } }, {}, () => {
+                    excelData.findByIdAndUpdate(MODid, { $set: { ChansuNoJunban: ChansuNoJunban_tmp } }, {}, callback);
+                });
+            }
+        });
         //}
     });
+};
+
+module.exports.delById = function (MODid, callback) {//L側板上升
+    excelData.findByIdAndDelete(MODid, callback);
 };

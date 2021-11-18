@@ -111,7 +111,14 @@ $(function () {
             excelHTML: INexcelHTML,
             ChansuNoJunban: INChansuNoJunban
         }, (res) => {
-            //empty
+            if (res === 'success') { location.reload(); } else { $('.ui.basic.modal').modal('show');/*錯誤宣告*/ }
         });
+    });
+});
+
+$(function () {
+    var clickonstart = document.getElementsByClassName('TRIGdissableOnStart');
+    clickonstart.forEach(element => {
+        element.click();
     });
 });
