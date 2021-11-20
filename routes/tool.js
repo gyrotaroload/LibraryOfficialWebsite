@@ -11,4 +11,8 @@ router.post('/isbn2json', function (req, res, next) {
     });
 });
 
+router.get('/mosbjt',function(req,res,next){//for fun not important
+res.render('mosbjt',{});
+});
+
 module.exports = router;

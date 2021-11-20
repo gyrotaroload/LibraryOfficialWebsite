@@ -21,6 +21,14 @@ router.get('/', function (req, res, next) {
   });
 });
 
+router.get('/editmd', function (req, res, next) {
+  res.render('md', {
+    title: '文字編輯',
+  topic:'最新消息',
+  topic_small:'新增'
+  });
+});
+
 router.get('/journals', function (req, res, next) {
   res.render('dashboard', {
     title: '成大數學系圖書館',
@@ -45,7 +53,7 @@ router.get(('/newbooks'), function (req, res, next) {
         innerHTMLofLlistSTRING = "<h1>[ERROR] DB Sequence length does not match!</h1>";
       }
       //這裡有一段是這裡新加的
-      excelDB.getPayloadById('newbooksdb',req.query.pageid, (thistopic, HTMLpayload) => {
+      excelDB.getPayloadById('newbooksdb', req.query.pageid, (thistopic, HTMLpayload) => {
         res.render('excel', {
           title: 'newbooks',
           VARcountClassJade: parseInt(VARcountClass, 10) + 1,
