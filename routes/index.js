@@ -1,6 +1,7 @@
 var express = require('express');
 var nckulib = require('nckulib');
 var router = express.Router();
+var MarkdownIt = require('markdown-it');
 
 var excelDB = require('../models/excelDB');
 
@@ -24,9 +25,15 @@ router.get('/', function (req, res, next) {
 router.get('/editmd', function (req, res, next) {
   res.render('md', {
     title: '文字編輯',
-  topic:'最新消息',
-  topic_small:'新增'
+    topic: '最新消息',
+    topic_small: '新增'
   });
+});
+
+router.post('/editmd', function (req, res, next) {
+  var md = new MarkdownIt();
+  var result = md.render(req.body.usrinpt);
+  res.status(200).send(result);
 });
 
 router.get('/journals', function (req, res, next) {
