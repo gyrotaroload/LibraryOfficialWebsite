@@ -1,7 +1,53 @@
 var express = require('express');
 var nckulib = require('nckulib');
 var router = express.Router();
-var MarkdownIt = require('markdown-it');
+///////////////////////////////////////////////////////////////////////
+const slugify = (...args) => import('@sindresorhus/slugify').then(({ default: slugify }) => slugify(...args));
+var md = require('markdown-it')()
+  .use(require('markdown-it-sub'))
+  .use(require('markdown-it-sup'))
+  .use(require('markdown-it-footnote'))
+  .use(require('markdown-it-deflist'))
+  .use(require('markdown-it-abbr'))
+  .use(require('markdown-it-emoji'))
+  .use(require('markdown-it-container'), 'spoiler', {
+    //use example
+    validate: function (params) {
+      return params.trim().match(/^spoiler\s+(.*)$/);
+    },
+
+    render: function (tokens, idx) {
+      var m = tokens[idx].info.trim().match(/^spoiler\s+(.*)$/);
+
+      if (tokens[idx].nesting === 1) {
+        // opening tag
+        return '<details><summary>' + md.utils.escapeHtml(m[1]) + '</summary>\n';
+
+      } else {
+        // closing tag
+        return '</details>\n';
+      }
+    }
+  })
+  .use(require('markdown-it-ins'))
+  .use(require('markdown-it-mark'))
+  .use(require('markdown-it-texmath'), {
+    engine: require('katex'),
+    delimiters: 'dollars',
+    katexOptions: { macros: { "\\RR": "\\mathbb{R}" } }
+  })
+  .use(require('markdown-it-attrs'), {
+    // optional, these are default options
+    leftDelimiter: '{',
+    rightDelimiter: '}',
+    allowedAttributes: ['id', 'class', /^regex.*$/]
+  })
+  .use(require('markdown-it-anchor'), { slugify: s => slugify(s) })
+  .use(require('markdown-it-task-lists'), { label: true, labelAfter: true });
+var randomstring = require("randomstring");//use with markdown~~
+var replaceall = require("replaceall");
+///////////////////////////////////////////////
+
 
 var excelDB = require('../models/excelDB');
 
@@ -31,9 +77,11 @@ router.get('/editmd', function (req, res, next) {
 });
 
 router.post('/editmd', function (req, res, next) {
-  var md = new MarkdownIt();
   var result = md.render(req.body.usrinpt);
-  res.status(200).send(result);
+  res.render('mdRaw', {
+    title: 'mdRaw-html',
+    VARformdtest: replaceall("[object Promise]", String(randomstring.generate()),String(result))
+  });
 });
 
 router.get('/journals', function (req, res, next) {
