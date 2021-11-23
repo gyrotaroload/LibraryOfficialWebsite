@@ -157,4 +157,10 @@ router.get('/docx', function (req, res, next) {
   });
 });
 
+router.get('/docxUpload', function (req, res, next) {
+  res.render('docx_upload', {
+    title: 'docx upload 2'
+  });
+});
+
 module.exports = router;

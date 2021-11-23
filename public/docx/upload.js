@@ -25,7 +25,21 @@ $(function () {//start
             },
             complete: function (xhr) {
                 console.log(xhr.responseJSON.sol_html);
-                document.getElementById("sol_html").innerHTML = xhr.responseJSON.sol_html;
+                document.getElementById("htmlfromuser").innerHTML = xhr.responseJSON.sol_html;
+                var makeALLtableTOsemanticUI = document.getElementsByTagName("table");
+                for (let index = 0; index < makeALLtableTOsemanticUI.length; index++) {
+                    const element = makeALLtableTOsemanticUI[index];
+                    if (!element.classList.contains("ui")) {
+                        element.classList.add("ui");
+                    }
+                    if (!element.classList.contains("celled")) {
+                        element.classList.add("celled");
+                    }
+                    if (!element.classList.contains("table")) {
+                        element.classList.add("table");
+                    }
+                }
+
             },
         });
     }

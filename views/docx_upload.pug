@@ -11,30 +11,30 @@ block contentHEAD
   //-script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js')
 
 block content
-  .ui.container
+  //.ui.container
     nav.ui.inverted.grey.big.stackable.menu
       .header.active.item
-        // this may be your photograph
+        //- this may be your photograph
         img.logo(src='/docx/logo.png' alt='')
         |         My Blog
       .item About me
       .item Contact
-      // Search
+      //- Search
       .right.menu
         .item
           .ui.inverted.black.icon.input
             i.search.icon
             input(placeholder='Search this blog' type='text')
-        // <a class="item">Link</a>
+        //- <a class="item">Link</a>
     .ui.stackable.grid
       main#htmlfromuser.eleven.wide.column
-        //h1 Tote bag four dollar toast bitters taxidermy prism
-        //p 09 October 2018
-        //p
+        //-h1 Tote bag four dollar toast bitters taxidermy prism
+        //-p 09 October 2018
+        //-p
           | Lorem ipsum dolor amet heirloom gentrify drinking vinegar, chillwave tote bag seitan shoreditch kombucha keffiyeh cred health goth shaman literally locavore wolf. Tofu kitsch scenester irony mixtape gochujang humblebrag 8-bit viral adaptogen aesthetic typewriter. Edison bulb banjo lo-fi, selvage synth pour-over keytar. 8-bit meh chartreuse asymmetrical readymade lumbersexual lyft craft beer kombucha roof party swag actually.
-        //p
+        //-p
           | Post-ironic schlitz la croix direct trade, trust fund selfies wayfarers thundercats man braid offal iPhone paleo migas. Health goth fingerstache 8-bit hella DIY small batch thundercats, pour-over snackwave crucifix vice. Lyft photo booth fam freegan hot chicken chartreuse dreamcatcher. Cliche taxidermy bushwick cronut, small batch activated charcoal roof party man bun DIY hammock succulents street art raclette. Man bun slow-carb migas coloring book art party, listicle direct trade tousled. Kale chips bitters ennui chartreuse, pabst organic cold-pressed disrupt fanny pack plaid. Lomo meggings fixie, knausgaard migas you probably haven't heard of them waistcoat 8-bit marfa tilde jean shorts.
-        //p
+        //-p
           | Succulents blog kinfolk craft beer tacos. Tumblr authentic single-origin coffee beard chambray. Fixie quinoa raw denim thundercats direct trade 3 wolf moon, intelligentsia gochujang leggings whatever jianbing. Squid art party fam authentic seitan tacos austin gluten-free next level adaptogen chia. Celiac 90's +1 godard. Crucifix sriracha sartorial street art put a bird on it intelligentsia VHS cronut, subway tile ramps 90's la croix meh next level.
       aside.five.wide.column
         h4 CATEGORIES
@@ -77,8 +77,8 @@ block content
         p
           a(href='#') Yet Another Interesting Blog
         .ui.divider
-  footer.ui.container
-    // Social
+  //footer.ui.container
+    //- Social
     .social
       a.ui.facebook.button(href='#')
         i.facebook.icon
@@ -95,13 +95,193 @@ block content
       a.ui.vk.button(href='#')
         i.vk.icon
         | VK
-      // 09 Oct 2018 R.I.P. Google Plus :-P
-      // <a class="ui google plus button" href="#"><i class="google plus icon"></i>Google Plus</a>
+      //- 09 Oct 2018 R.I.P. Google Plus :-P
+      //- <a class="ui google plus button" href="#"><i class="google plus icon"></i>Google Plus</a>
     .copyright
       | Free html personal blog theme by 
       i.ui.icon.github
       a(href='https://github.com/shawooha') shawooha
   // Free html personal blog theme "Samantha" (Semantic UI + jQuery) by Tim B. https://github.com/shawooha
+  .ui.clearing.segment
+    h6.ui.right.floated.header
+      .first-border.flex.color-3
+        #submit.button.flex(align="center")
+          | &#9745;提交
+          svg(width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg')
+            path(d='M9.77623 4.61867C10.4796 4.99574 10.4796 6.00427 9.77623 6.38133L2.39266 10.3397C1.72648 10.6969 0.920166 10.2143 0.920167 9.45841L0.920167 1.54159C0.920167 0.785717 1.72648 0.30311 2.39266 0.660254L9.77623 4.61867Z' fill='#333')
+    h1.ui.left.floated.header
+      | 「新增」最新消息
+  .ui.placeholder.segment
+    .ui.two.column.very.relaxed.stackable.grid
+      .column
+        .ui.card
+          .content
+            .header 新消息發布日期
+            .meta 不一定要是當天的日期
+            .description
+              .ui.labeled.input
+                .ui.label
+                  | 年
+                input(type='text' placeholder='1998')
+              .ui.fitted.divider
+              .ui.labeled.input
+                .ui.label
+                  | 月
+                input(type='text' placeholder='12')
+              .ui.fitted.divider
+              .ui.labeled.input
+                .ui.label
+                  | 日
+                input(type='text' placeholder='12')
+              .ui.fitted.divider
+              .ui.labeled.input
+                .ui.label
+                  | 時
+                input(type='text' placeholder='12')
+              .ui.fitted.divider
+              .ui.labeled.input
+                .ui.label
+                  | 分
+                input(type='text' placeholder='12')
+      .middle.aligned.column
+        .ui.card
+          .content
+            .header 標籤
+            .meta 輸入標籤並且按下按鈕，可以輸入很多個標籤，輸入完的標籤會顯示在列表中
+            .description
+              .ui.right.labeled.left.icon.input
+                i.tags.icon
+                input(type='text' placeholder='輸入標籤')
+                a.ui.tag.label 新增標籤 
+              h4.ui.horizontal.divider.header
+                i.flag.checkered.icon
+                |  新消息的標題
+              .ui.labeled.input
+                .ui.label
+                  | 標題
+                input(type='text' placeholder='例如，形象影片發布瞜~~之類的文字')
+              .ui.fitted.divider
+    .ui.vertical.divider |
+  .ui.placeholder.segment
+    .ui.two.column.very.relaxed.stackable.grid
+      .column
+        .ui.card
+          .content
+            .header 新消息發布日期
+            .meta 不一定要是當天的日期
+            .description
+              .ui.labeled.input
+                .ui.label
+                  | 年
+                input(type='text' placeholder='1998')
+              .ui.fitted.divider
+              .ui.labeled.input
+                .ui.label
+                  | 月
+                input(type='text' placeholder='12')
+              .ui.fitted.divider
+              .ui.labeled.input
+                .ui.label
+                  | 日
+                input(type='text' placeholder='12')
+              .ui.fitted.divider
+              .ui.labeled.input
+                .ui.label
+                  | 時
+                input(type='text' placeholder='12')
+              .ui.fitted.divider
+              .ui.labeled.input
+                .ui.label
+                  | 分
+                input(type='text' placeholder='12')
+      .middle.aligned.column
+        .ui.icon.message
+          i.file.alternate.icon
+          .content
+            .header
+              | 輸入最新消息的「內容」
+            p 你可以選擇上傳WORD檔來做為本頁面的內容；或者使用markdown線上純文字編輯器來鍵入內容；或者你可以選擇將「最新消息內容」與「最新消息摘要」設為相符
+        .ui.piled.segment
+          h4.ui.horizontal.divider.header
+            i.hand.point.right.outline.icon
+            |   輸入方法三選一(三個按鈕選一個按)
+          h4.ui.horizontal.divider.header
+            i.thumbtack.icon
+            |   不建議的方法
+          .next-button.flex
+            .next.flex.color-2
+              | WORD
+              svg.next-svg(width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg')
+                path(d='M9.77623 4.61867C10.4796 4.99574 10.4796 6.00427 9.77623 6.38133L2.39266 10.3397C1.72648 10.6969 0.920166 10.2143 0.920167 9.45841L0.920167 1.54159C0.920167 0.785717 1.72648 0.30311 2.39266 0.660254L9.77623 4.61867Z' fill='#fff')
+          h4.ui.horizontal.divider.header
+            i.thumbtack.icon
+            |   建議選擇這個
+          .first-border.flex.color-3
+            #submit.button.flex(align="center")
+              | 下一步[使用markdown編輯器編輯內容]
+              svg(width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg')
+                path(d='M9.77623 4.61867C10.4796 4.99574 10.4796 6.00427 9.77623 6.38133L2.39266 10.3397C1.72648 10.6969 0.920166 10.2143 0.920167 9.45841L0.920167 1.54159C0.920167 0.785717 1.72648 0.30311 2.39266 0.660254L9.77623 4.61867Z' fill='#333')
+          h4.ui.horizontal.divider.header
+            i.thumbtack.icon
+            |   最快速省事的方法
+          .first-border.flex.color-1
+            .round.flex
+              svg#svg2474(xmlns:inkscape='http://www.inkscape.org/namespaces/inkscape' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns='http://www.w3.org/2000/svg' xmlns:sodipodi='http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd' xmlns:cc='http://creativecommons.org/ns#' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:dc='http://purl.org/dc/elements/1.1/' xmlns:svg='http://www.w3.org/2000/svg' xmlns:ns1='http://sozi.baierouge.fr' sodipodi:docname='view-refresh.svg' viewBox='0 0 48 48' version='1.1' inkscape:version='0.47 r22583')
+                sodipodi:namedview#namedview31(bordercolor='#666666' inkscape:pageshadow='2' guidetolerance='10' pagecolor='#ffffff' gridtolerance='10' inkscape:window-maximized='1' inkscape:zoom='9.8333333' objecttolerance='10' borderopacity='1' inkscape:current-layer='svg2474' inkscape:cx='17.058689' inkscape:cy='28.777087' inkscape:window-y='24' inkscape:window-x='0' inkscape:window-width='1280' showgrid='false' inkscape:pageopacity='0' inkscape:window-height='973')
+                defs#defs2476
+                  lineargradient#linearGradient4873
+                    stop#stop4875(style='stop-color:white' offset='0')
+                    stop#stop4877(style='stop-color:white;stop-opacity:0' offset='1')
+                  lineargradient#linearGradient2861(y2='22.6' gradientUnits='userSpaceOnUse' x2='15.373' gradientTransform='matrix(.95437 0 0 .95437 .49330 2.8946)' y1='5.0472' x1='15.373')
+                    stop#stop3535(style='stop-color:#93b9dd' offset='0')
+                    stop#stop3545(style='stop-color:#6396cd' offset='1')
+                  radialgradient#radialGradient2864(gradientUnits='userSpaceOnUse' cy='4.625' cx='62.625' gradientTransform='matrix(2.1499 0 0 .87466 -110.64 34.661)' r='10.625')
+                    stop#stop8840(style='stop-color:black' offset='0')
+                    stop#stop8842(style='stop-color:black;stop-opacity:0' offset='1')
+                  lineargradient#linearGradient2850(y2='19.948' xlink:href='#linearGradient4873' gradientUnits='userSpaceOnUse' x2='10.512' gradientTransform='matrix(.95437 0 0 .95437 .49330 2.8946)' y1='10.677' x1='35.233' inkscape:collect='always')
+                  lineargradient#linearGradient3684(y2='19.948' xlink:href='#linearGradient4873' gradientUnits='userSpaceOnUse' x2='10.512' gradientTransform='matrix(-.95437 0 0 -.95437 46.382 44.602)' y1='10.677' x1='35.233' inkscape:collect='always')
+                  lineargradient#linearGradient3687(y2='22.6' gradientUnits='userSpaceOnUse' x2='15.373' gradientTransform='matrix(-.95437 0 0 -.95437 46.382 44.602)' y1='5.0472' x1='15.373' inkscape:collect='always')
+                    stop#stop3691(style='stop-color:#d7e866' offset='0')
+                    stop#stop3693(style='stop-color:#8cab2a' offset='1')
+                path#path8836(style='opacity:.56044;fill-rule:evenodd;fill:url(#radialGradient2864)' d='m46.842 38.707a22.842 9.2933 0 0 1 -45.685 0 22.842 9.2933 0 1 1 45.685 0z')
+                g#g3669
+                  path#path3372(style='stroke-linejoin:round;stroke:#387ab8;fill:url(#linearGradient2861)' d='m23.531 4.5c-9.848 0.3989-17.691 8.015-18.906 17.656h10.625c1.058-3.926 4.851-6.983 9.031-6.937 2.364 0.026 4.646 0.799 6.344 2.437l-4.406 4.063h16.031v-15.813l-4.219 4.219c-3.708-3.644-7.996-5.5648-13.469-5.625-0.347-0.0038-0.687-0.0139-1.031 0z')
+                  path#path3370(sodipodi:nodetypes='csccccccc' style='opacity:.4;stroke:url(#linearGradient2850);stroke-width:1.193;fill:none' d='m14.219 21.75c1.2893-4.2881 5.5889-7.7538 10.125-7.6875 2.6731 0.03908 5.955 1.1919 7.9688 3.4688l-3.2188 3.0625 12.062 0.03125v-12.062l-3.156 3.2182c-3.542-3.9506-8.053-5.9756-13.594-6.031-9.609-0.0962-17.172 6.815-18.562 16')
+                path#path3675(style='stroke-linejoin:round;stroke:#42770c;fill:url(#linearGradient3687)' d='m23.344 42.997c9.848-0.399 17.691-8.015 18.906-17.657h-10.625c-1.0577 3.9266-4.8512 6.9835-9.0312 6.9375-2.3639-0.02602-4.646-0.79971-6.3438-2.4375l4.4062-4.0625h-16.031v15.812l4.2188-4.2188c3.7082 3.644 7.9959 5.5648 13.469 5.625 0.34792 0.0038 0.68793 0.01391 1.0312 0z')
+                path#path3677(sodipodi:nodetypes='csccccccc' style='opacity:.4;stroke:url(#linearGradient3684);stroke-width:1.193;fill:none' d='m32.656 25.747c-1.2893 4.2881-5.5889 7.7538-10.125 7.6875-2.6731-0.03908-5.955-1.1919-7.9688-3.4688l3.2188-3.0625-12.062-0.03125v12.062l3.1562-3.2188c3.542 3.9509 8.0533 5.9758 13.594 6.0312 9.6095 0.09616 17.172-6.8151 18.562-16')
+                metadata
+                  rdf:rdf
+                    cc:work
+                      dc:format image/svg+xml
+                      dc:type(rdf:resource='http://purl.org/dc/dcmitype/StillImage')
+                      cc:license(rdf:resource='http://creativecommons.org/licenses/publicdomain/')
+                      dc:publisher
+                        cc:agent(rdf:about='http://openclipart.org/')
+                          dc:title Openclipart
+                      dc:title synchronize 
+                      dc:date 2010-07-21T07:37:00
+                      dc:description a synchronize icon for the gnome desktop
+                      dc:source https://openclipart.org/detail/74173/synchronize--by-aguest
+                      dc:creator
+                        cc:agent
+                          dc:title aguest
+                      dc:subject
+                        rdf:bag
+                          rdf:li gnome
+                          rdf:li human
+                          rdf:li icon
+                          rdf:li symbol
+                          rdf:li sync
+                          rdf:li synchronize
+                          rdf:li ubuntu
+                    cc:license(rdf:about='http://creativecommons.org/licenses/publicdomain/')
+                      cc:permits(rdf:resource='http://creativecommons.org/ns#Reproduction')
+                      cc:permits(rdf:resource='http://creativecommons.org/ns#Distribution')
+                      cc:permits(rdf:resource='http://creativecommons.org/ns#DerivativeWorks')
+            .button.flex.up
+              | 同步「摘要」與「內容」
+            .button
+    .ui.vertical.divider |
   input(type='file')
   textarea(rows='10' cols='50')
   #sol_html.ui.container
