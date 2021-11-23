@@ -7,13 +7,6 @@
 .color-3 {
   background: linear-gradient(to right, #3494e6, #ec6ead); }
 
-body {
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
-  background: #333;
-  font-family: 'Montserrat', sans-serif; }
-
 .flex {
   width: 100%;
   display: flex;

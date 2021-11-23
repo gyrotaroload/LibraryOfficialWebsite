@@ -21,10 +21,11 @@ $(function () {//start
                 console.log("success");
             },
             error: function (xhr) {
-                console.log("alert('Ajax request 發生錯誤');");
+                document.getElementById("sol_html").innerText = "資料傳輸錯誤";
             },
             complete: function (xhr) {
-                console.log("complete");
+                console.log(xhr.responseJSON.sol_html);
+                document.getElementById("sol_html").innerHTML = xhr.responseJSON.sol_html;
             },
         });
     }

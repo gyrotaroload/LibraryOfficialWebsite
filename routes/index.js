@@ -142,10 +142,13 @@ router.post('/docx'/*, ensureAuthenticated*/, upload.single('docxPayload'), func
     .then(function (result) {
       var html = result.value; // The generated HTML
       var messages = result.messages; // Any messages, such as warnings during conversion
-      console.log(html);
-      console.log(messages);
+      //console.log(html);
+      // console.log(messages);
+      return { sol_html: html, sol_messages: messages };
     })
-    .done();
+    .done((sol) => {
+      res.status(200).send(sol);
+    });
 });
 
 router.get('/docx', function (req, res, next) {
