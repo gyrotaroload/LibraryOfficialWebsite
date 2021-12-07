@@ -84,10 +84,16 @@ function initTable() {
                 sortable: true,
                 footerFormatter: totalTextFormatter
             }
-            
-            
             , {
                 title: 'ISSN',
+                field: 'id',
+                rowspan: 2,
+                align: 'center',
+                valign: 'middle',
+                sortable: true,
+                footerFormatter: totalTextFormatter
+            }, {
+                title: '刊名',
                 field: 'id',
                 rowspan: 2,
                 align: 'center',
@@ -135,9 +141,7 @@ function initTable() {
                 sortable: true,
                 footerFormatter: totalTextFormatter
             }
-            
-            
-            , {
+                , {
                 title: '資料細節',
                 colspan: 3,
                 align: 'center'
