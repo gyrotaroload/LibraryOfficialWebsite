@@ -53,6 +53,7 @@ const storage = multer.memoryStorage();
 var upload = multer({ storage: storage, limits: { /*fields: 1, */fileSize: 6000000, files: 1/*, parts: 2 */ } });
 
 var excelDB = require('../models/excelDB');
+var ji = require('../models/JournalInformation');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -162,5 +163,56 @@ router.get('/docxUpload', function (req, res, next) {
     title: 'docx upload 2'
   });
 });
+
+router.get('/jjson', function (req, res, next) {
+  ji.getAll((d) => {
+    var rowsDATA = [];
+    d.forEach(element => {
+      var tmpobj = {};
+      tmpobj.frameNumber = element.frameNumber;
+      tmpobj.ISSN = element.ISSN;
+      tmpobj.STAT = element.STAT;
+      tmpobj.ES = element.ES;
+      tmpobj.PS = element.PS;
+      tmpobj.REMK = element.REMK;
+      tmpobj.LIVstart = element.LIVstart;
+      tmpobj.new_date = element.new_date;
+      rowsDATA.push(tmpobj);
+    });
+
+    res.status(200).json({
+      "total": 2,
+      "totalNotFiltered": 2,
+      "rows": /*rowsDATA*/[
+        {
+          "placeNumber": "a",
+          "ISSN": "b",
+          "mainName": "c",
+          "stat": "d",
+          "eSource": "e",
+          "pSource": "f",
+          "datas": "g",
+          "someStuff": "h",
+          "updateTime": "i",
+          "existTime": "j"
+        },
+        {
+          "placeNumber": "a",
+          "ISSN": "b",
+          "mainName": "c",
+          "stat": "d",
+          "eSource": "e",
+          "pSource": "f",
+          "datas": "g",
+          "someStuff": "h",
+          "updateTime": "i",
+          "existTime": "j"
+        },
+      ]
+    });
+  });
+
+});
+
 
 module.exports = router;

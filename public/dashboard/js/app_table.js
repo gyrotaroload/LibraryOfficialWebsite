@@ -77,7 +77,7 @@ function initTable() {
                 valign: 'middle'
             }, {
                 title: '架號',
-                field: 'id',
+                field: 'placeNumber',
                 rowspan: 2,
                 align: 'center',
                 valign: 'middle',
@@ -86,7 +86,7 @@ function initTable() {
             }
             , {
                 title: 'ISSN',
-                field: 'id',
+                field: 'issn',
                 rowspan: 2,
                 align: 'center',
                 valign: 'middle',
@@ -94,7 +94,7 @@ function initTable() {
                 footerFormatter: totalTextFormatter
             }, {
                 title: '刊名',
-                field: 'id',
+                field: 'mainName',
                 rowspan: 2,
                 align: 'center',
                 valign: 'middle',
@@ -102,7 +102,7 @@ function initTable() {
                 footerFormatter: totalTextFormatter
             }, {
                 title: '狀況',
-                field: 'id',
+                field: 'stat',
                 rowspan: 2,
                 align: 'center',
                 valign: 'middle',
@@ -110,7 +110,7 @@ function initTable() {
                 footerFormatter: totalTextFormatter
             }, {
                 title: '電子資源',
-                field: 'id',
+                field: 'eSource',
                 rowspan: 2,
                 align: 'center',
                 valign: 'middle',
@@ -118,7 +118,7 @@ function initTable() {
                 footerFormatter: totalTextFormatter
             }, {
                 title: '紙本資源',
-                field: 'id',
+                field: 'pSource',
                 rowspan: 2,
                 align: 'center',
                 valign: 'middle',
@@ -126,7 +126,7 @@ function initTable() {
                 footerFormatter: totalTextFormatter
             }, {
                 title: '卷期-年代',
-                field: 'id',
+                field: 'datas',
                 rowspan: 2,
                 align: 'center',
                 valign: 'middle',
@@ -134,7 +134,7 @@ function initTable() {
                 footerFormatter: totalTextFormatter
             }, {
                 title: '備註',
-                field: 'id',
+                field: 'someStuff',
                 rowspan: 2,
                 align: 'center',
                 valign: 'middle',
@@ -147,7 +147,7 @@ function initTable() {
                 align: 'center'
             }],
             [{
-                field: 'name',
+                field: 'updateTime',
                 title: '更新日期',
                 sortable: true,
                 footerFormatter: totalNameFormatter,
