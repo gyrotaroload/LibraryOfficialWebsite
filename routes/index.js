@@ -169,24 +169,26 @@ router.get('/jjson', function (req, res, next) {
     var rowsDATA = [];
     d.forEach(element => {
       var tmpobj = {};
-      tmpobj.frameNumber = element.frameNumber;
-      tmpobj.ISSN = element.ISSN;
-      tmpobj.STAT = element.STAT;
-      tmpobj.ES = element.ES;
-      tmpobj.PS = element.PS;
-      tmpobj.REMK = element.REMK;
-      tmpobj.LIVstart = element.LIVstart;
-      tmpobj.new_date = element.new_date;
+      tmpobj.placeNumber = element.frameNumber;
+      tmpobj.issn = element.ISSN;
+      tmpobj.mainName = element.bookName;
+      tmpobj.stat = element.STAT;
+      tmpobj.eSource = element.ES;
+      tmpobj.pSource = element.PS;
+      tmpobj.datas = element.Volume;
+      tmpobj.someStuff = element.REMK;
+      tmpobj.existTime = element.LIVstart;
+      tmpobj.updateTime = element.new_date;
       rowsDATA.push(tmpobj);
     });
 
     res.status(200).json({
-      "total": 2,
-      "totalNotFiltered": 2,
-      "rows": /*rowsDATA*/[
+      "total": d.length,
+      "totalNotFiltered":  d.length,
+      "rows": rowsDATA/*[
         {
           "placeNumber": "a",
-          "ISSN": "b",
+          "issn": "b",
           "mainName": "c",
           "stat": "d",
           "eSource": "e",
@@ -198,7 +200,7 @@ router.get('/jjson', function (req, res, next) {
         },
         {
           "placeNumber": "a",
-          "ISSN": "b",
+          "issn": "b",
           "mainName": "c",
           "stat": "d",
           "eSource": "e",
@@ -208,7 +210,7 @@ router.get('/jjson', function (req, res, next) {
           "updateTime": "i",
           "existTime": "j"
         },
-      ]
+      ]*/
     });
   });
 
