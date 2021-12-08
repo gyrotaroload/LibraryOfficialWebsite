@@ -53,6 +53,7 @@ const storage = multer.memoryStorage();
 var upload = multer({ storage: storage, limits: { /*fields: 1, */fileSize: 6000000, files: 1/*, parts: 2 */ } });
 
 var excelDB = require('../models/excelDB');
+var ji = require('../models/JournalInformation');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -162,5 +163,58 @@ router.get('/docxUpload', function (req, res, next) {
     title: 'docx upload 2'
   });
 });
+
+router.get('/jjson', function (req, res, next) {
+  ji.getAll((d) => {
+    var rowsDATA = [];
+    d.forEach(element => {
+      var tmpobj = {};
+      tmpobj.placeNumber = element.frameNumber;
+      tmpobj.issn = element.ISSN;
+      tmpobj.mainName = element.bookName;
+      tmpobj.stat = element.STAT;
+      tmpobj.eSource = element.ES;
+      tmpobj.pSource = element.PS;
+      tmpobj.datas = element.Volume;
+      tmpobj.someStuff = element.REMK;
+      tmpobj.existTime = element.LIVstart;
+      tmpobj.updateTime = element.new_date;
+      rowsDATA.push(tmpobj);
+    });
+
+    res.status(200).json({
+      "total": d.length,
+      "totalNotFiltered":  d.length,
+      "rows": rowsDATA/*[
+        {
+          "placeNumber": "a",
+          "issn": "b",
+          "mainName": "c",
+          "stat": "d",
+          "eSource": "e",
+          "pSource": "f",
+          "datas": "g",
+          "someStuff": "h",
+          "updateTime": "i",
+          "existTime": "j"
+        },
+        {
+          "placeNumber": "a",
+          "issn": "b",
+          "mainName": "c",
+          "stat": "d",
+          "eSource": "e",
+          "pSource": "f",
+          "datas": "g",
+          "someStuff": "h",
+          "updateTime": "i",
+          "existTime": "j"
+        },
+      ]*/
+    });
+  });
+
+});
+
 
 module.exports = router;

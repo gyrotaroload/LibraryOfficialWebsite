@@ -77,69 +77,69 @@ function initTable() {
                 valign: 'middle'
             }, {
                 title: '架號',
-                field: 'id',
+                field: 'placeNumber',
                 rowspan: 2,
                 align: 'center',
                 valign: 'middle',
                 sortable: true,
-                footerFormatter: totalTextFormatter
+                //footerFormatter: totalTextFormatter
             }
             , {
                 title: 'ISSN',
-                field: 'id',
+                field: 'issn',
                 rowspan: 2,
                 align: 'center',
                 valign: 'middle',
                 sortable: true,
-                footerFormatter: totalTextFormatter
+                //footerFormatter: totalTextFormatter
             }, {
                 title: '刊名',
-                field: 'id',
+                field: 'mainName',
                 rowspan: 2,
                 align: 'center',
                 valign: 'middle',
                 sortable: true,
-                footerFormatter: totalTextFormatter
+                //footerFormatter: totalTextFormatter
             }, {
                 title: '狀況',
-                field: 'id',
+                field: 'stat',
                 rowspan: 2,
                 align: 'center',
                 valign: 'middle',
                 sortable: true,
-                footerFormatter: totalTextFormatter
+                //footerFormatter: totalTextFormatter
             }, {
                 title: '電子資源',
-                field: 'id',
+                field: 'eSource',
                 rowspan: 2,
                 align: 'center',
                 valign: 'middle',
                 sortable: true,
-                footerFormatter: totalTextFormatter
+                //footerFormatter: totalTextFormatter
             }, {
                 title: '紙本資源',
-                field: 'id',
+                field: 'pSource',
                 rowspan: 2,
                 align: 'center',
                 valign: 'middle',
                 sortable: true,
-                footerFormatter: totalTextFormatter
+                //footerFormatter: totalTextFormatter
             }, {
                 title: '卷期-年代',
-                field: 'id',
+                field: 'datas',
                 rowspan: 2,
                 align: 'center',
                 valign: 'middle',
                 sortable: true,
-                footerFormatter: totalTextFormatter
+                //footerFormatter: totalTextFormatter
             }, {
                 title: '備註',
-                field: 'id',
+                field: 'someStuff',
                 rowspan: 2,
                 align: 'center',
                 valign: 'middle',
                 sortable: true,
-                footerFormatter: totalTextFormatter
+                //footerFormatter: totalTextFormatter
             }
                 , {
                 title: '資料細節',
@@ -147,17 +147,17 @@ function initTable() {
                 align: 'center'
             }],
             [{
-                field: 'name',
+                field: 'updateTime',
                 title: '更新日期',
                 sortable: true,
-                footerFormatter: totalNameFormatter,
+                //footerFormatter: totalNameFormatter,
                 align: 'center'
             }, {
-                field: 'price',
+                field: 'existTime',
                 title: '存在年分',
                 sortable: true,
                 align: 'center',
-                footerFormatter: totalPriceFormatter
+                //footerFormatter: totalPriceFormatter
             }, {
                 field: 'operate',
                 title: '管理操作',
