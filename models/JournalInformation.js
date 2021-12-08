@@ -73,7 +73,7 @@ module.exports.getAllFormat = function (callback) {
             tmpobj.pSource = element.PS;
             tmpobj.datas = element.Volume;
             tmpobj.someStuff = element.REMK;
-            tmpobj.existTime = element.LIVstart;
+            tmpobj.existTime = `起始:${element.LIVstart};終止:${element.LIVend};停定年分(負面表列):${element.LIVx};`;
             tmpobj.updateTime = element.new_date;
             rowsDATA.push(tmpobj);
         });
