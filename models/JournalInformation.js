@@ -55,7 +55,28 @@ module.exports.getAll = function (callback) {
     JournalInformation.find(ft).sort({ frameNumber: 'descending' }).exec((err, SearchResult) => {
         if (err) {
             console.log(err);
-        }
+        }//TODO:error handle
         callback(SearchResult);
+    });
+}
+
+module.exports.getAllFormat = function (callback) {
+    JournalInformation.getAll((d) => {
+        var rowsDATA = [];
+        d.forEach(element => {
+            var tmpobj = {};
+            tmpobj.placeNumber = element.frameNumber;
+            tmpobj.issn = element.ISSN;
+            tmpobj.mainName = element.bookName;
+            tmpobj.stat = element.STAT;
+            tmpobj.eSource = element.ES;
+            tmpobj.pSource = element.PS;
+            tmpobj.datas = element.Volume;
+            tmpobj.someStuff = element.REMK;
+            tmpobj.existTime = element.LIVstart;
+            tmpobj.updateTime = element.new_date;
+            rowsDATA.push(tmpobj);
+        });
+        callback(rowsDATA);
     });
 }
