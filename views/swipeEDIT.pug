@@ -1,0 +1,363 @@
+extends layout
+
+block contentHEAD
+  script(src='https://code.iconify.design/2/2.1.0/iconify.min.js')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css' integrity='sha512-SJw7jzjMYJhsEnN/BuxTWXkezA2cRanuB8TdCNMXFJjxG9ZGSKOX5P3j03H6kdMxalKHZ7vlBMB4CagFP/de0A==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='/stylesheets/swipe_table.css')
+  link(rel='stylesheet' href='/stylesheets/swipeEdit.css')
+  link(rel='stylesheet' href='/stylesheets/swipe_text_input.css')
+  link(rel='stylesheet' href='/stylesheets/swipe_f.css')
+
+block content
+  //- Nav Items
+  - var navItems = { home: 'Home', my_trip: 'My Trip', discover_places: 'Discover Places', notifications: 'Notifications', settings: 'Settings' }
+
+  //- Trips
+  - var trips = { kulon_progo: 'Kulon Progo', bromo: 'Bromo' }
+
+  //- Bromo Trip
+  - var bromo = { title: '標題', date: '15 May - 23 May 2016', temp: '21' }
+  - var bromoTasks = ['Prepare the Sound Recorder', 'Book a resturant', 'Book 24 hotel rooms']
+
+  //- Kulon Progo Trip
+  - var kulon_progo = { title: '摘要', date: '15 May - 23 May 2016', temp: '34' }
+  - var kulon_progoTasks = ['Book tickets', 'Get passports ready', 'Book hotel rooms']
+
+
+  // Dashboard (Parent Block)
+  .dashboard(style="transform: scale(1.25);margin-Left:-30vw;background-color:#DDB98B")
+
+    // Dashboard Sidebar (Block)
+    .dashboard-sidebar(style="background-color:#f9dddf;color:#000000")
+    
+      // Brand (Element)
+      .dashboard-sidebar__brand
+        //img(src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/planner_dashboard_logo.svg')
+        | 目錄
+
+      // Dashboard Nav (Block)
+      .dashboard-nav: ul
+        each name, val in navItems
+          if name == 'My Trip'
+            // Item:Selected (Element:Modifier)        
+            li.dashboard-nav__item.dashboard-nav__item--selected: a(href=val)
+              img(src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/planner_dashboard_' + val + '.svg')
+              =name
+
+          else
+            // Item (Element)
+            li.dashboard-nav__item: a(href=val)
+              img(src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/planner_dashboard_' + val + '.svg')
+              =name 
+
+    // Dashboard Preview (Block)  
+    .dashboard-preview
+      each name, val in trips
+      
+        // Panel (Element)
+        .dashboard-preview__panel(class=name == 'Bromo' ? 'dashboard-preview__panel--active' : ''
+                                  data-panel-id=val)
+                                  
+          // Header (Element)
+          .dashboard-preview__header
+            h2 詳細資料
+            //h2=name
+            h3
+              | 主標題
+              //if name == 'Bromo'
+                =bromo.temp
+                span C
+              //else if name == 'Kulon Progo'
+                = kulon_progo.temp
+                span C
+              br
+              span 副標題
+                                  
+          // Content (Element)
+          .dashboard-preview__content(style="margin-Top:-15vh")
+            section
+              - var totalUnread = Math.floor((Math.random() * 100) + 1);
+              h2 操作
+                span (請小心...)
+                //span (#{totalUnread} unread)
+
+            section
+              h2 超連結
+              table(style="width:100%;")
+                thead
+                  tr
+                    th 按鈕文字
+                    th 按鈕超連結
+                tbody
+                  tr
+                    td Carolina Biggleswade
+                    td 23
+                  tr
+                    td Harry Sparrowhead
+                    td 34
+                  tr
+                    td Marjorie Doors
+                    td 32
+                  tr
+                    td Earnest Piggington-Smithe
+                    td 18
+
+              //if name == 'Bromo'
+                each name in bromoTasks
+                  label
+                    input(type='checkbox')
+                    span=name
+                    
+              //else if name == 'Kulon Progo'
+                each name in kulon_progoTasks
+                  label
+                    input(type='checkbox')
+                    span=name
+              //else
+                p All task complete
+            //section
+              - var randomDay = Math.floor((Math.random() * 10) + 1);
+              h2 Progress 
+                span (Day #{randomDay} of 10)
+
+              - var percetange = Math.floor((Math.random() * 100) + 1);
+              
+              .progress-bar
+                .progress-bar__bar(style='width: #{percetange}%')
+                .progress-bar__badge(style='left: #{percetange}%')=percetange + '%'
+
+    // Dashboard Content (Block)
+    .dashboard-content
+
+      // Dashboard Header (Block)
+      .dashboard-header
+      
+        // Search (Element)
+        .dashboard-header__search
+          //新增首頁投影片
+          input(type='search'
+                placeholder='新增首頁投影片')
+        
+        // New (Element)
+        #f4.dashboard-header__new
+          img(src='/images/photo-47.svg' style="transform: scale(3);")
+          input#fileinput(type='file' style="display:none;")
+          input#btnLoad(type='button' value='Load' onclick='handleFileSelect();' style="display:none;")
+          #editor
+          #editor_base64_fin
+
+        #f0.dashboard-header__new
+          img(src='/images/accept_confirm_okay_icon_141912.svg' style="transform: scale(3);")
+          
+      .row.ti(style="background-color:#fafdf5;")
+        span(style="color:#000000;")
+          input#f1.basic-slide(type='text' placeholder='Your best name')
+          label(for='name') 標題
+
+          
+      .dashboard-content__panel.dashboard-content__panel--active(data-panel-id='my_trip')
+        // Dashboard List (Block)
+        .dashboard-list
+          // Dasboard List Item (Element)
+          //.dashboard-list__item(data-item-id='kulon_progo')
+            //- Title (Element)
+            h2 摘要
+            //- Date (Element)
+            span 15 May - 23 May 2016
+            //- Avatar (Element)
+            .dashboard-list__avatar
+              img(src='http://placehold.it/31/95BFBF/FFF' data-avatar-id='0')
+            //- Avatar (Element)
+            .dashboard-list__avatar
+              img(src='http://placehold.it/31/95BFBF/FFF' data-avatar-id='1')
+            //- Avatar (Element)
+            .dashboard-list__avatar
+              img(src='http://placehold.it/31/95BFBF/FFF' data-avatar-id='2')
+          // Dasboard List Item (Element)
+          .dashboard-list__item.dashboard-list__item--active(data-item-id='bromo')
+            // Title (Element)
+            h2 新增按鈕與連結
+              span.iconify.hvr-bounce-in(data-icon='bx:bxs-eraser' data-icon-inline='false' style='color: #c41953;' onclick="document.getElementById('f2').innerText=document.getElementById('fn0').value.substring(1).substring(1)+':[]';")
+            // Date (Element)
+            span#f2(style="word-break: break-all;") 儲列:[]
+            // Avatar (Element)
+            //.dashboard-list__avatar
+              img(src='http://placehold.it/31/95BFBF/FFF' data-avatar-id='0')
+            // Avatar (Element)
+            //.dashboard-list__avatar
+              img(src='http://placehold.it/31/95BFBF/FFF' data-avatar-id='1')
+            // Avatar (Element)
+            //.dashboard-list__avatar
+              img(src='http://placehold.it/31/95BFBF/FFF' data-avatar-id='2')
+            form.ff
+              input#fn1.ff.name(name='text' placeholder='按鈕文字...' required='')
+              input#fn2.ff.email(name='url' placeholder='按鈕超連結...' type='url' required='')
+              //textarea.ff.message(rows='4' cols='50' name='subject' placeholder='Please enter your message' required='')
+              input#fn0.ff.btn(name='submit' type='submit' value='加入儲列')
+        h2(style='background-color:#ddb98b;margin-top:-2vh;color:#000000;text-align:center;') 摘要
+        form.ff
+          //input.ff.name(name='name' placeholder='What is your name?' required='')
+          //input.ff.email(name='emailaddress' placeholder='What is your email?' type='email' required='')
+          textarea#f3.ff.message(rows='4' cols='50' name='subject' placeholder='請輸入摘要...' required='')
+          //input.ff.btn(name='submit' type='submit' value='Send')
+
+
+
+      //each name, val in navItems
+        if name == 'My Trip'
+          //- Dashboard Content Panel (Element)
+          .dashboard-content__panel.dashboard-content__panel--active(data-panel-id=val)
+
+            //- Dashboard List (Block) 
+            .dashboard-list
+              each name, val in trips
+                    
+                if val == 'kulon_progo'
+                  //- Dasboard List Item (Element)
+                  .dashboard-list__item(data-item-id=val)
+                    //- Title (Element)
+                    h2=kulon_progo.title
+                    
+                    //- Date (Element)
+                    span=kulon_progo.date
+                    
+                    - var totalAvatars = Math.floor((Math.random() * 7) + 1);
+                    - var n = 0
+
+                    while n < totalAvatars
+                      //- Avatar (Element)
+                      .dashboard-list__avatar
+                        img(src='http://placehold.it/31/95BFBF/FFF'
+                            data-avatar-id=n++)
+              
+                else if val == 'bromo'
+                  //- Dasboard List Item (Element)
+                  .dashboard-list__item.dashboard-list__item--active(data-item-id=val)
+                    //- Title (Element)
+                    h2=bromo.title
+
+                    //- Date (Element)
+                    span=bromo.date
+                    
+                    - var totalAvatars = Math.floor((Math.random() * 5) + 1);
+                    - var n = 0
+
+                    while n < totalAvatars
+                      //- Avatar (Element)
+                      .dashboard-list__avatar
+                        img(src='http://placehold.it/31/95BFBF/FFF'
+                            data-avatar-id=n++)
+                    
+                else
+                  //- Dasboard List Item (Element)
+                  .dashboard-list__item(data-item-id=val)
+                  
+                    //- Title (Element)
+                    h2 Null
+                    
+                    //- Date (Element)
+                    span Null
+                    
+                    - var totalAvatars = Math.floor((Math.random() * 5) + 1);
+                    - var n = 0
+
+                    while n < totalAvatars
+                      //- Avatar (Element)
+                      .dashboard-list__avatar
+                        img(src='http://placehold.it/31/95BFBF/FFF'
+                            data-avatar-id=n++)
+        else
+          //- Dashboard Content Panel (Element)
+          .dashboard-content__panel(data-panel-id=val)
+            p=name
+            
+        .row.ti
+          span
+            input#name.basic-slide(type='text' placeholder='Your best name')
+            label(for='name') Name
+
+      //.row
+        p Click every input.
+      //.row
+        span
+          input#name.basic-slide(type='text' placeholder='Your best name')
+          label(for='name') Name
+        span
+          input#email.basic-slide(type='text' placeholder='Your favorite email')
+          label(for='email') Email
+        span
+          input#phone.basic-slide(type='text' placeholder='You can trust us')
+          label(for='phone') Phone
+      //.row
+        span
+          input#age.clean-slide(type='text' placeholder='Go for the high score!')
+          label(for='age') Age
+        span
+          input#height.clean-slide(type='text' placeholder='Heels count')
+          label(for='height') Height
+        span
+          input#weight.clean-slide(type='text' placeholder='Go ahead and lie')
+          label(for='weight') Weight
+      //.row
+        span
+          input#class.gate(type='text' placeholder='Wizard!')
+          label(for='class') Class
+        span
+          input#element.gate(type='text' placeholder='Five to choose from')
+          label(for='element') Element
+        span
+          input#move.gate(type='text' placeholder='Secret book attack!')
+          label(for='move') Move
+      //.row
+        span
+          input#english.skinny(type='text' placeholder='Do you speak it?')
+          label(for='english') English
+        span
+          input#burger.skinny(type='text' placeholder='A Royale with cheese?')
+          label(for='burger') Burger
+        span
+          input#wallet.skinny(type='text' placeholder='Bad Mother****er')
+          label(for='wallet') Wallet
+      //.row
+        span
+          input#card.slide-up(type='text' placeholder='Fund me!')
+          label(for='card') Credit Card
+        span
+          input#expires.slide-up(type='text' placeholder='Month Day, Year')
+          label(for='expires') Expires
+        span
+          input#security.slide-up(type='text' placeholder='Public')
+          label(for='security') Security Code
+      //.row
+        span
+          input#knock.card-slide(type='text' placeholder="Who's there?")
+          label(for='knock') Knock knock
+        span
+          input#max.card-slide(type='text' placeholder='Max who?')
+          label(for='max') Max
+        span
+          input#out.card-slide(type='text' placeholder='Sunuva...')
+          label(for='out') Maxed out card ;)
+      //.row
+        span
+          input#artist.swing(type='text' placeholder='BO$$')
+          label(for='artist') Artist
+        span
+          input#song.swing(type='text' placeholder="I don't give a ****")
+          label(for='song') Song
+        span
+          input#eyes.swing(type='text' placeholder='Crazy')
+          label(for='eyes') Eyes
+      //.row
+        span
+          input#state.balloon(type='text' placeholder='Liquid, solid, gaseous...')
+          label(for='state') State
+        span
+          input#planet.balloon(type='text' placeholder='Probably Earth')
+          label(for='planet') Planet
+        span
+          input#galaxy.balloon(type='text' placeholder='Milky Way?')
+          label(for='galaxy') Galaxy
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+  script(src='/swipe_edit/index.js')
+

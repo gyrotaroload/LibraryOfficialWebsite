@@ -101,19 +101,19 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
         LIrangeNext = true;
     } else {
         console.log('[400 error] DEFAULTLIVstart is not a number');
-    } 
+    }
     if (typeof DEFAULTLIVend == 'number') {
         LIrangeNext = true;
     } else {
         console.log('[400 error] DEFAULTLIVend is not a number');
     }
     var LIrange = [];
-    if(LIrangeNext){
-LIrange = range(DEFAULTLIVstart,DEFAULTLIVend,1);
-array.forEach((element,ind) => {
-    
-});
-    }else{
+    if (LIrangeNext) {
+        LIrange = range(DEFAULTLIVstart, DEFAULTLIVend, 1);
+        array.forEach((element, ind) => {
+
+        });
+    } else {
         LIrange = [];
     }
 
@@ -218,6 +218,14 @@ router.post('/excelTransferOrder', ensureAuthenticated, function (req, res, next
     }
 });
 
+
+router.get('/swipeEDIT', ensureAuthenticated, function (req, res, next) {
+    res.render('swipeEDIT', {
+        title: 'swipeEDIT'
+    });
+});
+
+
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
@@ -226,10 +234,12 @@ function ensureAuthenticated(req, res, next) {
         res.redirect('/users/login');
     }
 }
+
+
 module.exports = router;
 
 // functions...
-var range = function(start, end, step) {
+var range = function (start, end, step) {
     var range = [];
     var typeofStart = typeof start;
     var typeofEnd = typeof end;
