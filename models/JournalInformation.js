@@ -39,6 +39,9 @@ var JournalInformationSchema = mongoose.Schema({
     },
     history: {
         type: Array
+    },
+    LIrange: {
+        type: Array
     }
 });
 
@@ -79,4 +82,8 @@ module.exports.getAllFormat = function (callback) {
         });
         callback(rowsDATA);
     });
+}
+
+module.exports.getByYear = function (callback) {
+
 }
