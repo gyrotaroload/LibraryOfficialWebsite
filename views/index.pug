@@ -58,9 +58,12 @@ block content
             form.ui.form
               .inline.fields
                 .field
+                  script(async='' src='https://cse.google.com/cse.js?cx=d613870f87198941e')
+                  //TODO fixhere
                   .ui.icon.input
-                    input(type='text' placeholder='Search...')
-                    i.inverted.circular.search.link.icon(onclick='console.log("search...");$(".ui.basic.modal").modal("show");')
+                    .gcse-searchbox-only
+                    //input(type='text' placeholder='Search...')
+                    //i.inverted.circular.search.link.icon(onclick='console.log("search...");$(".ui.basic.modal").modal("show");')
   .ui.mobile.only.padded.grid
     #headderBar.ui.top.fixed.borderless.fluid.inverted.huge.menu
       a.header.item 成功大學數學系圖書室

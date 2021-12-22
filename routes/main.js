@@ -6,6 +6,8 @@ var DEF_DEBUG = true;
 
 var JournalInformation = require('../models/JournalInformation');
 var excelDB = require('../models/excelDB');
+var swipe_edit = require('../models/swipe_edit');
+
 
 router.get('/', ensureAuthenticated, function (req, res, next) {
     //Person.getPersonal(req.user.username, function (err, Personget) {
