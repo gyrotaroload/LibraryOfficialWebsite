@@ -165,7 +165,9 @@ router.get('/docxUpload', function (req, res, next) {
 });
 
 router.get('/jjson', function (req, res, next) {
+
   ji.getAllFormat((d) => {/*
+
     var rowsDATA = [];
     d.forEach(element => {
       var tmpobj = {};
@@ -180,12 +182,14 @@ router.get('/jjson', function (req, res, next) {
       tmpobj.existTime = element.LIVstart;
       tmpobj.updateTime = element.new_date;
       rowsDATA.push(tmpobj);
+
     });*/
 
     res.status(200).json({
       "total": d.length,
       "totalNotFiltered": d.length,
       "rows": d/*rowsDATA*//*[
+
         {
           "placeNumber": "a",
           "issn": "b",

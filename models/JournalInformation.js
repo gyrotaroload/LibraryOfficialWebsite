@@ -58,6 +58,7 @@ module.exports.getAll = function (callback) {
     JournalInformation.find(ft).sort({ frameNumber: 'descending' }).exec((err, SearchResult) => {
         if (err) {
             console.log(err);
+
         }//TODO:error handle
         callback(SearchResult);
     });
@@ -85,5 +86,6 @@ module.exports.getAllFormat = function (callback) {
 }
 
 module.exports.getByYear = function (callback) {
+
 
 }
