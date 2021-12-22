@@ -8,6 +8,10 @@ block contentHEAD
   meta(name='keywords' content='修改的部分_關鍵字1, 修改的部分_關鍵字2, 修改的部分_關鍵字3, 修改的部分_關鍵字4')
   meta(name='author' content='修改的部分_作者1')
   meta(name='theme-color' content='#DDB98B')
+  meta(property='og:title' content='成大數學系圖書館')
+  meta(property='og:description' content='請補充描述')
+  meta(property='og:type' content='website')
+  meta(property='og:image' content='public/images/california-brown-wooden-shelves-in-a-library-usa-usa-image.jpg')
   title #{ title }
   link(rel='stylesheet' href='./jumbotron/stylesheets/normalize.css')
   link(rel='stylesheet' href='./jumbotron/stylesheets/main.css')
@@ -605,12 +609,12 @@ block content
               h4.ui.header(style='margin-bottom: 2px;') 網站維護
               .ui.list(role='list' style='margin-top: 2px;')
                 li(role='listitem')
-                  a.jsx-2061850338(href='https://github.com/semantic-ui-forest/semantic-ui-forest/graphs/contributors') 錯誤回報
-                  //TODO錯誤回報的網址要補充
+                  a.jsx-2061850338(target='_blank' href='https://github.com/gyrotaroload/LibraryOfficialWebsite/issues') 錯誤回報
+                  //TODO錯誤回報的網址要更動
                 li(role='listitem')
-                  a.jsx-2061850338(href='/main') 後台管理
+                  a.jsx-2061850338(target='_blank' href='/main') 後台管理
                 li(role='listitem')
-                  a.jsx-2061850338(href='https://github.com/andythebreaker/LibraryOfficialWebsiteE') 程式開源
+                  a.jsx-2061850338(target='_blank' href='https://github.com/andythebreaker/LibraryOfficialWebsite') 程式開源
                   //TODO open in new window
   #aLotOFjs(style='display: none;')
     // 請注意:所有script的順序都是嚴格要求的
