@@ -39,6 +39,9 @@ var JournalInformationSchema = mongoose.Schema({
     },
     history: {
         type: Array
+    },
+    LIrange: {
+        type: Array
     }
 });
 
@@ -55,7 +58,34 @@ module.exports.getAll = function (callback) {
     JournalInformation.find(ft).sort({ frameNumber: 'descending' }).exec((err, SearchResult) => {
         if (err) {
             console.log(err);
-        }
+
+        }//TODO:error handle
         callback(SearchResult);
     });
+}
+
+module.exports.getAllFormat = function (callback) {
+    JournalInformation.getAll((d) => {
+        var rowsDATA = [];
+        d.forEach(element => {
+            var tmpobj = {};
+            tmpobj.placeNumber = element.frameNumber;
+            tmpobj.issn = element.ISSN;
+            tmpobj.mainName = element.bookName;
+            tmpobj.stat = element.STAT;
+            tmpobj.eSource = element.ES;
+            tmpobj.pSource = element.PS;
+            tmpobj.datas = element.Volume;
+            tmpobj.someStuff = element.REMK;
+            tmpobj.existTime = `起始:${element.LIVstart};終止:${element.LIVend};停定年分(負面表列):${element.LIVx};`;
+            tmpobj.updateTime = element.new_date;
+            rowsDATA.push(tmpobj);
+        });
+        callback(rowsDATA);
+    });
+}
+
+module.exports.getByYear = function (callback) {
+
+
 }

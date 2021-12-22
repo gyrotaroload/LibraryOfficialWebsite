@@ -96,6 +96,27 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
         INLIVxARRAYfailed = true;
     }
 
+    var LIrangeNext = false;
+    if (typeof DEFAULTLIVstart == 'number') {
+        LIrangeNext = true;
+    } else {
+        console.log('[400 error] DEFAULTLIVstart is not a number');
+    } 
+    if (typeof DEFAULTLIVend == 'number') {
+        LIrangeNext = true;
+    } else {
+        console.log('[400 error] DEFAULTLIVend is not a number');
+    }
+    var LIrange = [];
+    if(LIrangeNext){
+LIrange = range(DEFAULTLIVstart,DEFAULTLIVend,1);
+array.forEach((element,ind) => {
+    
+});
+    }else{
+        LIrange = [];
+    }
+
     var newJournalInformation = new JournalInformation({
         new_date: Date.now(),
         frameNumber: INframeNumber,
@@ -206,3 +227,54 @@ function ensureAuthenticated(req, res, next) {
     }
 }
 module.exports = router;
+
+// functions...
+var range = function(start, end, step) {
+    var range = [];
+    var typeofStart = typeof start;
+    var typeofEnd = typeof end;
+
+    if (step === 0) {
+        throw TypeError("Step cannot be zero.");
+    }
+
+    if (typeofStart == "undefined" || typeofEnd == "undefined") {
+        throw TypeError("Must pass start and end arguments.");
+    } else if (typeofStart != typeofEnd) {
+        throw TypeError("Start and end arguments must be of same type.");
+    }
+
+    typeof step == "undefined" && (step = 1);
+
+    if (end < start) {
+        step = -step;
+    }
+
+    if (typeofStart == "number") {
+
+        while (step > 0 ? end >= start : end <= start) {
+            range.push(start);
+            start += step;
+        }
+
+    } else if (typeofStart == "string") {
+
+        if (start.length != 1 || end.length != 1) {
+            throw TypeError("Only strings with one character are supported.");
+        }
+
+        start = start.charCodeAt(0);
+        end = end.charCodeAt(0);
+
+        while (step > 0 ? end >= start : end <= start) {
+            range.push(String.fromCharCode(start));
+            start += step;
+        }
+
+    } else {
+        throw TypeError("Only string and number types are supported");
+    }
+
+    return range;
+
+}

@@ -12,6 +12,7 @@ block contentHEAD
     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css' type='text/css')
     link(rel='stylesheet' href='https://unpkg.com/bootstrap-table@1.18.3/dist/themes/semantic/bootstrap-table-semantic.min.css' type='text/css')
     link(rel='stylesheet' href='/dashboard/stylesheets/index.css' type='text/css')
+    link(rel='stylesheet' href='/stylesheets/bbwizerd.css' type='text/css')
     style.
         @import url('/dashboard/stylesheets/customStyle.css');
     style.
@@ -69,11 +70,13 @@ block content
       #sidebar.three.wide.tablet.only.three.wide.computer.only.column
         .ui.vertical.borderless.fluid.text.menu
           // show all...etc
-          a.active.item A
+          a.active.item 按類別檢視
+          .ui.hidden.divider
+          a.item
+            .ui.violet.message 按年份檢視
           a.item B
           a.item C
           a.item D
-          .ui.hidden.divider
           // show eng...etc
           a.item E
           a.item F
@@ -89,7 +92,35 @@ block content
         .ui.padded.grid
           .row
             h1.ui.huge.dividing.header 期刊資料分類
-          .center.aligned.row
+          .bb-wizard.center.aligned.row
+            .containter
+              ul#bb-wizard-steps.bb-wizard-steps.markers.bb-justified
+                li
+                  a(data-toggle='tab' href='#wiz-page-1')
+                    label
+                      h4 現期期刊
+                      span ...說明文字....
+                li.active
+                  a(data-toggle='tab' href='#wiz-page-2')
+                    label
+                      h4 歷史期刊
+                      | ...說明文字....
+                li
+                  a(data-toggle='tab' href='#wiz-page-3')
+                    label
+                      h4 所有期刊
+                      | ...說明文字....
+                li
+                  a(data-toggle='tab' href='#wiz-page-4')
+                    label
+                      h4 電子期刊
+                      | ...說明文字....
+                li
+                  a(data-toggle='tab' href='#wiz-page-5')
+                    label
+                      h4 紙本期刊
+                      | ...說明文字....
+          //.center.aligned.row
             .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
               img.ui.centered.small.circular.image(src='/dashboard/static/images/wireframe/square-image.png')
               .ui.large.basic.label 現期期刊
