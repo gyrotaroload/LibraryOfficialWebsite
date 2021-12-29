@@ -36,3 +36,7 @@ body {
 .aLikeMouse {
     cursor: pointer;
 }
+
+.AugmentedExternalSearchModule *:first-child{
+    display: none;
+}

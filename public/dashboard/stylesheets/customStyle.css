@@ -5,3 +5,15 @@
 #masterVision {
     background-color: #DBC89AFF;
 }
+
+/*th.detail {
+    display: none;
+}
+
+#table tbody tr :first-child {
+    display: none;
+}*/
+
+#remove{
+    display: none;
+}

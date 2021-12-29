@@ -9,6 +9,7 @@ block content
   script(src='/ws/index.js')
   link(rel='stylesheet', href='/stylesheets/FreebieInteractiveFlatDesignUIOnlyHTML5CSS3.css')
   link(rel='stylesheet', href='/stylesheets/https_codepen_io_maggiben_pen_OPmLBW.css')
+  link(href='https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic.min.css' rel='stylesheet')
   .main-container
       // HEADER
       header.block
@@ -55,14 +56,15 @@ block content
                 | 新增期刊
                 //.menu-box-number 3
             li
-              a.menu-box-tab(href='#10')
-                span.icon.entypo-calendar.scnd-font-color
-                | Events
-                .menu-box-number 5
+              a.menu-box-tab(href='/main/journals')
+                span.icon.entypo-sweden.scnd-font-color
+                | 期刊管理/編輯
+                //.menu-box-number 5
             li
-              a.menu-box-tab(href='#12')
+              a.menu-box-tab(href='/main/swipeEDIT')
                 span.icon.entypo-cog.scnd-font-color
-                | Account Settings
+                | 首頁動畫編輯(未開放)
+                .menu-box-number X
             li
               a.menu-box-tab(href='#13')
                 sapn.icon.entypo-chart-line.scnd-font-color
@@ -238,26 +240,34 @@ block content
             li
               a(href='#43')
                 p.next-days-date
-                  span.day 功能
+                  span.day 需求
                   span.scnd-font-color 新書通報
                 p.next-days-temperature
                   | 完成
                   span.icon.icon-cloudy.scnd-font-color
             li
-              a(href='#44')
+              a(href='#45')
                 p.next-days-date
-                  span.day 外觀
-                  span.scnd-font-color 新書通報
+                  span.day 需求
+                  span.scnd-font-color 期刊服務
                 p.next-days-temperature
-                  | 50%
+                  | 完成
                   span.icon.icon-cloudy2.scnd-font-color
             li
               a(href='#45')
                 p.next-days-date
                   span.day 功能
-                  span.scnd-font-color 期刊服務
+                  span.scnd-font-color 首頁動畫編輯
                 p.next-days-temperature
-                  | 只能新增
+                  | 開發中
+                  span.icon.icon-cloudy2.scnd-font-color
+            li
+              a(href='#45')
+                p.next-days-date
+                  span.day 功能
+                  span.scnd-font-color 開放時間編輯
+                p.next-days-temperature
+                  | 未開發
                   span.icon.icon-cloudy2.scnd-font-color
             li
               a(href='#46')

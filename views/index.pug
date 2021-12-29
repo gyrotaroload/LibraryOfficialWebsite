@@ -12,6 +12,7 @@ block contentHEAD
   meta(property='og:description' content='請補充描述')
   meta(property='og:type' content='website')
   meta(property='og:image' content='images/california-brown-wooden-shelves-in-a-library-usa-usa-image.jpg')
+  //TODO FIX og:image
   title #{ title }
   link(rel='stylesheet' href='./jumbotron/stylesheets/normalize.css')
   link(rel='stylesheet' href='./jumbotron/stylesheets/main.css')
@@ -28,7 +29,7 @@ block contentHEAD
   link(rel='stylesheet', href='/stylesheets/foot.css')
 
 block content
-  .ui.basic.modal
+  #innerINDEX.ui.basic.modal
     .ui.icon.header
       i.archive.icon
       |     敬請期待
@@ -54,12 +55,15 @@ block content
           a.item.hvr-hang(href=`${browseHyperlinkedObjectsHorizontally2L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally2T }
           a.item.hvr-hang(href=`${browseHyperlinkedObjectsHorizontally3L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally3T }
           .item
-            form.ui.form
+            form.ui.form(onsubmit="event.target.querySelector('i').click();")
+              //TODO preventDefault
               .inline.fields
                 .field
-                  .ui.icon.input
+                  script(async='' src='https://cse.google.com/cse.js?cx=d613870f87198941e')
+                  .AugmentedExternalSearchModule.ui.icon.input
+                    .gcse-searchbox-only
                     input(type='text' placeholder='Search...')
-                    i.inverted.circular.search.link.icon(onclick='console.log("search...");$(".ui.basic.modal").modal("show");')
+                    i.AugmentedExternalSearchModuleF.inverted.circular.search.link.icon(onclick="var AugmentedExternalSearchModule=event.target.closest('.AugmentedExternalSearchModule');AugmentedExternalSearchModule.getElementsByTagName('input')[0].value=AugmentedExternalSearchModule.getElementsByTagName('input')[1].value;AugmentedExternalSearchModule.getElementsByTagName('button')[0].click();")
   .ui.mobile.only.padded.grid
     #headderBar.ui.top.fixed.borderless.fluid.inverted.huge.menu
       a.header.item 成功大學數學系圖書室
@@ -76,7 +80,7 @@ block content
             .field
               .ui.icon.input
                 input(type='text' placeholder='Search...')
-                i.inverted.circular.search.link.icon(onclick='console.log("search...");$(".ui.basic.modal").modal("show");')
+                i.inverted.circular.search.link.icon(onclick='console.log("search...");$("#innerINDEX.ui.basic.modal").modal("show");')
   // 投影片
   .ui.grid
     .sixteen.wide.column
@@ -295,7 +299,7 @@ block content
             .ui.items
               .item(align='left')
                 .ui.tiny.image
-                  img(src='./jumbotron/assets/img/400x400.png')
+                  img(src='./tool/t2i?txt=1')
                 .content
                   a.header Introduction About System JS
                   .meta

@@ -38,9 +38,10 @@ block contentHEAD
         .execl_clear { display: none }
 
 block content
+    #isUSER #{isUSER}
     .ui.tablet.computer.only.padded.grid
       #headderBar.ui.inverted.borderless.top.fixed.fluid.menu
-        a.header.item 期刊服務
+        a.header.item(onclick="window.location.href=window.location.href.split( '?' )[0]") 期刊服務
         .right.menu
           .item
             .ui.small.input
@@ -48,8 +49,9 @@ block content
             // TODO添加放大鏡、同步行動版
           a.item 回首頁
           a.item 圖書服務
-          a.item Profile
-          a.item Help
+          a#sbSlideToggle.item(style="display:none;" onclick="if(event.target.innerText==='關閉側欄'){event.target.innerText='顯示側欄';document.getElementById('content').classList.add('right');document.getElementById('content').classList.add('column');document.getElementById('content').classList.add('floated');}else{event.target.innerText='關閉側欄';document.getElementById('content').classList.remove(['right', 'floated', 'column']);}$('#sidebar').slideToggle();") 關閉側欄
+          //TODO fix this toggle
+          //a.item Help
     .ui.mobile.only.padded.grid
       .ui.top.fixed.borderless.fluid.inverted.menu
         a.header.item 期刊服務
@@ -60,66 +62,62 @@ block content
         .ui.vertical.borderless.inverted.fluid.menu
           a.item Dashboard
           a.item Settings
-          a.item Profile
+          a.item(onclick="event.target.innerText='關閉側欄';$('.sidebar').slideToggle()") 顯示側欄
+          //TODO手機板沒弄
           a.item Help
           .ui.fitted.divider
           .item
             .ui.small.input
               input(placeholder='Search...')
     .ui.padded.grid
-      #sidebar.three.wide.tablet.only.three.wide.computer.only.column
+      #sidebar.three.wide.tablet.only.three.wide.computer.only.column(style="overflow-y:scroll;")
         .ui.vertical.borderless.fluid.text.menu
           // show all...etc
-          a.active.item 按類別檢視
+          a.item(class=alpha === "0" ? "active" : "")(onclick='$(".Viewbycategory").slideToggle()') 按類別檢視
           .ui.hidden.divider
           a.item
-            .ui.violet.message 按年份檢視
-          a.item B
-          a.item C
-          a.item D
+            .ui.violet.message 按英文字母開頭檢視
+          each Ea2z in a2z
+            //-注意:不可用int當索引
+            if Ea2z == alpha
+              a.item.active(onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=${event.target.innerText}`")= Ea2z
+            else
+              a.item(onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=${event.target.innerText}`")= Ea2z
           // show eng...etc
-          a.item E
-          a.item F
-          a.item G
-          a.item H
-          a.item I
           .ui.hidden.divider
           // show ch...etc
-          a.item J
-          a.item K
-          a.item L
       #content.sixteen.wide.mobile.thirteen.wide.tablet.thirteen.wide.computer.right.floated.column
         .ui.padded.grid
-          .row
+          .Viewbycategory.row
             h1.ui.huge.dividing.header 期刊資料分類
-          .bb-wizard.center.aligned.row
+          .Viewbycategory.bb-wizard.center.aligned.row
             .containter
               ul#bb-wizard-steps.bb-wizard-steps.markers.bb-justified
-                li
-                  a(data-toggle='tab' href='#wiz-page-1')
+                li(class=alpha === "1" ? "active" : "")
+                  a(data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=1`")
                     label
                       h4 現期期刊
-                      span ...說明文字....
-                li.active
+                      span 資料將展示於下方表格
+                //li.active
                   a(data-toggle='tab' href='#wiz-page-2')
                     label
                       h4 歷史期刊
-                      | ...說明文字....
-                li
-                  a(data-toggle='tab' href='#wiz-page-3')
+                      | 資料將展示於下方表格
+                li(class=alpha === "0" ? "active" : "")
+                  a(data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]")
                     label
                       h4 所有期刊
-                      | ...說明文字....
-                li
-                  a(data-toggle='tab' href='#wiz-page-4')
+                      | 資料將展示於下方表格
+                li(class=alpha === "2" ? "active" : "")
+                  a(data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=2`")
                     label
                       h4 電子期刊
-                      | ...說明文字....
-                li
-                  a(data-toggle='tab' href='#wiz-page-5')
+                      | 資料將展示於下方表格
+                li(class=alpha === "3" ? "active" : "")
+                  a(data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=3`")
                     label
                       h4 紙本期刊
-                      | ...說明文字....
+                      | 資料將展示於下方表格
           //.center.aligned.row
             .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
               img.ui.centered.small.circular.image(src='/dashboard/static/images/wireframe/square-image.png')
@@ -137,7 +135,7 @@ block content
               img.ui.centered.small.circular.image(src='/dashboard/static/images/wireframe/square-image.png')
               .ui.large.basic.label Label
               p Something else
-          .ui.hidden.section.divider
+          .Viewbycategory.ui.hidden.section.divider
           .row
             h1.ui.huge.dividing.header 所有期刊
           .row
@@ -195,7 +193,8 @@ block content
               button#remove.ui.red.button(disabled='')
                 i.fa.fa-trash
                 |  Delete
-            table#table(data-toolbar='#toolbar' data-search='true' data-show-refresh='true' data-show-toggle='true' data-show-fullscreen='true' data-show-columns='true' data-show-columns-toggle-all='true' data-detail-view='true' data-show-export='true' data-click-to-select='true' data-detail-formatter='detailFormatter' data-minimum-count-columns='2' data-show-pagination-switch='true' data-pagination='true' data-id-field='id' data-page-list='[10, 25, 50, 100, all]' data-show-footer='true' data-side-pagination='server' data-url='/jjson' data-response-handler='responseHandler')
+            // data-detail-view='true'把這行加到下方表格中，可以顯示加號
+            table#table(data-toolbar='#toolbar' data-search='true' data-show-refresh='true' data-show-toggle='true' data-show-fullscreen='true' data-show-columns='true' data-show-columns-toggle-all='true' data-show-export='true' data-click-to-select='true' data-detail-formatter='detailFormatter' data-minimum-count-columns='2' data-show-pagination-switch='true' data-pagination='true' data-id-field='id' data-page-list='[10, 25, 50, 100, all]' data-show-footer='true' data-side-pagination='server' data-url=`${jjsonURL}` data-response-handler='responseHandler')
     #aLotOFjs(style='display: none;')
       // 請注意:所有script的順序都是嚴格要求的
       script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
@@ -206,5 +205,20 @@ block content
       script(src='https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table-locale-all.min.js')
       script(src='https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/export/bootstrap-table-export.min.js')
       script(src='https://kit.fontawesome.com/8d41246ac0.js' crossorigin='anonymous')
+      script(src='https://cdn.jsdelivr.net/npm/js-base64@3.7.2/base64.min.js')
       script(src='/dashboard/js/app_table.js')
       script(src='/dashboard/js/index.js')
+      script.
+        function table_user(){
+        if(document.getElementById('isUSER').innerText==='yes'){
+        document.querySelector('.export.ui.button.dropdown').style.display = 'none';
+        document.querySelector('[data-field="updateTime"]').parentElement.style.display = 'none';
+        document.querySelector('[data-field="existTime"]').parentElement.style.display = 'none';
+        document.querySelector('[data-field="operate"]').parentElement.style.display = 'none';
+        document.querySelector('[data-field="id"]').parentElement.style.display = 'none';
+        }else{
+        $('#sbSlideToggle').click();
+        $('.Viewbycategory').hide();//TODO注意:在維護模式下，不可用資料分類
+        }
+        }
+
