@@ -34,7 +34,7 @@
     "pug": "3.0.1",
     "randomstring": "*",
     "sanitizer": "*",
-    "sharp": "^0.28.3",
+    "sharp": "*",
     "ws": "^6.1.4",
     "markdown-it-sub": "^1.0.0",
     "markdown-it-sup": "^1.0.0",
@@ -55,7 +55,11 @@
     "mammoth": "*",
     "character-generator": "*",
     "js-base64": "*",
-    "esm": "*"
+    "esm": "*",
+    "canvas": "*",
+    "text-to-image": "*",
+    "text2png": "*",
+    "font-list": "*"
   },
   "engines": {
     "node": "14.16.0",
