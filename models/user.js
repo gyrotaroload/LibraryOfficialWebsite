@@ -6,11 +6,11 @@ var bcrypt = require('bcryptjs');
 const mongoDBuserName = "linjsing";
 const mongoDBpsw = process.env.linjsing;
 const mongoDBdataBaseName = "maindb";
-console.log(mongoDBpsw);
+//console.log(mongoDBpsw);
 //mongodb+srv://linjsing:<password>@cluster0.iupxg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 const uri = `mongodb+srv://${mongoDBuserName}:${mongoDBpsw}@cluster0.iupxg.mongodb.net/${mongoDBdataBaseName}?retryWrites=true&w=majority`;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-console.log("WTF???");
+//console.log("WTF???");
 
 //User Schema
 var UserSchema = mongoose.Schema({

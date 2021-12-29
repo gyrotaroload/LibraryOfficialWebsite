@@ -66,105 +66,122 @@ function totalPriceFormatter(data) {
 
 function initTable() {
     $table.bootstrapTable('destroy').bootstrapTable({
-        height: 550,
+        height: vh,
         locale: $('#locale').val(),
         columns: [
-            [{
-                field: 'state',
-                checkbox: true,
-                rowspan: 2,
-                align: 'center',
-                valign: 'middle'
-            }, {
-                title: '架號',
-                field: 'placeNumber',
-                rowspan: 2,
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-                //footerFormatter: totalTextFormatter
-            }
-            , {
-                title: 'ISSN',
-                field: 'issn',
-                rowspan: 2,
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-                //footerFormatter: totalTextFormatter
-            }, {
-                title: '刊名',
-                field: 'mainName',
-                rowspan: 2,
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-                //footerFormatter: totalTextFormatter
-            }, {
-                title: '狀況',
-                field: 'stat',
-                rowspan: 2,
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-                //footerFormatter: totalTextFormatter
-            }, {
-                title: '電子資源',
-                field: 'eSource',
-                rowspan: 2,
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-                //footerFormatter: totalTextFormatter
-            }, {
-                title: '紙本資源',
-                field: 'pSource',
-                rowspan: 2,
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-                //footerFormatter: totalTextFormatter
-            }, {
-                title: '卷期-年代',
-                field: 'datas',
-                rowspan: 2,
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-                //footerFormatter: totalTextFormatter
-            }, {
-                title: '備註',
-                field: 'someStuff',
-                rowspan: 2,
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-                //footerFormatter: totalTextFormatter
-            }
+            [//{
+                // field: 'state',
+                // checkbox: true,
+                //rowspan: 2,
+                //align: 'center',
+                //valign: 'middle'
+                //},
+                {
+                    title: '架號',
+                    field: 'placeNumber',
+                    rowspan: 2,
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true,
+                    searchable: false,
+                    //footerFormatter: totalTextFormatter
+                }
                 , {
-                title: '資料細節',
-                colspan: 3,
-                align: 'center'
-            }],
+                    title: 'ISSN',
+                    field: 'issn',
+                    rowspan: 2,
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true, searchable: false,
+                    //footerFormatter: totalTextFormatter
+                }, {
+                    title: 'E-ISSN',
+                    field: 'eissn',
+                    rowspan: 2,
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true, searchable: false,
+                    //footerFormatter: totalTextFormatter
+                }, {
+                    title: '刊名',
+                    field: 'mainName',
+                    rowspan: 2,
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true,
+                    searchable: true,
+                    //footerFormatter: totalTextFormatter
+                }, {
+                    title: '狀況',
+                    field: 'stat',
+                    rowspan: 2,
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true, searchable: false,
+                    //footerFormatter: totalTextFormatter
+                }, {
+                    title: '電子資源',
+                    field: 'eSource',
+                    rowspan: 2,
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true, searchable: false,
+                    //footerFormatter: totalTextFormatter
+                }, {
+                    title: '紙本資源',
+                    field: 'pSource',
+                    rowspan: 2,
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true, searchable: false,
+                    //footerFormatter: totalTextFormatter
+                }
+                //, {
+                //  title: '卷期-年代',
+                //field: 'datas',
+                //        rowspan: 2,
+                //      align: 'center',
+                //    valign: 'middle',
+                //  sortable: true,
+                //-footerFormatter: totalTextFormatter
+                //}
+                , {
+                    title: '備註',
+                    field: 'someStuff',
+                    rowspan: 2,
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true, searchable: false,
+                    //footerFormatter: totalTextFormatter
+                }
+                , {
+                    title: '資料細節',
+                    colspan: 3,
+                    align: 'center',
+                    visible: (document.getElementById('isUSER').innerText==='no')?true:false
+                }],
             [{
                 field: 'updateTime',
                 title: '更新日期',
                 sortable: true,
                 //footerFormatter: totalNameFormatter,
-                align: 'center'
+                align: 'center', searchable: false,
+                visible: (document.getElementById('isUSER').innerText==='no')?true:false
             }, {
                 field: 'existTime',
                 title: '存在年分',
                 sortable: true,
-                align: 'center',
+                align: 'center', searchable: false,
+                visible: (document.getElementById('isUSER').innerText==='no')?true:false
                 //footerFormatter: totalPriceFormatter
             }, {
                 field: 'operate',
                 title: '管理操作',
-                align: 'center',
+                align: 'center', searchable: false,
                 clickToSelect: false,
                 events: window.operateEvents,
-                formatter: operateFormatter
+                formatter: operateFormatter,
+                visible: (document.getElementById('isUSER').innerText==='no')?true:false
             }]
         ]
     })
@@ -181,7 +198,7 @@ function initTable() {
         } else {
             console.log("[ERROR] <table> onevent:load-success.bs.table -> can't find **class=fixed-table-toolbar**");
         }
-
+        table_user();
     })
     $table.on('check.bs.table uncheck.bs.table ' +
         'check-all.bs.table uncheck-all.bs.table',
@@ -210,3 +227,7 @@ $(function () {
 
     $('#locale').change(initTable)
 })
+
+/*TODO
+下載按鈕無法收回
+*/

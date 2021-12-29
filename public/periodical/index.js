@@ -10,6 +10,8 @@ var INLIVstart;
 var INLIVend;
 var INLIVx;
 
+var INeissn;
+
 document.getElementById('submit').addEventListener('click', function () {
     INframeNumber = document.getElementById('frameNumber').value;
     INISSN = document.getElementById('ISSN').value;
@@ -22,6 +24,9 @@ document.getElementById('submit').addEventListener('click', function () {
     INLIVstart = document.getElementById('LIVstart').value;
     INLIVend = document.getElementById('LIVend').value;
     INLIVx = document.getElementById('LIVx').value;
+
+INeissn = document.getElementById('eissn').value;
+
     console.log("dats->");
     console.log(INframeNumber);
     console.log(INISSN);
@@ -45,7 +50,8 @@ document.getElementById('submit').addEventListener('click', function () {
         REMK: INREMK,
         LIVstart: INLIVstart,
         LIVend: INLIVend,
-        LIVx: INLIVx
+        LIVx: INLIVx,
+        eissn:INeissn
     }, (res) => {
         //empty
     });
@@ -68,11 +74,14 @@ function DOCE(e) {
 }
 
 document.getElementById('isbnjson').addEventListener('click', function () {
+    document.getElementsByClassName("loader")[0].style.display = "inline-block";
     console.log("isbnjson");
     $.post("/tool/isbn2json", {
         //TODO:沒有做例外處理
         isbn: document.getElementById('ISSN').value
     }, (res) => {
+        document.getElementsByClassName("loader")[0].style.display = "none";
+
         if (res) {
             if (res.book_name) {
                 document.getElementById('bookName').value = res.book_name;
@@ -85,7 +94,11 @@ document.getElementById('isbnjson').addEventListener('click', function () {
                     const element = book_info_s[index];
                     if (element.stor_loc) {
                         if (element.stor_loc.includes("總圖")) {
-                            document.getElementById('Volume').value = element.stor_loc + '&#8227;' + element.stor_s;
+                            if ($('.ui.slider.checkbox').checkbox("is checked")) {
+                                document.getElementById('Volume').value = element.stor_loc + '&#8227;' + element.stor_s;
+                            } else {
+                                document.getElementById('PS').value = element.stor_loc + '&#8227;' + element.stor_s;
+                            }
                         } else if (element.stor_loc.includes("數學系")) {
                             document.getElementById('PS').value = element.stor_loc + '&#8227;' + element.stor_s;
                         } else {
@@ -102,3 +115,10 @@ document.getElementById('isbnjson').addEventListener('click', function () {
     });
 });
 
+$('.ui.mini.image').click(() => {
+    document.getElementById("quickPOPUPtopic").innerText = "功能建置中(預計2022年1月上線)";
+    document.getElementById("quickPOPUPinfo").innerText = "請點選下方任意按鈕離開";
+    $('#quickPOPUP')
+        .modal('show')
+        ;
+});

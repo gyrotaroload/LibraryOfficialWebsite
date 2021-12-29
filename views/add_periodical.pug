@@ -3,16 +3,43 @@ extends layout
 block content
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css' type='text/css')
   link(rel='stylesheet' href='/stylesheets/ButtonsUIKit.css' type='text/css')
-  #jade_user_info
-  #jade_user_info_name #{var_jade_user_info_name}
-  #jade_user_info_username #{var_jade_user_info_username}
-  #jade_user_info_profileimage #{var_jade_user_info_profileimage}
-  #jade_user_info_choosedanimal #{var_jade_user_info_choosedanimal}
+  link(rel='stylesheet' href='/stylesheets/ap.css' type='text/css')
+  .ui.top.fixed.borderless.fluid.huge.menu
+    .ui.container
+      .item 回主控台
+      //a.active.item 
+      //a.item About
+      //a.item Contact
+      //a.ui.dropdown.item(tabindex='0')
+        | Dropdown 
+        i.dropdown.icon
+        .menu(tabindex='-1')
+          .item Action
+          .item Another action
+          .item Something else here
+          .ui.divider
+          .header Navbar header
+          .item Seperated link
+          .item One more seperated link
+      //.right.menu
+        a.item Default
+        a.item Static top
+        a.active.item Fixed top
+      .right.item
+        .ui.slider.checkbox
+          input(type='checkbox' name='newsletter')
+          label 使用舊版
+  #jade_user_info(style="display:none;")
+    //TODO 資安問題
+    #jade_user_info_name #{var_jade_user_info_name}
+    #jade_user_info_username #{var_jade_user_info_username}
+    #jade_user_info_profileimage #{var_jade_user_info_profileimage}
+    #jade_user_info_choosedanimal #{var_jade_user_info_choosedanimal}
   .ui.raised.very.padded.text.container.segment
     .ui.divided.items
       .item
-        a.ui.red.ribbon.label Overview
-        .ui.mini.image
+        //a.ui.red.ribbon.label Overview
+        a.ui.mini.image
           //https://www.google.com/url?sa=i&url=https%3A%2F%2Ficonscout.com%2Ficon%2Freset-7&psig=AOvVaw1_kzZ6OklNiT5suU2cyplT&ust=1636981666842000&source=images&cd=vfe&ved=0CAwQjhxqFwoTCPj-1YH2l_QCFQAAAAAdAAAAABAD
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
@@ -21,23 +48,47 @@ block content
                 | 架號
             input#frameNumber(type='text' placeholder='Z9999')
       .item
-        .ui.mini.image
+        a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
             .ui.label
                 | ISSN
             input#ISSN(type='text' placeholder='1234-5678')
+        .first-border.flex.color-2
+          .round.flex
+            svg(width='25' height='25' viewBox='0 0 25 25' fill='none' xmlns='http://www.w3.org/2000/svg')
+              path(d='M24.2013 22.771L18.2512 16.5827C19.7811 14.7641 20.6193 12.4759 20.6193 10.0937C20.6193 4.52814 16.0912 0 10.5256 0C4.95996 0 0.431824 4.52814 0.431824 10.0937C0.431824 15.6593 4.95996 20.1875 10.5256 20.1875C12.615 20.1875 14.6061 19.5573 16.3084 18.361L22.3036 24.5963C22.5542 24.8565 22.8913 25 23.2525 25C23.5943 25 23.9186 24.8697 24.1648 24.6327C24.688 24.1293 24.7046 23.2946 24.2013 22.771ZM10.5256 2.63315C14.6394 2.63315 17.9862 5.97988 17.9862 10.0937C17.9862 14.2076 14.6394 17.5543 10.5256 17.5543C6.41171 17.5543 3.06497 14.2076 3.06497 10.0937C3.06497 5.97988 6.41171 2.63315 10.5256 2.63315Z' fill='#16a085')
+          #isbnjson.button.flex.up
+            | SEARCH
+          #isbnjsonCSS.button(onClick="document.getElementById('isbnjson').click();")
       .item
-        .ui.mini.image
+        a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
             .ui.label
                 | 刊名
             input#bookName(type='text' placeholder='1234-5678')
+        // 1
+        .loader.loader--style1(title='0' style='display:none;')
+          svg#loader-1(version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='40px' height='40px' viewBox='0 0 40 40' enable-background='new 0 0 40 40' xml:space='preserve')
+            path(opacity='0.2' fill='#000' d='M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946\
+            s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634\
+            c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z')
+            path(fill='#000' d='M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0\
+            C22.32,8.481,24.301,9.057,26.013,10.047z')
+              animatetransform(attributeType='xml' attributeName='transform' type='rotate' from='0 20 20' to='360 20 20' dur='0.5s' repeatCount='indefinite')
       .item
-        .ui.mini.image
+        a.ui.mini.image
+          img(src='/periodical/reset-7-438845.png')
+        .middle.aligned.content
+          .ui.labeled.input
+            .ui.label
+                | E-ISSN
+            input#eissn(type='text' placeholder='某些資料...')
+      .item
+        a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
@@ -51,7 +102,7 @@ block content
           option(value='1') 停訂
           option(value='2') 改名
       .item
-        .ui.mini.image
+        a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
@@ -59,23 +110,23 @@ block content
                 | 電子資源
             input#ES(type='text' placeholder='某些資料...')
       .item
-        .ui.mini.image
+        a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
             .ui.label
                 | 紙本資源
             input#PS(type='text' placeholder='某些資料...')
-      .item
-        .ui.mini.image
+      .item(style='display:none;')
+        a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
             .ui.label
                 | 卷期
-            input#Volume(type='text' placeholder='應該可以自動填入的')
+            input#Volume(type='text' placeholder='應該可以自動填入的' value='Obsolete field')
       .item
-        .ui.mini.image
+        a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
@@ -83,7 +134,7 @@ block content
                 | 備註
             input#REMK(type='text' placeholder='隨意打入一些資料吧')
       .item
-        .ui.mini.image
+        a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
@@ -91,7 +142,7 @@ block content
                 | 存在年分(起)[輸入-1代表「停用」存在年份表述]
             input#LIVstart(type='number' placeholder='1997')
       .item
-        .ui.mini.image
+        a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
@@ -99,7 +150,7 @@ block content
                 | 存在年分(訖)[輸入-1代表未停止]
             input#LIVend(type='number' placeholder='2022')
       .item
-        .ui.mini.image
+        a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
@@ -125,7 +176,7 @@ block content
         | ADD TO CARD
         svg(width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg')
           path(d='M11.3488 5.16279H6.83719V0.651191C6.83719 0.44567 6.55811 3.05176e-05 5.99998 3.05176e-05C5.44184 3.05176e-05 5.16276 0.445694 5.16276 0.651191V5.16282H0.651161C0.445663 5.16279 0 5.44187 0 5.99998C0 6.55809 0.445663 6.8372 0.651161 6.8372H5.16279V11.3488C5.16279 11.5543 5.44184 12 6 12C6.55816 12 6.83721 11.5543 6.83721 11.3488V6.8372H11.3488C11.5543 6.8372 12 6.55814 12 5.99998C12 5.44182 11.5543 5.16279 11.3488 5.16279Z' fill='#333')
-  .flex.row
+  //.flex.row
     .Forced2Disappear.first-border.flex.color-3
       .round.flex
         svg(width='33' height='24' viewBox='0 0 33 24' fill='none' xmlns='http://www.w3.org/2000/svg')
@@ -153,7 +204,7 @@ block content
       #isbnjson.button.flex.up
         | SEARCH
       #isbnjsonCSS.button(onClick="document.getElementById('isbnjson').click();")
-  .Forced2Disappear.flex.row
+  //.Forced2Disappear.flex.row
     .save-button.color-3.flex
       .save.flex
         | SAVE
@@ -164,7 +215,7 @@ block content
     .save-button.color-2.flex
       .save.flex
         | ADD
-  .Forced2Disappear.flex.row
+  //.Forced2Disappear.flex.row
     .next-button.flex
       .next.flex.color-3
         svg.back-svg(width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg')
@@ -175,7 +226,7 @@ block content
         | NEXT
         svg.next-svg(width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg')
           path(d='M9.77623 4.61867C10.4796 4.99574 10.4796 6.00427 9.77623 6.38133L2.39266 10.3397C1.72648 10.6969 0.920166 10.2143 0.920167 9.45841L0.920167 1.54159C0.920167 0.785717 1.72648 0.30311 2.39266 0.660254L9.77623 4.61867Z' fill='#fff')
-  .Forced2Disappear.flex.row
+  //.Forced2Disappear.flex.row
     .accept-button.color-3.flex
       p ACCEPT
       .cancel.flex

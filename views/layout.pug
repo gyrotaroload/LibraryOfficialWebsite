@@ -14,8 +14,22 @@ html
       *{font-family:'Noto Sans TC'}
     block contentHEAD
   body#root
+    #quickPOPUP.ui.basic.modal
+      .ui.icon.header
+        i#quickPOPUPtopic.archive.icon 標題
+      .content
+        p#quickPOPUPinfo 說明
+      .actions
+        .ui.red.basic.cancel.inverted.button
+          i.remove.icon
+          |       No
+        .ui.green.ok.inverted.button
+          i.checkmark.icon
+          |       Yes
     block content
     script.
+      const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
       WebFontConfig = {
       custom: {
       //families: ['DFYuan-W5-WIN-BF'],

@@ -91,6 +91,10 @@ router.post('/editmd', function (req, res, next) {
 router.get('/journals', function (req, res, next) {
   res.render('dashboard', {
     title: '成大數學系圖書館',
+    isUSER: 'yes',
+    jjsonURL:(req.query.alpha)?("/jjson?alpha="+req.query.alpha):"/jjson",
+    a2z:genCharArray('A','Z'),
+    alpha:req.query.alpha||'0'
   });
 });
 
@@ -129,7 +133,7 @@ router.get(('/newbooks'), function (req, res, next) {
 });
 
 router.post('/docx'/*, ensureAuthenticated*/, upload.single('docxPayload'), function (req, res, next) {
-  console.log(typeof (req.body.docxPayload));
+  //console.log(typeof (req.body.docxPayload));
   var content = req.file.buffer;
   mammoth.convertToHtml({ buffer: content }, {
     convertImage: mammoth.images.imgElement(function (image) {
@@ -165,60 +169,81 @@ router.get('/docxUpload', function (req, res, next) {
 });
 
 router.get('/jjson', function (req, res, next) {
+  console.log(req.query.alpha);
+  if (req.query.alpha) {
 
-  ji.getAllFormat((d) => {/*
-
-    var rowsDATA = [];
-    d.forEach(element => {
-      var tmpobj = {};
-      tmpobj.placeNumber = element.frameNumber;
-      tmpobj.issn = element.ISSN;
-      tmpobj.mainName = element.bookName;
-      tmpobj.stat = element.STAT;
-      tmpobj.eSource = element.ES;
-      tmpobj.pSource = element.PS;
-      tmpobj.datas = element.Volume;
-      tmpobj.someStuff = element.REMK;
-      tmpobj.existTime = element.LIVstart;
-      tmpobj.updateTime = element.new_date;
-      rowsDATA.push(tmpobj);
-
-    });*/
-
-    res.status(200).json({
-      "total": d.length,
-      "totalNotFiltered": d.length,
-      "rows": d/*rowsDATA*//*[
-
-        {
-          "placeNumber": "a",
-          "issn": "b",
-          "mainName": "c",
-          "stat": "d",
-          "eSource": "e",
-          "pSource": "f",
-          "datas": "g",
-          "someStuff": "h",
-          "updateTime": "i",
-          "existTime": "j"
-        },
-        {
-          "placeNumber": "a",
-          "issn": "b",
-          "mainName": "c",
-          "stat": "d",
-          "eSource": "e",
-          "pSource": "f",
-          "datas": "g",
-          "someStuff": "h",
-          "updateTime": "i",
-          "existTime": "j"
-        },
-      ]*/
+    ji.getByNameStartFormat(req.query.alpha,(d) => {
+  ///////////區間複製起點
+      res.status(200).json({
+        "total": d.length,
+        "totalNotFiltered": d.length,
+        "rows": d
+      });
+      ///////////區間複製宗典
     });
-  });
+  } else {
+    ji.getAllFormat((d) => {/*
+  
+      var rowsDATA = [];
+      d.forEach(element => {
+        var tmpobj = {};
+        tmpobj.placeNumber = element.frameNumber;
+        tmpobj.issn = element.ISSN;
+        tmpobj.mainName = element.bookName;
+        tmpobj.stat = element.STAT;
+        tmpobj.eSource = element.ES;
+        tmpobj.pSource = element.PS;
+        tmpobj.datas = element.Volume;
+        tmpobj.someStuff = element.REMK;
+        tmpobj.existTime = element.LIVstart;
+        tmpobj.updateTime = element.new_date;
+        rowsDATA.push(tmpobj);
+  
+      });*/
+  
+      res.status(200).json({
+        "total": d.length,
+        "totalNotFiltered": d.length,
+        "rows": d/*rowsDATA*//*[
+  
+          {
+            "placeNumber": "a",
+            "issn": "b",
+            "mainName": "c",
+            "stat": "d",
+            "eSource": "e",
+            "pSource": "f",
+            "datas": "g",
+            "someStuff": "h",
+            "updateTime": "i",
+            "existTime": "j"
+          },
+          {
+            "placeNumber": "a",
+            "issn": "b",
+            "mainName": "c",
+            "stat": "d",
+            "eSource": "e",
+            "pSource": "f",
+            "datas": "g",
+            "someStuff": "h",
+            "updateTime": "i",
+            "existTime": "j"
+          },
+        ]*/
+      });
+    });
+  }
 
 });
 
 
 module.exports = router;
+
+function genCharArray(charA, charZ) {
+  var a = [], i = charA.charCodeAt(0), j = charZ.charCodeAt(0);
+  for (; i <= j; ++i) {
+      a.push(String.fromCharCode(i));
+  }
+  return a;
+}

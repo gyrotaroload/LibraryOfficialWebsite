@@ -52,7 +52,8 @@
     "katex": "^0.15.1",
     "@sindresorhus/slugify": "^2.1.0",
     "replaceall": "^0.1.6",
-    "mammoth": "*"
+    "mammoth": "*",
+    "character-generator": "*"
   },
   "engines": {
     "node": "14.16.0",

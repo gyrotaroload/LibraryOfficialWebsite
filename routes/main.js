@@ -1,6 +1,7 @@
 //TODOindx要設定可以搜尋
 var express = require('express');
 var router = express.Router();
+var generator = require('character-generator');
 
 var DEF_DEBUG = true;
 
@@ -66,6 +67,7 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
     var INLIVstart = req.body.LIVstart;
     var INLIVend = req.body.LIVend;
     var INLIVx = req.body.LIVx;
+    var INeissn = req.body.eissn;
     var INhistory = [];
     console.log("dats->");
     console.log(INframeNumber);
@@ -132,6 +134,7 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
         LIVstart: /*parseInt(*/INLIVstart/*, 10)*/,
         LIVend: /*parseInt(*/INLIVend/*, 10)*/,
         LIVx: INLIVxARRAY,
+        eissn: INeissn,
         history: INhistory
     });
     JournalInformation.addJournal(newJournalInformation, function (err) {
@@ -226,6 +229,17 @@ router.get('/swipeEDIT', ensureAuthenticated, function (req, res, next) {
         title: 'swipeEDIT'
     });
 });
+
+router.get('/journals', ensureAuthenticated, function (req, res, next) {
+    res.render('dashboard', {
+      title: '成大數學系圖書館',
+      isUSER:'no',
+      jjsonURL:"/jjson",
+      a2z:generator('@',['A-Z']),
+      alpha:'0'
+    });
+  });
+  
 
 
 function ensureAuthenticated(req, res, next) {
