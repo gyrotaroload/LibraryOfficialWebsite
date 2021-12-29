@@ -25,7 +25,7 @@ document.getElementById('submit').addEventListener('click', function () {
     INLIVend = document.getElementById('LIVend').value;
     INLIVx = document.getElementById('LIVx').value;
 
-INeissn = document.getElementById('eissn').value;
+    INeissn = document.getElementById('eissn').value;
 
     console.log("dats->");
     console.log(INframeNumber);
@@ -51,9 +51,22 @@ INeissn = document.getElementById('eissn').value;
         LIVstart: INLIVstart,
         LIVend: INLIVend,
         LIVx: INLIVx,
-        eissn:INeissn
+        eissn: INeissn,
+        id: (document.getElementById('EDITid')) ? document.getElementById('EDITid').innerText : null
     }, (res) => {
-        //empty
+        if (res.status === 200) {
+            document.getElementById("quickPOPUPtopic").innerText = "成功☆請重新整理這個網頁";
+            document.getElementById("quickPOPUPinfo").innerText = "請點選下方任意按鈕離開";
+            $('#quickPOPUP')
+                .modal('show')
+                ;
+        } else {
+            document.getElementById("quickPOPUPtopic").innerText = "成功☆請「關閉」這個網頁";
+            document.getElementById("quickPOPUPinfo").innerText = "請點選下方任意按鈕離開";
+            $('#quickPOPUP')
+                .modal('show')
+                ;
+        }
     });
 });
 

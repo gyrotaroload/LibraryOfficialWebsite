@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var generator = require('character-generator');
+const { Base64 } = require('js-base64');
 
 var DEF_DEBUG = true;
 
@@ -51,7 +52,18 @@ router.get('/add_periodical', ensureAuthenticated, function (req, res, next) {
         var_jade_err_msg_show: false,
         var_jade_error_msg_gui_text_1: "X",
         var_jade_error_msg_gui_text_2: "X",
-
+        EDITframeNumber: (req.query.EDITframeNumber) ? Base64.decode(req.query.EDITframeNumber) : "",
+        EDITISSN: (req.query.EDITISSN) ? Base64.decode(req.query.EDITISSN) : "",
+        EDITbookName: (req.query.EDITbookName) ? Base64.decode(req.query.EDITbookName) : "",
+        EDITeissn: (req.query.EDITeissn) ? Base64.decode(req.query.EDITeissn) : "",
+        EDITSTAT: (req.query.EDITSTAT) ? Base64.decode(req.query.EDITSTAT) : "",
+        EDITES: (req.query.EDITES) ? Base64.decode(req.query.EDITES) : "",
+        EDITPS: (req.query.EDITPS) ? Base64.decode(req.query.EDITPS) : "",
+        EDITREMK: (req.query.EDITREMK) ? Base64.decode(req.query.EDITREMK) : "",
+        EDITLIVstart: (req.query.EDITLIVstart) ? Base64.decode(req.query.EDITLIVstart) : "",
+        EDITLIVend: (req.query.EDITLIVend) ? Base64.decode(req.query.EDITLIVend) : "",
+        EDITLIVx: (req.query.EDITLIVx) ? Base64.decode(req.query.EDITLIVx) : ""
+        , id: req.query.id || "", modeAE: (req.query.id) ? "編輯" : "新增"
     });
 });
 
@@ -121,33 +133,43 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
         LIrange = [];
     }
 
-    var newJournalInformation = new JournalInformation({
-        new_date: Date.now(),
-        frameNumber: INframeNumber,
-        ISSN: INISSN,
-        bookName: INbookName,
-        STAT: INSTAT,
-        ES: INES,
-        PS: INPS,
-        Volume: INVolume,
-        REMK: INREMK,
-        LIVstart: /*parseInt(*/INLIVstart/*, 10)*/,
-        LIVend: /*parseInt(*/INLIVend/*, 10)*/,
-        LIVx: INLIVxARRAY,
-        eissn: INeissn,
-        history: INhistory
+    JournalInformation.gethis(req.body.id, (stuff) => {
+
+        JournalInformation.del(req.body.id, (stuff2) => {
+
+            var newJournalInformation = new JournalInformation({
+                new_date: Date.now(),
+                frameNumber: INframeNumber,
+                ISSN: INISSN,
+                bookName: INbookName,
+                STAT: INSTAT,
+                ES: INES,
+                PS: INPS,
+                Volume: INVolume,
+                REMK: INREMK,
+                LIVstart: /*parseInt(*/INLIVstart/*, 10)*/,
+                LIVend: /*parseInt(*/INLIVend/*, 10)*/,
+                LIVx: INLIVxARRAY,
+                eissn: INeissn,
+                history: stuff || INhistory
+            });
+            JournalInformation.addJournal(newJournalInformation, function (err) {
+                if (err) {
+                    console.log(err);
+                    res.status(404).send("fail");
+                } else if (INLIVxARRAYfailed) {
+                    res.status(404).send("fail");
+                } else {
+                    res.status(200).send("success");
+                }
+            });
+
+        });
+
     });
-    JournalInformation.addJournal(newJournalInformation, function (err) {
-        if (err) {
-            console.log(err);
-            res.status(200).send("fail");
-        } else if (INLIVxARRAYfailed) {
-            //TODOdont use 200
-            res.status(200).send("fail");
-        } else {
-            res.status(200).send("success");
-        }
-    });
+
+
+
 });
 
 router.post('/excel', ensureAuthenticated, function (req, res, next) {
@@ -232,15 +254,26 @@ router.get('/swipeEDIT', ensureAuthenticated, function (req, res, next) {
 
 router.get('/journals', ensureAuthenticated, function (req, res, next) {
     res.render('dashboard', {
-      title: '成大數學系圖書館',
-      isUSER:'no',
-      jjsonURL:"/jjson",
-      a2z:generator('@',['A-Z']),
-      alpha:'0'
+        title: '成大數學系圖書館',
+        isUSER: 'no',
+        jjsonURL: "/jjson",
+        a2z: generator('@', ['A-Z']),
+        alpha: '0'
     });
-  });
-  
+});
 
+router.get('/delJ', ensureAuthenticated, function (req, res, next) {
+    JournalInformation.del(req.query.id, (stuff) => {
+        res.status(200).send(stuff);
+        //TODO[對使用者不友善]如過錯了不會有提醒
+    });
+});
+
+router.get('/infoJ', ensureAuthenticated, function (req, res, next) {
+    JournalInformation.gethis(req.query.id, (stuff) => {
+        res.status(200).send(stuff);
+    });
+});
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {

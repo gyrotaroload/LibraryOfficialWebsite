@@ -1,3 +1,4 @@
+//const { default: fetch } = require("node-fetch")
 
 var $table = $('#table')
 var $remove = $('#remove')
@@ -27,7 +28,7 @@ function detailFormatter(index, row) {
 function operateFormatter(value, row, index) {
     return [
         '<a class="like" href="javascript:void(0)" title="Like">',
-        '<i class="fa fa-heart"></i>',
+        '<i class="fa fa-pen"></i>',
         '</a>  ',
         '<a class="remove" href="javascript:void(0)" title="Remove">',
         '<i class="fa fa-trash"></i>',
@@ -37,13 +38,18 @@ function operateFormatter(value, row, index) {
 
 window.operateEvents = {
     'click .like': function (e, value, row, index) {
-        alert('You click like action, row: ' + JSON.stringify(row))
+        window.open(
+            `/main/add_periodical?EDITframeNumber=${Base64.encodeURI(row.placeNumber)}&EDITISSN=${Base64.encodeURI(row.issn)}&EDITbookName=${Base64.encodeURI(row.mainName)}&EDITeissn=${Base64.encodeURI(row.eissn)}&EDITSTAT=${Base64.encodeURI(row.stat)}&EDITES=${Base64.encodeURI(row.eSource)}&EDITPS=${Base64.encodeURI(row.pSource)}&EDITREMK=${Base64.encodeURI(row.someStuff)}&EDITLIVstart=${Base64.encodeURI(row.TIMEs)}&EDITLIVend=${Base64.encodeURI(row.TIMEe)}&EDITLIVx=${Base64.encodeURI(row.TIMEn)}&id=${row.id}`,
+            "_blank");
     },
     'click .remove': function (e, value, row, index) {
-        $table.bootstrapTable('remove', {
+        /*$table.bootstrapTable('remove', {
             field: 'id',
             values: [row.id]
-        })
+        })*/
+        fetch(`/main/delJ?id=${row.id}`)
+            .then((r) => { return r.text() })
+            .then((t) => { console.log(t); });
     }
 }
 
@@ -156,9 +162,9 @@ function initTable() {
                 }
                 , {
                     title: '資料細節',
-                    colspan: 3,
+                    colspan: 4,
                     align: 'center',
-                    visible: (document.getElementById('isUSER').innerText==='no')?true:false
+                    visible: (document.getElementById('isUSER').innerText === 'no') ? true : false
                 }],
             [{
                 field: 'updateTime',
@@ -166,13 +172,20 @@ function initTable() {
                 sortable: true,
                 //footerFormatter: totalNameFormatter,
                 align: 'center', searchable: false,
-                visible: (document.getElementById('isUSER').innerText==='no')?true:false
+                visible: (document.getElementById('isUSER').innerText === 'no') ? true : false
             }, {
                 field: 'existTime',
                 title: '存在年分',
                 sortable: true,
                 align: 'center', searchable: false,
-                visible: (document.getElementById('isUSER').innerText==='no')?true:false
+                visible: (document.getElementById('isUSER').innerText === 'no') ? true : false
+                //footerFormatter: totalPriceFormatter
+            }, {
+                field: 'id',
+                title: '識別碼',
+                sortable: true,
+                align: 'center', searchable: false,
+                visible: (document.getElementById('isUSER').innerText === 'no') ? true : false
                 //footerFormatter: totalPriceFormatter
             }, {
                 field: 'operate',
@@ -181,8 +194,33 @@ function initTable() {
                 clickToSelect: false,
                 events: window.operateEvents,
                 formatter: operateFormatter,
-                visible: (document.getElementById('isUSER').innerText==='no')?true:false
-            }]
+                visible: (document.getElementById('isUSER').innerText === 'no') ? true : false
+            }
+
+                , {
+                field: 'TIMEs',
+                title: '年代紀錄(不顯示在使用者/管理端)[起始]',
+                sortable: true,
+                align: 'center', searchable: false,
+                visible: false
+                //footerFormatter: totalPriceFormatter
+            }, {
+                field: 'TIMEe',
+                title: '年代紀錄(不顯示在使用者/管理端)[停止]',
+                sortable: true,
+                align: 'center', searchable: false,
+                visible: false
+                //footerFormatter: totalPriceFormatter
+            }, {
+                field: 'TIMEn',
+                title: '年代紀錄(不顯示在使用者/管理端)[負面]',
+                sortable: true,
+                align: 'center', searchable: false,
+                visible: false
+                //footerFormatter: totalPriceFormatter
+            }
+
+            ]
         ]
     })
     $table.on('load-success.bs.table', function (e, name, args) {

@@ -6,9 +6,10 @@ block content
   link(rel='stylesheet' href='/stylesheets/ap.css' type='text/css')
   .ui.top.fixed.borderless.fluid.huge.menu
     .ui.container
-      .item 回主控台
-      //a.active.item 
-      //a.item About
+      .item 期刊資料
+      .item= modeAE
+      #EDITid.item= id 
+      a.item(href='/main') &sstarf;回主控台&sstarf;
       //a.item Contact
       //a.ui.dropdown.item(tabindex='0')
         | Dropdown 
@@ -46,7 +47,7 @@ block content
           .ui.labeled.input
             .ui.label
                 | 架號
-            input#frameNumber(type='text' placeholder='Z9999')
+            input#frameNumber(type='text' placeholder='Z9999' value=`${EDITframeNumber}`)
       .item
         a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
@@ -54,7 +55,7 @@ block content
           .ui.labeled.input
             .ui.label
                 | ISSN
-            input#ISSN(type='text' placeholder='1234-5678')
+            input#ISSN(type='text' placeholder='1234-5678' value=`${EDITISSN}`)
         .first-border.flex.color-2
           .round.flex
             svg(width='25' height='25' viewBox='0 0 25 25' fill='none' xmlns='http://www.w3.org/2000/svg')
@@ -69,7 +70,7 @@ block content
           .ui.labeled.input
             .ui.label
                 | 刊名
-            input#bookName(type='text' placeholder='1234-5678')
+            input#bookName(type='text' placeholder='1234-5678' value=`${EDITbookName}`)
         // 1
         .loader.loader--style1(title='0' style='display:none;')
           svg#loader-1(version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='40px' height='40px' viewBox='0 0 40 40' enable-background='new 0 0 40 40' xml:space='preserve')
@@ -86,7 +87,7 @@ block content
           .ui.labeled.input
             .ui.label
                 | E-ISSN
-            input#eissn(type='text' placeholder='某些資料...')
+            input#eissn(type='text' placeholder='某些資料...' value=`${EDITeissn}`)
       .item
         a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
@@ -94,7 +95,7 @@ block content
           .ui.labeled.input
             .ui.label
                 | 狀況
-            input#STAT(type='text' placeholder='請輸入文字或用快速選單')
+            input#STAT(type='text' placeholder='請輸入文字或用快速選單' value=`${EDITSTAT}`)
         select.ui.dropdown(onChange='DOCE(event)')
           //TODO這裡有問題，UI沒有叫到
           option(value='') 其他
@@ -108,7 +109,7 @@ block content
           .ui.labeled.input
             .ui.label
                 | 電子資源
-            input#ES(type='text' placeholder='某些資料...')
+            input#ES(type='text' placeholder='某些資料...' value=`${EDITES}`)
       .item
         a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
@@ -116,7 +117,7 @@ block content
           .ui.labeled.input
             .ui.label
                 | 紙本資源
-            input#PS(type='text' placeholder='某些資料...')
+            input#PS(type='text' placeholder='某些資料...' value=`${EDITPS}`)
       .item(style='display:none;')
         a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
@@ -132,7 +133,7 @@ block content
           .ui.labeled.input
             .ui.label
                 | 備註
-            input#REMK(type='text' placeholder='隨意打入一些資料吧')
+            input#REMK(type='text' placeholder='隨意打入一些資料吧' value=`${EDITREMK}`)
       .item
         a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
@@ -140,7 +141,7 @@ block content
           .ui.labeled.input
             .ui.label
                 | 存在年分(起)[輸入-1代表「停用」存在年份表述]
-            input#LIVstart(type='number' placeholder='1997')
+            input#LIVstart(type='number' placeholder='1997' value=`${EDITLIVstart}`)
       .item
         a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
@@ -148,7 +149,7 @@ block content
           .ui.labeled.input
             .ui.label
                 | 存在年分(訖)[輸入-1代表未停止]
-            input#LIVend(type='number' placeholder='2022')
+            input#LIVend(type='number' placeholder='2022' value=`${EDITLIVend}`)
       .item
         a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
@@ -156,7 +157,7 @@ block content
           .ui.labeled.input
             .ui.label
                 | 存在年分(排除)
-            input#LIVx(type='text' placeholder='-1')
+            input#LIVx(type='text' placeholder='-1' value=`${EDITLIVx}`)
           | &diams;以逗號分開多個年
   link(href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet')
   .flex.row

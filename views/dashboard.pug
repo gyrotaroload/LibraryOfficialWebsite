@@ -205,6 +205,7 @@ block content
       script(src='https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table-locale-all.min.js')
       script(src='https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/export/bootstrap-table-export.min.js')
       script(src='https://kit.fontawesome.com/8d41246ac0.js' crossorigin='anonymous')
+      script(src='https://cdn.jsdelivr.net/npm/js-base64@3.7.2/base64.min.js')
       script(src='/dashboard/js/app_table.js')
       script(src='/dashboard/js/index.js')
       script.
@@ -214,6 +215,7 @@ block content
         document.querySelector('[data-field="updateTime"]').parentElement.style.display = 'none';
         document.querySelector('[data-field="existTime"]').parentElement.style.display = 'none';
         document.querySelector('[data-field="operate"]').parentElement.style.display = 'none';
+        document.querySelector('[data-field="id"]').parentElement.style.display = 'none';
         }else{
         $('#sbSlideToggle').click();
         $('.Viewbycategory').hide();//TODO注意:在維護模式下，不可用資料分類

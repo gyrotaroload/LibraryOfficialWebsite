@@ -53,7 +53,9 @@
     "@sindresorhus/slugify": "^2.1.0",
     "replaceall": "^0.1.6",
     "mammoth": "*",
-    "character-generator": "*"
+    "character-generator": "*",
+    "js-base64": "*",
+    "esm": "*"
   },
   "engines": {
     "node": "14.16.0",

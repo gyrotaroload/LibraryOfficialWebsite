@@ -135,3 +135,7 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+
+/*TODO
+package json sort按字母排序
+*/

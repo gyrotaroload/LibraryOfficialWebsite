@@ -92,6 +92,7 @@ module.exports.getAllFormat = function (callback) {
         var rowsDATA = [];
         d.forEach(element => {
             var tmpobj = {};
+            tmpobj.id = element.id;
             tmpobj.placeNumber = element.frameNumber;
             tmpobj.issn = element.ISSN;
             tmpobj.mainName = element.bookName;
@@ -103,6 +104,9 @@ module.exports.getAllFormat = function (callback) {
             tmpobj.existTime = `起始:${element.LIVstart};終止:${element.LIVend};停定年分(負面表列):${element.LIVx};`;
             tmpobj.updateTime = element.new_date;
             tmpobj.eissn = element.eissn;
+            tmpobj.TIMEs = element.LIVstart;
+            tmpobj.TIMEe = element.LIVend;
+            tmpobj.TIMEn = JSON.stringify(element.LIVx).replace('[', '').replace(']', '');
             rowsDATA.push(tmpobj);
         });
         callback(rowsDATA);
@@ -111,7 +115,7 @@ module.exports.getAllFormat = function (callback) {
 
 module.exports.getByYear = function (callback) {
 
-
+    //TODO痾....這裡長草了是吧
 }
 
 module.exports.getByNameStartFormat = function (headALPHA, callback) {
@@ -120,6 +124,7 @@ module.exports.getByNameStartFormat = function (headALPHA, callback) {
         var rowsDATA = [];
         d.forEach(element => {
             var tmpobj = {};
+            tmpobj.id = element.id;
             tmpobj.placeNumber = element.frameNumber;
             tmpobj.issn = element.ISSN;
             tmpobj.mainName = element.bookName;
@@ -131,10 +136,33 @@ module.exports.getByNameStartFormat = function (headALPHA, callback) {
             tmpobj.existTime = `起始:${element.LIVstart};終止:${element.LIVend};停定年分(負面表列):${element.LIVx};`;
             tmpobj.updateTime = element.new_date;
             tmpobj.eissn = element.eissn;
+            tmpobj.TIMEs = element.LIVstart;
+            tmpobj.TIMEe = element.LIVend;
+            tmpobj.TIMEn = JSON.stringify(element.LIVx).replace('[', '').replace(']', '');
             rowsDATA.push(tmpobj);
         });
         callback(rowsDATA);
         ///////////////end of copy//////////////////////
     });
 
+}
+
+module.exports.gethis = function (id2del, callback) {
+    JournalInformation.findById(id2del, (e, ans) => {
+        if (e) {//error occurs
+            callback(null);
+        } else {
+            var this_all = Object.assign({}, ans);
+            var this_his = Object.assign([], ans.history);
+            //console.log(ans.history);
+            this_all.history = [];
+            //console.log(this_all);
+            this_his.push(this_all);
+            callback(this_his);
+        }
+    });
+}
+
+module.exports.del = function (id2del, callback) {
+    JournalInformation.findByIdAndDelete(id2del, callback);
 }
