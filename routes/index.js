@@ -48,27 +48,35 @@ var randomstring = require("randomstring");//use with markdown~~
 var replaceall = require("replaceall");
 ///////////////////////////////////////////////
 var mammoth = require("mammoth");//main
+const numberArray = require('number-array');
 var multer = require('multer');
 const storage = multer.memoryStorage();
 var upload = multer({ storage: storage, limits: { /*fields: 1, */fileSize: 6000000, files: 1/*, parts: 2 */ } });
 
 var excelDB = require('../models/excelDB');
 var ji = require('../models/JournalInformation');
+var least = require('../models/least');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', {
-    title: '成大數學系圖書館',
-    functionButtonMainText1: '新書入庫',
-    functionButtonMainText2: '期刊服務',
-    functionButtonMainText3: '館際合作',
-    functionButtonMainText4: '電子資源',
-    browseHyperlinkedObjectsHorizontally1T: '成大首頁',
-    browseHyperlinkedObjectsHorizontally2T: '數學系網站',
-    browseHyperlinkedObjectsHorizontally3T: '成大總圖',
-    browseHyperlinkedObjectsHorizontally1L: 'https://www.ncku.edu.tw/',
-    browseHyperlinkedObjectsHorizontally2L: 'http://www.math.ncku.edu.tw/',
-    browseHyperlinkedObjectsHorizontally3L: 'https://www.lib.ncku.edu.tw/',
+  least.frontend((stuff) => {
+    //console.log(c);console.log(numberArray(c));
+    res.render('index', {
+      title: '成大數學系圖書館',
+      functionButtonMainText1: '新書入庫',
+      functionButtonMainText2: '期刊服務',
+      functionButtonMainText3: '館際合作',
+      functionButtonMainText4: '電子資源',
+      browseHyperlinkedObjectsHorizontally1T: '成大首頁',
+      browseHyperlinkedObjectsHorizontally2T: '數學系網站',
+      browseHyperlinkedObjectsHorizontally3T: '成大總圖',
+      browseHyperlinkedObjectsHorizontally1L: 'https://www.ncku.edu.tw/',
+      browseHyperlinkedObjectsHorizontally2L: 'http://www.math.ncku.edu.tw/',
+      browseHyperlinkedObjectsHorizontally3L: 'https://www.lib.ncku.edu.tw/',
+      pc: numberArray(stuff.c),
+      ps: req.query.page ? stuff.s.slice(parseInt(req.query.page) * 4, (parseInt(req.query.page) + 1) * 4) : stuff.s.slice(0 * 4, (0 + 1) * 4),
+      margin: parseInt(req.query.page, 10) || 0
+    });
   });
 });
 
@@ -92,9 +100,9 @@ router.get('/journals', function (req, res, next) {
   res.render('dashboard', {
     title: '成大數學系圖書館',
     isUSER: 'yes',
-    jjsonURL:(req.query.alpha)?("/jjson?alpha="+req.query.alpha):"/jjson",
-    a2z:genCharArray('A','Z'),
-    alpha:req.query.alpha||'0'
+    jjsonURL: (req.query.alpha) ? ("/jjson?alpha=" + req.query.alpha) : "/jjson",
+    a2z: genCharArray('A', 'Z'),
+    alpha: req.query.alpha || '0'
   });
 });
 
@@ -162,18 +170,12 @@ router.get('/docx', function (req, res, next) {
   });
 });
 
-router.get('/docxUpload', function (req, res, next) {
-  res.render('docx_upload', {
-    title: 'docx upload 2'
-  });
-});
-
 router.get('/jjson', function (req, res, next) {
   console.log(req.query.alpha);
   if (req.query.alpha) {
 
-    ji.getByNameStartFormat(req.query.alpha,(d) => {
-  ///////////區間複製起點
+    ji.getByNameStartFormat(req.query.alpha, (d) => {
+      ///////////區間複製起點
       res.status(200).json({
         "total": d.length,
         "totalNotFiltered": d.length,
@@ -200,7 +202,7 @@ router.get('/jjson', function (req, res, next) {
         rowsDATA.push(tmpobj);
   
       });*/
-  
+
       res.status(200).json({
         "total": d.length,
         "totalNotFiltered": d.length,
@@ -243,7 +245,7 @@ module.exports = router;
 function genCharArray(charA, charZ) {
   var a = [], i = charA.charCodeAt(0), j = charZ.charCodeAt(0);
   for (; i <= j; ++i) {
-      a.push(String.fromCharCode(i));
+    a.push(String.fromCharCode(i));
   }
   return a;
 }

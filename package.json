@@ -59,7 +59,9 @@
     "canvas": "*",
     "text-to-image": "*",
     "text2png": "*",
-    "font-list": "*"
+    "font-list": "*",
+    "moment": "*",
+    "number-array": "*"
   },
   "engines": {
     "node": "14.16.0",

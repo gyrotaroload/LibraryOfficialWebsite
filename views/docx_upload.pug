@@ -5,10 +5,8 @@ block contentHEAD
   //-title Samantha
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
   meta(http-equiv='X-UA-Compatible' content='ie=edge')
-  //-link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css')
   link(rel='stylesheet' href='/stylesheets/samantha.css')
-  //-script(src='https://code.jquery.com/jquery-3.3.1.min.js')
-  //-script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js')
+  link(rel='stylesheet' href='/stylesheets/swipe_f.css')
 
 block content
   //.ui.container
@@ -105,7 +103,7 @@ block content
   .ui.clearing.segment
     h6.ui.right.floated.header
       .first-border.flex.color-3
-        #submit.button.flex(align="center")
+        #submit.button.flex(align="center" onclick="$.post('/main/addleast',{YYYY:$('#YYYY').val(),M:$('#M').val(),D:$('#D').val(),h:$('#h').val(),mm:$('#mm').val(),tp:$('#tp').val(),ab:$('#ab').val(),labels:$('#labels').text(),uri:'$(__#uri__).val()'},(r)=>{console.log(r);})")
           | &#9745;提交
           svg(width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg')
             path(d='M9.77623 4.61867C10.4796 4.99574 10.4796 6.00427 9.77623 6.38133L2.39266 10.3397C1.72648 10.6969 0.920166 10.2143 0.920167 9.45841L0.920167 1.54159C0.920167 0.785717 1.72648 0.30311 2.39266 0.660254L9.77623 4.61867Z' fill='#333')
@@ -122,50 +120,53 @@ block content
               .ui.labeled.input
                 .ui.label
                   | 年
-                input(type='text' placeholder='1998')
+                input#YYYY(type='number' placeholder='1998' value=`${moment().format('YYYY')}`)
               .ui.fitted.divider
               .ui.labeled.input
                 .ui.label
                   | 月
-                input(type='text' placeholder='12')
+                input#M(type='number' placeholder='12' value=`${moment().format('M')}`)
               .ui.fitted.divider
               .ui.labeled.input
                 .ui.label
                   | 日
-                input(type='text' placeholder='12')
+                input#D(type='number' placeholder='12' value=`${moment().format('D')}`)
               .ui.fitted.divider
               .ui.labeled.input
                 .ui.label
                   | 時
-                input(type='text' placeholder='12')
+                input#h(type='number' placeholder='12' value=`${moment().format('h')}`)
               .ui.fitted.divider
               .ui.labeled.input
                 .ui.label
                   | 分
-                input(type='text' placeholder='12')
+                input#mm(type='number' placeholder='12' value=`${moment().format('mm')}`)
       .middle.aligned.column
         .ui.card
           .content
             .header 標籤
-            .meta 輸入標籤並且按下按鈕，可以輸入很多個標籤，輸入完的標籤會顯示在列表中
+            #labels.meta {"label":[]}
             .description
               .ui.right.labeled.left.icon.input
                 i.tags.icon
-                input(type='text' placeholder='輸入標籤')
-                a.ui.tag.label 新增標籤 
+                input#labeli(type='text' placeholder='輸入標籤')
+                a.ui.tag.label(onclick="var ls=JSON.parse(document.getElementById('labels').innerText);ls.label.push(document.getElementById('labeli').value);document.getElementById('labels').innerText=JSON.stringify(ls);") 新增標籤 
               h4.ui.horizontal.divider.header
                 i.flag.checkered.icon
                 |  新消息的標題
               .ui.labeled.input
                 .ui.label
                   | 標題
-                input(type='text' placeholder='例如，形象影片發布瞜~~之類的文字')
+                input#tp(type='text' placeholder='例如，形象影片發布瞜~~之類的文字')
               .ui.fitted.divider
     .ui.vertical.divider |
   .ui.placeholder.segment
     .ui.two.column.very.relaxed.stackable.grid
       .column
-        .ui.card
+        h2(style='background-color:#ddb98b;margin-top:-2vh;color:#000000;text-align:center;') 摘要
+        form.ff(style="margin:0px;")
+          textarea#ab.ff.message(rows='4' cols='50' name='subject' placeholder='請輸入摘要...' required='')
+        //.ui.card
           .content
             .header 新消息發布日期
             .meta 不一定要是當天的日期

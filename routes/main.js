@@ -9,6 +9,7 @@ var DEF_DEBUG = true;
 var JournalInformation = require('../models/JournalInformation');
 var excelDB = require('../models/excelDB');
 var swipe_edit = require('../models/swipe_edit');
+var least = require('../models/least');
 
 
 router.get('/', ensureAuthenticated, function (req, res, next) {
@@ -274,6 +275,38 @@ router.get('/infoJ', ensureAuthenticated, function (req, res, next) {
         res.status(200).send(stuff);
     });
 });
+router.get('/docxUpload', ensureAuthenticated, function (req, res, next) {
+    res.render('docx_upload', {
+        title: 'docx upload 2',
+        moment: require('moment')
+    });
+});
+
+router.post('/addleast', ensureAuthenticated, function (req, res, next) {
+    //console.log(req.body);
+    var newobj = new least({
+        new_date: Date.now(),
+        YYYY: req.body.YYYY,
+        M: req.body.M,
+        D: req.body.D,
+        h: req.body.h,
+        mm: req.body.mm,
+        tp: req.body.tp,
+        ab: req.body.ab,
+        lab: JSON.parse(req.body.labels).label,
+        uri: req.body.uri
+    });
+    least.add(newobj, function (err) {
+        if (err) {
+            console.log(err);
+            res.status(404).send("fail");
+        } else {
+            res.status(200).send("success");
+        }
+    });
+
+});
+
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
@@ -283,7 +316,6 @@ function ensureAuthenticated(req, res, next) {
         res.redirect('/users/login');
     }
 }
-
 
 module.exports = router;
 
