@@ -5,7 +5,7 @@ $(function () {//start
         console.log(typeof (stuff));
         console.log(formData);
         $.ajax({
-            url: "/docx",
+            url: "/main/docx",
             data: formData,//do not Place the file directly here!
             type: 'POST',
             contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
@@ -60,6 +60,7 @@ $(function () {//start
     /////////////////////////end of memo/////////////////////////////
 
     function changeFile() {
+        console.log("wtf");
         var file = input.files[0];
         /*var reader = new FileReader();
         reader.addEventListener('load', readFile);

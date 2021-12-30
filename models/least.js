@@ -39,7 +39,14 @@ var least = module.exports = mongoose.model('least', leastSchema);
 
 //function
 module.exports.add = function (newOBJ, callback) {
-    newOBJ.save(callback);
+    newOBJ.save((e, r) => {
+        if (e) {
+            console.log(e);
+            callback(null);
+        } else {
+            callback(r);
+        }
+    });
 }
 
 module.exports.frontend = function (callback) {
@@ -52,7 +59,7 @@ module.exports.frontend = function (callback) {
             //console.log(SearchResult);
             callback(
                 {
-                    c: count<4?1:1+(count - count % 4) / 4,
+                    c: count < 4 ? 1 : 1 + (count - count % 4) / 4,
                     s: SearchResult
                 });
         });

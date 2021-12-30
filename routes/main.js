@@ -4,12 +4,19 @@ var router = express.Router();
 var generator = require('character-generator');
 const { Base64 } = require('js-base64');
 
+var mammoth = require("mammoth");//main
+const numberArray = require('number-array');
+var multer = require('multer');
+const storage = multer.memoryStorage();
+var upload = multer({ storage: storage, limits: { /*fields: 1, */fileSize: 6000000, files: 1/*, parts: 2 */ } });
+
 var DEF_DEBUG = true;
 
 var JournalInformation = require('../models/JournalInformation');
 var excelDB = require('../models/excelDB');
 var swipe_edit = require('../models/swipe_edit');
 var least = require('../models/least');
+var docs = require('../models/docs');
 
 
 router.get('/', ensureAuthenticated, function (req, res, next) {
@@ -296,15 +303,74 @@ router.post('/addleast', ensureAuthenticated, function (req, res, next) {
         lab: JSON.parse(req.body.labels).label,
         uri: req.body.uri
     });
-    least.add(newobj, function (err) {
-        if (err) {
-            console.log(err);
-            res.status(404).send("fail");
+    least.add(newobj, function (r) {
+        if (r) {
+            res.status(200).send(r.id);
         } else {
-            res.status(200).send("success");
+            //console.log(err);
+            res.status(404).send("fail");
         }
     });
 
+});
+
+router.post('/docx', ensureAuthenticated, upload.single('docxPayload'), function (req, res, next) {
+    //console.log(typeof (req.body.docxPayload));
+    /*
+    說明
+    這裡跟img一點關西都沒有
+    概念:
+    前端上傳doc檔案至後台
+    後台傳html回給前台
+    */
+    var content = req.file.buffer;
+    mammoth.convertToHtml({ buffer: content }, {
+        convertImage: mammoth.images.imgElement(function (image) {
+            return image.read("base64").then(function (imageBuffer) {
+                return {
+                    src: "data:" + image.contentType + ";base64," + imageBuffer
+                };
+            });
+        }),
+    })
+        .then(function (result) {
+            var html = result.value; // The generated HTML
+            var messages = result.messages; // Any messages, such as warnings during conversion
+            //console.log(html);
+            // console.log(messages);
+            return { sol_html: html, sol_messages: messages };
+        })
+        .done((sol) => {
+            var no = new docs({
+                dt: Date.now(),
+                html: sol.sol_html
+            });
+            docs.add(no, function (r) {
+                if (r) {
+                    sol.id=r.id;
+                    res.status(200).send(sol);
+                } else {
+                    sol.id=null;
+                    //console.log(err);
+                    res.status(404).send(sol);
+                }
+            });
+        });
+});
+
+router.get('/docx', ensureAuthenticated, function (req, res, next) {
+    res.render('docx', {
+        title: 'docx upload',
+        infoClass: req.query.ic,
+        infoDT: Date.now(),
+        infoID: req.query.id,
+        infoOther: "編輯模式",
+        labSW: "點我!",
+        urls: null,
+        ttp: "編輯",//公告
+        tp: "按下右側「上傳」按鈕以上傳docx檔案",
+        alpha: { txt: "提交", uri: `/main/link?lid=${req.query.ic}&` }
+    });
 });
 
 

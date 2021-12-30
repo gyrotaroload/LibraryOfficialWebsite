@@ -399,10 +399,10 @@ block content
               button.ui.button(onclick="var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=0;i<pgs.length;i++){if(parseInt(pgs[i].innerText,10)-1<0){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)-1;}}") Previous
               if margin>4||pc.length
                 each epc in pc.slice(margin-2<0?0:margin-2,margin+3)
-                  a.ui.button(class=margin === epc ? "blue" : "")(href=`?page=${epc}`)= epc
+                  a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc
               else
                 each epc in pc
-                  a.ui.button(class=margin === epc ? "blue" : "")(href=`?page=${epc}`)= epc
+                  a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc
               button.ui.button(onclick=`var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=pgs.length-1;i>=0;i--){if(parseInt(pgs[i].innerText,10)+1>=${pc.length}){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)+1;}}`) Next
         // Right Sidebar
         .four.wide.column.mobile.only

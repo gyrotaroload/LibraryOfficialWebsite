@@ -41,7 +41,7 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand(href='#') Brand
+          a.navbar-brand(href='#') 純文字編輯器
         // Collect the nav links, forms, and other content for toggling
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav
@@ -74,21 +74,23 @@ html
             button#sendmd.btn.btn-default(type='submit') Submit
           ul.nav.navbar-nav.navbar-right
             li
+              a(href='#') 預覽(新分頁中開啟)
+            //li
               a(href='#') Link
             li.dropdown
               a.dropdown-toggle(href='#' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false')
-                | Dropdown 
+                | 進階選項 
                 span.caret
               ul.dropdown-menu
                 li
-                  a(href='#') Action
+                  a(href='#' onclick="var tmp=document.getElementsByClassName('childdisappear');if(tmp[1].style.display!=='none'){tmp[1].style.display='none';tmp[0].style.display='block';}else{tmp[0].style.display='none';tmp[1].style.display='block';}") [顯示/關閉]即時預覽進階選項
                 li
-                  a(href='#') Another action
-                li
+                  a(href='#' onclick="var tmp=document.getElementsByClassName('demo-control');for(var i=0;i<tmp.length;i++){tmp[i].style.display=tmp[i].style.display==='none'?'block':'none';}") [顯示/關閉]編輯器除錯選項
+                //li
                   a(href='#') Something else here
                 li.divider(role='separator')
                 li
-                  a(href='#') Separated link
+                  a#mddocid(href='#') 尚未提交...
         // /.navbar-collapse
         // /.container-fluid
     .container
@@ -97,7 +99,11 @@ html
       //.input-group
         span#basic-addon3.input-group-addon https://example.com/users/
         input#basic-url.form-control(type='text' aria-describedby='basic-addon3')
-      .form-inline.demo-options
+      .row.childdisappear
+        h3.col-md-3 編輯器
+        h3.col-md-6 刪除左方編輯器中的既有內容並擅打所需文字
+        h3.col-md-3 即時預覽
+      .childdisappear.form-inline.demo-options(style="display:none;")
         .checkbox.not-strict
           label._tip(title='enable html tags in source text')
             input#html(type='checkbox')
@@ -131,7 +137,7 @@ html
     .container.full-height
       .row.full-height
         .col-xs-6.full-height
-          .demo-control
+          .demo-control(style="display:none;")
             a.source-clear(href='#') clear
             a#permalink(href='./' title='Share this snippet as link')
               strong permalink
@@ -275,7 +281,7 @@ html
             | *here be dragons*
             | :::
         section.col-xs-6.full-height
-          .demo-control
+          .demo-control(style="display:none;")
             a(href='#' data-result-as='html') html
             a(href='#' data-result-as='src') source
             a(href='#' data-result-as='debug') debug

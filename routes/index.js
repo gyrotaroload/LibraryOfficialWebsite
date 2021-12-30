@@ -47,11 +47,6 @@ var md = require('markdown-it')()
 var randomstring = require("randomstring");//use with markdown~~
 var replaceall = require("replaceall");
 ///////////////////////////////////////////////
-var mammoth = require("mammoth");//main
-const numberArray = require('number-array');
-var multer = require('multer');
-const storage = multer.memoryStorage();
-var upload = multer({ storage: storage, limits: { /*fields: 1, */fileSize: 6000000, files: 1/*, parts: 2 */ } });
 
 var excelDB = require('../models/excelDB');
 var ji = require('../models/JournalInformation');
@@ -138,36 +133,6 @@ router.get(('/newbooks'), function (req, res, next) {
     });
   });
   /////////////////////////////////////////////////////////////////////////////////
-});
-
-router.post('/docx'/*, ensureAuthenticated*/, upload.single('docxPayload'), function (req, res, next) {
-  //console.log(typeof (req.body.docxPayload));
-  var content = req.file.buffer;
-  mammoth.convertToHtml({ buffer: content }, {
-    convertImage: mammoth.images.imgElement(function (image) {
-      return image.read("base64").then(function (imageBuffer) {
-        return {
-          src: "data:" + image.contentType + ";base64," + imageBuffer
-        };
-      });
-    }),
-  })
-    .then(function (result) {
-      var html = result.value; // The generated HTML
-      var messages = result.messages; // Any messages, such as warnings during conversion
-      //console.log(html);
-      // console.log(messages);
-      return { sol_html: html, sol_messages: messages };
-    })
-    .done((sol) => {
-      res.status(200).send(sol);
-    });
-});
-
-router.get('/docx', function (req, res, next) {
-  res.render('docx', {
-    title: 'docx upload'
-  });
 });
 
 router.get('/jjson', function (req, res, next) {

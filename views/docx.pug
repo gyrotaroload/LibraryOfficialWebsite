@@ -5,20 +5,30 @@ block contentHEAD
   //-title Samantha
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
   meta(http-equiv='X-UA-Compatible' content='ie=edge')
-  //-link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css')
   link(rel='stylesheet' href='/stylesheets/samantha.css')
-  //-script(src='https://code.jquery.com/jquery-3.3.1.min.js')
-  //-script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css' type='text/css')
+  link(rel='stylesheet' href='/stylesheets/ButtonsUIKit.css' type='text/css')
+  link(href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet')
+  link(rel='stylesheet' href='/stylesheets/welovefontsicon.css')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css' integrity='sha512-SJw7jzjMYJhsEnN/BuxTWXkezA2cRanuB8TdCNMXFJjxG9ZGSKOX5P3j03H6kdMxalKHZ7vlBMB4CagFP/de0A==' crossorigin='anonymous' referrerpolicy='no-referrer')
 
 block content
+  #jade_user_info
+  #jade_user_info_name #{var_jade_user_info_name}
+  #jade_user_info_username #{var_jade_user_info_username}
+  #jade_user_info_profileimage #{var_jade_user_info_profileimage}
+  #jade_user_info_choosedanimal #{var_jade_user_info_choosedanimal}
   .ui.container
     nav.ui.inverted.grey.big.stackable.menu
       .header.active.item
         // this may be your photograph
         img.logo(src='/docx/logo.png' alt='')
-        |         My Blog
-      .item About me
-      .item Contact
+        | #{ttp}
+        //| 公告
+      .item= tp
+      // (^上方文字^)標題
+      a.item(href=`${alpha.uri}`)= alpha.txt
+      //^^^^^^^^^^^^ 回到上一頁
       // Search
       .right.menu
         .item
@@ -37,39 +47,63 @@ block content
         //p
           | Succulents blog kinfolk craft beer tacos. Tumblr authentic single-origin coffee beard chambray. Fixie quinoa raw denim thundercats direct trade 3 wolf moon, intelligentsia gochujang leggings whatever jianbing. Squid art party fam authentic seitan tacos austin gluten-free next level adaptogen chia. Celiac 90's +1 godard. Crucifix sriracha sartorial street art put a bird on it intelligentsia VHS cronut, subway tile ramps 90's la croix meh next level.
       aside.five.wide.column
-        h4 CATEGORIES
-        p
+        h4 詳細資料
+        .ui.list
+          .item
+            i.map.marker.icon
+            .content
+              a.header 分類
+              .description= infoClass
+          .item
+            i.map.marker.icon
+            .content
+              a.header 更新時間
+              .description= infoDT
+          .item
+            i.map.marker.icon
+            .content
+              a.header 索引號碼/永久鏈結
+              .description= infoID
+          .item
+            i.map.marker.icon
+            .content
+              a.header 其他
+              .description= infoOther
+        //p
           a(href='#') JavaScript
-        p
+        //p
           a(href='#') HTML/CSS
-        p
+        //p
           a(href='#') React.js
-        p
+        //p
           a(href='#') Redux
-        p
+        //p
           a(href='#') Other
         .ui.divider
-        h4 TAGS
-        .tagcloud
-          .ui.label
-            a(href='#') javascript
-          .ui.label
-            a(href='#') html
-          .ui.label
-            a(href='#') css
-          .ui.label
-            a(href='#') react
-          .ui.label
-            a(href='#') xampp
-          .ui.label
-            a(href='#') wordpress
-          .ui.label
-            a(href='#') design
-          .ui.label
-            a(href='#') personal
-          .ui.label
-            a(href='#') productivity
-        h4 BLOGROLL
+        h4= labSW||'標籤'
+        if labSW
+
+        else
+          .tagcloud
+            .ui.label
+              a(href='#') javascript
+            .ui.label
+              a(href='#') html
+            .ui.label
+              a(href='#') css
+            .ui.label
+              a(href='#') react
+            .ui.label
+              a(href='#') xampp
+            .ui.label
+              a(href='#') wordpress
+            .ui.label
+              a(href='#') design
+            .ui.label
+              a(href='#') personal
+            .ui.label
+              a(href='#') productivity
+        h4 相關頁面
         p
           a(href='#') Interesting Blog
         p
@@ -82,19 +116,20 @@ block content
     .social
       a.ui.facebook.button(href='#')
         i.facebook.icon
-        | Facebook
+        | 數學系圖首頁
       a.ui.linkedin.button(href='#')
         i.linkedin.icon
-        | LinkedIn
+        | 截圖
       a.ui.youtube.button(href='#')
         i.youtube.icon
-        | YouTube
+        | 分享
       a.ui.instagram.button(href='#')
         i.instagram.icon
-        | Instagram
+        | 列印
       a.ui.vk.button(href='#')
         i.vk.icon
-        | VK
+        | 另存為PDF
+        //TODO https://www.npmjs.com/package/html-pdf
       // 09 Oct 2018 R.I.P. Google Plus :-P
       // <a class="ui google plus button" href="#"><i class="google plus icon"></i>Google Plus</a>
     .copyright
@@ -102,10 +137,14 @@ block content
       i.ui.icon.github
       a(href='https://github.com/shawooha') shawooha
   // Free html personal blog theme "Samantha" (Semantic UI + jQuery) by Tim B. https://github.com/shawooha
-  input(type='file')
-  textarea(rows='10' cols='50')
+  label.ui.primary.button
+    input(type='file' style='display:none;')
+    span.zocial-windows
+    |  上傳word檔
+  //input(type='file')
+  textarea(rows='10' cols='50' style='display:none;')
   #sol_html.ui.container
-  //the form is garbage
+  //TODO the form is garbage--------------------------------------------------------------所以到底留這幹嘛?從哪裡來的?反正不知道的東西不要動就對了
   form(method='post', action='/users/register', enctype='multipart/form-data')
   //.form-group
    label Name
@@ -122,19 +161,15 @@ block content
   //.form-group   
    label Confirm Password
    input.form-control(name='password2', type='password', placeholder='Confirm password')
-  .form-group     
-   label Profile Image
-   input.form-control(name='docxPayload', type='file')
-  .form-group
-   input.btn.btn-primary(type='submit', name='submit', value='Register')
-  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css' type='text/css')
-  link(rel='stylesheet' href='/stylesheets/ButtonsUIKit.css' type='text/css')
-  #jade_user_info
-  #jade_user_info_name #{var_jade_user_info_name}
-  #jade_user_info_username #{var_jade_user_info_username}
-  #jade_user_info_profileimage #{var_jade_user_info_profileimage}
-  #jade_user_info_choosedanimal #{var_jade_user_info_choosedanimal}
-  link(href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet')
+  label.ui.primary.button(style='display:none;')
+    input.form-control(name='docxPayload', type='file' style='display:none;')
+    span.zocial-windows
+    |  上傳圖片...反正我確定這根片一點關西都沒有WWW到底在幹嘛
+  //.form-group     
+    label Profile Image
+    input.form-control(name='docxPayload', type='file')
+  //.form-group
+    input.btn.btn-primary(type='submit', name='submit', value='Register')
   //.flex.row
     .Forced2Disappear.first-border.flex.color-3
       //-TODO這裡要處理提交的字沒有置中然後按下去的回饋
