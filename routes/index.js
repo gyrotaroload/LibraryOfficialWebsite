@@ -48,9 +48,12 @@ var randomstring = require("randomstring");//use with markdown~~
 var replaceall = require("replaceall");
 ///////////////////////////////////////////////
 
+const numberArray = require('number-array');
+
 var excelDB = require('../models/excelDB');
 var ji = require('../models/JournalInformation');
 var least = require('../models/least');
+var docs = require('../models/docs');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -202,6 +205,59 @@ router.get('/jjson', function (req, res, next) {
     });
   }
 
+});
+
+router.get('/inner', function (req, res, next) {
+  if (req.query.ic === 'l') {
+    least.getById(req.query.pid, ro => {
+      if (ro) {
+        docs.getById(ro.uri, html => {
+          if (html) {
+            res.render('docx', {
+              title: 'inner',
+              infoClass: "最新消息",
+              infoDT: String(ro.YYYY)+String(ro.M)+String(ro.D)+String(ro.h)+String(ro.mm),
+              infoID: ro.uri,//TODO...hum
+              infoOther: ro.ab,//TODO標籤化
+              urls: null,//TODO添加近期URL
+              ttp: "最新消息",//公告
+              tp: ro.tp,
+              alpha: { txt: "回上一頁", uri: `/` },
+              moment: require('moment'),
+              dbhtml: html
+            });
+          } else {
+            res.status(404).send("404 not found");
+          }
+        }
+        );
+      } else {
+        res.status(404).send("404 not found");
+      }
+    });
+  } else {
+    res.status(404).send("404 not found");
+  }
+  /*docs.getById(req.query.id, html => {
+    if (html) {
+      res.render('docx', {
+        title: 'inner',
+        infoClass: req.query.ic,
+        infoDT: req.query.dt,
+        infoID: req.query.pid,
+        infoOther: req.query.ab,//TODO標籤化
+        urls: null,//TODO添加近期URL
+        ttp: req.query.ic,//公告
+        tp: req.query.tp,
+        alpha: { txt: "回上一頁", uri: `/${req.query.rt}` },
+        moment: require('moment'),
+        dbhtml: html
+      });
+    } else {
+      res.status(404).send("404 not found");
+    }
+  }
+  );*/
 });
 
 

@@ -5,7 +5,6 @@ var generator = require('character-generator');
 const { Base64 } = require('js-base64');
 
 var mammoth = require("mammoth");//main
-const numberArray = require('number-array');
 var multer = require('multer');
 const storage = multer.memoryStorage();
 var upload = multer({ storage: storage, limits: { /*fields: 1, */fileSize: 6000000, files: 1/*, parts: 2 */ } });
@@ -347,10 +346,10 @@ router.post('/docx', ensureAuthenticated, upload.single('docxPayload'), function
             });
             docs.add(no, function (r) {
                 if (r) {
-                    sol.id=r.id;
+                    sol.id = r.id;
                     res.status(200).send(sol);
                 } else {
-                    sol.id=null;
+                    sol.id = null;
                     //console.log(err);
                     res.status(404).send(sol);
                 }
@@ -369,10 +368,21 @@ router.get('/docx', ensureAuthenticated, function (req, res, next) {
         urls: null,
         ttp: "編輯",//公告
         tp: "按下右側「上傳」按鈕以上傳docx檔案",
-        alpha: { txt: "提交", uri: `/main/link?lid=${req.query.ic}&` }
+        alpha: { txt: "提交", uri: `/main/link?lid=${req.query.id}&` },
+        moment: require('moment')
     });
 });
 
+router.get('/link', ensureAuthenticated, function (req, res, next) {
+    least.SETuri(req.query.lid, req.query.docid, r => {
+        if (r === 'yes') {
+            res.status(200).send("success");
+        }
+        else {
+            res.status(404).send("failed");
+        }
+    })
+});
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {

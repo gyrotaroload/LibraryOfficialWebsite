@@ -66,3 +66,35 @@ module.exports.frontend = function (callback) {
     });
 
 }
+
+module.exports.SETuri = function (id, uri, callback) {
+    least.findById(id, function (err, contact) {
+        if (!err) {
+            if (contact) {
+                console.log(contact.tp);
+                contact.uri = uri;
+                contact.save(function (err) {
+                    if (!err) {
+                        console.log("contact " + contact.id + " created at " + contact.createdAt + " updated at " + contact.updatedAt);
+                        callback("yes");
+                    }
+                    else {
+                        console.log("Error: could not save contact " + contact.id);
+                        callback("no");
+                    }
+                });
+            } else { callback("no"); }
+        }
+    });
+}
+
+module.exports.getById = function (id, callback) {
+    least.findById(id, function (err, adventure) {
+        if (err) {
+            console.log(err);
+            callback(null);
+        } else {
+            callback((adventure) ? adventure : null);
+        }
+    });
+}

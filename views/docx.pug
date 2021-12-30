@@ -13,6 +13,22 @@ block contentHEAD
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css' integrity='sha512-SJw7jzjMYJhsEnN/BuxTWXkezA2cRanuB8TdCNMXFJjxG9ZGSKOX5P3j03H6kdMxalKHZ7vlBMB4CagFP/de0A==' crossorigin='anonymous' referrerpolicy='no-referrer')
 
 block content
+  script.
+    function FUCNmakeALLtableTOsemanticUI(){
+    var makeALLtableTOsemanticUI = document.getElementsByTagName("table");
+    for (let index = 0; index < makeALLtableTOsemanticUI.length; index++) {
+    const element = makeALLtableTOsemanticUI[index];
+    if (!element.classList.contains("ui")) {
+    element.classList.add("ui");
+    }
+    if (!element.classList.contains("celled")) {
+    element.classList.add("celled");
+    }
+    if (!element.classList.contains("table")) {
+    element.classList.add("table");
+    }
+    }
+    }
   #jade_user_info
   #jade_user_info_name #{var_jade_user_info_name}
   #jade_user_info_username #{var_jade_user_info_username}
@@ -27,7 +43,7 @@ block content
         //| 公告
       .item= tp
       // (^上方文字^)標題
-      a.item(href=`${alpha.uri}`)= alpha.txt
+      a#alpha.item(href=`${alpha.uri}`)= alpha.txt
       //^^^^^^^^^^^^ 回到上一頁
       // Search
       .right.menu
@@ -37,7 +53,7 @@ block content
             input(placeholder='Search this blog' type='text')
         // <a class="item">Link</a>
     .ui.stackable.grid
-      main#htmlfromuser.eleven.wide.column
+      main#htmlfromuser.eleven.wide.column!= dbhtml
         //h1 Tote bag four dollar toast bitters taxidermy prism
         //p 09 October 2018
         //p
@@ -68,7 +84,7 @@ block content
             i.map.marker.icon
             .content
               a.header 其他
-              .description= infoOther
+              #docid.description= infoOther
         //p
           a(href='#') JavaScript
         //p
@@ -82,7 +98,10 @@ block content
         .ui.divider
         h4= labSW||'標籤'
         if labSW
-
+          label.ui.primary.button
+            input(type='file' style='display:none;')
+            span.zocial-windows
+            |  上傳word檔
         else
           .tagcloud
             .ui.label
@@ -103,13 +122,14 @@ block content
               a(href='#') personal
             .ui.label
               a(href='#') productivity
-        h4 相關頁面
-        p
-          a(href='#') Interesting Blog
-        p
-          a(href='#') Another Blog
-        p
-          a(href='#') Yet Another Interesting Blog
+        if urls
+          h4 相關頁面
+          p
+            a(href='#') Interesting Blog
+          p
+            a(href='#') Another Blog
+          p
+            a(href='#') Yet Another Interesting Blog
         .ui.divider
   footer.ui.container
     // Social
@@ -133,11 +153,11 @@ block content
       // 09 Oct 2018 R.I.P. Google Plus :-P
       // <a class="ui google plus button" href="#"><i class="google plus icon"></i>Google Plus</a>
     .copyright
-      | Free html personal blog theme by 
-      i.ui.icon.github
-      a(href='https://github.com/shawooha') shawooha
+      | 成大數學系圖書館網站內頁 
+      i.ui.icon.bullseye
+      a(href='#')= `${moment().format('YYYY')}`
   // Free html personal blog theme "Samantha" (Semantic UI + jQuery) by Tim B. https://github.com/shawooha
-  label.ui.primary.button
+  //-label.ui.primary.button
     input(type='file' style='display:none;')
     span.zocial-windows
     |  上傳word檔

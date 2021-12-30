@@ -25,3 +25,14 @@ module.exports.add = function (newOBJ, callback) {
     });
 }
 
+module.exports.getById = function (id, callback) {
+    docs.findById(id, function (err, adventure) {
+        if (err) {
+            console.log(err);
+            callback(null);
+        } else {
+            callback((adventure) ? adventure.html : null);
+        }
+    });
+
+}
