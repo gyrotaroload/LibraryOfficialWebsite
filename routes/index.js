@@ -216,15 +216,17 @@ router.get('/inner', function (req, res, next) {
             res.render('docx', {
               title: 'inner',
               infoClass: "最新消息",
-              infoDT: String(ro.YYYY)+String(ro.M)+String(ro.D)+String(ro.h)+String(ro.mm),
-              infoID: ro.uri,//TODO...hum
+              infoDT: String(ro.YYYY)+'年'+String(ro.M)+'月'+String(ro.D)+'日'+String(ro.h)+'時'+String(ro.mm)+'分',
+              infoID: ro.uri +'@'+`/inner?id=${ro.uri}&pid=${ro.id}&ic=l`,//flex string copy from index.pug search in code "詳全文" 之href
               infoOther: ro.ab,//TODO標籤化
               urls: null,//TODO添加近期URL
               ttp: "最新消息",//公告
               tp: ro.tp,
               alpha: { txt: "回上一頁", uri: `/` },
               moment: require('moment'),
-              dbhtml: html
+              dbhtml: html,
+              ISuser:false,
+              ProntEndBeautificationRendering:true
             });
           } else {
             res.status(404).send("404 not found");
