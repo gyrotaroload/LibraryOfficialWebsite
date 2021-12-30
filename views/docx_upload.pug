@@ -101,9 +101,10 @@ block content
       a(href='https://github.com/shawooha') shawooha
   // Free html personal blog theme "Samantha" (Semantic UI + jQuery) by Tim B. https://github.com/shawooha
   .ui.clearing.segment
-    h6.ui.right.floated.header
-      .first-border.flex.color-3
-        #submit.button.flex(align="center" onclick="$.post('/main/addleast',{YYYY:$('#YYYY').val(),M:$('#M').val(),D:$('#D').val(),h:$('#h').val(),mm:$('#mm').val(),tp:$('#tp').val(),ab:$('#ab').val(),labels:$('#labels').text(),uri:'$(__#uri__).val()'},(r)=>{console.log(r);})")
+    #TheNextStep
+    h6.ui.right.floated.header 填寫「標題」、「標籤」、「摘要」後，按下右下方的下一步接續填寫「內容」
+      .first-border.flex.color-3(style="display:none;")
+        #submit.button.flex(align="center" onclick="$.post('/main/addleast',{YYYY:$('#YYYY').val(),M:$('#M').val(),D:$('#D').val(),h:$('#h').val(),mm:$('#mm').val(),tp:$('#tp').val(),ab:$('#ab').val(),labels:$('#labels').text(),uri:'$(__#uri__).val()'},(r)=>{console.log(r);if($('#TheNextStep').text()==='1'){window.location.href = '/main/docx?ic=l&id='+r;}else if($('#TheNextStep').text()==='2'){console.log(2);}else if($('#TheNextStep').text()==='3'){console.log(3);}else{console.log('內容->下一步::未定義');}})")
           | &#9745;提交
           svg(width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg')
             path(d='M9.77623 4.61867C10.4796 4.99574 10.4796 6.00427 9.77623 6.38133L2.39266 10.3397C1.72648 10.6969 0.920166 10.2143 0.920167 9.45841L0.920167 1.54159C0.920167 0.785717 1.72648 0.30311 2.39266 0.660254L9.77623 4.61867Z' fill='#333')
@@ -164,6 +165,7 @@ block content
     .ui.two.column.very.relaxed.stackable.grid
       .column
         h2(style='background-color:#ddb98b;margin-top:-2vh;color:#000000;text-align:center;') 摘要
+        //TODO 摘要過長會破圖
         form.ff(style="margin:0px;")
           textarea#ab.ff.message(rows='4' cols='50' name='subject' placeholder='請輸入摘要...' required='')
         //.ui.card
@@ -209,7 +211,7 @@ block content
           h4.ui.horizontal.divider.header
             i.thumbtack.icon
             |   不建議的方法
-          .next-button.flex
+          .next-button.flex(onclick="$('#TheNextStep').text('1');$('#submit').click();")
             .next.flex.color-2
               | WORD
               svg.next-svg(width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg')
@@ -283,11 +285,11 @@ block content
               | 同步「摘要」與「內容」
             .button
     .ui.vertical.divider |
-  input(type='file')
-  textarea(rows='10' cols='50')
-  #sol_html.ui.container
+  input(type='file' style='display:none;')
+  textarea(rows='10' cols='50' style='display:none;')
+  #sol_html.ui.container(style='display:none;')
   //the form is garbage
-  form(method='post', action='/users/register', enctype='multipart/form-data')
+  form( style='display:none;', method='post', action='/users/register', enctype='multipart/form-data')
   //.form-group
    label Name
    input.form-control(name='name', type='text', placeholder='Enter name')
@@ -303,18 +305,18 @@ block content
   //.form-group   
    label Confirm Password
    input.form-control(name='password2', type='password', placeholder='Confirm password')
-  .form-group     
-   label Profile Image
-   input.form-control(name='docxPayload', type='file')
-  .form-group
-   input.btn.btn-primary(type='submit', name='submit', value='Register')
+  .form-group(style='display:none;')
+    label Profile Image
+    input.form-control(name='docxPayload', type='file')
+  .form-group(style='display:none;')
+    input.btn.btn-primary(type='submit', name='submit', value='Register')
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css' type='text/css')
   link(rel='stylesheet' href='/stylesheets/ButtonsUIKit.css' type='text/css')
-  #jade_user_info
-  #jade_user_info_name #{var_jade_user_info_name}
-  #jade_user_info_username #{var_jade_user_info_username}
-  #jade_user_info_profileimage #{var_jade_user_info_profileimage}
-  #jade_user_info_choosedanimal #{var_jade_user_info_choosedanimal}
+  #jade_user_info(style='display:none;')
+  #jade_user_info_name(style='display:none;') #{var_jade_user_info_name}
+  #jade_user_info_username(style='display:none;') #{var_jade_user_info_username}
+  #jade_user_info_profileimage(style='display:none;') #{var_jade_user_info_profileimage}
+  #jade_user_info_choosedanimal(style='display:none;') #{var_jade_user_info_choosedanimal}
   link(href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet')
   //.flex.row
     .Forced2Disappear.first-border.flex.color-3

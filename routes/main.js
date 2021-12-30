@@ -7,7 +7,7 @@ const { Base64 } = require('js-base64');
 var mammoth = require("mammoth");//main
 var multer = require('multer');
 const storage = multer.memoryStorage();
-var upload = multer({ storage: storage, limits: { /*fields: 1, */fileSize: 6000000, files: 1/*, parts: 2 */ } });
+var upload = multer({ storage: storage, limits: { /*fields: 1, */fileSize: 52428800/*50M我猜 */, files: 1/*, parts: 2 */ } });
 
 var DEF_DEBUG = true;
 
