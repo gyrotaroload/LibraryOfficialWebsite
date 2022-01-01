@@ -55,6 +55,7 @@ var ji = require('../models/JournalInformation');
 var least = require('../models/least');
 var docs = require('../models/docs');
 
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
   least.frontend((stuff) => {
@@ -208,6 +209,7 @@ router.get('/jjson', function (req, res, next) {
 });
 
 router.get('/inner', function (req, res, next) {
+  
   if (req.query.ic === 'l') {
     least.getById(req.query.pid, ro => {
       if (ro) {

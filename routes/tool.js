@@ -5,6 +5,8 @@ var text2png = require('text2png');
 const fontList = require('font-list');
 const sharp = require('sharp');
 var router = express.Router();
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+
 
 router.post('/isbn2json', function (req, res, next) {
     nckulib.isbn_to_json(req.body.isbn, (ok) => {
@@ -21,6 +23,7 @@ router.get('/mosbjt', function (req, res, next) {//for fun not important
 });
 
 router.get('/t2i', function (req, res, next) {
+    //生成數字圖片的功能
     // using the asynchronous API with .then
     /*textToImage.generate('Lorem ipsum dolor sit amet', {
         debug: true,
@@ -83,6 +86,12 @@ console.log(tf);*/
 
     /* });*/
 
+});
+
+router.get('/localfetch', function (req, res, next) {
+    fetch('/inner?id=61cdf503b346ec72f289aa09&pid=61cdf3d7f75eb35714a35b45&ic=l').
+    then(r=>r.text()).
+    then(t=>console.log(t));
 });
 
 module.exports = router;

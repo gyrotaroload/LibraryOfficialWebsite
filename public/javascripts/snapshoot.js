@@ -7,7 +7,7 @@ var html2canvas = require('html2canvas');
 
 //import html2canvas from '/js/vendor/html2canvas/dist/html2canvas.esm.js';
 
-var commercialFileName = document.title + ((moment) ? (`${moment().format('MMMM-Do-YYYY-h-mm-ss-a')}`) : 'could_not_load_current_moment') + '.jpg';
+var commercialFileName = document.title + ((typeof moment !== 'undefined') ? (`${moment().format('MMMM-Do-YYYY-h-mm-ss-a')}`) : 'could_not_load_current_moment') + '.jpg';
 
 function saveData(blob, filename) {
     var a = document.createElement("a");
