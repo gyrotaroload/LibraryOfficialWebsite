@@ -216,8 +216,8 @@ router.get('/inner', function (req, res, next) {
             res.render('docx', {
               title: 'inner',
               infoClass: "最新消息",
-              infoDT: String(ro.YYYY)+'年'+String(ro.M)+'月'+String(ro.D)+'日'+String(ro.h)+'時'+String(ro.mm)+'分',
-              infoID: ro.uri +'@'+`/inner?id=${ro.uri}&pid=${ro.id}&ic=l`,//flex string copy from index.pug search in code "詳全文" 之href
+              infoDT: String(ro.YYYY) + '年' + String(ro.M) + '月' + String(ro.D) + '日' + String(ro.h) + '時' + String(ro.mm) + '分',
+              infoID: ro.uri + '@' + `/inner?id=${ro.uri}&pid=${ro.id}&ic=l`,//flex string copy from index.pug search in code "詳全文" 之href
               infoOther: ro.ab,//TODO標籤化
               urls: null,//TODO添加近期URL
               ttp: "最新消息",//公告
@@ -225,8 +225,8 @@ router.get('/inner', function (req, res, next) {
               alpha: { txt: "回上一頁", uri: `/` },
               moment: require('moment'),
               dbhtml: html,
-              ISuser:false,
-              ProntEndBeautificationRendering:true
+              ISuser: false,
+              ProntEndBeautificationRendering: true
             });
           } else {
             res.status(404).send("404 not found");
@@ -260,6 +260,24 @@ router.get('/inner', function (req, res, next) {
     }
   }
   );*/
+});
+
+
+router.get('/interlibraryCooperation', function (req, res, next) {
+
+  res.render('docx', {
+    title: 'interlibraryCooperation',
+    ExternalLargeButtonName:"外部連結",
+    urls: null,//TODO添加近期URL
+    ttp: "成大數學系圖書館",//公告
+    tp: "館際合作服務",
+    alpha: { txt: "回首頁", uri: `/` },
+    moment: require('moment'),
+    //dbhtml: html,
+    ISuser: false,
+    ProntEndBeautificationRendering: true
+  });
+
 });
 
 

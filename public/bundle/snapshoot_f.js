@@ -1,0 +1,1 @@
+console.error("Error: Parsing file D:\\andy\\code\\LibraryOfficialWebsite\\public\\javascripts\\snapshoot.js: 'import' and 'export' may appear only with 'sourceType: module' (7:0)");

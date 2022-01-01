@@ -11,6 +11,8 @@ block contentHEAD
   link(href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet')
   link(rel='stylesheet' href='/stylesheets/welovefontsicon.css')
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css' integrity='sha512-SJw7jzjMYJhsEnN/BuxTWXkezA2cRanuB8TdCNMXFJjxG9ZGSKOX5P3j03H6kdMxalKHZ7vlBMB4CagFP/de0A==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/print-js/1.6.0/print.css' integrity='sha512-tKGnmy6w6vpt8VyMNuWbQtk6D6vwU8VCxUi0kEMXmtgwW+6F70iONzukEUC3gvb+KTJTLzDKAGGWc1R7rmIgxQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='/stylesheets/print.css' type='text/css')
 
 block content
   script.
@@ -63,31 +65,36 @@ block content
         //p
           | Succulents blog kinfolk craft beer tacos. Tumblr authentic single-origin coffee beard chambray. Fixie quinoa raw denim thundercats direct trade 3 wolf moon, intelligentsia gochujang leggings whatever jianbing. Squid art party fam authentic seitan tacos austin gluten-free next level adaptogen chia. Celiac 90's +1 godard. Crucifix sriracha sartorial street art put a bird on it intelligentsia VHS cronut, subway tile ramps 90's la croix meh next level.
       aside.five.wide.column
-        h4 詳細資料
-        .ui.list
-          .item
-            i.map.marker.icon
-            .content
-              a.header 分類
-              .description= infoClass
-          .item
-            i.map.marker.icon
-            .content
-              a.header 更新時間
-              .description= infoDT
-          .item
-            i.map.marker.icon
-            .content
-              a.header 索引號碼/永久鏈結
-              if infoID.includes('@')
-                a.description(href=`${infoID.split('@')[1]}`)= infoID.split('@')[0]
-              else
-                .description= infoID
-          .item
-            i.map.marker.icon
-            .content
-              a.header 其他
-              #docid.description= infoOther
+        if ExternalLargeButtonName
+          link(rel='stylesheet' href='/stylesheets/https___raw_githubusercontent_com_loup-brun_buttons_master_main.css')
+          .lambda
+            a.btn.btn-secondary abc123
+        else
+          h4 詳細資料
+          .ui.list
+            .item
+              i.map.marker.icon
+              .content
+                a.header 分類
+                .description= infoClass
+            .item
+              i.map.marker.icon
+              .content
+                a.header 更新時間
+                .description= infoDT
+            .item
+              i.map.marker.icon
+              .content
+                a.header 索引號碼/永久鏈結
+                if infoID.includes('@')
+                  a.description(href=`${infoID.split('@')[1]}`)= infoID.split('@')[0]
+                else
+                  .description= infoID
+            .item
+              i.map.marker.icon
+              .content
+                a.header 其他
+                #docid.description= infoOther
         //p
           a(href='#') JavaScript
         //p
@@ -140,15 +147,22 @@ block content
       a.ui.facebook.button(href='#')
         i.facebook.icon
         | 數學系圖首頁
-      a.ui.linkedin.button(href='#')
+      a#snap_shoot_screen.ui.linkedin.button(href='#')
         i.linkedin.icon
         | 截圖
+        #snap_shoot_html2canvas_group(style='display: none;')
+          //button#snap_shoot_screen(style='display: none;') snap_shoot_screen
+          #snap_shoot_finish(style='display: none;') -1
+          #snap_shoot_canvas_tmp(style='display: none;')
+          //-#imgdownloadOK(style='display: none;') 這個快速差建下載完成的時候這個dom會被點集...沒
       a.ui.youtube.button(href='#')
         i.youtube.icon
         | 分享
-      a.ui.instagram.button(href='#')
+        //TODO https://css-tricks.com/how-to-use-the-web-share-api/;https://codepen.io/ayoisaiah/pen/WBpzBo
+      a.ui.instagram.button( onclick="printJS('root', 'html')")
         i.instagram.icon
         | 列印
+        //TODO 格式css消失
       a.ui.vk.button(href='#')
         i.vk.icon
         | 另存為PDF
@@ -278,3 +292,5 @@ block content
   if ProntEndBeautificationRendering
     script.
       FUCNmakeALLtableTOsemanticUI();
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/print-js/1.6.0/print.js' integrity='sha512-/fgTphwXa3lqAhN+I8gG8AvuaTErm1YxpUjbdCvwfTMyv8UZnFyId7ft5736xQ6CyQN4Nzr21lBuWWA9RTCXCw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script(src='/javascripts/snapshoot.js'  type="module" )
