@@ -1,12 +1,13 @@
 //https://raw.githubusercontent.com/UIDD2021ElderlyApp/backend_ex/main/public/javascripts/snapshoot_layout.js
 
-//*****************這裡的東西要用browserify!!!!!!!!!!!!!!!!!!!!!!攬就拿掉吧
+//*****************這裡的東西要用browserify!!!!!!!!!!!!!!!!!!!!!!沒的話就拿掉吧，用底下的import
 var moment = require('moment');
+var html2canvas = require('html2canvas');
 ///////////////////////////////////////////////////////////
 
-import html2canvas from '/js/vendor/html2canvas/dist/html2canvas.esm.js';
+//import html2canvas from '/js/vendor/html2canvas/dist/html2canvas.esm.js';
 
-var commercialFileName = document.title + (moment) ? 'could_not_load_current_moment' : (`${moment().format('MMMM-Do-YYYY-h-mm-ss-a')}`) + '.jpg';
+var commercialFileName = document.title + ((moment) ? (`${moment().format('MMMM-Do-YYYY-h-mm-ss-a')}`) : 'could_not_load_current_moment') + '.jpg';
 
 function saveData(blob, filename) {
     var a = document.createElement("a");

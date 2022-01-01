@@ -267,7 +267,7 @@ router.get('/interlibraryCooperation', function (req, res, next) {
 
   res.render('docx', {
     title: 'interlibraryCooperation',
-    ExternalLargeButtonName:"外部連結",
+    ExternalLargeButtonName: "外部連結",
     urls: null,//TODO添加近期URL
     ttp: "成大數學系圖書館",//公告
     tp: "館際合作服務",
