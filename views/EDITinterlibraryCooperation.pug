@@ -17,23 +17,23 @@ block content
           li
             a.header-menu-tab(href='/')
               span.icon.fontawesome-home.scnd-font-color
-              | 回首頁
+              | 館際合作頁面維護
           li
             a.header-menu-tab(href='#2')
               span.icon.fontawesome-user.scnd-font-color
-              | 管理員帳號管理
+              | 先填寫表單連結與說明文字
           li
             a.header-menu-tab(href='#3')
               span.icon.entypo-flow-tree.scnd-font-color
-              | 管理員登入紀錄
+              | 再按下一步編輯內文
             //a.header-menu-number(href='#4') 5
-          li
+          //li
             a.header-menu-tab(href='/users/logout')
               span.icon.entypo-logout.scnd-font-color
               | 登出
         .profile-menu
           p
-            | Me 
+            | 注意:動作會複寫既有資料
             //a(href='#26')
               span.entypo-down-open.scnd-font-color
           .profile-picture.small-profile-picture
@@ -229,21 +229,20 @@ block content
           // WEATHER (MIDDLE-CONTAINER)
           h2.titular
             span.icon.entypo-rocket
-            strong 最新消息
-            | /由開發人員發佈
+            strong 下一步
           .current-day
-            p.current-day-date 編輯人員只要看
+            p.current-day-date 內容編輯
             p.current-day-temperature
-              | 左邊
+              | 二選一
               span.icon-cloudy
           ul.next-days
             li
               a(href='#43')
                 p.next-days-date
-                  span.day 需求
-                  span.scnd-font-color 新書通報
+                  span.day markdown
+                  span.scnd-font-color 純文字編輯
                 p.next-days-temperature
-                  | 完成
+                  | 
                   span.icon.icon-cloudy.scnd-font-color
             li
               a(href='#45')
@@ -329,7 +328,7 @@ block content
               h2.googleplus.titular SHARE TO GOOGLE+
       // RIGHT-CONTAINER
       .right-container.container
-        //.join-newsletter.block
+        .join-newsletter.block
           //- JOIN NEWSLETTER (RIGHT-CONTAINER)
           h2.titular JOIN THE NEWSLETTER
           .input-container
@@ -337,7 +336,7 @@ block content
             .input-icon.envelope-icon-newsletter
               span.fontawesome-envelope.scnd-font-color
           a.subscribe.button(href='#21') SUBSCRIBE
-        //.account.block
+        .account.block
           //- ACCOUNT (RIGHT-CONTAINER)
           h2.titular SIGN IN TO YOUR ACCOUNT
           .input-container
@@ -478,7 +477,7 @@ block content
                 td
                 td
                 td
-        #calendar.calendar.block.otherplugincalendar(calendar='')
+        //#calendar.calendar.block.otherplugincalendar(calendar='')
         // end calendar-month block
         // end right-container
         // end main-container

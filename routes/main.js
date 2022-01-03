@@ -4,11 +4,18 @@ var router = express.Router();
 var generator = require('character-generator');
 const { Base64 } = require('js-base64');
 
+var mammoth = require("mammoth");//main
+var multer = require('multer');
+const storage = multer.memoryStorage();
+var upload = multer({ storage: storage, limits: { /*fields: 1, */fileSize: 52428800/*50M我猜 */, files: 1/*, parts: 2 */ } });
+
 var DEF_DEBUG = true;
 
 var JournalInformation = require('../models/JournalInformation');
 var excelDB = require('../models/excelDB');
 var swipe_edit = require('../models/swipe_edit');
+var least = require('../models/least');
+var docs = require('../models/docs');
 
 
 router.get('/', ensureAuthenticated, function (req, res, next) {
@@ -274,6 +281,121 @@ router.get('/infoJ', ensureAuthenticated, function (req, res, next) {
         res.status(200).send(stuff);
     });
 });
+router.get('/docxUpload', ensureAuthenticated, function (req, res, next) {
+    res.render('docx_upload', {
+        title: 'docx upload 2',
+        moment: require('moment')
+    });
+});
+
+router.post('/addleast', ensureAuthenticated, function (req, res, next) {
+    //console.log(req.body);
+    var newobj = new least({
+        new_date: Date.now(),
+        YYYY: req.body.YYYY,
+        M: req.body.M,
+        D: req.body.D,
+        h: req.body.h,
+        mm: req.body.mm,
+        tp: req.body.tp,
+        ab: req.body.ab,
+        lab: JSON.parse(req.body.labels).label,
+        uri: req.body.uri
+    });
+    least.add(newobj, function (r) {
+        if (r) {
+            res.status(200).send(r.id);
+        } else {
+            //console.log(err);
+            res.status(404).send("fail");
+        }
+    });
+
+});
+
+router.post('/docx', ensureAuthenticated, upload.single('docxPayload'), function (req, res, next) {
+    //console.log(typeof (req.body.docxPayload));
+    /*
+    說明
+    這裡跟img一點關西都沒有
+    概念:
+    前端上傳doc檔案至後台
+    後台傳html回給前台
+    */
+    var content = req.file.buffer;
+    mammoth.convertToHtml({ buffer: content }, {
+        convertImage: mammoth.images.imgElement(function (image) {
+            return image.read("base64").then(function (imageBuffer) {
+                return {
+                    src: "data:" + image.contentType + ";base64," + imageBuffer
+                };
+            });
+        }),
+    })
+        .then(function (result) {
+            var html = result.value; // The generated HTML
+            var messages = result.messages; // Any messages, such as warnings during conversion
+            //console.log(html);
+            // console.log(messages);
+            return { sol_html: html, sol_messages: messages };
+        })
+        .done((sol) => {
+            var no = new docs({
+                dt: Date.now(),
+                html: sol.sol_html
+            });
+            docs.add(no, function (r) {
+                if (r) {
+                    sol.id = r.id;
+                    res.status(200).send(sol);
+                } else {
+                    sol.id = null;
+                    //console.log(err);
+                    res.status(404).send(sol);
+                }
+            });
+        });
+});
+
+router.get('/docx', ensureAuthenticated, function (req, res, next) {
+    res.render('docx', {
+        title: 'docx upload',
+        infoClass: req.query.ic,
+        infoDT: Date.now(),
+        infoID: req.query.id,
+        infoOther: "編輯模式",
+        labSW: "點我!",
+        urls: null,
+        ttp: "編輯",//公告
+        tp: "按下右側「上傳」按鈕以上傳docx檔案",
+        alpha: { txt: "提交", uri: `/main/link?lid=${req.query.id}&` },
+        moment: require('moment')
+    });
+});
+
+router.get('/link', ensureAuthenticated, function (req, res, next) {
+    least.SETuri(req.query.lid, req.query.docid, r => {
+        if (r === 'yes') {
+            res.status(200).send("success");
+        }
+        else {
+            res.status(404).send("failed");
+        }
+    })
+});
+
+router.get('/interlibraryCooperation', ensureAuthenticated, function (req, res, next) {
+    res.render('EDITinterlibraryCooperation', {
+        title: 'EDITinterlibraryCooperation',
+        var_jade_user_info_name: `${req.user.name}`,
+        var_jade_user_info_username: `${req.user.username}`,
+        var_jade_user_info_profileimage: `${req.user.profileimage}`,
+        var_use_old_jquery: true,
+        var_jade_err_msg_show: false,
+        var_jade_error_msg_gui_text_1: "X",
+        var_jade_error_msg_gui_text_2: "X",
+    });
+});
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
@@ -283,7 +405,6 @@ function ensureAuthenticated(req, res, next) {
         res.redirect('/users/login');
     }
 }
-
 
 module.exports = router;
 

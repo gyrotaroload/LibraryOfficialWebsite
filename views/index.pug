@@ -297,7 +297,28 @@ block content
           div(align='center')
             .ui.divider
             .ui.items
-              .item(align='left')
+              each eps, index in ps
+                .item(align='left')
+                  .ui.tiny.image
+                    img(src=`./tool/t2i?txt=${margin*4+index}`)
+                  .content
+                    a.header= eps.tp
+                    .meta
+                      span
+                        i.calendar.icon
+                        | #{String(eps.YYYY)+'/'+String(eps.M)+'/'+String(eps.D)+'-'+String(eps.h)+':'+String(eps.mm)}
+                        //i.tag.icon= eps.lab
+                        each epl, index in eps.lab
+                          i.tag.icon
+                          | #{epl}
+                        i.user.icon
+                        |  管理員
+                    .description(align='justify')
+                      p= eps.ab
+                    .extra
+                      a.ui.blue.right.floated.button(href=`/inner?id=${eps.uri}&pid=${eps.id}&ic=l`) 詳全文...
+                .ui.divider
+              //.item(align='left')
                 .ui.tiny.image
                   img(src='./tool/t2i?txt=1')
                 .content
@@ -316,8 +337,8 @@ block content
                       | sunt...
                   .extra
                     .ui.blue.right.floated.button Read More
-              .ui.divider
-              .item(align='left')
+              //.ui.divider
+              //.item(align='left')
                 .ui.tiny.image
                   img(src='./jumbotron/assets/img/400x400.png')
                 .content
@@ -335,8 +356,8 @@ block content
                       | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi vel, itaque
                   .extra
                     .ui.blue.right.floated.button Read More
-              .ui.divider
-              .item(align='left')
+              //.ui.divider
+              //.item(align='left')
                 .ui.tiny.image
                   img(src='./jumbotron/assets/img/400x400.png')
                 .content
@@ -354,8 +375,8 @@ block content
                       | Lor
                   .extra
                     .ui.blue.right.floated.button Read More
-              .ui.divider
-              .item(align='left')
+              //.ui.divider
+              //.item(align='left')
                 .ui.tiny.image
                   img(src='./jumbotron/assets/img/400x400.png')
                 .content
@@ -375,13 +396,14 @@ block content
                     .ui.blue.right.floated.button Read More
             .ui.divider
             .ui.buttons
-              button.ui.button.disabled Previous
-              button.ui.blue.button 1
-              button.ui.button 2
-              button.ui.button 3
-              button.ui.button ...
-              button.ui.button n
-              button.ui.button Next
+              button.ui.button(onclick="var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=0;i<pgs.length;i++){if(parseInt(pgs[i].innerText,10)-1<0){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)-1;}}") Previous
+              if margin>4||pc.length
+                each epc in pc.slice(margin-2<0?0:margin-2,margin+3)
+                  a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc
+              else
+                each epc in pc
+                  a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc
+              button.ui.button(onclick=`var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=pgs.length-1;i>=0;i--){if(parseInt(pgs[i].innerText,10)+1>=${pc.length}){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)+1;}}`) Next
         // Right Sidebar
         .four.wide.column.mobile.only
           #copyRightSidebar_mobile2desktop.ui.fluid.vertical.menu.moderns

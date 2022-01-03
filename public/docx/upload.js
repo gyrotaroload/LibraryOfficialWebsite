@@ -5,7 +5,7 @@ $(function () {//start
         console.log(typeof (stuff));
         console.log(formData);
         $.ajax({
-            url: "/docx",
+            url: "/main/docx",
             data: formData,//do not Place the file directly here!
             type: 'POST',
             contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
@@ -25,8 +25,12 @@ $(function () {//start
             },
             complete: function (xhr) {
                 console.log(xhr.responseJSON.sol_html);
+                $('#docid').text(xhr.responseJSON.id);
+                //-$('#alpha').href($('#alpha').href()+"docid="+xhr.responseJSON.id);
+                var _href = $('#alpha').attr("href");
+                $('#alpha').attr("href", _href + 'docid='+xhr.responseJSON.id);
                 document.getElementById("htmlfromuser").innerHTML = xhr.responseJSON.sol_html;
-                var makeALLtableTOsemanticUI = document.getElementsByTagName("table");
+                /*var makeALLtableTOsemanticUI = document.getElementsByTagName("table");
                 for (let index = 0; index < makeALLtableTOsemanticUI.length; index++) {
                     const element = makeALLtableTOsemanticUI[index];
                     if (!element.classList.contains("ui")) {
@@ -38,8 +42,8 @@ $(function () {//start
                     if (!element.classList.contains("table")) {
                         element.classList.add("table");
                     }
-                }
-
+                }*/
+                FUCNmakeALLtableTOsemanticUI();
             },
         });
     }
@@ -60,6 +64,7 @@ $(function () {//start
     /////////////////////////end of memo/////////////////////////////
 
     function changeFile() {
+        console.log("wtf");
         var file = input.files[0];
         /*var reader = new FileReader();
         reader.addEventListener('load', readFile);

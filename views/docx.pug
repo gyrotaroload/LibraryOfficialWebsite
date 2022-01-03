@@ -5,20 +5,48 @@ block contentHEAD
   //-title Samantha
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
   meta(http-equiv='X-UA-Compatible' content='ie=edge')
-  //-link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css')
   link(rel='stylesheet' href='/stylesheets/samantha.css')
-  //-script(src='https://code.jquery.com/jquery-3.3.1.min.js')
-  //-script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css' type='text/css')
+  link(rel='stylesheet' href='/stylesheets/ButtonsUIKit.css' type='text/css')
+  link(href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet')
+  link(rel='stylesheet' href='/stylesheets/welovefontsicon.css')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css' integrity='sha512-SJw7jzjMYJhsEnN/BuxTWXkezA2cRanuB8TdCNMXFJjxG9ZGSKOX5P3j03H6kdMxalKHZ7vlBMB4CagFP/de0A==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/print-js/1.6.0/print.css' integrity='sha512-tKGnmy6w6vpt8VyMNuWbQtk6D6vwU8VCxUi0kEMXmtgwW+6F70iONzukEUC3gvb+KTJTLzDKAGGWc1R7rmIgxQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='/stylesheets/print.css' type='text/css')
 
 block content
+  script.
+    function FUCNmakeALLtableTOsemanticUI(){
+    var makeALLtableTOsemanticUI = document.getElementsByTagName("table");
+    for (let index = 0; index < makeALLtableTOsemanticUI.length; index++) {
+    const element = makeALLtableTOsemanticUI[index];
+    if (!element.classList.contains("ui")) {
+    element.classList.add("ui");
+    }
+    if (!element.classList.contains("celled")) {
+    element.classList.add("celled");
+    }
+    if (!element.classList.contains("table")) {
+    element.classList.add("table");
+    }
+    }
+    }
+  #jade_user_info
+  #jade_user_info_name #{var_jade_user_info_name}
+  #jade_user_info_username #{var_jade_user_info_username}
+  #jade_user_info_profileimage #{var_jade_user_info_profileimage}
+  #jade_user_info_choosedanimal #{var_jade_user_info_choosedanimal}
   .ui.container
     nav.ui.inverted.grey.big.stackable.menu
       .header.active.item
         // this may be your photograph
         img.logo(src='/docx/logo.png' alt='')
-        |         My Blog
-      .item About me
-      .item Contact
+        | #{ttp}
+        //| 公告
+      .item= tp
+      // (^上方文字^)標題
+      a#alpha.item(href=`${alpha.uri}`)= alpha.txt
+      //^^^^^^^^^^^^ 回到上一頁
       // Search
       .right.menu
         .item
@@ -27,7 +55,7 @@ block content
             input(placeholder='Search this blog' type='text')
         // <a class="item">Link</a>
     .ui.stackable.grid
-      main#htmlfromuser.eleven.wide.column
+      main#htmlfromuser.eleven.wide.column!= dbhtml
         //h1 Tote bag four dollar toast bitters taxidermy prism
         //p 09 October 2018
         //p
@@ -37,75 +65,124 @@ block content
         //p
           | Succulents blog kinfolk craft beer tacos. Tumblr authentic single-origin coffee beard chambray. Fixie quinoa raw denim thundercats direct trade 3 wolf moon, intelligentsia gochujang leggings whatever jianbing. Squid art party fam authentic seitan tacos austin gluten-free next level adaptogen chia. Celiac 90's +1 godard. Crucifix sriracha sartorial street art put a bird on it intelligentsia VHS cronut, subway tile ramps 90's la croix meh next level.
       aside.five.wide.column
-        h4 CATEGORIES
-        p
+        if ExternalLargeButtonName
+          link(rel='stylesheet' href='/stylesheets/https___raw_githubusercontent_com_loup-brun_buttons_master_main.css')
+          .lambda
+            a.btn.btn-secondary abc123
+        else
+          h4 詳細資料
+          .ui.list
+            .item
+              i.map.marker.icon
+              .content
+                a.header 分類
+                .description= infoClass
+            .item
+              i.map.marker.icon
+              .content
+                a.header 更新時間
+                .description= infoDT
+            .item
+              i.map.marker.icon
+              .content
+                a.header 索引號碼/永久鏈結
+                if infoID.includes('@')
+                  a.description(href=`${infoID.split('@')[1]}`)= infoID.split('@')[0]
+                else
+                  .description= infoID
+            .item
+              i.map.marker.icon
+              .content
+                a.header 其他
+                #docid.description= infoOther
+        //p
           a(href='#') JavaScript
-        p
+        //p
           a(href='#') HTML/CSS
-        p
+        //p
           a(href='#') React.js
-        p
+        //p
           a(href='#') Redux
-        p
+        //p
           a(href='#') Other
         .ui.divider
-        h4 TAGS
-        .tagcloud
-          .ui.label
-            a(href='#') javascript
-          .ui.label
-            a(href='#') html
-          .ui.label
-            a(href='#') css
-          .ui.label
-            a(href='#') react
-          .ui.label
-            a(href='#') xampp
-          .ui.label
-            a(href='#') wordpress
-          .ui.label
-            a(href='#') design
-          .ui.label
-            a(href='#') personal
-          .ui.label
-            a(href='#') productivity
-        h4 BLOGROLL
-        p
-          a(href='#') Interesting Blog
-        p
-          a(href='#') Another Blog
-        p
-          a(href='#') Yet Another Interesting Blog
+        h4= labSW||'標籤'
+        if labSW
+          label.ui.primary.button
+            input(type='file' style='display:none;')
+            span.zocial-windows
+            |  上傳word檔
+        else
+          .tagcloud
+            .ui.label
+              a(href='#') javascript
+            .ui.label
+              a(href='#') html
+            .ui.label
+              a(href='#') css
+            .ui.label
+              a(href='#') react
+            .ui.label
+              a(href='#') xampp
+            .ui.label
+              a(href='#') wordpress
+            .ui.label
+              a(href='#') design
+            .ui.label
+              a(href='#') personal
+            .ui.label
+              a(href='#') productivity
+        if urls
+          h4 相關頁面
+          p
+            a(href='#') Interesting Blog
+          p
+            a(href='#') Another Blog
+          p
+            a(href='#') Yet Another Interesting Blog
         .ui.divider
   footer.ui.container
     // Social
     .social
       a.ui.facebook.button(href='#')
         i.facebook.icon
-        | Facebook
-      a.ui.linkedin.button(href='#')
+        | 數學系圖首頁
+      a#snap_shoot_screen.ui.linkedin.button(href='#')
         i.linkedin.icon
-        | LinkedIn
+        | 截圖
+        #snap_shoot_html2canvas_group(style='display: none;')
+          //button#snap_shoot_screen(style='display: none;') snap_shoot_screen
+          #snap_shoot_finish(style='display: none;') -1
+          #snap_shoot_canvas_tmp(style='display: none;')
+          //-#imgdownloadOK(style='display: none;') 這個快速差建下載完成的時候這個dom會被點集...沒
       a.ui.youtube.button(href='#')
         i.youtube.icon
-        | YouTube
-      a.ui.instagram.button(href='#')
+        | 分享
+        //TODO https://css-tricks.com/how-to-use-the-web-share-api/;https://codepen.io/ayoisaiah/pen/WBpzBo
+      a.ui.instagram.button( onclick="printJS('root', 'html')")
         i.instagram.icon
-        | Instagram
-      a.ui.vk.button(href='#')
+        | 列印
+        //TODO 格式css消失
+      a.pdfutils.ui.vk.button
+        //(onclick="var pdf = new jsPDF('p','pt','a4');var margins = {top: 25,bottom: 60,left: 20,width: 522};pdf.addHTML(document.body, margins.top, margins.left, {},function() {console.log('???');/*saveData(pdf.output('Blob'), commercialFileName);*/pdf.save(commercialFileName);});")
         i.vk.icon
-        | VK
+        | 另存為PDF
+        //TODO https://www.npmjs.com/package/html-pdf
       // 09 Oct 2018 R.I.P. Google Plus :-P
       // <a class="ui google plus button" href="#"><i class="google plus icon"></i>Google Plus</a>
     .copyright
-      | Free html personal blog theme by 
-      i.ui.icon.github
-      a(href='https://github.com/shawooha') shawooha
+      | 成大數學系圖書館網站內頁 
+      i.ui.icon.bullseye
+      a(href='#')= `${moment().format('YYYY')}`
   // Free html personal blog theme "Samantha" (Semantic UI + jQuery) by Tim B. https://github.com/shawooha
-  input(type='file')
-  textarea(rows='10' cols='50')
+  //-label.ui.primary.button
+    input(type='file' style='display:none;')
+    span.zocial-windows
+    |  上傳word檔
+  //input(type='file')
+  textarea(rows='10' cols='50' style='display:none;')
   #sol_html.ui.container
-  //the form is garbage
+  //TODO the form is garbage--------------------------------------------------------------所以到底留這幹嘛?從哪裡來的?反正不知道的東西不要動就對了
   form(method='post', action='/users/register', enctype='multipart/form-data')
   //.form-group
    label Name
@@ -122,19 +199,15 @@ block content
   //.form-group   
    label Confirm Password
    input.form-control(name='password2', type='password', placeholder='Confirm password')
-  .form-group     
-   label Profile Image
-   input.form-control(name='docxPayload', type='file')
-  .form-group
-   input.btn.btn-primary(type='submit', name='submit', value='Register')
-  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css' type='text/css')
-  link(rel='stylesheet' href='/stylesheets/ButtonsUIKit.css' type='text/css')
-  #jade_user_info
-  #jade_user_info_name #{var_jade_user_info_name}
-  #jade_user_info_username #{var_jade_user_info_username}
-  #jade_user_info_profileimage #{var_jade_user_info_profileimage}
-  #jade_user_info_choosedanimal #{var_jade_user_info_choosedanimal}
-  link(href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet')
+  label.ui.primary.button(style='display:none;')
+    input.form-control(name='docxPayload', type='file' style='display:none;')
+    span.zocial-windows
+    |  上傳圖片...反正我確定這根片一點關西都沒有WWW到底在幹嘛
+  //.form-group     
+    label Profile Image
+    input.form-control(name='docxPayload', type='file')
+  //.form-group
+    input.btn.btn-primary(type='submit', name='submit', value='Register')
   //.flex.row
     .Forced2Disappear.first-border.flex.color-3
       //-TODO這裡要處理提交的字沒有置中然後按下去的回饋
@@ -215,4 +288,28 @@ block content
           path(d='M20.8265 18.2213L15.8478 13.2426L20.8266 8.26375C21.0534 8.03695 21.2372 7.23718 20.6212 6.62125C20.0053 6.00532 19.2055 6.18915 18.9787 6.41593L13.9999 11.3948L9.02111 6.41595C8.79436 6.18915 7.99456 6.00531 7.37866 6.62122C6.76275 7.23713 6.94656 8.03695 7.17334 8.26372L12.1522 13.2426L7.17334 18.2214C6.94659 18.4481 6.7627 19.2479 7.37866 19.8639C7.99462 20.4798 8.79441 20.296 9.02116 20.0692L14 15.0904L18.9788 20.0692C19.2056 20.296 20.0054 20.4798 20.6213 19.8639C21.2373 19.2479 21.0533 18.4481 20.8265 18.2213Z' fill='#333')
   script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
   script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
-  script(src='/docx/upload.js')
+  if !ISuser
+    script(src='/docx/upload.js')
+  if ProntEndBeautificationRendering
+    script.
+      FUCNmakeALLtableTOsemanticUI();
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/print-js/1.6.0/print.js' integrity='sha512-/fgTphwXa3lqAhN+I8gG8AvuaTErm1YxpUjbdCvwfTMyv8UZnFyId7ft5736xQ6CyQN4Nzr21lBuWWA9RTCXCw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  //script(src='/javascripts/snapshoot.js'  type="module" )
+  script(src='/bundle/snapshoot.js')
+  script(src='/build/bundle.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.1/jspdf.debug.js' integrity='sha512-RbC6buTUvpHRNPIeunxmQXp66uAqxt/T5ACNM7qmUey/KvbihbhPFZpDcqmJCsc00+Zuwr/Cn3uqdJS+6i+Gng==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  //script(type="module" src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.es.min.js' integrity='sha512-ADI0Y5mOlKdWvNoFMqemyhsXH3ij2AB8GY1Y9wPAu6p3TH3FXzGOyVuOguHBtm/rPdS5eBxVUlbrfGwmZq066g==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js' integrity='sha512-s/XK4vYVXTGeUSv4bRPOuxSDmDlTedEpMEcAQk0t/FMd9V6ft8iXdwSBxV0eD60c6w/tjotSlKu9J2AAW1ckTA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script.
+    var commercialFileName = document.title + ((typeof moment !=='undefined') ? (`${moment().format('MMMM-Do-YYYY-h-mm-ss-a')}`) : 'could_not_load_current_moment') + '.pdf';
+    function saveData(blob, filename) {
+    console.log('wtf');
+    var a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style = "display: none";
+    var url = window.URL.createObjectURL(blob);
+    a.href = url;
+    a.download = filename;
+    a.click();
+    window.URL.revokeObjectURL(url);
+    };
