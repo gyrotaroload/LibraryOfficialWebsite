@@ -42,3 +42,7 @@ gulp.task('browserify', function () {
         // Start piping stream to tasks!
         .pipe(gulp.dest('public/build/'));
 });
+
+gulp.task('watch', function () {
+  gulp.watch('./src/js/app.js', gulp.series('browserify'));
+});

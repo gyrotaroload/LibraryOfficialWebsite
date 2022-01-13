@@ -3,6 +3,7 @@
 //*****************這裡的東西要用browserify!!!!!!!!!!!!!!!!!!!!!!沒的話就拿掉吧，用底下的import
 var moment = require('moment');
 var html2canvas = require('html2canvas');
+var imageClipper = require('image-clipper');
 ///////////////////////////////////////////////////////////
 
 //import html2canvas from '/js/vendor/html2canvas/dist/html2canvas.esm.js';
@@ -59,7 +60,9 @@ document.getElementById("snap_shoot_screen").addEventListener("click", function 
     </style></span>
     `;
     document.getElementById("snap_shoot_finish").innerText = "0";
-    html2canvas(document.querySelector("body"), { useCORS: true, }).then(canvas => {
+    //$("body").css({left: 0, top: 0, position:'fixed'});
+    html2canvas(document.querySelector("body"), { useCORS: true/*,scrollY: 0,scrollX: 0 */ }).then(canvas => {
+        //$("body").css({position:'absolute'});
         var url = window.location.href;
         var window_location_href_host = new URL(url).host;
         console.log(window_location_href_host);
@@ -67,39 +70,47 @@ document.getElementById("snap_shoot_screen").addEventListener("click", function 
         //canvas.style.display="none";
         //document.body.appendChild(canvas);
         var target_img = canvas.toDataURL("image/jpeg", 1.0);
-        //console.log(canvas.toDataURL("image/jpeg", 1.0));
-        if (DEF_consolelogdata) {
-            console.log(canvas.toDataURL("image/jpeg", 1.0));
-        }
-        if (DEF_download_screenshot) {
-            var a = document.createElement("a"); //Create <a>
-            a.style = "display: none";
-            a.href = canvas.toDataURL("image/jpeg", 1.0); //Image Base64 Goes here
-            a.download = commercialFileName; //File name Here
-            a.click(); //Downloaded file
-            //if (document.getElementById('imgdownloadOK')) document.getElementById('imgdownloadOK').click();
-            if (document.getElementById('snap_shoot_screen').getElementsByClassName('removeafterSSS')) document.getElementById('snap_shoot_screen').getElementsByClassName('removeafterSSS')[0].remove();
-        }
+        imageClipper(target_img, function () {
+            this.crop(0, 0, vw, vh)
+                .toDataURL(function (dataUrl_c) {
+                    console.log('cropped!');
+                    //preview.src = dataUrl_c;
+                    //console.log(canvas.toDataURL("image/jpeg", 1.0));
+                    if (DEF_consolelogdata) {
+                        console.log(canvas.toDataURL("image/jpeg", 1.0));
+                    }
+                    if (DEF_download_screenshot) {
+                        var a = document.createElement("a"); //Create <a>
+                        a.style = "display: none";
+                        a.href = dataUrl_c//canvas.toDataURL("image/jpeg", 1.0); //Image Base64 Goes here
+                        a.download = commercialFileName; //File name Here
+                        a.click(); //Downloaded file
+                        //if (document.getElementById('imgdownloadOK')) document.getElementById('imgdownloadOK').click();
+                        if (document.getElementById('snap_shoot_screen').getElementsByClassName('removeafterSSS')) document.getElementById('snap_shoot_screen').getElementsByClassName('removeafterSSS')[0].remove();
+                    }
 
-        var blob_tmp = dataURItoBlob(target_img);
-        if (DEF_download_Blob) {
-            saveData(blob_tmp, "download_blob.jpg");
+                    var blob_tmp = dataURItoBlob(dataUrl_c);
+                    if (DEF_download_Blob) {
+                        saveData(blob_tmp, "download_blob.jpg");
 
-        }
-        if (blob_tmp.size < 6000000) {
-            send_pic_to_backend(blob_tmp);
-        } else {
-            console.log("compress_ratio");
-            var compress_ratio = 0.9;
-            while (compress_ratio > 0 && (dataURItoBlob(canvas.toDataURL("image/jpeg", compress_ratio)).size > 6000000)) {
-                compress_ratio = compress_ratio - 0.1;
-            }
-            if (dataURItoBlob(canvas.toDataURL("image/jpeg", compress_ratio)).size > 6000000) {
-                console.error("this is a error, the page is tooooooooooooooooo large, so you can't trans this file to backend!!!!")
-            }
-            send_pic_to_backend(dataURItoBlob(canvas.toDataURL("image/jpeg", compress_ratio)));
-        }
+                    }
+                    if (blob_tmp.size < 6000000) {
+                        send_pic_to_backend(blob_tmp);
+                    } else {
+                        console.log("compress_ratio");
+                        var compress_ratio = 0.9;
+                        while (compress_ratio > 0 && (dataURItoBlob(canvas.toDataURL("image/jpeg", compress_ratio)).size > 6000000)) {
+                            compress_ratio = compress_ratio - 0.1;
+                        }
+                        if (dataURItoBlob(canvas.toDataURL("image/jpeg", compress_ratio)).size > 6000000) {
+                            console.error("this is a error, the page is tooooooooooooooooo large, so you can't trans this file to backend!!!!")
+                        }
+                        send_pic_to_backend(dataURItoBlob(canvas.toDataURL("image/jpeg", compress_ratio)));
+                    }
+                });
 
+
+        });
     });
 });
 

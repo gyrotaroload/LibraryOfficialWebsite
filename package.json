@@ -7,9 +7,10 @@
     "minify:js": "browserify ./public/javascripts/snapshoot.js -o ./public/bundle/snapshoot_f.js && uglifyjs ./public/bundle/snapshoot_f.js -o ./public/bundle/snapshoot.js",
     "watch": "watchify ./public/javascripts/snapshoot.js -o ./public/bundle/snapshoot_f.js --debug --verbose",
     "postinstall": "symdeps",
-    "prestart": "npm run minify:js"
+    "prestart": "npm run minify:js && gulp browserify"
   },
   "dependencies": {
+    "image-clipper": "*",
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.4",
@@ -99,7 +100,12 @@
     "retext": "*",
     "retext-pos": "*",
     "retext-keywords": "*",
-    "fix-esm": "*"
+    "fix-esm": "*",
+    "line-height": "*",
+    "dom-to-image-more": "*",
+    "svg-to-pdfkit": "*",
+    "pdfkit": "*",
+    "blob-stream": "*"
   },
   "symdeps": {
     "paths": {

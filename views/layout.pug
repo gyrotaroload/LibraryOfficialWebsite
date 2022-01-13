@@ -2,11 +2,11 @@ doctype html
 html
   head
     //for markdown latex
-    link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css')
-    link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css')
-    script(src='https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js')
-    script(src='https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js')
-    script(src='https://cdn.jsdelivr.net/npm/markdown-it-texmath/texmath.min.js')
+    link( crossorigin="anonymous" rel='stylesheet' href='https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css')
+    link(crossorigin="anonymous" rel='stylesheet' href='https://cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css')
+    script(crossorigin="anonymous" src='https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js')
+    script(crossorigin="anonymous" src='https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js')
+    script(crossorigin="anonymous" src='https://cdn.jsdelivr.net/npm/markdown-it-texmath/texmath.min.js')
     //The top is the end of the check point
     title= title
     //link(rel='stylesheet', href='/stylesheets/style.css')
@@ -14,6 +14,9 @@ html
       *{font-family:'Noto Sans TC'}
     block contentHEAD
   body#root
+    script.
+        const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+        const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
     #quickPOPUP.ui.basic.modal
       .ui.icon.header
         i#quickPOPUPtopic.archive.icon 標題
@@ -28,8 +31,6 @@ html
           |       Yes
     block content
     script.
-      const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
       WebFontConfig = {
       custom: {
       //families: ['DFYuan-W5-WIN-BF'],
