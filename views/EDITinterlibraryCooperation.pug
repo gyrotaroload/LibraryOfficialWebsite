@@ -17,7 +17,7 @@ block content
         ul.header-menu.horizontal-list
           li
             a.header-menu-tab(href='/')
-              span.icon.fontawesome-home.scnd-font-color
+              span.icon.entypo-docs.scnd-font-color
               | 館際合作頁面維護
           li
             a.aLikeMouse.header-menu-tab(onclick="document.getElementById('ClickMe').click()")
@@ -74,20 +74,20 @@ block content
           //- ACCOUNT (RIGHT-CONTAINER)
           h2.titular 添加按鈕連結
           .input-container
-            input.email.text-input(type='text' placeholder='按鈕說明文字')
+            input#tbB.email.text-input(type='text' placeholder='按鈕說明文字')
             .input-icon.envelope-icon-acount
-              span.fontawesome-envelope.scnd-font-color
+              span.fontawesome-magnet.scnd-font-color
           .input-container
-            input.password.text-input(type='text' placeholder='連結(一律在新分頁開啟)')
+            input#tbL.password.text-input(type='text' placeholder='連結(一律在新分頁開啟)')
             .input-icon.password-icon
-              span.fontawesome-lock.scnd-font-color
-          a.sign-in.button(href='#22') 加到佇列
-          p.scnd-font-color Forgot Password?
+              span.fontawesome-link.scnd-font-color
+          a.sign-in.button(href='#22' onclick="addBL()") 加到佇列
+          p.scnd-font-color &emsp;
           a.fb-sign-in(href='58')
             p
               span.fb-border
-                span.icon.zocial-facebook
-              | Sign in with Facebook
+                span.icon.zocial-bitbucket
+              | 清空佇列!
       // MIDDLE-CONTAINER
       .middle-container.container
         //.profile.block
@@ -118,48 +118,22 @@ block content
                   span.icon.fontawesome-heart-empty.scnd-font-color
                   | 49
             p
-        .weather.block.clear
-          // WEATHER (MIDDLE-CONTAINER)
-          h2.titular
-            span.icon.entypo-rocket
-            strong 下一步
-          .current-day
-            p.current-day-date 內容編輯
-            p.current-day-temperature
-              | 二選一
-              span.icon-cloudy
-          ul.next-days
-            li
-              a(href='#43')
-                p.next-days-date
-                  span.day markdown
-                  span.scnd-font-color 純文字編輯
-                p.next-days-temperature
-                  | (方便)
-                  span.icon.icon-cloudy.scnd-font-color
-            li
-              a(href='#45')
-                p.next-days-date
-                  span.day word
-                  span.scnd-font-color 上傳文件
-                p.next-days-temperature
-                  | (推薦)
-                  span.icon.icon-cloudy2.scnd-font-color
-        .tweets.block
+        #stackBL.tweets.block
           //- TWEETS (MIDDLE-CONTAINER)
           h2.titular
-            span.icon.zocial-twitter
-            | LATEST TWEETS
-          .tweet.first
+            span.icon.fontawesome-list-ol
+            | 按鈕與連結佇列
+          //TODO會破圖
+          //.tweet.first
             p
               | Ice-cream trucks only play music when out of ice-cream. Well played dad. On 
-              a.tweet-link(href='#17') @Quora
+              a.tweet-link(href='#17') &emsp;
             p
               a.time-ago.scnd-font-color(href='#18') 3 minutes ago
-          .tweet
+          //.tweet
             p
               | We are in the process of pushing out all of the new CC apps! We will tweet again once they are live 
-              a.tweet-link(href='#19') #CreativeCloud
+              a.tweet-link(href='#19') &emsp;
             p
               a.scnd-font-color(href='#20') 6 hours ago
         //ul.social.block
@@ -189,24 +163,33 @@ block content
             .input-icon.envelope-icon-newsletter
               span.fontawesome-envelope.scnd-font-color
           a.subscribe.button(href='#21') SUBSCRIBE
-        .account.block
-          //- ACCOUNT (RIGHT-CONTAINER)
-          h2.titular 添加按鈕連結
-          .input-container
-            input.email.text-input(type='text' placeholder='按鈕說明文字')
-            .input-icon.envelope-icon-acount
-              span.fontawesome-envelope.scnd-font-color
-          .input-container
-            input.password.text-input(type='text' placeholder='連結(一律在新分頁開啟)')
-            .input-icon.password-icon
-              span.fontawesome-lock.scnd-font-color
-          a.sign-in.button(href='#22') 加到佇列
-          p.scnd-font-color Forgot Password?
-          a.fb-sign-in(href='58')
-            p
-              span.fb-border
-                span.icon.zocial-facebook
-              | Sign in with Facebook
+        .weather.block.clear
+          // WEATHER (MIDDLE-CONTAINER)
+          h2.titular
+            span.icon.entypo-rocket
+            strong 下一步
+          .current-day
+            p.current-day-date 內容編輯
+            p.current-day-temperature
+              | 二選一
+              span.icon-cloudy
+          ul.next-days
+            li
+              a(href='#43')
+                p.next-days-date
+                  span.day markdown
+                  span.scnd-font-color 純文字編輯
+                p.next-days-temperature
+                  | (方便)
+                  span.icon.icon-cloudy.scnd-font-color
+            li
+              a(href='#45')
+                p.next-days-date
+                  span.day word
+                  span.scnd-font-color 上傳文件
+                p.next-days-temperature
+                  | (推薦)
+                  span.icon.icon-cloudy2.scnd-font-color
         //.loading.block
           //- LOADING (RIGHT-CONTAINER)
           .progress-bar.downloading
@@ -337,7 +320,7 @@ block content
   .pureCSSpopUP
     //https://codepen.io/peiche/pen/vhqym
     h1.dn Popup/Modal Windows without JavaScript
-    #wrapper
+    #wrapper.dn
       p
         a#ClickMe.button(href='#popup1') Click Me
       p
@@ -357,3 +340,12 @@ block content
   script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js' integrity='sha512-7oYXeK0OxTFxndh0erL8FsjGvrl2VMDor6fVqzlLGfwOQQqTbYsGPv4ZZ15QHfSk80doyaM0ZJdvkyDcVO7KFA==' crossorigin='anonymous' referrerpolicy='no-referrer')
   script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js")
   script(src='/javascripts/calendar.js')
+  script.
+    function addBL(){
+    var b= document.getElementById('tbB')?document.getElementById('tbB').value:'none';
+    var l= document.getElementById('tbL')?document.getElementById('tbL').value:'none';
+    var sbl=document.getElementById('stackBL');if(sbl){
+    if(!sbl.getElementsByClassName('tweet').length){sbl.innerHTML+=`<div class="tweet first"><p>${b}<a class="tweet-link" href="#17">&emsp;</a></p><p><a class="time-ago scnd-font-color" href="#18">${l}</a></p></div>`;}
+    else{sbl.innerHTML+=`<div class="tweet"><p>${b}<a class="tweet-link" href="#17">&emsp;</a></p><p><a class="time-ago scnd-font-color" href="#18">${l}</a></p></div>`;}
+    }else{console.error('[frontend error (unexpected)] - cannot find critical web page element { #stackBL }');}
+    }
