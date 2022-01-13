@@ -10,6 +10,7 @@ block content
   link(rel='stylesheet', href='/stylesheets/FreebieInteractiveFlatDesignUIOnlyHTML5CSS3.css')
   link(rel='stylesheet', href='/stylesheets/https_codepen_io_maggiben_pen_OPmLBW.css')
   link(href='https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic.min.css' rel='stylesheet')
+  link(href='/stylesheets/pureCSSpopUP.css' rel='stylesheet')
   .main-container
       // HEADER
       header.block
@@ -19,47 +20,47 @@ block content
               span.icon.fontawesome-home.scnd-font-color
               | 館際合作頁面維護
           li
-            a.header-menu-tab(href='#2')
-              span.icon.fontawesome-user.scnd-font-color
+            a.aLikeMouse.header-menu-tab(onclick="document.getElementById('ClickMe').click()")
+              span.icon.entypo-right-bold.scnd-font-color
               | 先填寫表單連結與說明文字
           li
-            a.header-menu-tab(href='#3')
-              span.icon.entypo-flow-tree.scnd-font-color
+            a.aLikeMouse.header-menu-tab(onclick="document.getElementById('ClickMeToo').click()")
+              span.icon.entypo-right-bold.scnd-font-color
               | 再按下一步編輯內文
             //a.header-menu-number(href='#4') 5
           //li
             a.header-menu-tab(href='/users/logout')
               span.icon.entypo-logout.scnd-font-color
               | 登出
-        .profile-menu
+        //.profile-menu
           p
             | 注意:動作會複寫既有資料
-            //a(href='#26')
+            //-a(href='#26')
               span.entypo-down-open.scnd-font-color
           .profile-picture.small-profile-picture
             img(width='40px' alt='Anne Hathaway picture' src='http://upload.wikimedia.org/wikipedia/commons/e/e1/Anne_Hathaway_Face.jpg')
       // LEFT-CONTAINER
       .left-container.container
-        .menu-box.block
-          // MENU BOX (LEFT-CONTAINER)
+        //.menu-box.block
+          //- MENU BOX (LEFT-CONTAINER)
           h2.titular 主功能表
           ul.menu-box-menu
-            //https://weloveiconfonts.com/
+            //-https://weloveiconfonts.com/
             li
               a.menu-box-tab(href='/main/addNewBooks')
                 span.icon.entypo-brush.scnd-font-color
                 | 新增「新書通報」
-                //.menu-box-number 24
+                //-.menu-box-number 24
             li
               a.menu-box-tab(href='/main/add_periodical')
                 span.icon.entypo-book-open.scnd-font-color
                 | 新增期刊
-                //.menu-box-number 3
+                //-.menu-box-number 3
             li
               a.menu-box-tab(href='/main/journals')
                 span.icon.entypo-sweden.scnd-font-color
                 | 期刊管理/編輯
-                //.menu-box-number 5
+                //-.menu-box-number 5
             li
               a.menu-box-tab(href='/main/swipeEDIT')
                 span.icon.entypo-cog.scnd-font-color
@@ -69,132 +70,24 @@ block content
               a.menu-box-tab(href='/main/docxUpload')
                 sapn.icon.entypo-chart-line.scnd-font-color
                 | 添加最新消息
-        //.donut-chart-block.block
-          //- DONUT CHART BLOCK (LEFT-CONTAINER)
-          h2.titular OS AUDIENCE STATS
-          .donut-chart
-            //- DONUT-CHART by @kseso https://codepen.io/Kseso/pen/phiyL
-            #porcion1.recorte
-              .quesito.ios(data-rel='21')
-            #porcion2.recorte
-              .quesito.mac(data-rel='39')
-            #porcion3.recorte
-              .quesito.win(data-rel='31')
-            #porcionFin.recorte
-              .quesito.linux(data-rel='9')
-            //- END DONUT-CHART by @kseso https://codepen.io/Kseso/pen/phiyL
-            p.center-date
-              | JUNE
-              br
-              span.scnd-font-color 2013
-          ul.os-percentages.horizontal-list
-            li
-              p.ios.os.scnd-font-color iOS
-              p.os-percentage
-                | 21
-                sup %
-            li
-              p.mac.os.scnd-font-color Mac
-              p.os-percentage
-                | 48
-                sup %
-            li
-              p.linux.os.scnd-font-color Linux
-              p.os-percentage
-                | 9
-                sup %
-            li
-              p.win.os.scnd-font-color Win
-              p.os-percentage
-                | 32
-                sup %
-        //.line-chart-block.block.clear
-          //- LINE CHART BLOCK (LEFT-CONTAINER)
-          .line-chart
-            //- LINE-CHART by @kseso https://codepen.io/Kseso/pen/phiyL
-            .grafico
-              ul.eje-y
-                li(data-ejey='30')
-                li(data-ejey='20')
-                li(data-ejey='10')
-                li(data-ejey='0')
-              ul.eje-x
-                li Apr
-                li May
-                li Jun
-              span(data-valor='25')
-                span(data-valor='8')
-                  span(data-valor='13')
-                    span(data-valor='5')
-                      span(data-valor='23')
-                        span(data-valor='12')
-                          span(data-valor='15')
-            //- END LINE-CHART by @kseso https://codepen.io/Kseso/pen/phiyL
-          ul.time-lenght.horizontal-list
-            li
-              a.time-lenght-btn(href='#14') Week
-            li
-              a.time-lenght-btn(href='#15') Month
-            li
-              a.time-lenght-btn(href='#16') Year
-          ul.month-data.clear
-            li
-              p
-                | APR
-                span.scnd-font-color  2013
-              p
-                span.entypo-plus.increment  
-                | 21
-                sup %
-            li
-              p
-                | MAY
-                span.scnd-font-color  2013
-              p
-                span.entypo-plus.increment  
-                | 48
-                sup %
-            li
-              p
-                | JUN
-                span.scnd-font-color  2013
-              p
-                span.entypo-plus.increment  
-                | 35
-                sup %
-        //.media.block
-          //-- MEDIA (LEFT-CONTAINER)
-          #media-display
-            a.media-btn.play(href='#23')
-              span.fontawesome-play
-          .media-control-bar
-            a.media-btn.play(href='#23')
-              span.fontawesome-play.scnd-font-color
-            p.time-passed
-              | 4:15 
-              span.time-duration.scnd-font-color / 9:23
-            a.media-btn.volume(href='#24')
-              span.fontawesome-volume-up.scnd-font-color
-            a.media-btn.resize(href='#25')
-              span.fontawesome-resize-full.scnd-font-color
-        //ul.social.horizontal-list.block
-          //-- SOCIAL (LEFT-CONTAINER)
-          li.facebook
-            p.icon
-              span.zocial-facebook
-            p.number 248k
-          li.twitter
-            p.icon
-              span.zocial-twitter
-            p.number 30k
-          li.googleplus
-            p.icon
-              span.zocial-googleplus
-            p.number 124k
-          li.mailbox
-            p.icon
-              span.fontawesome-envelope
-            p.number 89k
+        .account.block
+          //- ACCOUNT (RIGHT-CONTAINER)
+          h2.titular 添加按鈕連結
+          .input-container
+            input.email.text-input(type='text' placeholder='按鈕說明文字')
+            .input-icon.envelope-icon-acount
+              span.fontawesome-envelope.scnd-font-color
+          .input-container
+            input.password.text-input(type='text' placeholder='連結(一律在新分頁開啟)')
+            .input-icon.password-icon
+              span.fontawesome-lock.scnd-font-color
+          a.sign-in.button(href='#22') 加到佇列
+          p.scnd-font-color Forgot Password?
+          a.fb-sign-in(href='58')
+            p
+              span.fb-border
+                span.icon.zocial-facebook
+              | Sign in with Facebook
       // MIDDLE-CONTAINER
       .middle-container.container
         //.profile.block
@@ -242,57 +135,17 @@ block content
                   span.day markdown
                   span.scnd-font-color 純文字編輯
                 p.next-days-temperature
-                  | 
+                  | (方便)
                   span.icon.icon-cloudy.scnd-font-color
             li
               a(href='#45')
                 p.next-days-date
-                  span.day 需求
-                  span.scnd-font-color 期刊服務
+                  span.day word
+                  span.scnd-font-color 上傳文件
                 p.next-days-temperature
-                  | 完成
+                  | (推薦)
                   span.icon.icon-cloudy2.scnd-font-color
-            li
-              a(href='#45')
-                p.next-days-date
-                  span.day 功能
-                  span.scnd-font-color 首頁動畫編輯
-                p.next-days-temperature
-                  | 開發中
-                  span.icon.icon-cloudy2.scnd-font-color
-            li
-              a(href='#45')
-                p.next-days-date
-                  span.day 功能
-                  span.scnd-font-color 開放時間編輯
-                p.next-days-temperature
-                  | 未開發
-                  span.icon.icon-cloudy2.scnd-font-color
-            li
-              a(href='#46')
-                p.next-days-date
-                  span.day 需求
-                  span.scnd-font-color 最新消息
-                p.next-days-temperature
-                  | 完成(-m/t)
-                  span.icon.icon-cloudy.scnd-font-color
-            li
-              a(href='')
-                p.next-days-date
-                  span.day 功能
-                  span.scnd-font-color 簡介規則
-                p.next-days-temperature
-                  | 未開發
-                  span.icon.icon-sun.scnd-font-color
-            li
-              a(href='')
-                p.next-days-date
-                  span.day THU
-                  span.scnd-font-color 04/07
-                p.next-days-temperature
-                  | 29º
-                  span.icon.icon-sun.scnd-font-color
-        //.tweets.block
+        .tweets.block
           //- TWEETS (MIDDLE-CONTAINER)
           h2.titular
             span.icon.zocial-twitter
@@ -328,7 +181,7 @@ block content
               h2.googleplus.titular SHARE TO GOOGLE+
       // RIGHT-CONTAINER
       .right-container.container
-        .join-newsletter.block
+        //.join-newsletter.block
           //- JOIN NEWSLETTER (RIGHT-CONTAINER)
           h2.titular JOIN THE NEWSLETTER
           .input-container
@@ -338,16 +191,16 @@ block content
           a.subscribe.button(href='#21') SUBSCRIBE
         .account.block
           //- ACCOUNT (RIGHT-CONTAINER)
-          h2.titular SIGN IN TO YOUR ACCOUNT
+          h2.titular 添加按鈕連結
           .input-container
-            input.email.text-input(type='text' placeholder='yourname@gmail.com')
+            input.email.text-input(type='text' placeholder='按鈕說明文字')
             .input-icon.envelope-icon-acount
               span.fontawesome-envelope.scnd-font-color
           .input-container
-            input.password.text-input(type='text' placeholder='Password')
+            input.password.text-input(type='text' placeholder='連結(一律在新分頁開啟)')
             .input-icon.password-icon
               span.fontawesome-lock.scnd-font-color
-          a.sign-in.button(href='#22') SIGN IN
+          a.sign-in.button(href='#22') 加到佇列
           p.scnd-font-color Forgot Password?
           a.fb-sign-in(href='58')
             p
@@ -481,6 +334,26 @@ block content
         // end calendar-month block
         // end right-container
         // end main-container
+  .pureCSSpopUP
+    //https://codepen.io/peiche/pen/vhqym
+    h1.dn Popup/Modal Windows without JavaScript
+    #wrapper
+      p
+        a#ClickMe.button(href='#popup1') Click Me
+      p
+        a#ClickMeToo.button(href='#popup2') Click Me Too
+    #popup1.overlay
+      .popup
+        h2 提示訊息
+        a.close(href='#') ×
+        .content
+          p 注意:動作會複寫既有資料!
+    #popup2.overlay.light
+      a.cancel(href='#')
+      .popup
+        h2 提示訊息(點擊空白處關閉)
+        .content
+          p 下一步的按鈕按下去會自動調轉頁面!
   script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js' integrity='sha512-7oYXeK0OxTFxndh0erL8FsjGvrl2VMDor6fVqzlLGfwOQQqTbYsGPv4ZZ15QHfSk80doyaM0ZJdvkyDcVO7KFA==' crossorigin='anonymous' referrerpolicy='no-referrer')
   script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js")
   script(src='/javascripts/calendar.js')
