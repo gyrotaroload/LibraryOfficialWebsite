@@ -28,6 +28,9 @@ var JournalInformationSchema = mongoose.Schema({
     REMK: {
         type: String
     },
+    eissn: {
+        type: String
+    },
     LIVstart: {
         type: Number
     },
@@ -38,6 +41,9 @@ var JournalInformationSchema = mongoose.Schema({
         type: Array
     },
     history: {
+        type: Array
+    },
+    LIrange: {
         type: Array
     }
 });
@@ -50,43 +56,113 @@ module.exports.addJournal = function (newPersonal, callback) {
     newPersonal.save(callback);
 }
 
-/*module.exports.setPersonalgetup_time = function (user_name, getup_time, callback) {
-    console.log("------->setPersonal");
-    var query = { user_name: { $eq: user_name } };
-    Personal.findOne(query, function (err, Personget) {
-        Personget.getup_time = getup_time;
-        Personget.save()
-    })
-    callback()
-}
-module.exports.setPersonalsleep_time = function (user_name, sleep_time, callback) {
-    console.log("------->setPersonalsleep_time");
-    var query = { user_name: { $eq: user_name } };
-    Personal.findOne(query, function (err, Personget) {
-        Personget.sleep_time = sleep_time;
-        Personget.save()
-    })
-    callback()
+module.exports.getAll = function (callback) {
+    var ft = {};
+    JournalInformation.find(ft).sort({ frameNumber: 'descending' }).exec((err, SearchResult) => {
+        if (err) {
+            console.log(err);
+
+        }//TODO:error handle
+        callback(SearchResult);
+    });
 }
 
-module.exports.setPersonalis_sleep = function (user_name, is_sleep, callback) {
-    console.log("------->setPersonalis_sleep");
-    var query = { user_name: { $eq: user_name } };
-    Personal.findOne(query, function (err, Personget) {
-        Personget.is_sleep = is_sleep;
-        Personget.save()
-    })
-    callback()
+module.exports.getByNameStart = function (headALPHA, callback) {
+    var ft = null;
+    if (headALPHA === "1") {//現勘
+        ft = { STAT: { $eq: '現刊' } };
+    } else if (headALPHA === "2") {//電子
+        ft = { ES: { $ne: '無' } };
+    } else if (headALPHA === "3") {//紙本
+        ft = { PS: { $ne: '無' } };
+    } else {
+        ft = { bookName: { $regex: "^" + headALPHA, $options: 'i' } };
+    }
+    JournalInformation.find(ft).sort({ frameNumber: 'descending' }).exec((err, SearchResult) => {
+        if (err) {
+            console.log(err);
+
+        }//TODO:error handle
+        callback(SearchResult);
+    });
 }
 
-module.exports.getPersonal = function (user_name, callback) {
-    console.log("------->getPersonal");
-    var query = { user_name: { $eq: user_name } };
-    Personal.findOne(query, callback)
+module.exports.getAllFormat = function (callback) {
+    JournalInformation.getAll((d) => {
+        var rowsDATA = [];
+        d.forEach(element => {
+            var tmpobj = {};
+            tmpobj.id = element.id;
+            tmpobj.placeNumber = element.frameNumber;
+            tmpobj.issn = element.ISSN;
+            tmpobj.mainName = element.bookName;
+            tmpobj.stat = element.STAT;
+            tmpobj.eSource = element.ES;
+            tmpobj.pSource = element.PS;
+            tmpobj.datas = element.Volume;
+            tmpobj.someStuff = element.REMK;
+            tmpobj.existTime = `起始:${element.LIVstart};終止:${element.LIVend};停定年分(負面表列):${element.LIVx};`;
+            tmpobj.updateTime = element.new_date;
+            tmpobj.eissn = element.eissn;
+            tmpobj.TIMEs = element.LIVstart;
+            tmpobj.TIMEe = element.LIVend;
+            tmpobj.TIMEn = JSON.stringify(element.LIVx).replace('[', '').replace(']', '');
+            rowsDATA.push(tmpobj);
+        });
+        callback(rowsDATA);
+    });
 }
 
-module.exports.deletePersonal = function (user_name, callback) {
-    console.log("------->deletePersonal");
-    var query = { user_name: { $eq: user_name } };
-    Personal.deleteOne(query, callback);
-}*/
+module.exports.getByYear = function (callback) {
+
+    //TODO痾....這裡長草了是吧
+}
+
+module.exports.getByNameStartFormat = function (headALPHA, callback) {
+    JournalInformation.getByNameStart(headALPHA, (d) => {
+        ///////////////////////////////////////copy start/////////////////////////
+        var rowsDATA = [];
+        d.forEach(element => {
+            var tmpobj = {};
+            tmpobj.id = element.id;
+            tmpobj.placeNumber = element.frameNumber;
+            tmpobj.issn = element.ISSN;
+            tmpobj.mainName = element.bookName;
+            tmpobj.stat = element.STAT;
+            tmpobj.eSource = element.ES;
+            tmpobj.pSource = element.PS;
+            tmpobj.datas = element.Volume;
+            tmpobj.someStuff = element.REMK;
+            tmpobj.existTime = `起始:${element.LIVstart};終止:${element.LIVend};停定年分(負面表列):${element.LIVx};`;
+            tmpobj.updateTime = element.new_date;
+            tmpobj.eissn = element.eissn;
+            tmpobj.TIMEs = element.LIVstart;
+            tmpobj.TIMEe = element.LIVend;
+            tmpobj.TIMEn = JSON.stringify(element.LIVx).replace('[', '').replace(']', '');
+            rowsDATA.push(tmpobj);
+        });
+        callback(rowsDATA);
+        ///////////////end of copy//////////////////////
+    });
+
+}
+
+module.exports.gethis = function (id2del, callback) {
+    JournalInformation.findById(id2del, (e, ans) => {
+        if (e) {//error occurs
+            callback(null);
+        } else {
+            var this_all = Object.assign({}, ans);
+            var this_his = Object.assign([], ans.history);
+            //console.log(ans.history);
+            this_all.history = [];
+            //console.log(this_all);
+            this_his.push(this_all);
+            callback(this_his);
+        }
+    });
+}
+
+module.exports.del = function (id2del, callback) {
+    JournalInformation.findByIdAndDelete(id2del, callback);
+}

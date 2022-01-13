@@ -8,6 +8,11 @@ block contentHEAD
   meta(name='keywords' content='修改的部分_關鍵字1, 修改的部分_關鍵字2, 修改的部分_關鍵字3, 修改的部分_關鍵字4')
   meta(name='author' content='修改的部分_作者1')
   meta(name='theme-color' content='#DDB98B')
+  meta(property='og:title' content='成大數學系圖書館')
+  meta(property='og:description' content='請補充描述')
+  meta(property='og:type' content='website')
+  meta(property='og:image' content='images/california-brown-wooden-shelves-in-a-library-usa-usa-image.jpg')
+  //TODO FIX og:image
   title #{ title }
   link(rel='stylesheet' href='./jumbotron/stylesheets/normalize.css')
   link(rel='stylesheet' href='./jumbotron/stylesheets/main.css')
@@ -24,7 +29,7 @@ block contentHEAD
   link(rel='stylesheet', href='/stylesheets/foot.css')
 
 block content
-  .ui.basic.modal
+  #innerINDEX.ui.basic.modal
     .ui.icon.header
       i.archive.icon
       |     敬請期待
@@ -50,12 +55,15 @@ block content
           a.item.hvr-hang(href=`${browseHyperlinkedObjectsHorizontally2L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally2T }
           a.item.hvr-hang(href=`${browseHyperlinkedObjectsHorizontally3L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally3T }
           .item
-            form.ui.form
+            form.ui.form(onsubmit="event.target.querySelector('i').click();")
+              //TODO preventDefault
               .inline.fields
                 .field
-                  .ui.icon.input
+                  script(async='' src='https://cse.google.com/cse.js?cx=d613870f87198941e')
+                  .AugmentedExternalSearchModule.ui.icon.input
+                    .gcse-searchbox-only
                     input(type='text' placeholder='Search...')
-                    i.inverted.circular.search.link.icon(onclick='console.log("search...");$(".ui.basic.modal").modal("show");')
+                    i.AugmentedExternalSearchModuleF.inverted.circular.search.link.icon(onclick="var AugmentedExternalSearchModule=event.target.closest('.AugmentedExternalSearchModule');AugmentedExternalSearchModule.getElementsByTagName('input')[0].value=AugmentedExternalSearchModule.getElementsByTagName('input')[1].value;AugmentedExternalSearchModule.getElementsByTagName('button')[0].click();")
   .ui.mobile.only.padded.grid
     #headderBar.ui.top.fixed.borderless.fluid.inverted.huge.menu
       a.header.item 成功大學數學系圖書室
@@ -72,7 +80,7 @@ block content
             .field
               .ui.icon.input
                 input(type='text' placeholder='Search...')
-                i.inverted.circular.search.link.icon(onclick='console.log("search...");$(".ui.basic.modal").modal("show");')
+                i.inverted.circular.search.link.icon(onclick='console.log("search...");$("#innerINDEX.ui.basic.modal").modal("show");')
   // 投影片
   .ui.grid
     .sixteen.wide.column
@@ -289,9 +297,30 @@ block content
           div(align='center')
             .ui.divider
             .ui.items
-              .item(align='left')
+              each eps, index in ps
+                .item(align='left')
+                  .ui.tiny.image
+                    img(src=`./tool/t2i?txt=${margin*4+index}`)
+                  .content
+                    a.header= eps.tp
+                    .meta
+                      span
+                        i.calendar.icon
+                        | #{String(eps.YYYY)+'/'+String(eps.M)+'/'+String(eps.D)+'-'+String(eps.h)+':'+String(eps.mm)}
+                        //i.tag.icon= eps.lab
+                        each epl, index in eps.lab
+                          i.tag.icon
+                          | #{epl}
+                        i.user.icon
+                        |  管理員
+                    .description(align='justify')
+                      p= eps.ab
+                    .extra
+                      a.ui.blue.right.floated.button(href=`/inner?id=${eps.uri}&pid=${eps.id}&ic=l`) 詳全文...
+                .ui.divider
+              //.item(align='left')
                 .ui.tiny.image
-                  img(src='./jumbotron/assets/img/400x400.png')
+                  img(src='./tool/t2i?txt=1')
                 .content
                   a.header Introduction About System JS
                   .meta
@@ -308,8 +337,8 @@ block content
                       | sunt...
                   .extra
                     .ui.blue.right.floated.button Read More
-              .ui.divider
-              .item(align='left')
+              //.ui.divider
+              //.item(align='left')
                 .ui.tiny.image
                   img(src='./jumbotron/assets/img/400x400.png')
                 .content
@@ -327,8 +356,8 @@ block content
                       | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi vel, itaque
                   .extra
                     .ui.blue.right.floated.button Read More
-              .ui.divider
-              .item(align='left')
+              //.ui.divider
+              //.item(align='left')
                 .ui.tiny.image
                   img(src='./jumbotron/assets/img/400x400.png')
                 .content
@@ -346,8 +375,8 @@ block content
                       | Lor
                   .extra
                     .ui.blue.right.floated.button Read More
-              .ui.divider
-              .item(align='left')
+              //.ui.divider
+              //.item(align='left')
                 .ui.tiny.image
                   img(src='./jumbotron/assets/img/400x400.png')
                 .content
@@ -367,13 +396,14 @@ block content
                     .ui.blue.right.floated.button Read More
             .ui.divider
             .ui.buttons
-              button.ui.button.disabled Previous
-              button.ui.blue.button 1
-              button.ui.button 2
-              button.ui.button 3
-              button.ui.button ...
-              button.ui.button n
-              button.ui.button Next
+              button.ui.button(onclick="var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=0;i<pgs.length;i++){if(parseInt(pgs[i].innerText,10)-1<0){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)-1;}}") Previous
+              if margin>4||pc.length
+                each epc in pc.slice(margin-2<0?0:margin-2,margin+3)
+                  a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc
+              else
+                each epc in pc
+                  a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc
+              button.ui.button(onclick=`var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=pgs.length-1;i>=0;i--){if(parseInt(pgs[i].innerText,10)+1>=${pc.length}){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)+1;}}`) Next
         // Right Sidebar
         .four.wide.column.mobile.only
           #copyRightSidebar_mobile2desktop.ui.fluid.vertical.menu.moderns
@@ -605,12 +635,12 @@ block content
               h4.ui.header(style='margin-bottom: 2px;') 網站維護
               .ui.list(role='list' style='margin-top: 2px;')
                 li(role='listitem')
-                  a.jsx-2061850338(href='https://github.com/semantic-ui-forest/semantic-ui-forest/graphs/contributors') 錯誤回報
-                  //TODO錯誤回報的網址要補充
+                  a.jsx-2061850338(target='_blank' href='https://github.com/gyrotaroload/LibraryOfficialWebsite/issues') 錯誤回報
+                  //TODO錯誤回報的網址要更動
                 li(role='listitem')
-                  a.jsx-2061850338(href='/main') 後台管理
+                  a.jsx-2061850338(target='_blank' href='/main') 後台管理
                 li(role='listitem')
-                  a.jsx-2061850338(href='https://github.com/andythebreaker/LibraryOfficialWebsiteE') 程式開源
+                  a.jsx-2061850338(target='_blank' href='https://github.com/andythebreaker/LibraryOfficialWebsite') 程式開源
                   //TODO open in new window
   #aLotOFjs(style='display: none;')
     // 請注意:所有script的順序都是嚴格要求的

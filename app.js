@@ -26,6 +26,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var mainRouter = require('./routes/main');
 var toolRouter = require('./routes/tool')
+var uploadRouter = require('./routes/upload')
 
 //////////////////////////////////ws//////////////////////////////////////////
 /*TODO完成伺服器端優先訊
@@ -90,6 +91,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/main', mainRouter);
 app.use('/tool', toolRouter);
+app.use('/upload', uploadRouter);
 
 //get/post
 app.get('*', function (req, res, next) {
@@ -133,3 +135,7 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+
+/*TODO
+package json sort按字母排序
+*/
