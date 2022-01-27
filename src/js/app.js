@@ -1,3 +1,5 @@
+//我不確定，但是我猜這個東西經荒廢了
+
 /*//const translate = require('translate-google')
 //var pdf = require('html-pdf');
 const streamToBlob = require('stream-to-blob');
@@ -114,12 +116,12 @@ var useold = false;
 var DEF_medal_path = "/app/medal/"
 
 if (document.getElementsByClassName("pdfutils")) document.getElementsByClassName("pdfutils")[0].addEventListener("click", function () {
-
+/*
     if (document.getElementsByClassName("pdfutils")) document.getElementsByClassName("pdfutils")[0].innerHTML += `
     <span class="loader removeafterSSP"><span class="loader-box"></span><span class="loader-box"></span><span class="loader-box"></span>
     <style>.loader {
         height : 8px;
-        width  : 36px; /* (6 * <margin: 2px>) + (3 * <width: 8px>) */
+        width  : 36px; // (6 * <margin: 2px>) + (3 * <width: 8px>)
     }
     
     .loader-box {
@@ -134,9 +136,9 @@ if (document.getElementsByClassName("pdfutils")) document.getElementsByClassName
         animation-direction       : alternate;
     }
     
-    .loader-box:nth-child(1) { animation-delay: 250ms; } /* (1/2) * <animation-duration: 500ms */
-    .loader-box:nth-child(2) { animation-delay: 500ms; } /* (2/2) * <animation-duration: 500ms */
-    .loader-box:nth-child(3) { animation-delay: 750ms; } /* (3/2) * <animation-duration: 500ms */
+    .loader-box:nth-child(1) { animation-delay: 250ms; } /// (1/2) * <animation-duration: 500ms 
+    .loader-box:nth-child(2) { animation-delay: 500ms; }// (2/2) * <animation-duration: 500ms 
+    .loader-box:nth-child(3) { animation-delay: 750ms; } // (3/2) * <animation-duration: 500ms 
     
     @keyframes fadeOutIn {
         0%   { background-color : rgba(0,146,255,1); }
@@ -260,7 +262,9 @@ if (document.getElementsByClassName("pdfutils")) document.getElementsByClassName
                 });
 
         }
-    });
+    });*/
+
+
 });
 
 document.getElementById("snap_shoot_canvas_tmp_pdf").addEventListener("click", function () {

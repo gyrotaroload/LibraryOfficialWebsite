@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "node -r mjs-require ./bin/wwwcopy.mjs",
+    "test": "node ./bin/www",
     "minify:js": "browserify ./public/javascripts/snapshoot.js -o ./public/bundle/snapshoot_f.js && uglifyjs ./public/bundle/snapshoot_f.js -o ./public/bundle/snapshoot.js",
     "watch": "watchify ./public/javascripts/snapshoot.js -o ./public/bundle/snapshoot_f.js --debug --verbose",
     "postinstall": "node ./public/js/createFolderIfNotExist.js && symdeps",
@@ -80,15 +81,16 @@
     "nckulib": "2.0.0",
     "ncr-decode": "*",
     "nlcst-to-string": "*",
+    "node-auto-loader": "*",
     "node-fetch": "*",
-    "node-html-parser": "*",
+    "node-html-parser": "^5.2.0",
     "node-sass-middleware": "0.11.0",
     "number-array": "^1.0.0",
     "passport": "0.5.0",
     "passport-local": "*",
     "pdfkit": "*",
     "pug": "3.0.1",
-    "randomstring": "*",
+    "randomstring": "^1.2.2",
     "replaceall": "^0.1.6",
     "retext": "*",
     "retext-keywords": "*",
@@ -101,6 +103,7 @@
     "text-to-image": "*",
     "text2png": "*",
     "to-vfile": "*",
+    "token": "^0.1.0",
     "translate-google": "^1.5.0",
     "uglify-js": "*",
     "vinyl": "~2.2.1",
@@ -108,7 +111,8 @@
     "vinyl-source-stream": "~2.0.0",
     "watchify": "*",
     "ws": "^6.1.4",
-    "node-auto-loader": "*"
+    "jsonwebtoken": "8.5.1",
+    "base64-arraybuffer": "1.0.2"
   },
   "symdeps": {
     "paths": {

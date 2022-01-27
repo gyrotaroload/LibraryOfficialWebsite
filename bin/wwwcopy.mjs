@@ -3,10 +3,12 @@
 /**
  * Module dependencies.
  */
-
- import app from "../app.js";
- import "../models/esm/keywordscopy.mjs";
+var randomstring = require("randomstring");
+process.env.token_defaults_secret = randomstring.generate();
 var debug = require('debug')('libraryofficialwebsite:server');
+debug(process.env.token_defaults_secret);
+import app from "../app.js";
+import "../models/esm/keywordscopy.mjs";
 var http = require('http');
 
 /**

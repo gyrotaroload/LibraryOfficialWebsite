@@ -48,6 +48,13 @@ var md = require('markdown-it')()
 var randomstring = require("randomstring");//use with markdown~~
 var replaceall = require("replaceall");
 ///////////////////////////////////////////////
+var jwt = require('jsonwebtoken');
+const EXPIRES_IN = 5 * 60 * 1000; // 5*60 sec
+const { Base64 } = require('js-base64');
+var token = require('token');
+///debug(process.env.token_defaults_secret);這裡還沒撙備好
+token.defaults.timeStep = 5 * 60; //5min
+///////////////////////////////////////////////
 
 const numberArray = require('number-array');
 
@@ -211,15 +218,47 @@ router.get('/jjson', function (req, res, next) {
 });
 
 router.get('/inner', function (req, res, next) {
-  debug('a');
-
-  if (req.query.ic === 'l') {
-    debug('b');
+  //debug('a');
+  var give404 = false;
+  var res_render_docx = {};
+  var tokenM = randomstring.generate();
+  //debug(process.env.token_defaults_secret);
+  ///////////////////////////////////////
+  function cb() {
+    if (give404) {
+      res.render('docx', {
+        title: '錯誤',
+        infoClass: '',
+        infoDT: '',
+        infoID: '',
+        infoOther: '',
+        urls: null,
+        ttp: "頁面不存在",//公告
+        tp: "404 error",
+        alpha: { txt: "回首頁", uri: `/` },
+        moment: require('moment'),
+        dbhtml: '',
+        ISuser: false,
+        ProntEndBeautificationRendering: true
+      });
+    } else {
+      //res.cookie('token', token, { maxAge: EXPIRES_IN, httpOnly: false });
+      var ht = Base64.encode(res_render_docx.dbhtml);
+      var tm = Base64.encode(tokenM);
+      token.defaults.secret = process.env.token_defaults_secret;
+      res_render_docx.tkn = Base64.encode(JSON.stringify({ id: ht, role: tm, auth: token.generate(`${ht}|${tm}`) }));
+      res.render('docx', res_render_docx);
+    }
+  }
+  ///////////////////end of res////////////////////////
+  if (req.query.ic === 'l') {//這一組if-else(每區)做完要叫cb
+    //debug('b');
     least.getById(req.query.pid, ro => {
       if (ro) {
         docs.getById(ro.uri, html => {
           if (html) {
-            res.render('docx', {
+            res_render_docx = {
+              // res.render('docx', {//neighbor pairing
               title: 'inner',
               infoClass: "最新消息",
               infoDT: String(ro.YYYY) + '年' + String(ro.M) + '月' + String(ro.D) + '日' + String(ro.h) + '時' + String(ro.mm) + '分',
@@ -233,16 +272,17 @@ router.get('/inner', function (req, res, next) {
               dbhtml: html,
               ISuser: false,
               ProntEndBeautificationRendering: true
-            });
+            }//);//neighbor pairing
+            tokenM = jwt.sign({ stuff: html/*aka上方的dbhtml*/ }, process.env.token_defaults_secret, { expiresIn: EXPIRES_IN });
           } else {
-            debug('1');
-            res.status(404).send("404 not found");
+            give404 = true;
           }
+          //.then(() => { cb(); })
+          cb();
         }
         );
       } else {
-        debug('2');
-        res.status(404).send("404 not found");
+        give404 = true; cb();
       }
     });
   } else if (req.query.ic === 'g') {
@@ -250,7 +290,8 @@ router.get('/inner', function (req, res, next) {
       if (ro) {
         docs.getById(ro.d, html => {
           if (html) {
-            res.render('docx', {
+            res_render_docx = {
+              //  res.render('docx', {//neighbor pairing
               title: 'interlibraryCooperation',
               ExternalLargeButtonName: "外部連結",
               urls: null,//TODO添加近期URL
@@ -261,22 +302,26 @@ router.get('/inner', function (req, res, next) {
               dbhtml: html,
               ISuser: false,
               ProntEndBeautificationRendering: true
-            });
+            }//);//neighbor pairing
+            tokenM = jwt.sign({ stuff: html/*aka上方的dbhtml*/ }, process.env.token_defaults_secret, { expiresIn: EXPIRES_IN });
           } else {
-            debug('3');
-            res.status(404).send("404 not found");
+            give404 = true;
           }
+          //.then(() => { cb(); })
+          cb();
         }
         );
       } else {
-        debug('4');
-        res.status(404).send("404 not found");
+        give404 = true; cb();
       }
     });
-  } else{
-    debug('5');
-    res.status(404).send("404 not found");
+  } else {
+    give404 = true;
+    //.then(() => { cb(); })
+    cb();
   }
+  ////////////////////end of logic///////////////////////
+
   /*docs.getById(req.query.id, html => {
     if (html) {
       res.render('docx', {
@@ -284,8 +329,8 @@ router.get('/inner', function (req, res, next) {
         infoClass: req.query.ic,
         infoDT: req.query.dt,
         infoID: req.query.pid,
-        infoOther: req.query.ab,//TODO標籤化
-        urls: null,//TODO添加近期URL
+        infoOther: req.query.ab,//TOXDO標籤化
+        urls: null,//TOXDO添加近期URL
         ttp: req.query.ic,//公告
         tp: req.query.tp,
         alpha: { txt: "回上一頁", uri: `/${req.query.rt}` },

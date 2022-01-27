@@ -91,6 +91,7 @@ module.exports.SETuri = function (id, uri, callback) {
 module.exports.getById = function (id, callback) {
     least.findById(id, function (err, adventure) {
         if (err) {
+            console.log("可忽略的警告");
             console.log(err);
             callback(null);
         } else {
