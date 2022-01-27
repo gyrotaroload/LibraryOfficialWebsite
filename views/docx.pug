@@ -15,6 +15,7 @@ block contentHEAD
   link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/print.css' type='text/css')
 
 block content
+  #tkn= tkn
   script(src='/ws/index.js')
   script.
     function FUCNmakeALLtableTOsemanticUI(){
@@ -114,25 +115,9 @@ block content
             span.zocial-windows
             |  上傳word檔
         else
-          .tagcloud
+          #wslab.tagcloud
             .ui.label
-              a(href='#') javascript
-            .ui.label
-              a(href='#') html
-            .ui.label
-              a(href='#') css
-            .ui.label
-              a(href='#') react
-            .ui.label
-              a(href='#') xampp
-            .ui.label
-              a(href='#') wordpress
-            .ui.label
-              a(href='#') design
-            .ui.label
-              a(href='#') personal
-            .ui.label
-              a(href='#') productivity
+              a(href='#') 載入中...
         if urls
           h4 相關頁面
           p
