@@ -2,6 +2,15 @@
 
 ncku math LibraryOfficialWebsite
 
+## stataus
+
+good
+
+## barnch
+
+edit:master
+pub:main(GY)
+
 ## how to run 
 
 set DEBUG=libraryofficialwebsite:* & npm start
