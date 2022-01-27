@@ -1,0 +1,9 @@
+#headderBar {
+    background-image: linear-gradient(to bottom, rgb(80, 122, 57) 0%, rgb(25, 56, 12) 100%);
+}
+
+.ui.masterVision {
+    background-color: #DBC89A;
+    background-size: cover;
+    background-position: center;
+}
