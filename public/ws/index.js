@@ -1,6 +1,50 @@
+function solution1(base64Data) {
+
+    var arrBuffer = base64ToArrayBuffer(base64Data);
+
+    // It is necessary to create a new blob object with mime-type explicitly set
+    // otherwise only Chrome works like it should
+    var newBlob = new Blob([arrBuffer], { type: "application/pdf" });
+
+    // IE doesn't allow using a blob object directly as link href
+    // instead it is necessary to use msSaveOrOpenBlob
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(newBlob);
+        return;
+    }
+
+    // For other browsers: 
+    // Create a link pointing to the ObjectURL containing the blob.
+    var data = window.URL.createObjectURL(newBlob);
+
+    var link = document.createElement('a');
+    document.body.appendChild(link); //required in FF, optional for Chrome
+    link.href = data;
+    link.download = "file.pdf";
+    link.click();
+    window.URL.revokeObjectURL(data);
+    link.remove();
+}
+
+function base64ToArrayBuffer(data) {
+    var binaryString = window.atob(data);
+    var binaryLen = binaryString.length;
+    var bytes = new Uint8Array(binaryLen);
+    for (var i = 0; i < binaryLen; i++) {
+        var ascii = binaryString.charCodeAt(i);
+        bytes[i] = ascii;
+    }
+    return bytes;
+};
+
+
+
 //使用 WebSocket 的網址向 Server 開啟連結
 let ws = new WebSocket(`ws://${window.location.hostname}:13030`);
-
+var pdf_b64 = "";
+function downpdf() {
+    solution1(pdf_b64);
+}
 //開啟後執行的動作，指定一個 function 會在連結 WebSocket 後執行
 ws.onopen = () => {
     console.log('open connection');
@@ -20,9 +64,9 @@ ws.onmessage = event => {
             document.getElementById('wslab').innerHTML = `<div class="ui label"><a href="#">解析失敗!</a></div>`;
         }
 
-        //}else if(){
-        ////////////////
-    } else {
+    } else if (event.data.startsWith('pdf||')) {
+        console.error('無法生成pdf');
+    } else if (event.data.startsWith('[')) {
         if (document.getElementById('wslab')) {
             document.getElementById('wslab').innerHTML = '';
             var JSON_parse_event_data = JSON.parse(event.data);
@@ -30,6 +74,9 @@ ws.onmessage = event => {
                 document.getElementById('wslab').innerHTML += `<div class="ui label"><a href="#">${JSON_parse_event_data[i]}</a></div>`;
             }
         }
+    } else {
+        pdf_b64 = event.data;
+
     }
 
 }

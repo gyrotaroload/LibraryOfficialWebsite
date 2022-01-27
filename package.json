@@ -111,7 +111,8 @@
     "vinyl-source-stream": "~2.0.0",
     "watchify": "*",
     "ws": "^6.1.4",
-    "jsonwebtoken": "8.5.1"
+    "jsonwebtoken": "8.5.1",
+    "base64-arraybuffer": "1.0.2"
   },
   "symdeps": {
     "paths": {
