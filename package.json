@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "minify:js": "browserify ./public/javascripts/snapshoot.js -o ./public/bundle/snapshoot_f.js && uglifyjs ./public/bundle/snapshoot_f.js -o ./public/bundle/snapshoot.js",
     "watch": "watchify ./public/javascripts/snapshoot.js -o ./public/bundle/snapshoot_f.js --debug --verbose",
-    "postinstall": "symdeps",
+    "postinstall": "node ./public/js/createFolderIfNotExist.js && symdeps",
     "prestart": "npm run minify:js && gulp browserify"
   },
   "dependencies": {
@@ -44,7 +44,7 @@
     "gulp-rename": "*",
     "gulp-uglify": "^3.0.2",
     "html-pdf": "^3.0.1",
-    "html2canvas": "*",
+    "html2canvas": "1.4.1",
     "http-errors": "~1.6.3",
     "image-clipper": "*",
     "is-empty": "^1.2.0",
