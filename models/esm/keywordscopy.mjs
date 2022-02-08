@@ -78,10 +78,18 @@ wss.on('connection', ws => {
               pdf.create(decoded.stuff).toBuffer(function (err, buffer) {
                 //console.log('This is a buffer:', b64a.encode(buffer));
                 if (!err && Buffer.isBuffer(buffer)) {
-                  ws.send(b64a.encode(buffer));
+                  try {
+                    ws.send(b64a.encode(buffer));
+                  } catch (error_of_ws) {
+                    console.log(error_of_ws);
+                  }
                 } else {
+                  try {
+                    ws.send('pdf||');
+                  } catch (error_of_ws) {
+                    console.log(error_of_ws);
+                  }
                   console.log(err);
-                  ws.send('pdf||');
                 }
               });
               ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,32 +111,66 @@ wss.on('connection', ws => {
                       var JSON_stringify_restw_items = restw.Keywords.concat(restw.Keyphrases);
                       debug(JSON_stringify_restw_items);
                       var JSON_stringify_restw_unique = [...new Set(JSON_stringify_restw_items)];
-                      ws.send(JSON.stringify(JSON_stringify_restw_unique));
+                      try {
+                        ws.send(JSON.stringify(JSON_stringify_restw_unique));
+                      } catch (error_of_ws) {
+                        console.log(error_of_ws);
+                      }
 
                     }).catch(errtw => {
                       console.log(errtw);
-                      ws.send('解析失敗!');
+                      try {
+                        ws.send('解析失敗!');
+                      } catch (error_of_ws) {
+                        console.log(error_of_ws);
+                      }
                     })
                   })
                 } else {
-                  ws.send('解析失敗!');
+                  try {
+                    ws.send('解析失敗!');
+                  } catch (error_of_ws) {
+                    console.log(error_of_ws);
+                  }
                 }
               }).catch(err => {
                 console.log(err);
-                ws.send('解析失敗!');
+                try {
+                  ws.send('解析失敗!');
+                } catch (error_of_ws) {
+                  console.log(error_of_ws);
+                }
               })
             } else {
-              ws.send('解析失敗!');
+              try {
+                ws.send('解析失敗!');
+              } catch (error_of_ws) {
+                console.log(error_of_ws);
+              }
             }
           })
           .catch(() => {
-            ws.send('解析失敗!');
+            try {
+              ws.send('解析失敗!');
+            } catch (error_of_ws) {
+              console.log(error_of_ws);
+            }
           });
       } catch (error) {
         console.log(error);
-        ws.send('解析失敗!');
+        try {
+          ws.send('解析失敗!');
+        } catch (error_of_ws) {
+          console.log(error_of_ws);
+        }
       }
-    } else { ws.send('解析失敗!'); }
+    } else {
+      try {
+        ws.send('解析失敗!');
+      } catch (error_of_ws) {
+        console.log(error_of_ws);
+      }
+    }
   })
 
   //當 WebSocket 的連線關閉時執行
