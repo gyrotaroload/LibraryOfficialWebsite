@@ -66,7 +66,7 @@ app.use('/upload', uploadRouter);
 
 app.use(robots({
   UserAgent: '*',
-  Disallow: '/',
+  Disallow: '',//allow every things
   CrawlDelay: '5',
   Sitemap: 'https://library-official-website.herokuapp.com/sitemap.xml',
 }))
