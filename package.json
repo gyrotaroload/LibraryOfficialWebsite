@@ -112,7 +112,10 @@
     "watchify": "*",
     "ws": "^6.1.4",
     "jsonwebtoken": "8.5.1",
-    "base64-arraybuffer": "1.0.2"
+    "base64-arraybuffer": "1.0.2",
+    "sitemap": "7.1.1",
+    "zlib": "1.0.5",
+    "stream": "0.0.2"
   },
   "symdeps": {
     "paths": {
