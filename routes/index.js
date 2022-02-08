@@ -293,6 +293,7 @@ router.get('/inner', function (req, res, next) {
     gh.getConvenient(ro => {
       if (ro) {
         docs.getById(ro.d, html => {
+          console.log(ro.d);
           if (html) {
             res_render_docx = {
               //  res.render('docx', {//neighbor pairing
@@ -305,7 +306,8 @@ router.get('/inner', function (req, res, next) {
               moment: require('moment'),
               dbhtml: html,
               ISuser: false,
-              ProntEndBeautificationRendering: true
+              ProntEndBeautificationRendering: true,
+              External_connection_button_array: ro.b
             }//);//neighbor pairing
             tokenM = jwt.sign({ stuff: html/*aka上方的dbhtml*/ }, process.env.token_defaults_secret, { expiresIn: EXPIRES_IN });
           } else {

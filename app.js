@@ -11,6 +11,7 @@ var session = require('express-session');
 var randomstring = require("randomstring");
 const { body, validationResult } = require('express-validator');
 const SocketServer = require('ws').Server;
+const robots = require('express-robots-txt');
 
 //add new module
 var flash = require('connect-flash');
@@ -62,6 +63,13 @@ app.use('/users', usersRouter);
 app.use('/main', mainRouter);
 app.use('/tool', toolRouter);
 app.use('/upload', uploadRouter);
+
+app.use(robots({
+  UserAgent: '*',
+  Disallow: '',//allow every things
+  CrawlDelay: '5',
+  Sitemap: 'https://library-official-website.herokuapp.com/sitemap.xml',
+}))
 
 //get/post
 app.get('*', function (req, res, next) {

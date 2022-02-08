@@ -8,7 +8,7 @@ var ghSchema = mongoose.Schema({
         type: Array
     },
     docid: {
-        type: Number
+        type: String
     }
 });
 
@@ -29,25 +29,26 @@ module.exports.add = function (newOBJ, callback) {
 
 module.exports.getConvenient = function (callback) {
 
-    gh.find({}).sort({ dt: 'descending' }).exec((err, SearchResult) => {
+    gh.find({}).sort({ dt: -1 }).limit(1).exec((err, SearchResult) => {
         if (err) {
             console.log(err);
         }
+        console.log(SearchResult);console.log(SearchResult[0].id);console.log(SearchResult[0]._id);
+        console.log(SearchResult[0].bts);console.log(SearchResult[0].docid);
         callback(
             {
-                b: SearchResult.bts,
-                d: SearchResult.docid
+                b: SearchResult[0].bts,
+                d: SearchResult[0].docid
             });
     });
-
-
 }
 
 module.exports.SETinnerdocID = function (id, uri, callback) {
+    console.log(id, uri);
     gh.findById(id, function (err, contact) {
         if (!err) {
             if (contact) {
-                console.log(contact.tp);
+                console.log(contact.bts);
                 contact.docid = uri;
                 contact.save(function (err) {
                     if (!err) {
@@ -55,7 +56,7 @@ module.exports.SETinnerdocID = function (id, uri, callback) {
                         callback("yes");
                     }
                     else {
-                        console.log("Error: could not save contact " + contact.id);
+                        console.log("Error: could not save contact " + contact.id + "#" + String(err));
                         callback("no");
                     }
                 });

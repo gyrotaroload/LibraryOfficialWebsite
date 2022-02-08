@@ -83,7 +83,7 @@ block content
               span.fontawesome-link.scnd-font-color
           a.sign-in.button(href='#22' onclick="addBL()") 加到佇列
           p.scnd-font-color &emsp;
-          a.fb-sign-in(href='58')
+          a.fb-sign-in(onclick="rma()")
             p
               span.fb-border
                 span.icon.zocial-bitbucket
@@ -183,7 +183,7 @@ block content
                   | (方便)
                   span.icon.icon-cloudy.scnd-font-color
             li
-              a(href='#45')
+              a(onclick="$('#TheNextStep').text('1');submitBTON();")
                 p.next-days-date
                   span.day word
                   span.scnd-font-color 上傳文件
@@ -337,11 +337,15 @@ block content
         h2 提示訊息(點擊空白處關閉)
         .content
           p 下一步的按鈕按下去會自動調轉頁面!
-  #submitBTON( onclick="$.post('/main/addleast',{YYYY:$('#YYYY').val(),M:$('#M').val(),D:$('#D').val(),h:$('#h').val(),mm:$('#mm').val(),tp:$('#tp').val(),ab:$('#ab').val(),labels:$('#labels').text(),uri:'$(__#uri__).val()'},(r)=>{console.log(r);if($('#TheNextStep').text()==='1'){window.location.href = '/main/docx?ic=l&id='+r;}else if($('#TheNextStep').text()==='2'){console.log(2);}else if($('#TheNextStep').text()==='3'){console.log(3);}else{console.log('內容->下一步::未定義');}})")
+  //#submitBTON( onclick="$.post('/main/addleast',{YYYY:$('#YYYY').val(),M:$('#M').val(),D:$('#D').val(),h:$('#h').val(),mm:$('#mm').val(),tp:$('#tp').val(),ab:$('#ab').val(),labels:$('#labels').text(),uri:'$(__#uri__).val()'},(r)=>{console.log(r);if($('#TheNextStep').text()==='1'){window.location.href = '/main/docx?ic=l&id='+r;}else if($('#TheNextStep').text()==='2'){console.log(2);}else if($('#TheNextStep').text()==='3'){console.log(3);}else{console.log('內容->下一步::未定義');}})")
+  #submitBTON( onclick='submitBTON()')
+  #TheNextStep
   script(src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js' integrity='sha512-7oYXeK0OxTFxndh0erL8FsjGvrl2VMDor6fVqzlLGfwOQQqTbYsGPv4ZZ15QHfSk80doyaM0ZJdvkyDcVO7KFA==' crossorigin='anonymous' referrerpolicy='no-referrer')
   script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js")
   script(src='/javascripts/calendar.js')
+  script(src='/PagingClassification/EDITinterlibraryCooperation/index.js')
   script.
+    var gs=[];
     function addBL(){
     var b= document.getElementById('tbB')?document.getElementById('tbB').value:'none';
     var l= document.getElementById('tbL')?document.getElementById('tbL').value:'none';
@@ -349,4 +353,10 @@ block content
     if(!sbl.getElementsByClassName('tweet').length){sbl.innerHTML+=`<div class="tweet first"><p>${b}<a class="tweet-link" href="#17">&emsp;</a></p><p><a class="time-ago scnd-font-color" href="#18">${l}</a></p></div>`;}
     else{sbl.innerHTML+=`<div class="tweet"><p>${b}<a class="tweet-link" href="#17">&emsp;</a></p><p><a class="time-ago scnd-font-color" href="#18">${l}</a></p></div>`;}
     }else{console.error('[frontend error (unexpected)] - cannot find critical web page element { #stackBL }');}
+    gs.push({b:b,l:l});
     }
+    function rma(){var tmp=document.getElementById('stackBL');
+    while (String(tmp.lastChild.tagName).toUpperCase()!=='H2') {
+    //console.log(String(tmp.lastChild.tagName).toUpperCase());
+    tmp.removeChild(tmp.lastChild);
+    };gs=[];}
