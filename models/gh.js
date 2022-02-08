@@ -29,18 +29,18 @@ module.exports.add = function (newOBJ, callback) {
 
 module.exports.getConvenient = function (callback) {
 
-    gh.find({}).sort({ dt: 'descending' }).exec((err, SearchResult) => {
+    gh.find({}).sort({ dt: -1 }).limit(1).exec((err, SearchResult) => {
         if (err) {
             console.log(err);
         }
+        console.log(SearchResult);console.log(SearchResult[0].id);console.log(SearchResult[0]._id);
+        console.log(SearchResult[0].bts);console.log(SearchResult[0].docid);
         callback(
             {
-                b: SearchResult.bts,
-                d: SearchResult.docid
+                b: SearchResult[0].bts,
+                d: SearchResult[0].docid
             });
     });
-
-
 }
 
 module.exports.SETinnerdocID = function (id, uri, callback) {

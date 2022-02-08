@@ -69,8 +69,9 @@ block content
       aside.five.wide.column
         if ExternalLargeButtonName
           link(rel='stylesheet' href='/stylesheets/https___raw_githubusercontent_com_loup-brun_buttons_master_main.css')
-          .lambda
-            a.btn.btn-secondary abc123
+          each objectECBA, index in External_connection_button_array
+            .lambda
+              a.btn.btn-secondary(href=`${objectECBA.l}`)= objectECBA.b
         else
           h4 詳細資料
           .ui.list

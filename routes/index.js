@@ -71,23 +71,25 @@ var gh = require('../models/gh');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  least.frontend((stuff) => {
-    //console.log(c);console.log(numberArray(c));
-    res.render('index', {
-      title: '成大數學系圖書館',
-      functionButtonMainText1: '新書入庫',
-      functionButtonMainText2: '期刊服務',
-      functionButtonMainText3: '館際合作',
-      functionButtonMainText4: '電子資源',
-      browseHyperlinkedObjectsHorizontally1T: '成大首頁',
-      browseHyperlinkedObjectsHorizontally2T: '數學系網站',
-      browseHyperlinkedObjectsHorizontally3T: '成大總圖',
-      browseHyperlinkedObjectsHorizontally1L: 'https://www.ncku.edu.tw/',
-      browseHyperlinkedObjectsHorizontally2L: 'http://www.math.ncku.edu.tw/',
-      browseHyperlinkedObjectsHorizontally3L: 'https://www.lib.ncku.edu.tw/',
-      pc: numberArray(stuff.c),
-      ps: req.query.page ? stuff.s.slice(parseInt(req.query.page) * 4, (parseInt(req.query.page) + 1) * 4) : stuff.s.slice(0 * 4, (0 + 1) * 4),
-      margin: parseInt(req.query.page, 10) || 0
+  gh.frontend((stuff_gh) => {
+    least.frontend((stuff) => {
+      //console.log(c);console.log(numberArray(c));
+      res.render('index', {
+        title: '成大數學系圖書館',
+        functionButtonMainText1: '新書入庫',
+        functionButtonMainText2: '期刊服務',
+        functionButtonMainText3: '館際合作',
+        functionButtonMainText4: '電子資源',
+        browseHyperlinkedObjectsHorizontally1T: '成大首頁',
+        browseHyperlinkedObjectsHorizontally2T: '數學系網站',
+        browseHyperlinkedObjectsHorizontally3T: '成大總圖',
+        browseHyperlinkedObjectsHorizontally1L: 'https://www.ncku.edu.tw/',
+        browseHyperlinkedObjectsHorizontally2L: 'http://www.math.ncku.edu.tw/',
+        browseHyperlinkedObjectsHorizontally3L: 'https://www.lib.ncku.edu.tw/',
+        pc: numberArray(stuff.c),
+        ps: req.query.page ? stuff.s.slice(parseInt(req.query.page) * 4, (parseInt(req.query.page) + 1) * 4) : stuff.s.slice(0 * 4, (0 + 1) * 4),
+        margin: parseInt(req.query.page, 10) || 0
+      });
     });
   });
 });
@@ -293,6 +295,7 @@ router.get('/inner', function (req, res, next) {
     gh.getConvenient(ro => {
       if (ro) {
         docs.getById(ro.d, html => {
+          console.log(ro.d);
           if (html) {
             res_render_docx = {
               //  res.render('docx', {//neighbor pairing
