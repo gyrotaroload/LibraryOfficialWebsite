@@ -308,7 +308,8 @@ router.get('/inner', function (req, res, next) {
               moment: require('moment'),
               dbhtml: html,
               ISuser: false,
-              ProntEndBeautificationRendering: true
+              ProntEndBeautificationRendering: true,
+              External_connection_button_array:ro.b
             }//);//neighbor pairing
             tokenM = jwt.sign({ stuff: html/*aka上方的dbhtml*/ }, process.env.token_defaults_secret, { expiresIn: EXPIRES_IN });
           } else {

@@ -71,7 +71,7 @@ block content
           link(rel='stylesheet' href='/stylesheets/https___raw_githubusercontent_com_loup-brun_buttons_master_main.css')
           each objectECBA, index in External_connection_button_array
             .lambda
-              a.btn.btn-secondary(href=`${objectECBA.l}`)= objectECBA.b
+              a.btn.btn-secondary(href=`${objectECBA.l}`  target='_blank')= objectECBA.b
         else
           h4 詳細資料
           .ui.list
