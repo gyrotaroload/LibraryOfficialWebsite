@@ -75601,6 +75601,8 @@ module.exports = function whichTypedArray(value) {
 },{"available-typed-arrays":5,"call-bind/callBound":47,"es-abstract/helpers/getOwnPropertyDescriptor":222,"foreach":226,"has-tostringtag/shams":232,"is-typed-array":259}],339:[function(require,module,exports){
 "use strict";
 
+//我不確定，但是我猜這個東西經荒廢了
+
 /*//const translate = require('translate-google')
 //var pdf = require('html-pdf');
 const streamToBlob = require('stream-to-blob');
@@ -75720,135 +75722,153 @@ var DEF_download_Blob = false;
 var useold = false;
 var DEF_medal_path = "/app/medal/";
 if (document.getElementsByClassName("pdfutils")) document.getElementsByClassName("pdfutils")[0].addEventListener("click", function () {
-  if (document.getElementsByClassName("pdfutils")) document.getElementsByClassName("pdfutils")[0].innerHTML += "\n    <span class=\"loader removeafterSSP\"><span class=\"loader-box\"></span><span class=\"loader-box\"></span><span class=\"loader-box\"></span>\n    <style>.loader {\n        height : 8px;\n        width  : 36px; /* (6 * <margin: 2px>) + (3 * <width: 8px>) */\n    }\n    \n    .loader-box {\n        display                   : inline-block;\n        height                    : 8px;\n        width                     : 8px;\n        margin                    : 0px 2px;\n        background-color          : rgb(0,146,255);\n        animation-name            : fadeOutIn;\n        animation-duration        : 500ms;\n        animation-iteration-count : infinite;\n        animation-direction       : alternate;\n    }\n    \n    .loader-box:nth-child(1) { animation-delay: 250ms; } /* (1/2) * <animation-duration: 500ms */\n    .loader-box:nth-child(2) { animation-delay: 500ms; } /* (2/2) * <animation-duration: 500ms */\n    .loader-box:nth-child(3) { animation-delay: 750ms; } /* (3/2) * <animation-duration: 500ms */\n    \n    @keyframes fadeOutIn {\n        0%   { background-color : rgba(0,146,255,1); }\n        100% { background-color : rgba(0,146,255,0); }\n    }\n    </style></span>\n    ";
-  if (document.getElementsByClassName("pdfutils")) document.getElementById("snap_shoot_finish_pdf").innerText = "0";
-  html2canvas(document.querySelector("body"), {
-    useCORS: true,
-    scrollY: 0,
-    scrollX: 0
-  }).then(function (canvas) {
-    //@ 
-    if (useold) {
-      //$("body").css({ left: 0, top: 0, position: 'fixed' });
-      //@   domtoimage.toSvg(document.querySelector("body"))
-      //@       .then(function (dataUrl) {console.log(dataUrl)});
-      //@   domtoimage.toPng(document.querySelector("body"))
-      //@      .then(function (dataUrl) {
-      //var img = new Image();
-      //img.src = dataUrl;
-      //document.body.appendChild(img);
-      //@        var img = Buffer.from(base64.substr(23), 'base64');
-      //@        var canvas = sizeOf(img);
-      //@        console.log(canvas.width, canvas.height);
-      //<!--這裡面的方式是:htnl2canvas->to pdf using jspdf-->>
-      //console.log(`canvas.width, canvas.height=${canvas.width}, ${canvas.height}`);
-      var jsPDF = window.jspdf.jsPDF; // var doc = new jsPDF();
-      //   doc.text(10, 15, "Hello World from jsPDF.");
-      //    doc.save("jsPDF-Hello_World.pdf");
-
-      var doc = new jsPDF({
-        orientation: 'portrait',
-        // landscape
-        unit: 'pt',
-        // points, pixels won't work properly
-        format: [canvas.width, canvas.height] // set needed canvas for any element
-
-      });
-      var target_img = dataUrl; //canvas.toDataURL("image/jpeg", 1.0);
-
-      doc.addFont('SourceHanSans-Normal.ttf', 'SourceHanSans-Normal', 'normal');
-      doc.setFont('SourceHanSans-Normal');
-      doc.addImage(target_img, 'PNG', 0, 0, canvas.width, canvas.height, 'a', 'NONE', 0);
-      getallvisabletext(doc);
-      doc.save(commercialFileName);
-      document.getElementById('snap_shoot_screen').getElementsByClassName('removeafterSSS')[0].remove(); //   $("body").css({ position: 'absolute' });
-
-      var url = window.location.href;
-      var window_location_href_host = new URL(url).host;
-      console.log(window_location_href_host);
-
-      if (DEF_consolelogdata) {
-        console.log(canvas.toDataURL("image/jpeg", 1.0));
+  /*
+      if (document.getElementsByClassName("pdfutils")) document.getElementsByClassName("pdfutils")[0].innerHTML += `
+      <span class="loader removeafterSSP"><span class="loader-box"></span><span class="loader-box"></span><span class="loader-box"></span>
+      <style>.loader {
+          height : 8px;
+          width  : 36px; // (6 * <margin: 2px>) + (3 * <width: 8px>)
       }
-
-      if (DEF_download_screenshot) {
-        //在pdfutils狀態下不會被觸發....反正懶得改了
-        var a = document.createElement("a"); //Create <a>
-
-        a.style = "display: none";
-        a.href = canvas.toDataURL("image/jpeg", 1.0); //Image Base64 Goes here
-
-        a.download = commercialFileName; //File name Here
-
-        a.click(); //Downloaded file
-
-        if (document.getElementById('snap_shoot_screen').getElementsByClassName('removeafterSSS')) document.getElementById('snap_shoot_screen').getElementsByClassName('removeafterSSS')[0].remove();
+      
+      .loader-box {
+          display                   : inline-block;
+          height                    : 8px;
+          width                     : 8px;
+          margin                    : 0px 2px;
+          background-color          : rgb(0,146,255);
+          animation-name            : fadeOutIn;
+          animation-duration        : 500ms;
+          animation-iteration-count : infinite;
+          animation-direction       : alternate;
       }
-
-      var blob_tmp = dataURItoBlob(target_img);
-
-      if (DEF_download_Blob) {
-        saveData(blob_tmp, "download_blob.jpg");
+      
+      .loader-box:nth-child(1) { animation-delay: 250ms; } /// (1/2) * <animation-duration: 500ms 
+      .loader-box:nth-child(2) { animation-delay: 500ms; }// (2/2) * <animation-duration: 500ms 
+      .loader-box:nth-child(3) { animation-delay: 750ms; } // (3/2) * <animation-duration: 500ms 
+      
+      @keyframes fadeOutIn {
+          0%   { background-color : rgba(0,146,255,1); }
+          100% { background-color : rgba(0,146,255,0); }
       }
-
-      if (blob_tmp.size < 6000000) {
-        send_pic_to_backend(blob_tmp);
-      } else {
-        console.log("compress_ratio");
-        var compress_ratio = 0.9;
-
-        while (compress_ratio > 0 && dataURItoBlob(canvas.toDataURL("image/jpeg", compress_ratio)).size > 6000000) {
-          compress_ratio = compress_ratio - 0.1;
-        }
-
-        if (dataURItoBlob(canvas.toDataURL("image/jpeg", compress_ratio)).size > 6000000) {
-          console.error("this is a error, the page is tooooooooooooooooo large, so you can't trans this file to backend!!!!");
-        }
-
-        send_pic_to_backend(dataURItoBlob(canvas.toDataURL("image/jpeg", compress_ratio)));
-      } // });->
-      //@    })
-      //@    .catch(function (error) {
-      //@        console.error('oops, something went wrong!', error);
-
-    } else {
-      // create a document the same way as above
-      //#  const doc = new PDFDocument;
-      // pipe the document to a blob
-      //#   const stream = doc.pipe(blobStream());
-      // add your content to the document here, as usual
-      domtoimage.toSvg(document.querySelector("body")).then(function (dataUrl) {
-        var jsPDF = window.jspdf.jsPDF; // var doc = new jsPDF();
-        //   doc.text(10, 15, "Hello World from jsPDF.");
-        //    doc.save("jsPDF-Hello_World.pdf");
-
-        var doc = new jsPDF({
-          orientation: 'portrait',
-          // landscape
-          unit: 'pt',
-          // points, pixels won't work properly
-          format: [canvas.width, canvas.height] // set needed canvas for any element
-
-        });
-        var target_img = dataUrl; //canvas.toDataURL("image/jpeg", 1.0);
-
-        doc.addFont('SourceHanSans-Normal.ttf', 'SourceHanSans-Normal', 'normal');
-        doc.setFont('SourceHanSans-Normal'); //# doc.addImage(target_img, 'PNG', 0, 0, canvas.width, canvas.height, 'a', 'NONE', 0);
-
-        doc.addSvgAsImage(dataUrl.split(';base64,')[1], 0, 0, canvas.width, canvas.height, 'a', 'NONE', 0);
-        getallvisabletext(doc);
-        doc.save(commercialFileName); //console.log(dataUrl);
-        //#SVGtoPDF(doc, dataUrl.split(';base64,')[1], 0, 0, {});
-        // get a blob when you're done
-        //#    doc.end();
-        //#    stream.on('finish', function () {
-        // or get a blob URL for display in the browser
-        //#        const url = stream.toBlobURL('application/pdf');
-        //#        window.open(url);
-        //#    });
-      });
-    }
-  });
+      </style></span>
+      `;
+      if (document.getElementsByClassName("pdfutils")) document.getElementById("snap_shoot_finish_pdf").innerText = "0";
+      html2canvas(document.querySelector("body"), { useCORS: true, scrollY: 0, scrollX: 0 }).then(canvas => {//@ 
+          if (useold) {
+              //$("body").css({ left: 0, top: 0, position: 'fixed' });
+              //@   domtoimage.toSvg(document.querySelector("body"))
+              //@       .then(function (dataUrl) {console.log(dataUrl)});
+  
+              //@   domtoimage.toPng(document.querySelector("body"))
+              //@      .then(function (dataUrl) {
+              //var img = new Image();
+              //img.src = dataUrl;
+              //document.body.appendChild(img);
+  
+              //@        var img = Buffer.from(base64.substr(23), 'base64');
+              //@        var canvas = sizeOf(img);
+              //@        console.log(canvas.width, canvas.height);
+  
+  
+              //<!--這裡面的方式是:htnl2canvas->to pdf using jspdf-->>
+              //console.log(`canvas.width, canvas.height=${canvas.width}, ${canvas.height}`);
+              var jsPDF = window.jspdf.jsPDF;
+              // var doc = new jsPDF();
+              //   doc.text(10, 15, "Hello World from jsPDF.");
+              //    doc.save("jsPDF-Hello_World.pdf");
+              var doc = new jsPDF({
+                  orientation: 'portrait', // landscape
+                  unit: 'pt', // points, pixels won't work properly
+                  format: [canvas.width, canvas.height] // set needed canvas for any element
+              });
+              var target_img = dataUrl//canvas.toDataURL("image/jpeg", 1.0);
+              doc.addFont('SourceHanSans-Normal.ttf', 'SourceHanSans-Normal', 'normal');
+              doc.setFont('SourceHanSans-Normal');
+              doc.addImage(target_img, 'PNG', 0, 0, canvas.width, canvas.height, 'a', 'NONE', 0);
+  
+              getallvisabletext(doc);
+  
+              doc.save(commercialFileName);
+              document.getElementById('snap_shoot_screen').getElementsByClassName('removeafterSSS')[0].remove();
+              //   $("body").css({ position: 'absolute' });
+              var url = window.location.href;
+              var window_location_href_host = new URL(url).host;
+              console.log(window_location_href_host);
+  
+              if (DEF_consolelogdata) {
+                  console.log(canvas.toDataURL("image/jpeg", 1.0));
+              }
+              if (DEF_download_screenshot) {//在pdfutils狀態下不會被觸發....反正懶得改了
+                  var a = document.createElement("a"); //Create <a>
+                  a.style = "display: none";
+                  a.href = canvas.toDataURL("image/jpeg", 1.0); //Image Base64 Goes here
+                  a.download = commercialFileName; //File name Here
+                  a.click(); //Downloaded file
+                  if (document.getElementById('snap_shoot_screen').getElementsByClassName('removeafterSSS')) document.getElementById('snap_shoot_screen').getElementsByClassName('removeafterSSS')[0].remove();
+              }
+  
+              var blob_tmp = dataURItoBlob(target_img);
+              if (DEF_download_Blob) {
+                  saveData(blob_tmp, "download_blob.jpg");
+              }
+              if (blob_tmp.size < 6000000) {
+                  send_pic_to_backend(blob_tmp);
+              } else {
+                  console.log("compress_ratio");
+                  var compress_ratio = 0.9;
+                  while (compress_ratio > 0 && (dataURItoBlob(canvas.toDataURL("image/jpeg", compress_ratio)).size > 6000000)) {
+                      compress_ratio = compress_ratio - 0.1;
+                  }
+                  if (dataURItoBlob(canvas.toDataURL("image/jpeg", compress_ratio)).size > 6000000) {
+                      console.error("this is a error, the page is tooooooooooooooooo large, so you can't trans this file to backend!!!!")
+                  }
+                  send_pic_to_backend(dataURItoBlob(canvas.toDataURL("image/jpeg", compress_ratio)));
+              }
+  
+              // });->
+              //@    })
+              //@    .catch(function (error) {
+              //@        console.error('oops, something went wrong!', error);
+  
+          } else {
+              // create a document the same way as above
+              //#  const doc = new PDFDocument;
+              // pipe the document to a blob
+              //#   const stream = doc.pipe(blobStream());
+              // add your content to the document here, as usual
+              domtoimage.toSvg(document.querySelector("body"))
+                  .then(function (dataUrl) {
+                      var jsPDF = window.jspdf.jsPDF;
+                      // var doc = new jsPDF();
+                      //   doc.text(10, 15, "Hello World from jsPDF.");
+                      //    doc.save("jsPDF-Hello_World.pdf");
+                      var doc = new jsPDF({
+                          orientation: 'portrait', // landscape
+                          unit: 'pt', // points, pixels won't work properly
+                          format: [canvas.width, canvas.height] // set needed canvas for any element
+                      });
+                      var target_img = dataUrl//canvas.toDataURL("image/jpeg", 1.0);
+                      doc.addFont('SourceHanSans-Normal.ttf', 'SourceHanSans-Normal', 'normal');
+                      doc.setFont('SourceHanSans-Normal');
+                      //# doc.addImage(target_img, 'PNG', 0, 0, canvas.width, canvas.height, 'a', 'NONE', 0);
+                      doc.addSvgAsImage(dataUrl.split(';base64,')[1], 0, 0, canvas.width, canvas.height, 'a', 'NONE', 0)
+  
+                      getallvisabletext(doc);
+  
+                      doc.save(commercialFileName);
+                      //console.log(dataUrl);
+                      //#SVGtoPDF(doc, dataUrl.split(';base64,')[1], 0, 0, {});
+                      // get a blob when you're done
+                      //#    doc.end();
+                      //#    stream.on('finish', function () {
+                      // or get a blob URL for display in the browser
+                      //#        const url = stream.toBlobURL('application/pdf');
+                      //#        window.open(url);
+                      //#    });
+                  });
+  
+          }
+      });*/
 });
 document.getElementById("snap_shoot_canvas_tmp_pdf").addEventListener("click", function () {
   document.getElementById("snap_shoot_finish_pdf").innerText = "0";

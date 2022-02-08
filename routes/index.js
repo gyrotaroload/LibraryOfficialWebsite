@@ -55,6 +55,10 @@ var token = require('token');
 ///debug(process.env.token_defaults_secret);這裡還沒撙備好
 token.defaults.timeStep = 5 * 60; //5min
 ///////////////////////////////////////////////
+const { SitemapStream, streamToPromise } = require('sitemap');
+const { createGzip } = require('zlib');
+const { Readable } = require('stream');
+let sitemap;
 
 const numberArray = require('number-array');
 
@@ -362,6 +366,42 @@ router.get('/interlibraryCooperation', function (req, res, next) {
 
 });
 
+
+router.get('/sitemap.xml', function (req, res) {
+  res.header('Content-Type', 'application/xml');
+  res.header('Content-Encoding', 'gzip');
+  // if we have a cached entry send it
+  if (sitemap) {
+    res.send(sitemap)
+    return
+  }
+
+  try {
+    const smStream = new SitemapStream({ hostname: 'https://library-official-website.herokuapp.com' });//TODO change hostname
+    const pipeline = smStream.pipe(createGzip())
+
+    // pipe your entries or directly write them.
+    //smStream.write({ url: '/page-1/',  changefreq: 'daily', priority: 0.3 })
+    //smStream.write({ url: '/page-2/',  changefreq: 'monthly',  priority: 0.7 })
+    //smStream.write({ url: '/page-3/'})    // changefreq: 'weekly',  priority: 0.5
+    //smStream.write({ url: '/page-4/',   img: "http://urlTest.com" })
+    /* or use
+    Readable.from([{url: '/page-1'}...]).pipe(smStream)
+    if you are looking to avoid writing your own loop.
+    */
+    smStream.write({ url: '/', changefreq: 'monthly', priority: 1.00 }); smStream.write({ url: '/inner?id=$(__', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: '/inner?id=61cdf503b346ec72f289aa09&amp;pid=61cdf3d7f75eb35714a35b45&amp;ic=l', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: '/inner?id=61cdf035f75eb35714a35b30&amp;pid=61cdf00bf75eb35714a35b2c&amp;ic=l', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: '/inner?id=61cdd3d52245725619503d1d&amp;pid=61cdd3a92245725619503d19&amp;ic=l', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: '/?page=0', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: '/?page=1', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: '/?page=2', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: '/users/login', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: '/?page=3', changefreq: 'monthly', priority: 0.64 }); smStream.write({ url: '/?page=4', changefreq: 'monthly', priority: 0.64 }); smStream.write({ url: '/?page=5', changefreq: 'monthly', priority: 0.51 }); smStream.write({ url: '/?page=6', changefreq: 'monthly', priority: 0.51 }); smStream.write({ url: '/?page=7', changefreq: 'monthly', priority: 0.41 }); smStream.write({ url: '/inner?id=undefined&amp;pid=61cce38d2f81b86f4f8381c6&amp;ic=l', changefreq: 'monthly', priority: 0.33 }); smStream.write({ url: '/inner?id=undefined&amp;pid=61cce2e1b19a78ec95b0229c&amp;ic=l', changefreq: 'monthly', priority: 0.33 }); smStream.write({ url: '/inner?id=61cdd3d52245725619503d1d&amp;pid=61cce2861052c1467ce136e5&amp;ic=l', changefreq: 'monthly', priority: 0.33 });
+
+    // cache the response
+    streamToPromise(pipeline).then(sm => sitemap = sm)
+    // make sure to attach a write stream such as streamToPromise before ending
+    smStream.end()
+    // stream write the response
+    pipeline.pipe(res).on('error', (e) => { throw e })
+  } catch (e) {
+    console.error(e)
+    res.status(500).end()
+  }
+})
 
 module.exports = router;
 
