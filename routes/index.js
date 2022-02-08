@@ -368,6 +368,11 @@ router.get('/interlibraryCooperation', function (req, res, next) {
 
 });
 
+router.get('/electronic-resources', function (req, res, next) {
+  res.render('https___technext_github_io_product_admin_index_html', {
+    title: '電子資源'
+  });
+});
 
 router.get('/sitemap.xml', function (req, res) {
   res.header('Content-Type', 'application/xml');
