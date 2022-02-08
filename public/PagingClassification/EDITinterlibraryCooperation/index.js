@@ -1,19 +1,19 @@
-function submitBTON(ns) {
+function submitBTON(/*ns*/) {
     $.post('/main/agh',
         {
-            gs: gs,
-            ns: ns
+            gs: JSON.stringify(gs),
+            //ns: ns
         },
         (r) => {
             console.log(r);
-            /*if ($('#TheNextStep').text() === '1') {
-                window.location.href = '/main/docx?ic=l&id=' + r;
+            if ($('#TheNextStep').text() === '1') {
+                window.location.href = '/main/docx?ic=g&id=' + r;
             }
             else if ($('#TheNextStep').text() === '2') { console.log(2); }
             else if
                 ($('#TheNextStep').text() === '3') { console.log(3); }
             else {
                 console.log('內容->下一步::未定義');
-            }*/
+            }
         })
 }

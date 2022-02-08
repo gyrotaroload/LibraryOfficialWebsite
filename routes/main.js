@@ -415,9 +415,10 @@ router.get('/interlibraryCooperation', ensureAuthenticated, function (req, res, 
 });
 
 router.post('/agh', ensureAuthenticated, function (req, res, next) {//丟資料到models\gh.js
+    console.log(req.body.gs);
     var newobj = new gh({
         dt : Date.now(),
-        bts: req.body.gs,
+        bts: JSON.parse(req.body.gs),
     });
     gh.add(newobj, function (r) {
         if (r) {

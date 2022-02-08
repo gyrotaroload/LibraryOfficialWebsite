@@ -8,7 +8,7 @@ var ghSchema = mongoose.Schema({
         type: Array
     },
     docid: {
-        type: Number
+        type: String
     }
 });
 
@@ -44,10 +44,11 @@ module.exports.getConvenient = function (callback) {
 }
 
 module.exports.SETinnerdocID = function (id, uri, callback) {
+    console.log(id, uri);
     gh.findById(id, function (err, contact) {
         if (!err) {
             if (contact) {
-                console.log(contact.tp);
+                console.log(contact.bts);
                 contact.docid = uri;
                 contact.save(function (err) {
                     if (!err) {
@@ -55,7 +56,7 @@ module.exports.SETinnerdocID = function (id, uri, callback) {
                         callback("yes");
                     }
                     else {
-                        console.log("Error: could not save contact " + contact.id);
+                        console.log("Error: could not save contact " + contact.id + "#" + String(err));
                         callback("no");
                     }
                 });
