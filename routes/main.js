@@ -16,7 +16,7 @@ var excelDB = require('../models/excelDB');
 var swipe_edit = require('../models/swipe_edit');
 var least = require('../models/least');
 var docs = require('../models/docs');
-var docs = require('../models/gh');
+var gh = require('../models/gh');
 
 
 //const
@@ -414,8 +414,19 @@ router.get('/interlibraryCooperation', ensureAuthenticated, function (req, res, 
     });
 });
 
-router.post('/agh', ensureAuthenticated, function (req, res, next) {
-
+router.post('/agh', ensureAuthenticated, function (req, res, next) {//丟資料到models\gh.js
+    var newobj = new gh({
+        dt : Date.now(),
+        bts: req.body.gs,
+    });
+    gh.add(newobj, function (r) {
+        if (r) {
+            res.status(200).send(r.id);
+        } else {
+            console.log(r);
+            res.status(404).send("fail");
+        }
+    });
 });
 
 function ensureAuthenticated(req, res, next) {
