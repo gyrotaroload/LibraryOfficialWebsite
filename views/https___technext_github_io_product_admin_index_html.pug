@@ -48,7 +48,7 @@ block content
               li.nav-item
                 a.nav-link.active(href='#')
                   i.fas.fa-tachometer-alt
-                  |                                 電子書
+                  |                                 校內資源
                   span.sr-only (current)
               //li.nav-item.dropdown
                 a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
@@ -63,11 +63,11 @@ block content
               li.nav-item
                 a.nav-link(href='products.html')
                   i.fas.fa-shopping-cart
-                  |                                 常用連結
-              //li.nav-item
+                  |                                 校外資源
+              li.nav-item
                 a.nav-link(href='accounts.html')
                   i.far.fa-user
-                  |                                 Accounts
+                  |                                 常用連結
               //li.nav-item.dropdown
                 a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
                   i.fas.fa-cog
@@ -228,7 +228,7 @@ block content
                     span.tm-small.tm-text-color-secondary 6h ago.
           .col-12.tm-block-col
             .tm-bg-primary-dark.tm-block.tm-block-taller.tm-block-scroll
-              h2.tm-block-title Orders List
+              h2.tm-block-title 點選每一資料欄位末端的超連結來檢視並下載資料
               table.table
                 thead
                   tr
@@ -238,6 +238,18 @@ block content
                     th(scope='col') 資源類型
                     th(scope='col') 發布時間
                     th(scope='col') 備註
+                    th(scope='col') 檔案
+                  //tr
+                    th(scope='col') 流水號
+                    th(scope='col') 名稱
+                    th(scope='col') 提供者
+                    th(scope='col') 類型
+                    th(scope='col') 發布時間
+                    th(scope='col') 備註
+                    th(scope='col') 超連結
+                  //tr
+                    th(scope='col') 流水號
+                    th(scope='col') 網站名稱
                     th(scope='col') 超連結
                 tbody
                   tr

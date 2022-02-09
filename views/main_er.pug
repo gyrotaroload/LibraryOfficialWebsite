@@ -1,0 +1,228 @@
+extends layout_DW
+
+block contentHEAD
+  link(href='./dw/er/Untitled-2.css' rel='stylesheet' type='text/css')
+
+block content
+  .gridContainer.clearfix
+    #LayoutDiv1
+      | 成功大學數學系圖書館網站管理後台
+      em 電子資源
+    p &emsp;
+    hr
+    p &emsp;
+    p
+      strong 常用連結
+    form(name='form1' method='post' action='')
+      label(for='y')
+      table(width='571' border='1' summary='請輸入每個欄位後提交')
+        caption
+          | 新增一個新的「常用連結」
+        tbody
+          tr
+            th(width='118' scope='col')
+              div
+                div  
+              h3 &emsp;
+            th(width='437' scope='col') 輸入資料
+          tr
+            th(align='center' valign='middle' scope='row')
+              div
+                div 流水號
+              h3 &emsp;
+            td(align='center' valign='middle')
+              label(for='no') serial_number
+              input#no(type='number' name='no' accesskey='n' tabindex='0')
+          tr
+            th(align='center' valign='middle' scope='row')
+              div
+                div 網站名稱
+              h3 &emsp;
+            td(align='center' valign='middle')
+              label(for='name') site_name
+              input#name(type='text' name='name' accesskey='a' tabindex='1')
+          tr
+            th(align='center' valign='middle' scope='row')
+              div
+                div 超連結
+              h3 &emsp;
+            td(align='center' valign='middle')
+              label(for='url') url
+              input#url(type='url' name='url' accesskey='u' tabindex='2')
+      p
+        label(for='submit') submit
+        input#submit(type='submit' name='submit' value='送出' accesskey='s' tabindex='3')
+    hr
+    p &emsp;
+    p
+      strong 校外電子資源
+    form(name='form2' method='post' action='')
+      table(width='573' border='1' summary='Off-Campus Electronic Resources Hyperlinks')
+        caption
+          | 「新增」校外電子資源超連結
+        tbody
+          tr
+            th(width='118' align='center' valign='middle' scope='col')
+              div
+                div  
+            th(width='439' align='left' valign='middle' scope='col') 輸入資料
+          tr
+            th(align='center' valign='middle' scope='row')
+              div
+                div
+                  div
+                    div 流水號
+            td(align='left' valign='middle')
+              label(for='sn') sn
+              input#sn(type='number' name='sn' accesskey='r' tabindex='4')
+          tr
+            th(align='center' valign='middle' scope='row')
+              div
+                div
+                  div
+                    div 名稱
+            td(align='left' valign='middle')
+              label(for='osn') osn
+              input#osn(type='text' name='osn' accesskey='t' tabindex='5')
+          tr
+            th(align='center' valign='middle' scope='row')
+              div
+                div 提供者
+            td(align='left' valign='middle')
+              label(for='provider') provider
+              input#provider(type='text' name='provider' accesskey='p' tabindex='6')
+          tr
+            th(align='center' valign='middle' scope='row')
+              div
+                div 類型
+            td(align='left' valign='middle')
+              p
+                label(for='c') class
+                select#c(name='c' accesskey='q' tabindex='7')
+                  option(value='清單' selected='') 清單
+                  option(value='外部連結') 外部連結
+                  option(value='其他') 其他
+              p
+                label(for='Textafterexternallinkother') 自行輸入
+                input#Textafterexternallinkother(type='text' name='Textafterexternallinkother' accesskey='e' tabindex='8')
+          tr
+            th(align='center' valign='middle' scope='row')
+              div
+                div 發布時間
+            td(align='left' valign='middle')
+              label(for='yPublished_External') 年
+              input#yPublished_External(type='number' name='yPublished_External' accesskey='l' tabindex='9')
+              label(for='mPublished_External')
+                br
+                |           月
+              input#mPublished_External(type='number' name='mPublished_External' accesskey='k' tabindex='10')
+              label(for='dPublished_External')
+                br
+                |           日
+              input#dPublished_External(type='number' name='dPublished_External' accesskey='j' tabindex='11')
+          tr
+            th(align='center' valign='middle' scope='row')
+              div
+                div 備註
+            td(align='left' valign='middle')
+              label(for='Remarks_External') Remarks_External
+              input#Remarks_External(type='text' name='Remarks_External' accesskey='y' tabindex='12')
+          tr
+            th(align='center' valign='middle' scope='row')
+              div
+                div 超連結
+            td(align='left' valign='middle')
+              label(for='urle') urle
+              input#urle(type='url' name='urle' accesskey='i' tabindex='13')
+      label(for='submit')
+        br
+        |     submit
+      input#submit(type='submit' name='submit2' value='送出' accesskey='w' tabindex='14')
+    hr
+    p &emsp;
+    p
+      strong 校外電子資源
+      | [檔案]
+    form(action='' method='post' enctype='multipart/form-data' name='form3')
+      table(width='573' border='1' summary='On-campus electronic resource files')
+        caption
+          | 「新增」校內電子資源檔案
+        tbody
+          tr
+            th(width='118' align='center' valign='middle' scope='col')
+              div
+                div  
+            th(width='439' align='left' valign='middle' scope='col') 輸入資料
+          tr
+            th(align='center' valign='middle' scope='row')
+              div
+                div
+                  div
+                    div 流水號
+            td(align='left' valign='middle')
+              label(for='sn') sn2
+              input#sn2(type='number' name='sn2' accesskey='o' tabindex='15')
+          tr
+            th(align='center' valign='middle' scope='row')
+              div
+                div
+                  div
+                    div 名稱
+            td(align='left' valign='middle')
+              label(for='osn2') osn
+              input#osn2(type='text' name='osn2' accesskey='h' tabindex='16')
+          tr
+            th(align='center' valign='middle' scope='row')
+              div
+                div 作者
+            td(align='left' valign='middle')
+              label(for='provider2') provider
+              input#provider2(type='text' name='provider2' accesskey='g' tabindex='17')
+          tr
+            th(align='center' valign='middle' scope='row')
+              div
+                div 資源類型
+            td(align='left' valign='middle')
+              p
+                label(for='c2') class
+                select#c2(name='c2' accesskey='d' tabindex='18')
+                  option(value='電子書' selected='') 電子書
+                  option(value='圖像') 圖像
+                  option(value='其他') 其他
+              p
+                label(for='Textafterexternallinkother2') 自行輸入
+                input#Textafterexternallinkother2(type='text' name='Textafterexternallinkother2' accesskey='z' tabindex='19')
+          tr
+            th(align='center' valign='middle' scope='row')
+              div
+                div 發布時間
+            td(align='left' valign='middle')
+              label(for='yPublished_External2') 年
+              input#yPublished_External2(type='number' name='yPublished_External2' accesskey='x' tabindex='20')
+              label(for='mPublished_External2')
+                br
+                |           月
+              input#mPublished_External2(type='number' name='mPublished_External2' accesskey='c' tabindex='21')
+              label(for='dPublished_External2')
+                br
+                |           日
+              input#dPublished_External2(type='number' name='dPublished_External2' accesskey='b' tabindex='22')
+          tr
+            th(align='center' valign='middle' scope='row')
+              div
+                div 備註
+            td(align='left' valign='middle')
+              label(for='Remarks_External2') Remarks_External
+              input#Remarks_External2(type='text' name='Remarks_External2' accesskey='m' tabindex='23')
+          tr
+            th(align='center' valign='middle' scope='row')
+              div
+                div 檔案
+            td(align='left' valign='middle')
+              label(for='file') file
+              input#file(type='file' name='file' accesskey='1' tabindex='24')
+      label(for='submit')
+        br
+        |     submit
+      input#submit(type='submit' name='submit2' value='送出' accesskey='2' tabindex='25')
+    p &emsp;
