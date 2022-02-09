@@ -430,6 +430,12 @@ router.post('/agh', ensureAuthenticated, function (req, res, next) {//丟資料�
     });
 });
 
+router.get('/AddElectronicResources', ensureAuthenticated, function (req, res, next) {
+    res.render('mainer', {
+        title: 'mainer',
+    });
+});
+
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
