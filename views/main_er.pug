@@ -1,228 +1,320 @@
 extends layout_DW
 
 block contentHEAD
-  link(href='./dw/er/Untitled-2.css' rel='stylesheet' type='text/css')
+  link(href='/dw/er/Untitled-2.css' rel='stylesheet' type='text/css')
+  link(rel='stylesheet' href='/stylesheets/https___raw_githubusercontent_com_loup-brun_buttons_master_main.css')
+  link(rel='stylesheet' href='/stylesheets/textbox.css')
+  //https://designdrastic.com/post/demo/input-text-box-effects-in-css
+  link(rel='stylesheet' href='https://cdn.jsdelivr.net/gh/filamentgroup/select-css@3.2.1/src/select-css.min.css')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css' integrity='sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/accordion.min.css' integrity='sha512-BIyIsOFJCQKKhxrCMtXBi1RJTXmV1vuMEWCRbU/UFieuYyvGAbl03GktViTWKM39yu9Jywbec1V0cRbQ6KgMVQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/ad.min.css' integrity='sha512-J10yVooc7Pgm5Rjre7pm69wAwxe2Jm/h+2eAC6XCbGzozDRoOWmyx7P55uKMrmyWN5ku1YHKEeXEnJBQE6qzuQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/breadcrumb.min.css' integrity='sha512-mJAIm8yYYnMEUdZ3S91J+NBcSPbEEefehsfKhWpsrJFJm2mglCkhxvOspZXp0KzosZgYgAiHZ0nZRZrOvbSLdQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/button.min.css' integrity='sha512-OD0ScwZAE5PCg4nATXnm8pdWi0Uk0Pp2XFsFz1xbZ7xcXvapzjvcxxHPeTZKfMjvlwwl4sGOvgJghWF2GRZZDw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/card.min.css' integrity='sha512-u5E5vOHVsB0blcZniDNfaRkTfqdgjxIgLX17YlG0vjQyos7Z7b1BXLuhHZbF2JOVRrfNNd8P6v7fw87JaFw/Rg==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/checkbox.min.css' integrity='sha512-binQUn0abXktVdo5lUPzJyj9ZRouAxqFlchlD22+y2IAivfojjNLPuC6HCZiHT5bx+cM7ZzJstL+jHhwOUtcyg==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/comment.min.css' integrity='sha512-TgSrvbVY7zMUKRWTicqLUsBAWSULRR7MlecRLKLALXsLVxF5F1p5fp4uQWJnqQ9tLqNk757j8O7xphaAU6dlsA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/container.min.css' integrity='sha512-SXxjjKOeD8WYj3u56VSyXYd+lQOG1rBN9pf1n7uamIvyq8klAjvH6wFdDD+nX9LA9/FPsgBvSIEFNvtFE3LKoA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/dimmer.min.css' integrity='sha512-H85EGEZQQ3VchqqRRY5U/ZYCYaCTG//aVoUvH0CMYoDUCN8+l5FN105Td0DheDCdYrtyoYcosPwO3nQ3cjDAhQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/divider.min.css' integrity='sha512-UfIon3gqrWjI1KDj6T2BmFN2vdmsr4dyUBFUxTVLPYHEeWIoNvH0JzZ4EHBa4CWoNhdcyYIpR2Kri7Ys835rrQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/dropdown.min.css' integrity='sha512-YYS7fyqDxVE/yJ1280i8KjA+nC7wAtv2u/qkulKbdMpmp8DBWX0Wj+HtILsFyvq+fouCwCyr0hasPAz1eBlvwA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/embed.min.css' integrity='sha512-ODrbFnz6Xc6jXrsIkuqKH1U4+aL5n2VgU3IZ08jC8crSRAIhmVbIRQFYAB7CNoOcOU4j/gKM8MldSzyNkGL+ow==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/feed.min.css' integrity='sha512-+lLfAV/THEeuUuFU6/mDKBpASZ+X9w1tK8zq//YMn/L8M4TGXyWjZwQligBkvnpsaGtKXjS/p8JZc6UgrtvWww==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/flag.min.css' integrity='sha512-CIK221b8gLR7nRSPV9/ZXbBh1zVkzoopwv4GzcGLntQqIwxmSNvrxNO0Rvu1qg1OIDJMRP6dh3npdVNVYmFKPg==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/form.min.css' integrity='sha512-GqdyivmcmveCy9pRf2yTD/TPYXVmbPFDojvy15i3xuLLy9nkgNhDRMk6+Dt/uYDdnItFUFF7WqW7GoGv+gPX+A==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/grid.min.css' integrity='sha512-RtktBL0Hhw9K2e2rGLZGadK8cF6Q0wKxRUkfh4pJszwnarmh3GbqHCiLm3UZFA1dRiFqtPkVrcby0hXWsqoDNA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/header.min.css' integrity='sha512-W7HgFS8NHLM8mfDtKDT7OBPvZORscUOJ6O9N0ejss8UdzlJttcZHCs9KZFjlUG6s+eIAnwApsSmrBSqo7aAwag==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/icon.min.css' integrity='sha512-8Tb+T7SKUFQWOPIQCaLDWWe1K/SY8hvHl7brOH8Nz5z1VT8fnf8B+9neoUzmFY3OzkWMMs3OjrwZALgB1oXFBg==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/image.min.css' integrity='sha512-VAAe94jjgwCEfNCbNa86pOgmSTnRQ1+jcZBtaIlqeD+xFxvphIGL0eKYCOKMODWOiEa1rNW7vSS4JkEeizVsgA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/input.min.css' integrity='sha512-5i24U/IyvjscOlHec06pTtT16Oq70uKtnjhrZ2oez7k/qBVOdpNHPK2+SVkuxni95v1x5VGOfXYQZxm4oZcHdQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/item.min.css' integrity='sha512-FegoQ4GicaEtaxCERXNNFN0eloN0wsebNJ8E0kwIJSKBGgfNWFhO0oQhzVPywJt19SwiF4eN/CvDvIKhgIyuhw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/label.min.css' integrity='sha512-bLGTFSFKewLG/ltHL52mMtuviUCuHlohn0410iUawDPbjvAONDt0yZ6vLkXfiFOIS9LxPqknEp2K76gBaMq9Bg==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/list.min.css' integrity='sha512-EdCYZ3yRjGGv6xsLGcgq3q3+ednD4FKKsS8b2R7680HmDJGU7UmzPUZANqwGn/ATw1nUF/vWutR4JqEUTfbadg==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/loader.min.css' integrity='sha512-+6VqtNJxRmuo2S1AnpgaP6T2CtH5a9aCX2mBIl58uE5DMtxxT9O6JNt2MQvIJAD1CGgJ98ERIKhGJkcX1OArVg==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/menu.min.css' integrity='sha512-ox96Q1iqhM5TvdY4gVbz6FXoDwsR/Q8jq15kWReQNefC+uUGCv+pkMbLOtr176K3+bfrQQv6gTDAvhL1PUw2YQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/message.min.css' integrity='sha512-y8REcSkaqTny0hsg2cT9v0/GG14v0XGNWEbEYeFtxeimWgcQXs6sJ6CJc55MM2MAbdri1f0DiDmVkFJvcAtVnQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/modal.min.css' integrity='sha512-CPLGe+O/BzgzHJKpdBXUuewmlxhlEfQ00zuYg1vcGCjOo88mqMeO1qa8q397ifxm18D12Go8OF7A42CjOKEl/g==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/nag.min.css' integrity='sha512-ONC2fyscW/J1lsuNDY4HCPiFdPBPHEYXhPKl5eN1kKhfSkvCGtHsTSL53j34R/e3g1L3YW9FgHAkPk8YcJj8zw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/placeholder.min.css' integrity='sha512-NJ9YPRrGGZFoIO+SJ+aJ9TOXgEN2de5NFhlG1rAcIL/pc5Py5qE4HZUIlGUt5nP59KFTIh5Cxy6OhaYESeIWFw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/popup.min.css' integrity='sha512-m4tALNp+ACgr9cb6by14CjJgmVGQezVx5pefE9SELVrHhfLDSjo/1kFMTLwv9n2Oh152k6xnWIxDae+btSTv6w==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/progress.min.css' integrity='sha512-6I1aA3gZvj26Zhs+6AodMBFBQlQzixuqGIt3FS+LrV/+E5mepzifvf1w7skWCYoJm1uuK0lpZwH/8tp6FpflTw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/rail.min.css' integrity='sha512-jvY76AdOzvetjkVAlaCIEWxBPg6T1SFHE1Qso9XZ2aBbsdUDDcRcIDWkYbE9uvZf1vRzZadDywnTF52XqcSoJw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/rating.min.css' integrity='sha512-RFEUlwT70pTUPWqm2Uv8cpqeLisUAM7YWG/LIrXcZo7F0zgvp3TbViqX6xQz0Oou++N9AcwpogmEf8sDuN/OoQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/reset.min.css' integrity='sha512-Hku6E1/1Cuu0fOfOzEVBgXmElwbpIvTkO8sxWBcx9rGR4rmhb9o6VX+1kDWsBimhphTFzDnloLQEc4Ijpr7dNA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/search.min.css' integrity='sha512-tHoIJz9M5ePPB6uuGC4AKP1U6KgjF1V2UK9jR/DKH2eEKVhIV0N6KpsAMOIMLZVvOWuby25zd339CQLcVRev2g==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/reveal.min.css' integrity='sha512-J7HUp0aRSNO7X9LXJonX3buuWMpCrytLGslkoFxdpZGiX3Vd2bm6ZZz2LZQwg4D1E+xD1w5WDFBbIFazYi8uaA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/segment.min.css' integrity='sha512-heuTVGo9s2Q6N9wruuzr4S3GCZWhVQuKpSM5hMNUFMAyxTvUDU3gme8NaVtgfET6rtnh8Eaet16nj7ihVSlI5g==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/shape.min.css' integrity='sha512-4kCOQrMTOE2lTdB+NeMEbfOr+KvqrZ1P0S8h1XDWdQT2JvKiu9jppj09pwccvOJgf+N12sszWd9ixWcsiSpssQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/sidebar.min.css' integrity='sha512-l74DvoQfunHVU2XU78fkSoyYJ6k6FzujNwWB5c3/U5AplWV6HnuyCfj4uNSEqFvd7i1nBvhUQ2Pr3e6JfkCPOA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/site.min.css' integrity='sha512-5yxpdenKx5qAR4FJvFjFgtGmpNriZ0Nak38uA3KPSuUFfy8iYi8GkjgXxxfnowH8w81BkIcfBG+4QYngf2FPRw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/statistic.min.css' integrity='sha512-7IFX/ZtMoeSQGjq0O3+9Ku9p3FgOZhHHf1NpbCO9O3hOlNxEb3Wjj8CoqHoDqq/X2pvGryE7aGVvI9+pb2cg7g==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/step.min.css' integrity='sha512-plpnHd+nWS23evZzGagVuED0DhyHYmtC3AOQt/NT5GzAne2RkTgT+8qFDJpRP7g3cKVs+8ud7kp7VmY8ARZj7A==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/sticky.min.css' integrity='sha512-zF2HEUhQSw0Cb7RtcIc9qx8SKuAvNl8wzA542h55r+COkQ/xBkkcMvqdzQ9NApKQxiluCRmmjFAs5oDlTPsOOw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/tab.min.css' integrity='sha512-NxWghIwNoV7V1IAHt4HwVnmsG/FuuViHaXFP0tsZS0D9snWm4SLGSdfB5XogpAWYXabp2t+XY9L184PQg2IuEA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/table.min.css' integrity='sha512-NtvxKmBWfr6sEZ3y/qV4DTXPEXpP/VZZV5BEaCFxUukf7/cyktgYpfsxs2ERvisbDXfnLJfswd2DYEj0h+qAFA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/transition.min.css' integrity='sha512-5StPzJo8hFyTvXfJ31FMB37EXRMVeUg+J3yvUNOJcL83MEMr7VrhZSNsoL3GDmUDBGBBhoTjnJx0Ql7cH9LY7g==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/video.min.css' integrity='sha512-kVJeoeJ0q5TVbGgwyIzTb0KKqGbzGZ8JIBGhqW7YjJx1aZSF6KzK4jzWfz4MK4MtZKAZa31L8H0oY+HrnB5usQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  //https://webgradients.com/
+  style.
+    body {
+    background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+    }
 
 block content
   .gridContainer.clearfix
-    #LayoutDiv1
+    #LayoutDiv1.ui.massive.breadcrumb
+      p &emsp;
       | 成功大學數學系圖書館網站管理後台
+      i.right.chevron.icon.divider
       em 電子資源
     p &emsp;
     hr
     p &emsp;
-    p
-      strong 常用連結
-    form(name='form1' method='post' action='')
-      label(for='y')
-      table(width='571' border='1' summary='請輸入每個欄位後提交')
-        caption
-          | 新增一個新的「常用連結」
-        tbody
-          tr
-            th(width='118' scope='col')
-              div
-                div  
-              h3 &emsp;
-            th(width='437' scope='col') 輸入資料
-          tr
-            th(align='center' valign='middle' scope='row')
-              div
-                div 流水號
-              h3 &emsp;
-            td(align='center' valign='middle')
-              label(for='no') serial_number
-              input#no(type='number' name='no' accesskey='n' tabindex='0')
-          tr
-            th(align='center' valign='middle' scope='row')
-              div
-                div 網站名稱
-              h3 &emsp;
-            td(align='center' valign='middle')
-              label(for='name') site_name
-              input#name(type='text' name='name' accesskey='a' tabindex='1')
-          tr
-            th(align='center' valign='middle' scope='row')
-              div
-                div 超連結
-              h3 &emsp;
-            td(align='center' valign='middle')
-              label(for='url') url
-              input#url(type='url' name='url' accesskey='u' tabindex='2')
+    .ui.piled.brown.secondary.segment
       p
-        label(for='submit') submit
-        input#submit(type='submit' name='submit' value='送出' accesskey='s' tabindex='3')
+        strong 常用連結
+      form(name='form1' method='post' action='')
+        label(for='y')
+        table.ui.celled.table.selectable(width='571' border='1' summary='請輸入每個欄位後提交')
+          caption
+            | 新增一個新的「常用連結」
+          tbody
+            tr
+              th(width='118' scope='col')
+                div
+                  div &emsp;
+                h3 &emsp;
+              th(width='437' scope='col') 輸入資料
+            tr
+              th(align='center' valign='middle' scope='row')
+                div
+                  div 流水號
+                h3 &emsp;
+              td(align='center' valign='middle')
+                label(for='no') serial_number
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#no(type='number' name='no' accesskey='n' tabindex='0')
+            tr
+              th(align='center' valign='middle' scope='row')
+                div
+                  div 網站名稱
+                h3 &emsp;
+              td(align='center' valign='middle')
+                label(for='name') site_name
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#name(type='text' name='name' accesskey='a' tabindex='1')
+            tr
+              th(align='center' valign='middle' scope='row')
+                div
+                  div 超連結
+                h3 &emsp;
+              td(align='center' valign='middle')
+                label(for='url') url
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#url(type='url' name='url' accesskey='u' tabindex='2')
+        p.lambda.inline.field
+          label.ui.right.pointing.green.basic.label(for='submit')
+            br
+            | submit
+          input.btn.btn-secondary#submit(type='submit' name='submit' value='送出' accesskey='s' tabindex='3')
     hr
     p &emsp;
-    p
-      strong 校外電子資源
-    form(name='form2' method='post' action='')
-      table(width='573' border='1' summary='Off-Campus Electronic Resources Hyperlinks')
-        caption
-          | 「新增」校外電子資源超連結
-        tbody
-          tr
-            th(width='118' align='center' valign='middle' scope='col')
-              div
-                div  
-            th(width='439' align='left' valign='middle' scope='col') 輸入資料
-          tr
-            th(align='center' valign='middle' scope='row')
-              div
+    .ui.piled.pink.secondary.segment
+      p
+        strong 校外電子資源
+      form(name='form2' method='post' action='')
+        table.ui.celled.table.selectable(width='573' border='1' summary='Off-Campus Electronic Resources Hyperlinks')
+          caption
+            | 「新增」校外電子資源超連結
+          tbody
+            tr
+              th(width='118' align='center' valign='middle' scope='col')
+                div
+                  div &emsp;
+              th(width='439' align='left' valign='middle' scope='col') 輸入資料
+            tr
+              th(align='center' valign='middle' scope='row')
                 div
                   div
-                    div 流水號
-            td(align='left' valign='middle')
-              label(for='sn') sn
-              input#sn(type='number' name='sn' accesskey='r' tabindex='4')
-          tr
-            th(align='center' valign='middle' scope='row')
-              div
+                    div
+                      div 流水號
+              td(align='left' valign='middle')
+                label(for='sn') sn
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#sn(type='number' name='sn' accesskey='r' tabindex='4')
+            tr
+              th(align='center' valign='middle' scope='row')
                 div
                   div
-                    div 名稱
-            td(align='left' valign='middle')
-              label(for='osn') osn
-              input#osn(type='text' name='osn' accesskey='t' tabindex='5')
-          tr
-            th(align='center' valign='middle' scope='row')
-              div
-                div 提供者
-            td(align='left' valign='middle')
-              label(for='provider') provider
-              input#provider(type='text' name='provider' accesskey='p' tabindex='6')
-          tr
-            th(align='center' valign='middle' scope='row')
-              div
-                div 類型
-            td(align='left' valign='middle')
-              p
-                label(for='c') class
-                select#c(name='c' accesskey='q' tabindex='7')
-                  option(value='清單' selected='') 清單
-                  option(value='外部連結') 外部連結
-                  option(value='其他') 其他
-              p
-                label(for='Textafterexternallinkother') 自行輸入
-                input#Textafterexternallinkother(type='text' name='Textafterexternallinkother' accesskey='e' tabindex='8')
-          tr
-            th(align='center' valign='middle' scope='row')
-              div
-                div 發布時間
-            td(align='left' valign='middle')
-              label(for='yPublished_External') 年
-              input#yPublished_External(type='number' name='yPublished_External' accesskey='l' tabindex='9')
-              label(for='mPublished_External')
-                br
-                |           月
-              input#mPublished_External(type='number' name='mPublished_External' accesskey='k' tabindex='10')
-              label(for='dPublished_External')
-                br
-                |           日
-              input#dPublished_External(type='number' name='dPublished_External' accesskey='j' tabindex='11')
-          tr
-            th(align='center' valign='middle' scope='row')
-              div
-                div 備註
-            td(align='left' valign='middle')
-              label(for='Remarks_External') Remarks_External
-              input#Remarks_External(type='text' name='Remarks_External' accesskey='y' tabindex='12')
-          tr
-            th(align='center' valign='middle' scope='row')
-              div
-                div 超連結
-            td(align='left' valign='middle')
-              label(for='urle') urle
-              input#urle(type='url' name='urle' accesskey='i' tabindex='13')
-      label(for='submit')
-        br
-        |     submit
-      input#submit(type='submit' name='submit2' value='送出' accesskey='w' tabindex='14')
+                    div
+                      div 名稱
+              td(align='left' valign='middle')
+                label(for='osn') osn
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#osn(type='text' name='osn' accesskey='t' tabindex='5')
+            tr
+              th(align='center' valign='middle' scope='row')
+                div
+                  div 提供者
+              td(align='left' valign='middle')
+                label(for='provider') provider
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#provider(type='text' name='provider' accesskey='p' tabindex='6')
+            tr
+              th(align='center' valign='middle' scope='row')
+                div
+                  div 類型
+              td(align='left' valign='middle')
+                p
+                  label(for='c') class
+                  select.select-css#c(name='c' accesskey='q' tabindex='7')
+                    option(value='清單' selected='') 清單
+                    option(value='外部連結') 外部連結
+                    option(value='其他') 其他
+                p
+                  label(for='Textafterexternallinkother') 自行輸入
+                  input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#Textafterexternallinkother(type='text' name='Textafterexternallinkother' accesskey='e' tabindex='8')
+            tr
+              th(align='center' valign='middle' scope='row')
+                div
+                  div 發布時間
+              td(align='left' valign='middle')
+                label(for='yPublished_External') 年
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#yPublished_External(type='number' name='yPublished_External' accesskey='l' tabindex='9')
+                label(for='mPublished_External')
+                  br
+                  |           月
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#mPublished_External(type='number' name='mPublished_External' accesskey='k' tabindex='10')
+                label(for='dPublished_External')
+                  br
+                  |           日
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#dPublished_External(type='number' name='dPublished_External' accesskey='j' tabindex='11')
+            tr
+              th(align='center' valign='middle' scope='row')
+                div
+                  div 備註
+              td(align='left' valign='middle')
+                label(for='Remarks_External') Remarks_External
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#Remarks_External(type='text' name='Remarks_External' accesskey='y' tabindex='12')
+            tr
+              th(align='center' valign='middle' scope='row')
+                div
+                  div 超連結
+              td(align='left' valign='middle')
+                label(for='urle') urle
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#urle(type='url' name='urle' accesskey='i' tabindex='13')
+        p.lambda.inline.field
+          label.ui.right.pointing.green.basic.label(for='submit')
+            br
+            |     submit
+          input.btn.btn-secondary#submit(type='submit' name='submit2' value='送出' accesskey='w' tabindex='14')
     hr
     p &emsp;
-    p
-      strong 校外電子資源
-      | [檔案]
-    form(action='' method='post' enctype='multipart/form-data' name='form3')
-      table(width='573' border='1' summary='On-campus electronic resource files')
-        caption
-          | 「新增」校內電子資源檔案
-        tbody
-          tr
-            th(width='118' align='center' valign='middle' scope='col')
-              div
-                div  
-            th(width='439' align='left' valign='middle' scope='col') 輸入資料
-          tr
-            th(align='center' valign='middle' scope='row')
-              div
+    .ui.piled.olive.secondary.segment
+      p
+        strong 校外電子資源
+        | [檔案]
+      form(action='' method='post' enctype='multipart/form-data' name='form3')
+        table.ui.celled.table.selectable(width='573' border='1' summary='On-campus electronic resource files')
+          caption
+            | 「新增」校內電子資源檔案
+          tbody
+            tr
+              th(width='118' align='center' valign='middle' scope='col')
+                div
+                  div &emsp;
+              th(width='439' align='left' valign='middle' scope='col') 輸入資料
+            tr
+              th(align='center' valign='middle' scope='row')
                 div
                   div
-                    div 流水號
-            td(align='left' valign='middle')
-              label(for='sn') sn2
-              input#sn2(type='number' name='sn2' accesskey='o' tabindex='15')
-          tr
-            th(align='center' valign='middle' scope='row')
-              div
+                    div
+                      div 流水號
+              td(align='left' valign='middle')
+                label(for='sn') sn2
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#sn2(type='number' name='sn2' accesskey='o' tabindex='15')
+            tr
+              th(align='center' valign='middle' scope='row')
                 div
                   div
-                    div 名稱
-            td(align='left' valign='middle')
-              label(for='osn2') osn
-              input#osn2(type='text' name='osn2' accesskey='h' tabindex='16')
-          tr
-            th(align='center' valign='middle' scope='row')
-              div
-                div 作者
-            td(align='left' valign='middle')
-              label(for='provider2') provider
-              input#provider2(type='text' name='provider2' accesskey='g' tabindex='17')
-          tr
-            th(align='center' valign='middle' scope='row')
-              div
-                div 資源類型
-            td(align='left' valign='middle')
-              p
-                label(for='c2') class
-                select#c2(name='c2' accesskey='d' tabindex='18')
-                  option(value='電子書' selected='') 電子書
-                  option(value='圖像') 圖像
-                  option(value='其他') 其他
-              p
-                label(for='Textafterexternallinkother2') 自行輸入
-                input#Textafterexternallinkother2(type='text' name='Textafterexternallinkother2' accesskey='z' tabindex='19')
-          tr
-            th(align='center' valign='middle' scope='row')
-              div
-                div 發布時間
-            td(align='left' valign='middle')
-              label(for='yPublished_External2') 年
-              input#yPublished_External2(type='number' name='yPublished_External2' accesskey='x' tabindex='20')
-              label(for='mPublished_External2')
-                br
-                |           月
-              input#mPublished_External2(type='number' name='mPublished_External2' accesskey='c' tabindex='21')
-              label(for='dPublished_External2')
-                br
-                |           日
-              input#dPublished_External2(type='number' name='dPublished_External2' accesskey='b' tabindex='22')
-          tr
-            th(align='center' valign='middle' scope='row')
-              div
-                div 備註
-            td(align='left' valign='middle')
-              label(for='Remarks_External2') Remarks_External
-              input#Remarks_External2(type='text' name='Remarks_External2' accesskey='m' tabindex='23')
-          tr
-            th(align='center' valign='middle' scope='row')
-              div
-                div 檔案
-            td(align='left' valign='middle')
-              label(for='file') file
-              input#file(type='file' name='file' accesskey='1' tabindex='24')
-      label(for='submit')
-        br
-        |     submit
-      input#submit(type='submit' name='submit2' value='送出' accesskey='2' tabindex='25')
+                    div
+                      div 名稱
+              td(align='left' valign='middle')
+                label(for='osn2') osn
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#osn2(type='text' name='osn2' accesskey='h' tabindex='16')
+            tr
+              th(align='center' valign='middle' scope='row')
+                div
+                  div 作者
+              td(align='left' valign='middle')
+                label(for='provider2') provider
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#provider2(type='text' name='provider2' accesskey='g' tabindex='17')
+            tr
+              th(align='center' valign='middle' scope='row')
+                div
+                  div 資源類型
+              td(align='left' valign='middle')
+                p
+                  label(for='c2') class
+                  select.select-css#c2(name='c2' accesskey='d' tabindex='18')
+                    option(value='電子書' selected='') 電子書
+                    option(value='圖像') 圖像
+                    option(value='其他') 其他
+                p
+                  label(for='Textafterexternallinkother2') 自行輸入
+                  input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#Textafterexternallinkother2(type='text' name='Textafterexternallinkother2' accesskey='z' tabindex='19')
+            tr
+              th(align='center' valign='middle' scope='row')
+                div
+                  div 發布時間
+              td(align='left' valign='middle')
+                label(for='yPublished_External2') 年
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#yPublished_External2(type='number' name='yPublished_External2' accesskey='x' tabindex='20')
+                label(for='mPublished_External2')
+                  br
+                  |           月
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#mPublished_External2(type='number' name='mPublished_External2' accesskey='c' tabindex='21')
+                label(for='dPublished_External2')
+                  br
+                  |           日
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#dPublished_External2(type='number' name='dPublished_External2' accesskey='b' tabindex='22')
+            tr
+              th(align='center' valign='middle' scope='row')
+                div
+                  div 備註
+              td(align='left' valign='middle')
+                label(for='Remarks_External2') Remarks_External
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#Remarks_External2(type='text' name='Remarks_External2' accesskey='m' tabindex='23')
+            tr
+              th(align='center' valign='middle' scope='row')
+                div
+                  div 檔案
+              td.lambda.inline.field(align='left' valign='middle')
+                label.ui.right.pointing.green.basic.label(for='file')
+                  br
+                  | file
+                input.btn.btn-secondary#file(type='file' name='file' accesskey='1' tabindex='24')
+        p.lambda.inline.field
+          label.ui.right.pointing.green.basic.label(for='submit')
+            br
+            |     submit
+          input.btn.btn-secondary#submit(type='submit' name='submit2' value='送出' accesskey='2' tabindex='25')
     p &emsp;
+    script(src='https://code.jquery.com/jquery-3.6.0.min.js' integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js' integrity='sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/accordion.min.js' integrity='sha512-zy/iMxvOAQO5VsB1/enNUXKWxoSBFAyjXwwwIU+sMYf2+iOnqoW2EokpAnnTwue6/Kcv3w7qyALGbppj3mOVgA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/api.min.js' integrity='sha512-Xx3WEY47isjKM7q4XwPXnJ/YGuMbA4Iua+rO3+/cU8/p69YqJNb1NORkJtbQWJyE9ek1i6jrxn/e6RpB6GXf7w==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/checkbox.min.js' integrity='sha512-xHPfIQ31nhgadqKFR79QIE1P+8QkEJRKYhbO+tNThUtBU1sOC55A29sLgjFxyekM7DUVJqapmIOx0J+G2VH8RQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/dimmer.min.js' integrity='sha512-ithjIigXZtEw3GWaeoFNMxdmkK0xKFLnew6JsvUkRVcjHkRNODGMaZPJwx6p0bzCLDYXBShgf3K3AqZdsX7sow==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/dropdown.min.js' integrity='sha512-8F/2JIwyPohlMVdqCmXt6A6YQ9X7MK1jHlwBJv2YeZndPs021083S2Z/mu7WZ5g0iTlGDYqelA9gQXGh1F0tUw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/embed.min.js' integrity='sha512-GsIS09bawLk+14iMqK6XSmESD/fZPWFOSlJGptbhVkIAijj9yRWlejlMD4875mGbkutGfy5RNq2n6wAuDdh5RQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/form.min.js' integrity='sha512-VM6WNFlVLFwKXphssthAXJpG3cKWUK3G4edfsydLITA4iSeZmvJ+2gKBrR6qYkt/3A/I8hDHnAuIBz7xtfVtOg==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/modal.min.js' integrity='sha512-aAW/TaSuYfyjTcMsaYP67Dwe0vI5d7ej9X7NJBPkhafB+D5kx57flRNo8+tOXWA0Gcq0MBmhPatrvn1YwvH9gQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/nag.min.js' integrity='sha512-8i/wB39NzDgizgNfh2ED0ZW3P1rmThlhvZE87jlCqZPHbMr379B2iQ8tRu9pOezf+sP1dN/BjCXmO8/5sQjXHQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/popup.min.js' integrity='sha512-784FtIkKrm/QsfPOTifpdvdvzE0y3/c4OSZhu91VxdGMuW7/y7gr8TiYFjuebfK9qE8HgYxFVhMR3nUu+LFbjg==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/progress.min.js' integrity='sha512-GBfu+i9kUg9WB2SXX3iYlIERWQCV5CfIy7C4SLyhGmd8Jn4KvuNy9gYECtpinpGRZhm86dmGTx84jZ5pjS2pHg==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/rating.min.js' integrity='sha512-GKPaQJKsw7I5CTRr27RvbXXpv/kulDkVilCQmqQen2doK07UxhEQLnSe2ozB/8yTJ8x6ofF63FXfIpYnETz9Jw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/search.min.js' integrity='sha512-cYY5gAyJxIK4sLwDYueWWJH9rEdgBNvRaEIGJ6+dQ5vzfoTqHAtUDYrG2rdZTGqACvPS9QRrnzqqRGfrgxO7ug==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/shape.min.js' integrity='sha512-5VWsnaFM3raOn+S5nDHgsQHZaK4soyGRwKIe5LIPP3S/WJ510JmUldSTJ57QW0cRDAhvNyKs0trYnWGgqIYxiQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/sidebar.min.js' integrity='sha512-1tmZBYaLOUohS48wc5egam1rTAIi71yvIpxj0FXHo6FskhgMF3LyCAdLvCFYi4e/L0GfH6BFtDBFD2wVa645Dg==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/site.min.js' integrity='sha512-QopOpigIapIapWckrGgzB0tNEIGBVSKWhN9Bh4vNl8JRDHvVHvbJoFlg/bSGAyF/vdcLT0RcL6w8e8l5M8nvRg==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/sticky.min.js' integrity='sha512-sWpXObBFGM42aj1IMnpgU4aUY5K3MYAmvR2QeVAo4zorR/IrNxIW1E9sAp95AKZ9TUGuxItlzCxZdLchz/rkoA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/tab.min.js' integrity='sha512-XKGavlXNr1OAZcYLtNBQA4oyuagTLY6t+bhOtR9PZNxSdFwGN+UX44izGw9+eDOnBHbf9sZJKEZ1OdVxNeXvaA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/transition.min.js' integrity='sha512-MCuLP92THkMwq8xkT2cQg5YpF30l3qzJuBRf/KsbQP1czFkRYkr2dSkCHmdJETqVmvIq5Y4AOVE//Su+cH+8QA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/video.min.js' integrity='sha512-ebgtEARHrY0ZrnNu7UG+/AyZo7Zl4RZOE/TIi4AqnPXwk/5MLKhHiSemsrheRV7ZbeLW1m2TqBzdSyEpjJcSLA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/visibility.min.js' integrity='sha512-pcX/bEmbHWxW0fvRU70A6UqVXm0Z1tBJTwSLHE3hE8AAhG4hDL8R19Oho4DmdCNNYrgDSyHhH+ALNg5d5SFxxw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+
