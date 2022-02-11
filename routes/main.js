@@ -431,7 +431,7 @@ router.post('/agh', ensureAuthenticated, function (req, res, next) {//丟資料�
 });
 
 router.get('/AddElectronicResources', ensureAuthenticated, function (req, res, next) {
-    res.render('mainer', {
+    res.render('main_er', {
         title: 'mainer',
     });
 });
