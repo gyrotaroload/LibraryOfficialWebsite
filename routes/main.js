@@ -513,9 +513,18 @@ router.post('/agh', ensureAuthenticated, function (req, res, next) {//丟資料�
 });
 
 router.get('/AddElectronicResources', ensureAuthenticated, function (req, res, next) {
-    res.render('main_er', {
-        title: 'mainer',
+    e1.getMaxIndex(re1 => {
+        e2.getMaxIndex(re2 => {
+            e3.getMaxIndex(re3 => {
+                console.log(re2);
+                res.render('main_er', {
+                    title: 'mainer',
+                    re1v: re1 | -1, re2v: re2 | -1, re3v: re3 | -1,
+                });
+            });
+        });
     });
+
 });
 
 router.post('/e1', ensureAuthenticated, function (req, res, next) {

@@ -126,3 +126,12 @@ module.exports.getById = function (id, callback) {
         }
     });
 }
+
+module.exports.getMaxIndex = function (callback) {
+    e2.find({}).sort({ sn: -1 }).exec((err, SearchResult) => {
+        if (err) {
+            console.log(err);
+        }
+        callback((SearchResult.length > 0) ? SearchResult[0].no : -1);
+    });
+}

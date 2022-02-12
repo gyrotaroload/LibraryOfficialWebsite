@@ -69,36 +69,11 @@ module.exports.lastTime = function (callback) {
     });
 }
 
-/*
-module.exports.SETuri = function (id, uri, callback) {
-    least.findById(id, function (err, contact) {
-        if (!err) {
-            if (contact) {
-                console.log(contact.tp);
-                contact.uri = uri;
-                contact.save(function (err) {
-                    if (!err) {
-                        console.log("contact " + contact.id + " created at " + contact.createdAt + " updated at " + contact.updatedAt);
-                        callback("yes");
-                    }
-                    else {
-                        console.log("Error: could not save contact " + contact.id);
-                        callback("no");
-                    }
-                });
-            } else { callback("no"); }
+module.exports.getMaxIndex = function (callback) {
+    e1.find({}).sort({ no: -1 }).exec((err, SearchResult) => {
+        if (err) {
+            console.log(err);
         }
+        callback((SearchResult.length > 0) ? SearchResult[0].no : -1);
     });
 }
-
-module.exports.getById = function (id, callback) {
-    least.findById(id, function (err, adventure) {
-        if (err) {
-            console.log("可忽略的警告");
-            console.log(err);
-            callback(null);
-        } else {
-            callback((adventure) ? adventure : null);
-        }
-    });
-}*/
