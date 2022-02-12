@@ -45,29 +45,54 @@ block content
             i.fas.fa-bars.tm-nav-icon
           #navbarSupportedContent.collapse.navbar-collapse
             ul.navbar-nav.mx-auto.h-100
-              li.nav-item
-                a.nav-link.active(href='#')
-                  i.fas.fa-tachometer-alt
-                  |                                 校內資源
-                  span.sr-only (current)
-              //li.nav-item.dropdown
-                a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
-                  i.far.fa-file-alt
-                  span
-                    | Reports 
-                    i.fas.fa-angle-down
-                .dropdown-menu(aria-labelledby='navbarDropdown')
-                  a.dropdown-item(href='#') Daily Report
-                  a.dropdown-item(href='#') Weekly Report
-                  a.dropdown-item(href='#') Yearly Report
-              li.nav-item
-                a.nav-link(href='products.html')
-                  i.fas.fa-shopping-cart
-                  |                                 校外資源
-              li.nav-item
-                a.nav-link(href='accounts.html')
-                  i.far.fa-user
-                  |                                 常用連結
+              if emt==="tab0"
+                li.nav-item
+                  a.nav-link.active(href='?tab=0')
+                    i.fas.fa-tachometer-alt
+                    |                                 校內資源
+                    span.sr-only (current)
+                li.nav-item
+                  a.nav-link(href='?tab=1')
+                    i.fas.fa-shopping-cart
+                    |                                 校外資源
+                li.nav-item
+                  a.nav-link(href='?tab=2')
+                    i.far.fa-user
+                    |                                 常用連結
+              else if emt==="tab1"
+                li.nav-item
+                  a.nav-link(href='?tab=0')
+                    i.fas.fa-tachometer-alt
+                    |                                 校內資源
+                li.nav-item
+                  a.nav-link.active(href='?tab=1')
+                    i.fas.fa-shopping-cart
+                    |                                 校外資源
+                    span.sr-only (current)
+                li.nav-item
+                  a.nav-link(href='?tab=2')
+                    i.far.fa-user
+                    |                                 常用連結
+              else if emt==="tab2"
+                li.nav-item
+                  a.nav-link(href='?tab=0')
+                    i.fas.fa-tachometer-alt
+                    |                                 校內資源
+                li.nav-item
+                  a.nav-link(href='?tab=1')
+                    i.fas.fa-shopping-cart
+                    |                                 校外資源
+                li.nav-item
+                  a.nav-link.active(href='?tab=2')
+                    i.far.fa-user
+                    |                                 常用連結
+                    span.sr-only (current)
+              else
+                li.nav-item
+                  a.nav-link.active(href='#')
+                    i.fas.fa-tachometer-alt
+                    |                                 error!
+                    span.sr-only (current)
               //li.nav-item.dropdown
                 a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
                   i.fas.fa-cog
@@ -228,184 +253,95 @@ block content
                     span.tm-small.tm-text-color-secondary 6h ago.
           .col-12.tm-block-col
             .tm-bg-primary-dark.tm-block.tm-block-taller.tm-block-scroll
-              h2.tm-block-title 點選每一資料欄位末端的超連結來檢視並下載資料
+              if emt==="tab0"
+                h2.tm-block-title 校內資源
+              else if emt==="tab1"
+                h2.tm-block-title 校外資源
+              else if emt==="tab2"
+                h2.tm-block-title 常用連結
+              else
+                h2.tm-block-title error!
               table.table
                 thead
-                  tr
-                    th(scope='col') 流水號
-                    th(scope='col') 名稱
-                    th(scope='col') 作者
-                    th(scope='col') 資源類型
-                    th(scope='col') 發布時間
-                    th(scope='col') 備註
-                    th(scope='col') 檔案
-                  //tr
-                    th(scope='col') 流水號
-                    th(scope='col') 名稱
-                    th(scope='col') 提供者
-                    th(scope='col') 類型
-                    th(scope='col') 發布時間
-                    th(scope='col') 備註
-                    th(scope='col') 超連結
-                  //tr
-                    th(scope='col') 流水號
-                    th(scope='col') 網站名稱
-                    th(scope='col') 超連結
+                  if emt==="tab0"
+                    tr
+                      th(scope='col') 流水號
+                      th(scope='col') 名稱
+                      th(scope='col') 作者
+                      th(scope='col') 資源類型
+                      th(scope='col') 發布時間
+                      th(scope='col') 備註
+                      th(scope='col') 檔案
+                  else if emt==="tab1"
+                    tr
+                      th(scope='col') 流水號
+                      th(scope='col') 名稱
+                      th(scope='col') 提供者
+                      th(scope='col') 類型
+                      th(scope='col') 發布時間
+                      th(scope='col') 備註
+                      th(scope='col') 超連結
+                  else if emt==="tab2"
+                    tr
+                      th(scope='col') 流水號
+                      th(scope='col') 網站名稱
+                      th(scope='col') 超連結
+                  else
+                    tr
+                      th error!
                 tbody
-                  tr
-                    th(scope='row')
-                      b #122349
-                    td
-                      .tm-status-circle.moving
-                      | Moving
-                    td
-                      b Oliver Trag
-                    td
-                      b London, UK
-                    td
-                      b 485 km
-                    td 16:00, 12 NOV 2018
-                    td 08:00, 18 NOV 2018
-                  tr
-                    th(scope='row')
-                      b #122348
-                    td
-                      .tm-status-circle.pending
-                      | Pending
-                    td
-                      b Jacob Miller
-                    td
-                      b London, UK
-                    td
-                      b 360 km
-                    td 11:00, 10 NOV 2018
-                    td 04:00, 14 NOV 2018
-                  tr
-                    th(scope='row')
-                      b #122347
-                    td
-                      .tm-status-circle.cancelled
-                      | Cancelled
-                    td
-                      b George Wilson
-                    td
-                      b London, UK
-                    td
-                      b 340 km
-                    td 12:00, 22 NOV 2018
-                    td 06:00, 28 NOV 2018
-                  tr
-                    th(scope='row')
-                      b #122346
-                    td
-                      .tm-status-circle.moving
-                      | Moving
-                    td
-                      b William Aung
-                    td
-                      b London, UK
-                    td
-                      b 218 km
-                    td 15:00, 10 NOV 2018
-                    td 09:00, 14 NOV 2018
-                  tr
-                    th(scope='row')
-                      b #122345
-                    td
-                      .tm-status-circle.pending
-                      | Pending
-                    td
-                      b Harry Ryan
-                    td
-                      b London, UK
-                    td
-                      b 280 km
-                    td 15:00, 11 NOV 2018
-                    td 09:00, 17 NOV 2018
-                  tr
-                    th(scope='row')
-                      b #122344
-                    td
-                      .tm-status-circle.pending
-                      | Pending
-                    td
-                      b Michael Jones
-                    td
-                      b London, UK
-                    td
-                      b 218 km
-                    td 18:00, 12 OCT 2018
-                    td 06:00, 18 OCT 2018
-                  tr
-                    th(scope='row')
-                      b #122343
-                    td
-                      .tm-status-circle.moving
-                      | Moving
-                    td
-                      b Timmy Davis
-                    td
-                      b London, UK
-                    td
-                      b 218 km
-                    td 12:00, 10 OCT 2018
-                    td 08:00, 18 OCT 2018
-                  tr
-                    th(scope='row')
-                      b #122342
-                    td
-                      .tm-status-circle.moving
-                      | Moving
-                    td
-                      b Oscar Phyo
-                    td
-                      b London, UK
-                    td
-                      b 420 km
-                    td 15:30, 06 OCT 2018
-                    td 09:30, 16 OCT 2018
-                  tr
-                    th(scope='row')
-                      b #122341
-                    td
-                      .tm-status-circle.moving
-                      | Moving
-                    td
-                      b Charlie Brown
-                    td
-                      b London, UK
-                    td
-                      b 300 km
-                    td 11:00, 10 OCT 2018
-                    td 03:00, 14 OCT 2018
-                  tr
-                    th(scope='row')
-                      b #122340
-                    td
-                      .tm-status-circle.cancelled
-                      | Cancelled
-                    td
-                      b Wilson Cookies
-                    td
-                      b London, UK
-                    td
-                      b 218 km
-                    td 17:30, 12 OCT 2018
-                    td 08:30, 22 OCT 2018
-                  tr
-                    th(scope='row')
-                      b #122339
-                    td
-                      .tm-status-circle.moving
-                      | Moving
-                    td
-                      b Richard Clamon
-                    td
-                      b London, UK
-                    td
-                      b 150 km
-                    td 15:00, 12 OCT 2018
-                    td 09:20, 26 OCT 2018
+                  if emt==="tab0"
+                    each eo, index in e3
+                      tr
+                        th(scope='row')
+                          b= index+1
+                        td= eo.osn2
+                        td
+                          b= eo.provider2
+                        td
+                          b= String(eo.c2)+' '+String(eo.Textafterexternallinkother2)
+                        td
+                          b= String(eo.yPublished_External2)+'年'+String(eo.mPublished_External2)+'月'+String(eo.dPublished_External2)+'日'
+                        td= eo.Remarks_External2
+                        td
+                          .tm-status-circle.moving
+                          button.ui.button(onclick=`function base64ToArrayBuffer(base64) { var binaryString = window.atob(base64); var binaryLen = binaryString.length; var bytes = new Uint8Array(binaryLen); for (var i = 0; i < binaryLen; i++) { var ascii = binaryString.charCodeAt(i); bytes[i] = ascii;}return bytes;}function saveByteArray(reportName, byte) {var blob = new Blob([byte], {type: "${eo.sub}"});var link = document.createElement('a');link.href = window.URL.createObjectURL(blob); var fileName = reportName;link.download = fileName;link.click();};var sampleArr = base64ToArrayBuffer('${eo.file.toString('base64')}');saveByteArray('${eo.osn2}', sampleArr);`)
+                            i.save.icon
+                            |   下載
+                  else if emt==="tab1"
+                    each eo, index in e2
+                      tr
+                        th(scope='row')
+                          b= index+1
+                          //.tm-status-circle.pending
+                        td= eo.osn
+                        td
+                          b= eo.provider
+                        td
+                          b= String(eo.c)+' '+String(eo.Textafterexternallinkother)
+                        td
+                          b= String(eo.yPublished_External)+'年'+String(eo.mPublished_External)+'月'+String(eo.dPublished_External)+'日'
+                        td= eo.Remarks_External
+                        td
+                          .tm-status-circle.moving
+                          a.ui.button(href=`${eo.urle}` target='_blank')
+                            i.external.alternate.icon
+                            |   開啟
+                  else if emt==="tab2"
+                    each eo, index in e1
+                      tr
+                        th(scope='row')
+                          b= index+1
+                          //.tm-status-circle.pending
+                        td= eo.name
+                        td
+                          .tm-status-circle.moving
+                          a.ui.button(href=`${eo.url}` target='_blank')
+                            i.external.alternate.icon
+                            |   開啟
+                  else
+                    tr
+                      th error!
       footer.tm-footer.row.tm-mt-small
         .col-12.font-weight-light
           p.text-center.text-white.mb-0.px-4.small

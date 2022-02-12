@@ -67,6 +67,9 @@ var ji = require('../models/JournalInformation');
 var least = require('../models/least');
 var docs = require('../models/docs');
 var gh = require('../models/gh');
+var e3 = require('../models/OnCampusElectronicResourceFiles');
+var e2 = require('../models/e2');
+var e1 = require('../models/e1');
 
 
 /* GET home page. */
@@ -369,9 +372,30 @@ router.get('/interlibraryCooperation', function (req, res, next) {
 });
 
 router.get('/electronic-resources', function (req, res, next) {
-  res.render('https___technext_github_io_product_admin_index_html', {
-    title: '電子資源'
-  });
+  if(req.query.tab==='1'){
+    e2.frontend(r => {
+      res.render('https___technext_github_io_product_admin_index_html', {
+        title: '電子資源',
+        e2: r,
+        emt:'tab1'
+      });
+    });
+  }else if (req.query.tab==='2'){
+    e1.frontend(r => {
+      res.render('https___technext_github_io_product_admin_index_html', {
+        title: '電子資源',
+        e1: r,
+        emt:'tab2'
+      });
+    });
+  }else{
+  e3.frontend(r => {
+    res.render('https___technext_github_io_product_admin_index_html', {
+      title: '電子資源',
+      e3: r,
+      emt:'tab0'
+    });
+  });}
 });
 
 router.get('/sitemap.xml', function (req, res) {
