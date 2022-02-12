@@ -31,7 +31,7 @@ var e3Schema = mongoose.Schema({
         type: String
     }, file: {
         type: Buffer
-    },sub:{
+    }, sub: {
         type: String
     }
 });
@@ -52,13 +52,26 @@ module.exports.add = function (newOBJ, callback) {
 }
 
 module.exports.frontend = function (callback) {
+    e3.lastTime(r => {
+
         e3.find({}).sort({ sn2: 1 }).exec((err, SearchResult) => {
             if (err) {
                 console.log(err);
             }
-            callback(SearchResult);
+            callback({ s: SearchResult, r: r });
         });
+    });
 }
+
+module.exports.lastTime = function (callback) {
+    e3.find({}).sort({ new_date: -1 }).exec((err, SearchResult) => {
+        if (err) {
+            console.log(err);
+        }
+        callback((SearchResult.length > 0) ? SearchResult[0].new_date.getFullYear() : 1997);
+    });
+}
+
 /*
 module.exports.SETuri = function (id, uri, callback) {
     least.findById(id, function (err, contact) {

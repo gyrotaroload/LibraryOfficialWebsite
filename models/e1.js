@@ -51,14 +51,24 @@ module.exports.add = function (newOBJ, callback) {
 }
 
 module.exports.frontend = function (callback) {
-    e1.find({}).sort({ no: 1 }).exec((err, SearchResult) => {
+    e1.lastTime(r => {
+        e1.find({}).sort({ no: 1 }).exec((err, SearchResult) => {
+            if (err) {
+                console.log(err);
+            }
+            callback({ s: SearchResult, r: r });
+        });
+    });
+}
+module.exports.lastTime = function (callback) {
+    e1.find({}).sort({ new_date: -1 }).exec((err, SearchResult) => {
         if (err) {
             console.log(err);
         }
-        callback(SearchResult);
+        callback((SearchResult.length > 0) ? SearchResult[0].new_date.getFullYear() : 1997);
     });
-
 }
+
 /*
 module.exports.SETuri = function (id, uri, callback) {
     least.findById(id, function (err, contact) {

@@ -65,33 +65,48 @@ module.exports.add = function (newOBJ, callback) {
             console.log(e);
             callback(null);
         } else {
-            callback(r);
+            callback(r.id);
         }
     });
 }
 
 module.exports.frontend = function (callback) {
-    e2.find({}).sort({ sn: 1 }).exec((err, SearchResult) => {
+    e2.lastTime(r => {
+        // console.log(r);
+        e2.find({}).sort({ sn: 1 }).exec((err, SearchResult) => {
+            if (err) {
+                console.log(err);
+            }
+            callback({ s: SearchResult, r: r });
+        });
+    });
+}
+
+module.exports.lastTime = function (callback) {
+    e2.find({}).sort({ new_date: -1 }).exec((err, SearchResult) => {
         if (err) {
             console.log(err);
         }
-        callback(SearchResult);
+        // console.log(SearchResult[0].new_date);
+        //  console.log(SearchResult[0].new_date.getFullYear());
+        callback((SearchResult.length > 0) ? SearchResult[0].new_date.getFullYear() : 1997);
     });
 }
-/*
-module.exports.SETuri = function (id, uri, callback) {
-    least.findById(id, function (err, contact) {
+
+module.exports.update_url = function (id, uri, callback) {
+    //console.log(id, uri);
+    e2.findById(id, function (err, contact) {
         if (!err) {
             if (contact) {
-                console.log(contact.tp);
-                contact.uri = uri;
+                //console.log(contact.bts);
+                contact.urle = uri;
                 contact.save(function (err) {
                     if (!err) {
-                        console.log("contact " + contact.id + " created at " + contact.createdAt + " updated at " + contact.updatedAt);
+                        //console.log("contact " + contact.id + " created at " + contact.createdAt + " updated at " + contact.updatedAt);
                         callback("yes");
                     }
                     else {
-                        console.log("Error: could not save contact " + contact.id);
+                        console.log("Error: could not save contact " + contact.id + "#" + String(err));
                         callback("no");
                     }
                 });
@@ -101,7 +116,7 @@ module.exports.SETuri = function (id, uri, callback) {
 }
 
 module.exports.getById = function (id, callback) {
-    least.findById(id, function (err, adventure) {
+    e2.findById(id, function (err, adventure) {
         if (err) {
             console.log("可忽略的警告");
             console.log(err);
@@ -110,4 +125,4 @@ module.exports.getById = function (id, callback) {
             callback((adventure) ? adventure : null);
         }
     });
-}*/
+}

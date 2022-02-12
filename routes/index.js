@@ -61,6 +61,7 @@ const { Readable } = require('stream');
 let sitemap;
 
 const numberArray = require('number-array');
+const queryString = require('query-string');
 
 var excelDB = require('../models/excelDB');
 var ji = require('../models/JournalInformation');
@@ -324,6 +325,49 @@ router.get('/inner', function (req, res, next) {
         give404 = true; cb();
       }
     });
+  } else if (req.query.ic === 'es') {
+    e2.getById(req.query.pid, ro => {
+      var regexes = /\/.+\?/gm;
+      var stres = ro.urle;
+      var substes = `?`;
+
+      // The substituted value will be contained in the result variable
+      var resultes = stres.replace(regexes, substes);
+
+      //console.log('Substitution result: ', result);
+      var rq = queryString.parse(resultes);
+      var cr = rq.id;
+      if (ro && cr === req.query.id) {
+        docs.getById(cr, html => {
+          if (html) {
+            res_render_docx = {
+              // res.render('docx', {//neighbor pairing
+              title: 'inner',
+              infoClass: "電子資源-外部資源清單",
+              infoDT: String(ro.yPublished_External) + '年' + String(ro.mPublished_External) + '月' + String(ro.dPublished_External) + '日',
+              infoID: cr + '@' + `/inner?id=${cr}&pid=${ro.id}&ic=es`,//flex string copy from index.pug search in code "詳全文" 之href
+              infoOther: '由 ' + ro.provider + ' 提供',
+              urls: null,//TODO添加近期URL
+              ttp: "電子資源-外部資源清單",//公告
+              tp: ro.osn,
+              alpha: { txt: "回上一頁", uri: `/electronic-resources?tab=1` },
+              moment: require('moment'),
+              dbhtml: html,
+              ISuser: false,
+              ProntEndBeautificationRendering: true
+            }//);//neighbor pairing
+            tokenM = jwt.sign({ stuff: html/*aka上方的dbhtml*/ }, process.env.token_defaults_secret, { expiresIn: EXPIRES_IN });
+          } else {
+            give404 = true;
+          }
+          //.then(() => { cb(); })
+          cb();
+        }
+        );
+      } else {
+        give404 = true; cb();
+      }
+    });
   } else {
     give404 = true;
     //.then(() => { cb(); })
@@ -372,30 +416,34 @@ router.get('/interlibraryCooperation', function (req, res, next) {
 });
 
 router.get('/electronic-resources', function (req, res, next) {
-  if(req.query.tab==='1'){
+  if (req.query.tab === '1') {
     e2.frontend(r => {
       res.render('https___technext_github_io_product_admin_index_html', {
         title: '電子資源',
-        e2: r,
-        emt:'tab1'
+        e2: r.s,
+        emt: 'tab1',
+        ly: r.r
       });
     });
-  }else if (req.query.tab==='2'){
+  } else if (req.query.tab === '2') {
     e1.frontend(r => {
       res.render('https___technext_github_io_product_admin_index_html', {
         title: '電子資源',
-        e1: r,
-        emt:'tab2'
+        e1: r.s,
+        emt: 'tab2',
+        ly: r.r
       });
     });
-  }else{
-  e3.frontend(r => {
-    res.render('https___technext_github_io_product_admin_index_html', {
-      title: '電子資源',
-      e3: r,
-      emt:'tab0'
+  } else {
+    e3.frontend(r => {
+      res.render('https___technext_github_io_product_admin_index_html', {
+        title: '電子資源',
+        e3: r.s,
+        emt: 'tab0',
+        ly: r.r
+      });
     });
-  });}
+  }
 });
 
 router.get('/sitemap.xml', function (req, res) {
