@@ -1,43 +1,42 @@
 var mongoose = require('mongoose');
-var e3Schema = mongoose.Schema({
+/*sn: '123',
+  osn: '123',
+  provider: '1',
+  c: '清單',
+  Textafterexternallinkother: '1',
+  yPublished_External: '1',
+  mPublished_External: '1',
+  dPublished_External: '1',
+  Remarks_External: '1',
+  urle: 'http://aqwertyuikl.345678.com',
+  submit2: '送出
+  
+   {
+  no: '23',
+  name: '123qwe',
+  url: 'https://github.com/andythebreaker/2020arduino.git',
+  submit: '送出'
+}
+
+*/
+var e1Schema = mongoose.Schema({
+    //Boolean
     new_date: {
         type: Date
     },
-    sn2: {
+    no: {
         type: Number
     },
-    osn2: {
+    name: {
         type: String
     },
-    provider2: {
-        type: String
-    },
-    c2: {
-        type: String
-    },
-    Textafterexternallinkother2: {
-        type: String
-    },
-    yPublished_External2: {
-        type: String
-    },
-    mPublished_External2: {
-        type: String
-    },
-    dPublished_External2: {
-        type: String
-    },
-    Remarks_External2: {
-        type: String
-    }, file: {
-        type: Buffer
-    },sub:{
+    url: {
         type: String
     }
 });
 
 //export JournalInformation schema
-var e3 = module.exports = mongoose.model('e3', e3Schema);
+var e1 = module.exports = mongoose.model('e1', e1Schema);
 
 //function
 module.exports.add = function (newOBJ, callback) {
@@ -52,12 +51,13 @@ module.exports.add = function (newOBJ, callback) {
 }
 
 module.exports.frontend = function (callback) {
-        e3.find({}).sort({ sn2: 1 }).exec((err, SearchResult) => {
-            if (err) {
-                console.log(err);
-            }
-            callback(SearchResult);
-        });
+    e1.find({}).sort({ no: 1 }).exec((err, SearchResult) => {
+        if (err) {
+            console.log(err);
+        }
+        callback(SearchResult);
+    });
+
 }
 /*
 module.exports.SETuri = function (id, uri, callback) {
