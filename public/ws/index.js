@@ -61,7 +61,8 @@ ws.onmessage = event => {
     console.log(event.data)
     if (event.data === "解析失敗!") {
         if (document.getElementById('wslab')) {
-            document.getElementById('wslab').innerHTML = `<div class="ui label"><a href="#">解析失敗!</a></div>`;
+            document.getElementById('wslab').innerHTML = `<div class="ui label"><a href="https://cse.google.com/cse?cx=d613870f87198941e&q=解析失敗" target="_blank">解析失敗!</a></div>`;
+        //TODO cse.google.com
         }
 
     } else if (event.data.startsWith('pdf||')) {
@@ -71,7 +72,7 @@ ws.onmessage = event => {
             document.getElementById('wslab').innerHTML = '';
             var JSON_parse_event_data = JSON.parse(event.data);
             for (var i = 0; i < JSON_parse_event_data.length; i++) {
-                document.getElementById('wslab').innerHTML += `<div class="ui label"><a href="#">${JSON_parse_event_data[i]}</a></div>`;
+                document.getElementById('wslab').innerHTML += `<div class="ui label"><a href="https://cse.google.com/cse?cx=d613870f87198941e&q=${JSON_parse_event_data[i]}" target="_blank">${JSON_parse_event_data[i]}</a></div>`;
             }
         }
     } else {
