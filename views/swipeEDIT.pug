@@ -9,8 +9,10 @@ block contentHEAD
   link(rel='stylesheet' href='/stylesheets/swipe_f.css')
 
 block content
+  script.
+    document.getElementById('quickPOPUP').style.display = 'none';
   //- Nav Items
-  - var navItems = { home: 'Home', my_trip: 'My Trip', discover_places: 'Discover Places', notifications: 'Notifications', settings: 'Settings' }
+  - var navItems = fullList
 
   //- Trips
   - var trips = { kulon_progo: 'Kulon Progo', bromo: 'Bromo' }
@@ -22,7 +24,6 @@ block content
   //- Kulon Progo Trip
   - var kulon_progo = { title: '摘要', date: '15 May - 23 May 2016', temp: '34' }
   - var kulon_progoTasks = ['Book tickets', 'Get passports ready', 'Book hotel rooms']
-
 
   // Dashboard (Parent Block)
   .dashboard(style="transform: scale(1.25);margin-Left:-30vw;background-color:#DDB98B")
@@ -36,22 +37,22 @@ block content
         | 目錄
 
       // Dashboard Nav (Block)
-      .dashboard-nav: ul
+      .dashboard-nav(style="height:80%; overflow-y: scroll;"): ul
         each name, val in navItems
           if name == 'My Trip'
             // Item:Selected (Element:Modifier)        
             li.dashboard-nav__item.dashboard-nav__item--selected: a(href=val)
-              img(src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/planner_dashboard_' + val + '.svg')
+              img(src=`/tool/t2i?txt=${val}` style='display:inline; height:1vh;')
               =name
-
+            //^^^^^^^^no fuxk use!
           else
             // Item (Element)
-            li.dashboard-nav__item: a(href=val)
-              img(src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/planner_dashboard_' + val + '.svg')
+            li.dashboard-nav__item: a(href=`/main/swipeEDIT?iol=${val}`)
+              img(src=`/tool/t2i?txt=${val}` style='display:inline; height:1vh;')
               =name 
 
     // Dashboard Preview (Block)  
-    .dashboard-preview
+    .dashboard-preview(style=`background: url('${px}')  no-repeat;`)
       each name, val in trips
       
         // Panel (Element)
@@ -62,8 +63,7 @@ block content
           .dashboard-preview__header
             h2 詳細資料
             //h2=name
-            h3
-              | 主標題
+            h3=(indexOfList<flo.length)?flo[indexOfList].topic:'[error: index exceeds array length]'
               //if name == 'Bromo'
                 =bromo.temp
                 span C
@@ -71,7 +71,7 @@ block content
                 = kulon_progo.temp
                 span C
               br
-              span 副標題
+              span=(indexOfList<flo.length)?flo[indexOfList].txt:'[error: index exceeds array length]'
                                   
           // Content (Element)
           .dashboard-preview__content(style="margin-Top:-15vh")
@@ -97,18 +97,18 @@ block content
                     th 按鈕文字
                     th 按鈕超連結
                 tbody
-                  tr
-                    td Carolina Biggleswade
-                    td 23
-                  tr
-                    td Harry Sparrowhead
-                    td 34
-                  tr
-                    td Marjorie Doors
-                    td 32
-                  tr
-                    td Earnest Piggington-Smithe
-                    td 18
+                  if indexOfList<flo.length
+                    - var n = 0;
+                    while n < ((flo[indexOfList].btons)?flo[indexOfList].btons.length:0)
+                      tr
+                        td=flo[indexOfList].btons[n]
+                        td=flo[indexOfList].btons[n+1]
+                        td(style="display:none;")= n++ 
+                        td(style="display:none;")= n++ 
+                  else
+                    tr 
+                      td error: index exceeds array length
+                      td error: index exceeds array length
 
               //if name == 'Bromo'
                 each name in bromoTasks
@@ -150,16 +150,16 @@ block content
         #f4.dashboard-header__new
           img(src='/images/photo-47.svg' style="transform: scale(3);")
           input#fileinput(type='file' style="display:none;")
-          input#btnLoad(type='button' value='Load' onclick='handleFileSelect();' style="display:none;")
           #editor
           #editor_base64_fin
-
+        input#btnLoad(type='button' value='Load' onclick='handleFileSelect();' style="display:none;")
+        //備註:^^^^^^這裡有修正，從F4中抽離
         #f0.dashboard-header__new
           img(src='/images/accept_confirm_okay_icon_141912.svg' style="transform: scale(3);")
           
       .row.ti(style="background-color:#fafdf5;")
         span(style="color:#000000;")
-          input#f1.basic-slide(type='text' placeholder='Your best name')
+          input#f1.basic-slide(type='text' placeholder='這是一個標題')
           label(for='name') 標題
 
           
