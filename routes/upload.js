@@ -15,7 +15,7 @@ const sharp = require('sharp');
 //import Data Model
 var swipe_edit = require('../models/swipe_edit');
 
-router.post('/swipe_edit',  ensureAuthenticated,upload.single('pic'), function (req, res, next) {
+router.post('/swipe_edit', ensureAuthenticated, upload.single('pic'), function (req, res, next) {
 
     var topic = req.body.topic;
     var txt = req.body.txt;
@@ -25,10 +25,16 @@ router.post('/swipe_edit',  ensureAuthenticated,upload.single('pic'), function (
 
     image = "data:image/jpeg;base64," + pic.toString('base64');
 
+    //console.log(JSON.parse(btons));
+    //console.log(btons);
+    //console.log(`
+    //console.log(JSON.parse(btons));
+    //console.log(btons);`);
+
     var newswipe_edit = new swipe_edit({
         topic: topic,
         txt: txt,
-        btons: btons,
+        btons: JSON.parse(btons),
         pic: image
     });
 

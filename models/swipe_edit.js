@@ -31,15 +31,13 @@ module.exports.addswipe_edit = function (newexcelData, callback) {//這只是一
 };
 
 module.exports.getList = function (callback) {
-    var stuf2return = -1;
-    const filter = {  };
+    const filter = {};
     swipe_edit.find(filter).sort({ ChansuNoJunban: 'descending' }).exec((err, SearchResult) => {
         if (err) {
+            console.log("======================");
             console.log(err);
+            console.log("======================");
         }
-        if (SearchResult[0]) {
-            stuf2return = SearchResult[0].ChansuNoJunban;
-        }
-        callback(stuf2return);
+        callback(SearchResult);
     });
 };

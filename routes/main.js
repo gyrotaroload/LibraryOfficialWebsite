@@ -67,6 +67,7 @@ var express = require('express');
 var router = express.Router();
 var generator = require('character-generator');
 const { Base64 } = require('js-base64');
+const sharp = require('sharp');
 var sanitize = require('mongo-sanitize');
 var mammoth = require("mammoth");//main
 var multer = require('multer');
@@ -327,8 +328,28 @@ router.post('/excelTransferOrder', ensureAuthenticated, function (req, res, next
 
 
 router.get('/swipeEDIT', ensureAuthenticated, function (req, res, next) {
-    res.render('swipeEDIT', {
-        title: 'swipeEDIT'
+    swipe_edit.getList(r => {
+        //console.log(parseInt((req.iol || 0), 10) || 0);
+        var pr = {};
+        r.forEach((e, i) => { var tmp = { [i]: String(e.topic) }; pr = { ...pr, ...tmp }; });
+        //console.log(r[8].btons);
+        //console.log(r[req.query.iol].pic);
+        sharp(Buffer.from(r[req.query.iol].pic.replace(/^data:image\/[a-z]+;base64,/, ""), 'base64'))
+            .resize(497, 1388, {
+                fit: 'fill',
+                position: 'right top',
+                background: { r: 255, g: 255, b: 255, alpha: 0.5 }
+            })
+            .webp({ lossless: true })
+            .toBuffer((err, data, info) => {
+                res.render('swipeEDIT', {
+                    title: 'swipeEDIT',
+                    fullList: pr || { x: 'x' },
+                    indexOfList: parseInt((req.query.iol || 0), 10) || 0,
+                    flo: r,
+                    px: err || 'data:image/webp;base64,' + data.toString('base64')
+                });
+            });
     });
 });
 
