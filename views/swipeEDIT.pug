@@ -9,6 +9,8 @@ block contentHEAD
   link(rel='stylesheet' href='/stylesheets/swipe_f.css')
 
 block content
+  script.
+    document.getElementById('quickPOPUP').style.display = 'none';
   //- Nav Items
   - var navItems = { home: 'Home', my_trip: 'My Trip', discover_places: 'Discover Places', notifications: 'Notifications', settings: 'Settings' }
 
@@ -150,16 +152,16 @@ block content
         #f4.dashboard-header__new
           img(src='/images/photo-47.svg' style="transform: scale(3);")
           input#fileinput(type='file' style="display:none;")
-          input#btnLoad(type='button' value='Load' onclick='handleFileSelect();' style="display:none;")
           #editor
           #editor_base64_fin
-
+        input#btnLoad(type='button' value='Load' onclick='handleFileSelect();' style="display:none;")
+        //備註:^^^^^^這裡有修正，從F4中抽離
         #f0.dashboard-header__new
           img(src='/images/accept_confirm_okay_icon_141912.svg' style="transform: scale(3);")
           
       .row.ti(style="background-color:#fafdf5;")
         span(style="color:#000000;")
-          input#f1.basic-slide(type='text' placeholder='Your best name')
+          input#f1.basic-slide(type='text' placeholder='這是一個標題')
           label(for='name') 標題
 
           
