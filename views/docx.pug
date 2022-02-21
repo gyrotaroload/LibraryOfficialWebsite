@@ -13,8 +13,215 @@ block contentHEAD
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css' integrity='sha512-SJw7jzjMYJhsEnN/BuxTWXkezA2cRanuB8TdCNMXFJjxG9ZGSKOX5P3j03H6kdMxalKHZ7vlBMB4CagFP/de0A==' crossorigin='anonymous' referrerpolicy='no-referrer')
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/print-js/1.6.0/print.css' integrity='sha512-tKGnmy6w6vpt8VyMNuWbQtk6D6vwU8VCxUi0kEMXmtgwW+6F70iONzukEUC3gvb+KTJTLzDKAGGWc1R7rmIgxQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
   link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/print.css' type='text/css')
+  link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/share_btns.css' type='text/css')
+  //link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/free_3d_an.css' type='text/css')
 
 block content
+  #sharepop.ui.modal
+    i.close.icon
+    .header
+      | Profile Picture
+    .image.content.d3
+      .ui.medium.image
+        img(src='https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/rocket-dynamic-premium.png')
+      //TODO https://3dicons.co/
+      //.icons-box
+        .i-wrap
+          .img-ani
+            .img-list
+              //-img.gradient(src='https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/gradient/rocket-dynamic-gradient.png')
+              //-img.clay(src='https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/clay/rocket-dynamic-clay.png')
+              //-img.color(src='https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/color/rocket-dynamic-color.png')
+              //-img.premium(src='https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/rocket-dynamic-premium.png')
+      .description
+        .ui.header 分享
+        // Feel free to copy and paste the markup below
+        h2 至其他應用程式
+        // Icon-only Branded Twitter button
+        //a.share-btn.share-btn-branded.share-btn-twitter(href='https://twitter.com/share?url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq&text=Share Buttons Demo&via=sunnyismoi' title='Share on Twitter')
+          span.share-btn-icon
+          span.share-btn-text-sr Twitter
+        // Icon-only Branded Facebook button
+        //a.share-btn.share-btn-branded.share-btn-facebook(href='https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on Facebook')
+          span.share-btn-icon
+          span.share-btn-text-sr Facebook
+        // Icon-only Branded Google+ button
+        //a.share-btn.share-btn-branded.share-btn-googleplus(href='https://plus.google.com/share?url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on Google+')
+          span.share-btn-icon
+          span.share-btn-text-sr Google+
+        // Icon-only Branded Reddit button
+        //a.share-btn.share-btn-branded.share-btn-reddit(href='http://www.reddit.com/submit?url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on Reddit+')
+          span.share-btn-icon
+          span.share-btn-text-sr Reddit
+        // Icon-only Branded Tumblr button
+        //a.share-btn.share-btn-branded.share-btn-tumblr(href='https://www.tumblr.com/share/link?url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on Tumblr')
+          span.share-btn-icon
+          span.share-btn-text-sr Tumblr
+        // Icon-only Branded LinkedIn button
+        //a.share-btn.share-btn-branded.share-btn-linkedin(href='https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on LinkedIn')
+          span.share-btn-icon
+          span.share-btn-text-sr LinkedIn
+        // Icon-only Branded Pinterest button
+        //a.share-btn.share-btn-branded.share-btn-pinterest(href='https://www.pinterest.com/pin/create/button/?url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on Pinterest')
+          span.share-btn-icon
+          span.share-btn-text-sr Pinterest
+        // Icon-only Branded StumbleUpon button
+        //a.share-btn.share-btn-branded.share-btn-stumbleupon(href='http://www.stumbleupon.com/submit?url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on StumbleUpon')
+          span.share-btn-icon
+          span.share-btn-text-sr StumbleUpon
+        // Icon-only Branded Delicious button
+        //a.share-btn.share-btn-branded.share-btn-delicious(href='https://delicious.com/save?v=5&noui&jump=close&url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on Delicious')
+          span.share-btn-icon
+          span.share-btn-text-sr Delicious
+        // Icon-only Email button
+        //a.share-btn.share-btn-email(href='mailto:?subject=Share Buttons Demo&body=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share via Email')
+          span.share-btn-icon
+          span.share-btn-text-sr Email
+        // Icon-only More/share button
+        a.share-btn.share-btn-more(style='transform: scale(2, 2);' href='https://www.addtoany.com/share_save?linkurl=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='More share options')
+          span.share-btn-icon
+          span.share-btn-text-sr More
+        h2 社群軟體
+        // Branded Twitter button
+        //a.share-btn.share-btn-branded.share-btn-twitter(href='https://twitter.com/share?url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq&text=Share Buttons Demo&via=sunnyismoi' title='Share on Twitter')
+          span.share-btn-icon
+          span.share-btn-text Twitter
+        // Branded Facebook button
+        a.share-btn.share-btn-branded.share-btn-facebook(href='https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on Facebook')
+          span.share-btn-icon
+          span.share-btn-text Facebook
+        // Branded Google+ button
+        //a.share-btn.share-btn-branded.share-btn-googleplus(href='https://plus.google.com/share?url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on Google+')
+          span.share-btn-icon
+          span.share-btn-text Google+
+        // Branded Reddit button
+        a.share-btn.share-btn-branded.share-btn-reddit(href='http://www.reddit.com/submit?url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on Reddit+')
+          span.share-btn-icon
+          span.share-btn-text Reddit
+        // Branded Tumblr button
+        a.share-btn.share-btn-branded.share-btn-tumblr(href='https://www.tumblr.com/share/link?url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on Tumblr')
+          span.share-btn-icon
+          span.share-btn-text Tumblr
+        // Divider only used for demo, don't copy this
+        .divider(role='presentation')
+        // Branded LinkedIn button
+        a.share-btn.share-btn-branded.share-btn-linkedin(href='https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on LinkedIn')
+          span.share-btn-icon
+          span.share-btn-text LinkedIn
+        // Branded Pinterest button
+        a.share-btn.share-btn-branded.share-btn-pinterest(href='https://www.pinterest.com/pin/create/button/?url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on Pinterest')
+          span.share-btn-icon
+          span.share-btn-text Pinterest
+        // Branded StumbleUpon button
+        //a.share-btn.share-btn-branded.share-btn-stumbleupon(href='http://www.stumbleupon.com/submit?url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on StumbleUpon')
+          span.share-btn-icon
+          span.share-btn-text StumbleUpon
+        // Branded Delicious button
+        //a.share-btn.share-btn-branded.share-btn-delicious(href='https://delicious.com/save?v=5&noui&jump=close&url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on Delicious')
+          span.share-btn-icon
+          span.share-btn-text Delicious
+        //h2 Default
+        // Medium Twitter button
+        //a.share-btn.share-btn-twitter(href='https://twitter.com/share?url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq&text=Share Buttons Demo&via=sunnyismoi' title='Share on Twitter')
+          span.share-btn-icon
+          span.share-btn-text Twitter
+        // Medium Facebook button
+        //a.share-btn.share-btn-facebook(href='https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on Facebook')
+          span.share-btn-icon
+          span.share-btn-text Facebook
+        // Medium Email button
+        //a.share-btn.share-btn-email(href='mailto:?subject=Share Buttons Demo&body=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share via Email')
+          span.share-btn-icon
+          span.share-btn-text Email
+        // Medium More/share button
+        //a.share-btn.share-btn-more(href='https://www.addtoany.com/share_save?linkurl=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='More share options')
+          span.share-btn-icon
+          span.share-btn-text-sr More
+        h2 電子郵件
+        //a.share-btn.share-btn-inverse.share-btn-twitter(href='https://twitter.com/share?url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq&text=Share Buttons Demo&via=sunnyismoi' title='Share on Twitter')
+          span.share-btn-icon
+          span.share-btn-text Twitter
+        //a.share-btn.share-btn-inverse.share-btn-facebook(href='https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on Facebook')
+          span.share-btn-icon
+          span.share-btn-text Facebook
+        a.share-btn.share-btn-inverse.share-btn-email(href='mailto:?subject=Share Buttons Demo&body=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share via Email')
+          span.share-btn-icon
+          span.share-btn-text Email
+        //a.share-btn.share-btn-inverse.share-btn-more(href='https://www.addtoany.com/share_save?linkurl=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='More share options')
+          span.share-btn-icon
+          span.share-btn-text-sr More
+        //h2.heading-sizes Sizes
+        //h3 Small
+        // Small Twitter button
+        //a.share-btn.share-btn-sm.share-btn-twitter(href='https://twitter.com/share?url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq&text=Share Buttons Demo&via=sunnyismoi' title='Share on Twitter')
+          span.share-btn-icon
+          span.share-btn-text Twitter
+        // Small Facebook button
+        //a.share-btn.share-btn-sm.share-btn-facebook(href='https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on Facebook')
+          span.share-btn-icon
+          span.share-btn-text Facebook
+        // Small Email button
+        //a.share-btn.share-btn-sm.share-btn-email(href='mailto:?subject=Share Buttons Demo&body=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share via Email')
+          span.share-btn-icon
+          span.share-btn-text Email
+        // Small More/share button
+        //a.share-btn.share-btn-sm.share-btn-more(href='https://www.addtoany.com/share_save?linkurl=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='More share options')
+          span.share-btn-icon
+          span.share-btn-text-sr More
+        //h3 Medium (default)
+        // Medium Twitter button
+        //a.share-btn.share-btn-twitter(href='https://twitter.com/share?url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq&text=Share Buttons Demo&via=sunnyismoi' title='Share on Twitter')
+          span.share-btn-icon
+          span.share-btn-text Twitter
+        // Medium Facebook button
+        //a.share-btn.share-btn-facebook(href='https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on Facebook')
+          span.share-btn-icon
+          span.share-btn-text Facebook
+        // Medium Email button
+        //a.share-btn.share-btn-email(href='mailto:?subject=Share Buttons Demo&body=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share via Email')
+          span.share-btn-icon
+          span.share-btn-text Email
+        // Medium More/share button
+        //a.share-btn.share-btn-more(href='https://www.addtoany.com/share_save?linkurl=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='More share options')
+          span.share-btn-icon
+          span.share-btn-text-sr More
+        //h3 Large
+        // Large Twitter button
+        //a.share-btn.share-btn-lg.share-btn-twitter(href='https://twitter.com/share?url=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq&text=Share Buttons Demo&via=sunnyismoi' title='Share on Twitter')
+          span.share-btn-icon
+          span.share-btn-text Twitter
+        // Large Facebook button
+        //a.share-btn.share-btn-lg.share-btn-facebook(href='https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share on Facebook')
+          span.share-btn-icon
+          span.share-btn-text Facebook
+        // Large Email button
+        //a.share-btn.share-btn-lg.share-btn-email(href='mailto:?subject=Share Buttons Demo&body=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='Share via Email')
+          span.share-btn-icon
+          span.share-btn-text Email
+        // Large More/share button
+        //a.share-btn.share-btn-lg.share-btn-more(href='https://www.addtoany.com/share_save?linkurl=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq' title='More share options')
+          span.share-btn-icon
+          span.share-btn-text-sr More
+        script.
+          (function(){
+          var shareButtons = document.querySelectorAll(".share-btn");
+           if (shareButtons) {
+          [].forEach.call(shareButtons, function(button) {
+          button.addEventListener("click", function(event) {
+          var width = 650,
+          height = 450;
+          event.preventDefault();
+          window.open(this.href, 'Share Dialog', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,width='+width+',height='+height+',top='+(screen.height/2-height/2)+',left='+(screen.width/2-width/2));
+          });
+          });
+          }
+          })();
+    .actions
+      .ui.black.deny.button
+        | 關閉
+      .ui.positive.right.labeled.icon.button
+        | 好的
+        i.checkmark.icon
   #tkn(style="display:none;")= tkn
   script(src='/ws/index.js')
   script.
@@ -131,11 +338,12 @@ block content
   footer.ui.container
     // Social
     .social
-      a.ui.facebook.button(href='#')
-        i.facebook.icon
-        | 數學系圖首頁
+      a.ui.facebook.button(href='#' onclick='$("html, body").animate({scrollTop:0}, "300");')
+        i.caret.square.up.outline.icon
+        | &emsp;回頂端
+        //為甚麼這裡需要一個全行空白啊?
       a#snap_shoot_screen.ui.linkedin.button(href='#')
-        i.linkedin.icon
+        i.camera.retro.icon
         | 截圖
         //TODO dont scroll up yo y=0 and crop to best, dont cut side!
         #snap_shoot_html2canvas_group(style='display: none;')
@@ -143,12 +351,12 @@ block content
           #snap_shoot_finish(style='display: none;') -1
           #snap_shoot_canvas_tmp(style='display: none;')
           //-#imgdownloadOK(style='display: none;') 這個快速差建下載完成的時候這個dom會被點集...沒
-      a.ui.youtube.button(href='#')
-        i.youtube.icon
+      a.ui.youtube.button(href='#' onclick="$('#sharepop').modal('show');")
+        i.share.alternate.icon
         | 分享
         //TODO https://css-tricks.com/how-to-use-the-web-share-api/;https://codepen.io/ayoisaiah/pen/WBpzBo
       a.ui.instagram.button( onclick="printJS('root', 'html')")
-        i.instagram.icon
+        i.print.icon
         | 列印
         //TODO fix text x,y pos...
         //OR use svg background
@@ -157,7 +365,7 @@ block content
           #snap_shoot_canvas_tmp_pdf(style='display: none;')
       a.pdfutils.ui.vk.button( onclick="downpdf()")
         //(onclick="var pdf = new jsPDF('p','pt','a4');var margins = {top: 25,bottom: 60,left: 20,width: 522};pdf.addHTML(document.body, margins.top, margins.left, {},function() {console.log('???');/*saveData(pdf.output('Blob'), commercialFileName);*/pdf.save(commercialFileName);});")
-        i.vk.icon
+        i.file.pdf.outline.icon
         | 另存為PDF
         //TODO fix print poor css
       // 09 Oct 2018 R.I.P. Google Plus :-P
