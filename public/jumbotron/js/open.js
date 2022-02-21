@@ -18,24 +18,39 @@ var timeNow = currentTimeHours + "" + currentTimeMinutes;
 var currentDayID = "#" + currentDay; //gets todays weekday and turns it into id
 $(currentDayID).toggleClass("active"); //this works at hightlighting today
 
+$('#the_open_chart_data tr').children('.no_right_border.no_left_border').each(function (index) {
+    if ($(this).hasClass('shutdown')) {
+        //TODO:Exception handling
+        $(this).text(' ');
+        $(this).parent().children('.opens').text($(
+            '.openinghours .openinghourscontent .OpeningHoursChineseNameFormDefinitionCollection .shutdownName1'
+        ).text());
+        $(this).parent().children('.closes').text($(
+            '.openinghours .openinghourscontent .OpeningHoursChineseNameFormDefinitionCollection .shutdownName2'
+        ).text());
+        //使用以下式子來啟用行動裝置的表格支援
+        //document.getElementById("openTimeChartLoaded_target").classList.add("openTimeChart_loadded");
+    }
+});
+
 if ($(currentDayID).children('.no_right_border.no_left_border').hasClass('shutdown')) {
     //this day is colse!!!
     $(".openorclosed").toggleClass("closed");
     //$("#open-status").toggleClass("negative");
 
-    //TODO:Exception handling
-    $(currentDayID).children('.no_right_border.no_left_border').text(' ');
-    $(currentDayID).children('.opens').text($(
-        '.openinghours .openinghourscontent .OpeningHoursChineseNameFormDefinitionCollection .shutdownName1'
-    ).text());
-    $(currentDayID).children('.closes').text($(
-        '.openinghours .openinghourscontent .OpeningHoursChineseNameFormDefinitionCollection .shutdownName2'
-    ).text());
+    //-TODO:Exception handling
+    //$(currentDayID).children('.no_right_border.no_left_border').text(' ');
+    //$(currentDayID).children('.opens').text($(
+    //    '.openinghours .openinghourscontent .OpeningHoursChineseNameFormDefinitionCollection .shutdownName1'
+    //).text());
+    //$(currentDayID).children('.closes').text($(
+    //    '.openinghours .openinghourscontent .OpeningHoursChineseNameFormDefinitionCollection .shutdownName2'
+    //).text());
     //使用以下式子來啟用行動裝置的表格支援
     //document.getElementById("openTimeChartLoaded_target").classList.add("openTimeChart_loadded");
     //console.log("opentime ok");
     document.getElementById("openTimeChartLoaded_target").click();
-//    console.log("wtf2");
+    //    console.log("wtf2");
 
 } else {
     var openTimeSplit = $(currentDayID).children('.opens').text().split(":");
@@ -62,9 +77,11 @@ if ($(currentDayID).children('.no_right_border.no_left_border').hasClass('shutdo
         //$("#open-status").toggleClass("negative");
     }
     // console.log("opentime ok");
-     document.getElementById("openTimeChartLoaded_target").click();
-//     console.log("wtf2");
+    document.getElementById("openTimeChartLoaded_target").click();
+    //     console.log("wtf2");
 
     //使用以下式子來啟用行動裝置的表格支援
     //document.getElementById("openTimeChartLoaded_target").classList.add("openTimeChart_loadded");
 }
+
+
