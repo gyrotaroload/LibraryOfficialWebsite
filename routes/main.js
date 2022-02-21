@@ -89,6 +89,7 @@ var e3 = require('../models/OnCampusElectronicResourceFiles');
 var IclassMap = new Map();
 IclassMap.set('l', '最新消息');
 IclassMap.set('g', '館際合作內頁');
+IclassMap.set('es', '電子資源-外部連結清單');
 
 router.get('/', ensureAuthenticated, function (req, res, next) {
     //Person.getPersonal(req.user.username, function (err, Personget) {
@@ -395,38 +396,44 @@ router.post('/docx', ensureAuthenticated, upload.single('docxPayload'), function
     後台傳html回給前台
     */
     var content = req.file.buffer;
-    mammoth.convertToHtml({ buffer: content }, {
-        convertImage: mammoth.images.imgElement(function (image) {
-            return image.read("base64").then(function (imageBuffer) {
-                return {
-                    src: "data:" + image.contentType + ";base64," + imageBuffer
-                };
-            });
-        }),
-    })
-        .then(function (result) {
-            var html = result.value; // The generated HTML
-            var messages = result.messages; // Any messages, such as warnings during conversion
-            //console.log(html);
-            // console.log(messages);
-            return { sol_html: html, sol_messages: messages };
+    try { // statements to try
+        // 函式可以丟出例外
+        mammoth.convertToHtml({ buffer: content }, {
+            convertImage: mammoth.images.imgElement(function (image) {
+                return image.read("base64").then(function (imageBuffer) {
+                    return {
+                        src: "data:" + image.contentType + ";base64," + imageBuffer
+                    };
+                });
+            }),
         })
-        .done((sol) => {
-            var no = new docs({
-                dt: Date.now(),
-                html: sol.sol_html
+            .then(function (result) {
+                var html = result.value; // The generated HTML
+                var messages = result.messages; // Any messages, such as warnings during conversion
+                //console.log(html);
+                // console.log(messages);
+                return { sol_html: html, sol_messages: messages };
+            })
+            .done((sol) => {
+                var no = new docs({
+                    dt: Date.now(),
+                    html: sol.sol_html
+                });
+                docs.add(no, function (r) {
+                    if (r) {
+                        sol.id = r.id;
+                        res.status(200).send(sol);
+                    } else {
+                        sol.id = null;
+                        //console.log(err);
+                        res.status(404).send(sol);
+                    }
+                });
             });
-            docs.add(no, function (r) {
-                if (r) {
-                    sol.id = r.id;
-                    res.status(200).send(sol);
-                } else {
-                    sol.id = null;
-                    //console.log(err);
-                    res.status(404).send(sol);
-                }
-            });
-        });
+    }
+    catch (e) {
+        res.status(400).send('word檔案解析失敗');
+    }
 });
 
 router.get('/docx', ensureAuthenticated, function (req, res, next) {
@@ -464,6 +471,15 @@ router.get('/link', ensureAuthenticated, function (req, res, next) {
                 res.status(404).send("failed");
             }
         })
+    } else if (req.query.ic === 'es') {
+        e2.update_url(req.query.lid, `/inner?id=${req.query.docid}&pid=${req.query.lid}&ic=es`, r => {
+            if (r === 'yes') {
+                res.status(200).send("success");
+            }
+            else {
+                res.status(404).send("failed");
+            }
+        });
     } else { res.status(400).send("failed"); }
 });
 
@@ -497,9 +513,18 @@ router.post('/agh', ensureAuthenticated, function (req, res, next) {//丟資料�
 });
 
 router.get('/AddElectronicResources', ensureAuthenticated, function (req, res, next) {
-    res.render('main_er', {
-        title: 'mainer',
+    e1.getMaxIndex(re1 => {
+        e2.getMaxIndex(re2 => {
+            e3.getMaxIndex(re3 => {
+                console.log(re2);
+                res.render('main_er', {
+                    title: 'mainer',
+                    re1v: re1 | -1, re2v: re2 | -1, re3v: re3 | -1,
+                });
+            });
+        });
     });
+
 });
 
 router.post('/e1', ensureAuthenticated, function (req, res, next) {
@@ -534,6 +559,7 @@ router.post('/e1', ensureAuthenticated, function (req, res, next) {
 router.post('/e2', ensureAuthenticated, function (req, res, next) {
     var rb = req.body;
     var rbn = req.body.sn;
+    var rbu = req.body.urle;
     delete rb["submit"];
     delete rb["sn"];
     rb["new_date"] = Date.now();
@@ -541,7 +567,13 @@ router.post('/e2', ensureAuthenticated, function (req, res, next) {
     var newobj = new e2(rb);
     e2.add(newobj, function (r) {
         if (r) {
-            res.status(200).send(form_callback_page('資料寫入成功!'));
+            if (rbu === 'http://this.is.not.a.url.com/add/page?with=docx&next=step') {
+                res.redirect(303, `/main/docx?ic=es&id=${r}`);
+            } else if (rbu === 'http://this.is.not.a.url.com/add/page?with=xlsx&next=step') {
+                res.redirect(303, '/docx')//TODO excel~ 
+            } else {
+                res.status(200).send(form_callback_page('資料寫入成功!'));
+            }
         } else {
             console.log(r);
             res.status(200).send(form_callback_page('資料寫入「失敗」!'));

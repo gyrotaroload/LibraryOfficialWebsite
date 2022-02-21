@@ -51,44 +51,29 @@ module.exports.add = function (newOBJ, callback) {
 }
 
 module.exports.frontend = function (callback) {
-    e1.find({}).sort({ no: 1 }).exec((err, SearchResult) => {
+    e1.lastTime(r => {
+        e1.find({}).sort({ no: 1 }).exec((err, SearchResult) => {
+            if (err) {
+                console.log(err);
+            }
+            callback({ s: SearchResult, r: r });
+        });
+    });
+}
+module.exports.lastTime = function (callback) {
+    e1.find({}).sort({ new_date: -1 }).exec((err, SearchResult) => {
         if (err) {
             console.log(err);
         }
-        callback(SearchResult);
-    });
-
-}
-/*
-module.exports.SETuri = function (id, uri, callback) {
-    least.findById(id, function (err, contact) {
-        if (!err) {
-            if (contact) {
-                console.log(contact.tp);
-                contact.uri = uri;
-                contact.save(function (err) {
-                    if (!err) {
-                        console.log("contact " + contact.id + " created at " + contact.createdAt + " updated at " + contact.updatedAt);
-                        callback("yes");
-                    }
-                    else {
-                        console.log("Error: could not save contact " + contact.id);
-                        callback("no");
-                    }
-                });
-            } else { callback("no"); }
-        }
+        callback((SearchResult.length > 0) ? SearchResult[0].new_date.getFullYear() : 1997);
     });
 }
 
-module.exports.getById = function (id, callback) {
-    least.findById(id, function (err, adventure) {
+module.exports.getMaxIndex = function (callback) {
+    e1.find({}).sort({ no: -1 }).exec((err, SearchResult) => {
         if (err) {
-            console.log("可忽略的警告");
             console.log(err);
-            callback(null);
-        } else {
-            callback((adventure) ? adventure : null);
         }
+        callback((SearchResult.length > 0) ? SearchResult[0].no : -1);
     });
-}*/
+}

@@ -92,7 +92,7 @@ block content
                 h3 &emsp;
               td(align='center' valign='middle')
                 label(for='no') serial_number
-                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#no(type='number' name='no' accesskey='n' tabindex='0')
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#no(type='number' name='no' accesskey='n' tabindex='0' value=`${re1v}`)
             tr
               th(align='center' valign='middle' scope='row')
                 div
@@ -119,6 +119,26 @@ block content
     .ui.piled.pink.secondary.segment
       p
         strong 校外電子資源
+      .ui.cards
+        .card
+          .content
+            .header 說明
+            .description 如果需要上傳列表或文件予使用者瀏覽，請勿按壓藍色送出按鈕，請使用卡片集中的word上傳或excel上傳功能。
+        .card
+          .content
+            .header word上傳
+            .description 按下一步來跳轉至上傳頁面 
+          button.ui.bottom.attached.button(onclick="document.getElementById('urle').value='http://this.is.not.a.url.com/add/page?with=docx&next=step';var tmp=document.getElementById('MetricsForSkippingUploadPages');tmp.getElementsByTagName('input')[0].click();")
+            i.cloud.upload.icon
+            |   下一步
+        .card
+          .content
+            .header excel上傳
+            .description 按下一步來跳轉至上傳頁面  
+          button.ui.bottom.attached.button(onclick="document.getElementById('urle').value='http://this.is.not.a.url.com/add/page?with=xlsx&next=step';var tmp=document.getElementById('MetricsForSkippingUploadPages');tmp.getElementsByTagName('input')[0].click();")
+            i.cloud.upload.icon
+            |   下一步
+      hr
       form(name='form2' method='post' action='./e2')
         table.ui.celled.table.selectable(width='573' border='1' summary='Off-Campus Electronic Resources Hyperlinks')
           caption
@@ -137,7 +157,7 @@ block content
                       div 流水號
               td(align='left' valign='middle')
                 label(for='sn') sn
-                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#sn(type='number' name='sn' accesskey='r' tabindex='4')
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#sn(type='number' name='sn' accesskey='r' tabindex='4' value=`${re2v}`)
             tr
               th(align='center' valign='middle' scope='row')
                 div
@@ -197,7 +217,7 @@ block content
               td(align='left' valign='middle')
                 label(for='urle') urle
                 input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#urle(type='url' name='urle' accesskey='i' tabindex='13')
-        p.lambda.inline.field
+        p.lambda.inline.field#MetricsForSkippingUploadPages
           label.ui.right.pointing.green.basic.label(for='submit')
             br
             |     submit
@@ -226,7 +246,7 @@ block content
                       div 流水號
               td(align='left' valign='middle')
                 label(for='sn') sn2
-                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#sn2(type='number' name='sn2' accesskey='o' tabindex='15')
+                input.form-input.form-input.round.form-input.spread-shadow.form-input.spread-shadow#sn2(type='number' name='sn2' accesskey='o' tabindex='15' value=`${re3v}`)
             tr
               th(align='center' valign='middle' scope='row')
                 div

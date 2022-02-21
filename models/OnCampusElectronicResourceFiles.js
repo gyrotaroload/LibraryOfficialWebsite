@@ -31,7 +31,7 @@ var e3Schema = mongoose.Schema({
         type: String
     }, file: {
         type: Buffer
-    },sub:{
+    }, sub: {
         type: String
     }
 });
@@ -52,43 +52,31 @@ module.exports.add = function (newOBJ, callback) {
 }
 
 module.exports.frontend = function (callback) {
+    e3.lastTime(r => {
+
         e3.find({}).sort({ sn2: 1 }).exec((err, SearchResult) => {
             if (err) {
                 console.log(err);
             }
-            callback(SearchResult);
+            callback({ s: SearchResult, r: r });
         });
-}
-/*
-module.exports.SETuri = function (id, uri, callback) {
-    least.findById(id, function (err, contact) {
-        if (!err) {
-            if (contact) {
-                console.log(contact.tp);
-                contact.uri = uri;
-                contact.save(function (err) {
-                    if (!err) {
-                        console.log("contact " + contact.id + " created at " + contact.createdAt + " updated at " + contact.updatedAt);
-                        callback("yes");
-                    }
-                    else {
-                        console.log("Error: could not save contact " + contact.id);
-                        callback("no");
-                    }
-                });
-            } else { callback("no"); }
-        }
     });
 }
 
-module.exports.getById = function (id, callback) {
-    least.findById(id, function (err, adventure) {
+module.exports.lastTime = function (callback) {
+    e3.find({}).sort({ new_date: -1 }).exec((err, SearchResult) => {
         if (err) {
-            console.log("可忽略的警告");
             console.log(err);
-            callback(null);
-        } else {
-            callback((adventure) ? adventure : null);
         }
+        callback((SearchResult.length > 0) ? SearchResult[0].new_date.getFullYear() : 1997);
     });
-}*/
+}
+
+module.exports.getMaxIndex = function (callback) {
+    e3.find({}).sort({ sn: -1 }).exec((err, SearchResult) => {
+        if (err) {
+            console.log(err);
+        }
+        callback((SearchResult.length > 0) ? SearchResult[0].sn2 : -1);
+    });
+}
