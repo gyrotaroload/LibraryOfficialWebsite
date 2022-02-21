@@ -35,6 +35,7 @@ block contentHEAD
         #drop-zone p, #drop-zone svg { pointer-events: none }
         #drop-zone svg { margin-right: 5px }
         .execl_clear { display: none }
+    link(rel='stylesheet' href='/stylesheets/External_embedded_search_box.css' type='text/css')
 
 block content
   - if(isADMIN==true) {
@@ -274,13 +275,19 @@ block content
         a.header.item 新進圖書
         .right.menu
           .item
-            .ui.small.input
-              input(placeholder='Search...')
-            // TODO添加放大鏡、同步行動版
-          a.item 回首頁
-          a.item 期刊服務
-          a.item Profile
-          a.item Help
+            form.ui.form(onsubmit="event.target.querySelector('i').click();")
+              //TODO preventDefault
+              .inline.fields
+                .field
+                  script(async='' src='https://cse.google.com/cse.js?cx=d613870f87198941e')
+                  .AugmentedExternalSearchModule.ui.icon.input
+                    .gcse-searchbox-only
+                    input(type='text' placeholder='Search...')
+                    i.AugmentedExternalSearchModuleF.inverted.circular.search.link.icon(onclick="var AugmentedExternalSearchModule=event.target.closest('.AugmentedExternalSearchModule');AugmentedExternalSearchModule.getElementsByTagName('input')[0].value=AugmentedExternalSearchModule.getElementsByTagName('input')[1].value;AugmentedExternalSearchModule.getElementsByTagName('button')[0].click();")
+          a.item(href='/') 回首頁
+          a.item(href='/journals') 期刊服務
+          a.item(href='/inner?ic=g') 館際合作
+          a.item(href='/electronic-resources') 電子資源
     .ui.mobile.only.padded.grid
       .ui.top.fixed.borderless.fluid.inverted.menu
         a.header.item 期刊服務
@@ -295,8 +302,15 @@ block content
           a.item Help
           .ui.fitted.divider
           .item
-            .ui.small.input
-              input(placeholder='Search...')
+            form.ui.form(onsubmit="event.target.querySelector('i').click();")
+              //TODO preventDefault
+              .inline.fields
+                .field
+                  script(async='' src='https://cse.google.com/cse.js?cx=d613870f87198941e')
+                  .AugmentedExternalSearchModule.ui.icon.input
+                    .gcse-searchbox-only
+                    input(type='text' placeholder='Search...')
+                    i.AugmentedExternalSearchModuleF.inverted.circular.search.link.icon(onclick="var AugmentedExternalSearchModule=event.target.closest('.AugmentedExternalSearchModule');AugmentedExternalSearchModule.getElementsByTagName('input')[0].value=AugmentedExternalSearchModule.getElementsByTagName('input')[1].value;AugmentedExternalSearchModule.getElementsByTagName('button')[0].click();")
     .ui.padded.grid
       #sidebar.three.wide.tablet.only.three.wide.computer.only.column
         .ui.vertical.borderless.fluid.text.menu!= innerHTMLofLlist
