@@ -48,43 +48,43 @@ block content
               if emt==="tab0"
                 li.nav-item
                   a.nav-link.active(href='?tab=0')
-                    i.fas.fa-tachometer-alt
+                    i.warehouse.icon
                     |                                 校內資源
                     span.sr-only (current)
                 li.nav-item
                   a.nav-link(href='?tab=1')
-                    i.fas.fa-shopping-cart
+                    i.icon.fort.awesome
                     |                                 校外資源
                 li.nav-item
                   a.nav-link(href='?tab=2')
-                    i.far.fa-user
+                    i.linkify.icon
                     |                                 常用連結
               else if emt==="tab1"
                 li.nav-item
                   a.nav-link(href='?tab=0')
-                    i.fas.fa-tachometer-alt
+                    i.warehouse.icon
                     |                                 校內資源
                 li.nav-item
                   a.nav-link.active(href='?tab=1')
-                    i.fas.fa-shopping-cart
+                    i.icon.fort.awesome
                     |                                 校外資源
                     span.sr-only (current)
                 li.nav-item
                   a.nav-link(href='?tab=2')
-                    i.far.fa-user
+                    i.linkify.icon
                     |                                 常用連結
               else if emt==="tab2"
                 li.nav-item
                   a.nav-link(href='?tab=0')
-                    i.fas.fa-tachometer-alt
+                    i.warehouse.icon
                     |                                 校內資源
                 li.nav-item
                   a.nav-link(href='?tab=1')
-                    i.fas.fa-shopping-cart
+                    i.icon.fort.awesome
                     |                                 校外資源
                 li.nav-item
                   a.nav-link.active(href='?tab=2')
-                    i.far.fa-user
+                    i.linkify.icon
                     |                                 常用連結
                     span.sr-only (current)
               else
@@ -105,7 +105,7 @@ block content
                   a.dropdown-item(href='#') Customize
             ul.navbar-nav
               li.nav-item
-                a.nav-link.d-block(href='login.html')
+                a.nav-link.d-block(href='/')
                   | &emsp;
                   b 回首頁
       .container
@@ -252,7 +252,7 @@ block content
                       | .
                     span.tm-small.tm-text-color-secondary 6h ago.
           .col-12.tm-block-col
-            .tm-bg-primary-dark.tm-block.tm-block-taller.tm-block-scroll
+            .tm-bg-primary-dark.tm-block.tm-block-taller.tm-block-scroll(style='max-height:80vh')
               if emt==="tab0"
                 h2.tm-block-title 校內資源
               else if emt==="tab1"
