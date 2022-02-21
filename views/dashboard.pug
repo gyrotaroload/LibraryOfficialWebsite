@@ -47,8 +47,10 @@ block content
             .ui.small.input
               input(placeholder='Search...')
             // TODO添加放大鏡、同步行動版
-          a.item 回首頁
-          a.item 圖書服務
+          a.item(href='/') 回首頁
+          a.item(href='/newbooks') 新書入庫
+          a.item(href='/inner?ic=g') 館際合作
+          a.item(href='/electronic-resources') 電子資源
           a#sbSlideToggle.item(style="display:none;" onclick="if(event.target.innerText==='關閉側欄'){event.target.innerText='顯示側欄';document.getElementById('content').classList.add('right');document.getElementById('content').classList.add('column');document.getElementById('content').classList.add('floated');}else{event.target.innerText='關閉側欄';document.getElementById('content').classList.remove(['right', 'floated', 'column']);}$('#sidebar').slideToggle();") 關閉側欄
           //TODO fix this toggle
           //a.item Help
