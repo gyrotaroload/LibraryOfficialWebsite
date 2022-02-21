@@ -516,10 +516,12 @@ router.get('/AddElectronicResources', ensureAuthenticated, function (req, res, n
     e1.getMaxIndex(re1 => {
         e2.getMaxIndex(re2 => {
             e3.getMaxIndex(re3 => {
-                console.log(re2);
+                //console.log(re1);console.log(re2);console.log(re3);
                 res.render('main_er', {
                     title: 'mainer',
-                    re1v: re1 | -1, re2v: re2 | -1, re3v: re3 | -1,
+                    re1v: re1 || -1,
+                    re2v: re2 || -1,
+                    re3v: re3 || -1,
                 });
             });
         });
