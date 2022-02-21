@@ -30,6 +30,14 @@ block contentHEAD
     @import url('./jumbotron/stylesheets/open.css');
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.0/css/hover-min.css' integrity='sha512-glciccPoOqr5mfDGmlJ3bpbvomZmFK+5dRARpt62nZnlKwaYZSfFpFIgUoD8ujqBw4TmPa/F3TX28OctJzoLfg==' crossorigin='anonymous')
   link(rel='stylesheet', href='/stylesheets/foot.css')
+  // Global site tag (gtag.js) - Google Analytics
+  script(async='' src='https://www.googletagmanager.com/gtag/js?id=G-HFF1V5CLB2')
+  script.
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HFF1V5CLB2');
+
 
 block content
   #innerINDEX.ui.basic.modal
@@ -612,11 +620,11 @@ block content
         .ui.stackable.grid
           .row
             .seven.wide.column
-              h2.ui.header &copy; 2021 成功大學圖書館
+              h2.ui.header &copy; 2021 成功大學數學系圖書館
               i.phone.icon
-              | 0987587487
+              | 服務電話：06-2757575#65105
               i.building.icon
-              | 台南市大學路1號某某大樓
+              | 館址：數學系1樓
             .three.wide.column
               h4.ui.header(style='margin-bottom: 2px;') Powered By
               .ui.list(role='list' style='margin-top: 2px;')
