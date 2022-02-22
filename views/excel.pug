@@ -39,7 +39,7 @@ block contentHEAD
 
 block content
   - if(isADMIN==true) {
-    .ui.basic.modal
+    #Data_manipulation_error.ui.basic.modal
       //TODO我也不知道未啥這個模組的好的按鈕與關閉按鈕啥都不用設定就可以關閉，傻眼
       //叫用$(".ui.basic.modal").modal("show");
       .ui.icon.header
@@ -272,7 +272,10 @@ block content
     //上面是excel下面是ui
     .ui.tablet.computer.only.padded.grid
       #headderBar.ui.inverted.borderless.top.fixed.fluid.menu
-        a.header.item(href='#') 新進圖書
+        if !disable_accession_number_to_link_to_master_plan
+          a.header.item(href='#') 新進圖書
+        else 
+          a.header.item(href='#')=Replace_text_to_re_enter_the_book_data_record
         .right.menu
           .item
             form.ui.form(onsubmit="event.target.querySelector('i').click();")
@@ -313,7 +316,7 @@ block content
                     i.AugmentedExternalSearchModuleF.inverted.circular.search.link.icon(onclick="var AugmentedExternalSearchModule=event.target.closest('.AugmentedExternalSearchModule');AugmentedExternalSearchModule.getElementsByTagName('input')[0].value=AugmentedExternalSearchModule.getElementsByTagName('input')[1].value;AugmentedExternalSearchModule.getElementsByTagName('button')[0].click();")
     .ui.padded.grid
       #sidebar.three.wide.tablet.only.three.wide.computer.only.column
-        .ui.vertical.borderless.fluid.text.menu!= innerHTMLofLlist
+        .ui.vertical.borderless.fluid.text.menu(style="height : 85vh; overflow : scroll;")!= innerHTMLofLlist
           //-TODO要處裡看不到側欄的問題
           //這底下的咚咚碼掉
             //- show all...etc
@@ -347,7 +350,10 @@ block content
         .ui.padded.grid
           - if(isADMIN==true) {
             .row
-              h1.ui.huge.dividing.header 新進圖書資料紀錄
+              if !disable_accession_number_to_link_to_master_plan
+                h1.ui.huge.dividing.header 新進圖書資料紀錄
+              else 
+                h1.ui.huge.dividing.header=Replace_text_to_re_enter_the_book_data_record
             .center.aligned.row
               .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
                 //img.ui.centered.small.circular.image(src='/newbookpage/static/images/wireframe/square-image.png')
@@ -366,29 +372,31 @@ block content
                               p  如果沒有反應，網頁關掉再重開。
                               p  建議使用windows系統的電腦來進行上傳的動作。
                               p  建議使用最新的chrome瀏覽器來上傳檔案。
+                              p  檔案大小限制：10Mebi位元組
                       .ui.info.message
                           .header 檔案名稱 
                           ul.list
                               li#the_file_name ...
                   .extra.content
                       button.ui.button(onClick="document.getElementById('xlf').click();") 上傳按鈕
-              .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
-                .ui.card
-                  .content
-                      .header 使登錄號可以連結至總圖
-                  .content
-                      h4.ui.sub.header 點選下方按鈕以自動化的產生(每筆資料)連結
-                      .ui.small.feed
-                      .event
-                          .content
-                          .summary
-                              p  對於較大的檔案，需要較長的處理時間。
-                              p  如果網頁沒有回應，請嘗試使用效能較好的電腦。
-                              p  此程式將視表格中的第一個行視為登錄號的格子。
-                              p  第一個行須存在一個格子其內容包含「登錄號」字樣。
-                              p  上述格子與其上方的格子將被視為標題而不被「超連結化」。
-                  .extra.content
-                      button.ui.button#RegistrationNumberLinkAutomaticallyGenerated 登錄號連結(自動)產生
+              if !disable_accession_number_to_link_to_master_plan
+                .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
+                  .ui.card
+                    .content
+                        .header 使登錄號可以連結至總圖
+                    .content
+                        h4.ui.sub.header 點選下方按鈕以自動化的產生(每筆資料)連結
+                        .ui.small.feed
+                        .event
+                            .content
+                            .summary
+                                p  對於較大的檔案，需要較長的處理時間。
+                                p  如果網頁沒有回應，請嘗試使用效能較好的電腦。
+                                p  此程式將視表格中的第一個行視為登錄號的格子。
+                                p  第一個行須存在一個格子其內容包含「登錄號」字樣。
+                                p  上述格子與其上方的格子將被視為標題而不被「超連結化」。
+                    .extra.content
+                        button.ui.button#RegistrationNumberLinkAutomaticallyGenerated 登錄號連結(自動)產生
               .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
                 //.ui.card
                   .content
@@ -577,6 +585,10 @@ block content
                   td semper
                   td porta
                   td Mauris
+    if linkAFTERfinish
+      #linkAFTERfinish=linkAFTERfinish
+    else 
+      #linkAFTERfinish no
     #aLotOFjs(style='display: none;')
       // 請注意:所有script的順序都是嚴格要求的
       script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')

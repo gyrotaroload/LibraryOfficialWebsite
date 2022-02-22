@@ -310,12 +310,12 @@ router.post('/excel', ensureAuthenticated, function (req, res, next) {
         ipaddress: req.ip,
         ChansuNoJunban: INChansuNoJunban
     });
-    excelDB.addexcelData(newexcelDB, function (err) {
+    excelDB.addexcelData(newexcelDB, function (err, r) {
         if (err) {
             console.log(err);
             res.status(500).send("fail - database save error");
         } else {
-            res.status(200).send("success");
+            res.status(200).send(`success@${r.id}`);
         }
     });
 });
@@ -350,6 +350,21 @@ router.get(('/addNewBooks'), ensureAuthenticated, function (req, res, next) {
                 VARdbname: "newbooksdb",
                 isADMIN: true,
             });
+        });
+    });
+});
+
+router.get(('/ero'), ensureAuthenticated, function (req, res, next) {
+    excelDB.getMAXChansuNoJunban('addExternalResources', (VARcountClass) => {
+        res.render('excel', {
+            title: '外部資源添加-使用excel',
+            Replace_text_to_re_enter_the_book_data_record: '外部資源添加-使用excel',
+            VARcountClassJade: parseInt(VARcountClass, 10) + 1,
+            //innerHTMLofLlist: innerHTMLofLlistSTRING,
+            VARdbname: "addExternalResources",
+            isADMIN: true,
+            disable_accession_number_to_link_to_master_plan: true,
+            linkAFTERfinish: req.query.eroID
         });
     });
 });
@@ -538,6 +553,17 @@ router.get('/docx', ensureAuthenticated, function (req, res, next) {
     });
 });
 
+router.get('/eroLink', ensureAuthenticated, function (req, res, next) {
+    e2.update_url(req.query.rlID, `/ero?pageid=${req.query.eID}&rlID=${req.query.rlID}`, r => {
+        if (r === 'yes') {
+            res.status(200).send(form_callback_page('成功'));
+        }
+        else {
+            res.status(404).send(form_callback_page('失敗'));
+        }
+    });
+});
+
 router.get('/link', ensureAuthenticated, function (req, res, next) {
     if (req.query.ic === 'l') {
         least.SETuri(req.query.lid, req.query.docid, r => {
@@ -658,7 +684,7 @@ router.post('/e2', ensureAuthenticated, function (req, res, next) {
             if (rbu === 'http://this.is.not.a.url.com/add/page?with=docx&next=step') {
                 res.redirect(303, `/main/docx?ic=es&id=${r}`);
             } else if (rbu === 'http://this.is.not.a.url.com/add/page?with=xlsx&next=step') {
-                res.redirect(303, '/docx')//TODO excel~ 
+                res.redirect(303, `/main/ero?eroID=${r}`);
             } else {
                 res.status(200).send(form_callback_page('資料寫入成功!'));
             }
