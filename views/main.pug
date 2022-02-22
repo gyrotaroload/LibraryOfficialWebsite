@@ -31,7 +31,7 @@ block content
             a.header-menu-tab(href='/users/logout')
               span.icon.entypo-logout.scnd-font-color
               | 登出
-        .profile-menu
+        .profile-menu(style='cursor: pointer;' onclick="document.getElementById('calendar').style.display = (document.getElementById('calendar').style.display==='none')?'block':'none';")
           p
             | Me 
             //a(href='#26')
@@ -42,42 +42,42 @@ block content
       .left-container.container
         .menu-box.block
           // MENU BOX (LEFT-CONTAINER)
-          h2.titular 主功能表
+          h2.titular 首頁編輯群
           ul.menu-box-menu
             //https://weloveiconfonts.com/
-            li
+            //li
               a.menu-box-tab(href='/main/addNewBooks')
                 span.icon.entypo-brush.scnd-font-color
                 | 新增「新書通報」
-                //.menu-box-number 24
-            li
+                //-.menu-box-number 24
+            //li
               a.menu-box-tab(href='/main/add_periodical')
                 span.icon.entypo-book-open.scnd-font-color
                 | 新增期刊
-                //.menu-box-number 3
-            li
+                //-.menu-box-number 3
+            //li
               a.menu-box-tab(href='/main/journals')
                 span.icon.entypo-sweden.scnd-font-color
                 | 期刊管理/編輯
-                //.menu-box-number 5
+                //-.menu-box-number 5
             li
               a.menu-box-tab(href='/main/swipeEDIT')
                 span.icon.entypo-cog.scnd-font-color
-                | 首頁動畫編輯(未開放)
-                .menu-box-number X
-            li
+                | 首頁動畫編輯
+                //.menu-box-number X
+            //li
               a.menu-box-tab(href='/main/docxUpload')
                 sapn.icon.entypo-chart-line.scnd-font-color
                 | 添加最新消息
-            li
+            //li
               a.menu-box-tab(href='/main/interlibraryCooperation')
                 sapn.icon.entypo-chart-line.scnd-font-color
                 | 編輯館際合作頁面
-            li
+            //li
               a.menu-box-tab(href='/main/AddElectronicResources')
                 sapn.icon.entypo-chart-line.scnd-font-color
                 | 新增電子資源
-            li
+            //li
               a.menu-box-tab(href='/main/swipeEDIT')
                 sapn.icon.entypo-chart-line.scnd-font-color
                 | 編輯首頁投影片
@@ -209,6 +209,47 @@ block content
             p.number 89k
       // MIDDLE-CONTAINER
       .middle-container.container
+        .menu-box.block
+          // MENU BOX (LEFT-CONTAINER)
+          h2.titular 新書通報群
+          ul.menu-box-menu
+            //https://weloveiconfonts.com/
+            li
+              a.menu-box-tab(href='/main/addNewBooks')
+                span.icon.entypo-brush.scnd-font-color
+                | 新增「新書通報」
+                //.menu-box-number 24
+            li
+              a.menu-box-tab(href='/main/add_periodical')
+                span.icon.entypo-book-open.scnd-font-color
+                | 新增期刊
+                //.menu-box-number 3
+            li
+              a.menu-box-tab(href='/main/journals')
+                span.icon.entypo-sweden.scnd-font-color
+                | 期刊管理/編輯
+                //.menu-box-number 5
+            li
+              a.menu-box-tab(href='/main/swipeEDIT')
+                span.icon.entypo-cog.scnd-font-color
+                | 首頁動畫編輯(未開放)
+                .menu-box-number X
+            li
+              a.menu-box-tab(href='/main/docxUpload')
+                sapn.icon.entypo-chart-line.scnd-font-color
+                | 添加最新消息
+            li
+              a.menu-box-tab(href='/main/interlibraryCooperation')
+                sapn.icon.entypo-chart-line.scnd-font-color
+                | 編輯館際合作頁面
+            li
+              a.menu-box-tab(href='/main/AddElectronicResources')
+                sapn.icon.entypo-chart-line.scnd-font-color
+                | 新增電子資源
+            li
+              a.menu-box-tab(href='/main/swipeEDIT')
+                sapn.icon.entypo-chart-line.scnd-font-color
+                | 編輯首頁投影片
         //.profile.block
           //-- PROFILE (MIDDLE-CONTAINER)
           a.add-button(href='#28')
@@ -490,7 +531,7 @@ block content
                 td
                 td
                 td
-        #calendar.calendar.block.otherplugincalendar(calendar='')
+        #calendar.calendar.block.otherplugincalendar(calendar='' style="display:none;")
         // end calendar-month block
         // end right-container
         // end main-container
