@@ -701,7 +701,8 @@ router.get('/editmd', ensureAuthenticated, function (req, res, next) {
         topic: '最新消息',
         topic_small: '新增',
         req_query_ic: req.query.ic,
-        req_query_id: req.query.id
+        req_query_id: req.query.id//,算了這個功能不做了
+        //defaultMDtextValue: req.query.defaultMDtextValue
     });
 });
 

@@ -141,6 +141,10 @@ html
             a.source-clear(href='#') clear
             a#permalink(href='./' title='Share this snippet as link')
               strong permalink
+          //if defaultMDtextValue
+            textarea.source.full-height=defaultMDtextValue
+          //else
+          //^^^^^^^^^^算了這個功能不做了
           textarea.source.full-height
             | ---
             | __Advertisement :)__
