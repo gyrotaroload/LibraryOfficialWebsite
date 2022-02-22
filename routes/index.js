@@ -2,52 +2,8 @@ var express = require('express');
 var nckulib = require('nckulib');
 var debug = require('debug')('libraryofficialwebsite:router');
 var router = express.Router();
+var randomstring = require("randomstring");
 ///////////////////////////////////////////////////////////////////////
-const slugify = (...args) => import('@sindresorhus/slugify').then(({ default: slugify }) => slugify(...args));
-var md = require('markdown-it')()
-  .use(require('markdown-it-sub'))
-  .use(require('markdown-it-sup'))
-  .use(require('markdown-it-footnote'))
-  .use(require('markdown-it-deflist'))
-  .use(require('markdown-it-abbr'))
-  .use(require('markdown-it-emoji'))
-  .use(require('markdown-it-container'), 'spoiler', {
-    //use example
-    validate: function (params) {
-      return params.trim().match(/^spoiler\s+(.*)$/);
-    },
-
-    render: function (tokens, idx) {
-      var m = tokens[idx].info.trim().match(/^spoiler\s+(.*)$/);
-
-      if (tokens[idx].nesting === 1) {
-        // opening tag
-        return '<details><summary>' + md.utils.escapeHtml(m[1]) + '</summary>\n';
-
-      } else {
-        // closing tag
-        return '</details>\n';
-      }
-    }
-  })
-  .use(require('markdown-it-ins'))
-  .use(require('markdown-it-mark'))
-  .use(require('markdown-it-texmath'), {
-    engine: require('katex'),
-    delimiters: 'dollars',
-    katexOptions: { macros: { "\\RR": "\\mathbb{R}" } }
-  })
-  .use(require('markdown-it-attrs'), {
-    // optional, these are default options
-    leftDelimiter: '{',
-    rightDelimiter: '}',
-    allowedAttributes: ['id', 'class', /^regex.*$/]
-  })
-  .use(require('markdown-it-anchor'), { slugify: s => slugify(s) })
-  .use(require('markdown-it-task-lists'), { label: true, labelAfter: true });
-var randomstring = require("randomstring");//use with markdown~~
-var replaceall = require("replaceall");
-///////////////////////////////////////////////
 var jwt = require('jsonwebtoken');
 const EXPIRES_IN = 5 * 60 * 1000; // 5*60 sec
 const { Base64 } = require('js-base64');
@@ -97,22 +53,6 @@ router.get('/', function (req, res, next) {
         swl: r
       });
     });
-  });
-});
-
-router.get('/editmd', function (req, res, next) {
-  res.render('md', {
-    title: '文字編輯',
-    topic: '最新消息',
-    topic_small: '新增'
-  });
-});
-
-router.post('/editmd', function (req, res, next) {
-  var result = md.render(req.body.usrinpt);
-  res.render('mdRaw', {
-    title: 'mdRaw-html',
-    VARformdtest: replaceall("[object Promise]", String(randomstring.generate()), String(result))
   });
 });
 

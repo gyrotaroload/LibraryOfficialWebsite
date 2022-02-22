@@ -73,6 +73,52 @@ var mammoth = require("mammoth");//main
 var multer = require('multer');
 const storage = multer.memoryStorage();
 var upload = multer({ storage: storage, limits: { /*fields: 1, */fileSize: 52428800/*50M我猜 */, files: 1/*, parts: 2 */ } });
+////////////////////////////////////////////////////////////////////////////////////////////////////
+const slugify = (...args) => import('@sindresorhus/slugify').then(({ default: slugify }) => slugify(...args));
+var md = require('markdown-it')()
+    .use(require('markdown-it-sub'))
+    .use(require('markdown-it-sup'))
+    .use(require('markdown-it-footnote'))
+    .use(require('markdown-it-deflist'))
+    .use(require('markdown-it-abbr'))
+    .use(require('markdown-it-emoji'))
+    .use(require('markdown-it-container'), 'spoiler', {
+        //use example
+        validate: function (params) {
+            return params.trim().match(/^spoiler\s+(.*)$/);
+        },
+
+        render: function (tokens, idx) {
+            var m = tokens[idx].info.trim().match(/^spoiler\s+(.*)$/);
+
+            if (tokens[idx].nesting === 1) {
+                // opening tag
+                return '<details><summary>' + md.utils.escapeHtml(m[1]) + '</summary>\n';
+
+            } else {
+                // closing tag
+                return '</details>\n';
+            }
+        }
+    })
+    .use(require('markdown-it-ins'))
+    .use(require('markdown-it-mark'))
+    .use(require('markdown-it-texmath'), {
+        engine: require('katex'),
+        delimiters: 'dollars',
+        katexOptions: { macros: { "\\RR": "\\mathbb{R}" } }
+    })
+    .use(require('markdown-it-attrs'), {
+        // optional, these are default options
+        leftDelimiter: '{',
+        rightDelimiter: '}',
+        allowedAttributes: ['id', 'class', /^regex.*$/]
+    })
+    .use(require('markdown-it-anchor'), { slugify: s => slugify(s) })
+    .use(require('markdown-it-task-lists'), { label: true, labelAfter: true });
+var randomstring = require("randomstring");//use with markdown~~
+var replaceall = require("replaceall");
+///////////////////////////////////////////////
 
 var DEF_DEBUG = true;
 
@@ -248,9 +294,6 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
         });
 
     });
-
-
-
 });
 
 router.post('/excel', ensureAuthenticated, function (req, res, next) {
@@ -648,6 +691,40 @@ router.post('/e3', ensureAuthenticated, upload.single('file'), function (req, re
         } else {
             console.log(r);
             res.status(200).send(form_callback_page('資料寫入「失敗」!'));
+        }
+    });
+});
+
+router.get('/editmd', ensureAuthenticated, function (req, res, next) {
+    res.render('md', {
+        title: '文字編輯',
+        topic: '最新消息',
+        topic_small: '新增',
+        req_query_ic: req.query.ic,
+        req_query_id: req.query.id//,算了這個功能不做了
+        //defaultMDtextValue: req.query.defaultMDtextValue
+    });
+});
+
+router.post('/editmd', ensureAuthenticated, function (req, res, next) {
+    var result = md.render(req.body.usrinpt);
+    var no = new docs({
+        dt: Date.now(),
+        html: replaceall("[object Promise]", String(randomstring.generate()), String(result))
+    });
+    docs.add(no, function (r) {
+        if (r) {
+            res.render('mdRaw', {
+                title: 'mdRaw-html',
+                VARformdtest: replaceall("[object Promise]", String(randomstring.generate()), String(result)),
+                docmdID: `@=@docmdid@=@${r.id}@~@docmdid@~@`
+            });
+        } else {
+            res.render('mdRaw', {
+                title: 'mdRaw-html',
+                VARformdtest: replaceall("[object Promise]", String(randomstring.generate()), String(result)),
+                docmdID: `@=@docmdid@=@error@~@docmdid@~@`
+            });
         }
     });
 });

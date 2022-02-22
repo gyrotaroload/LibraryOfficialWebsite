@@ -175,7 +175,7 @@ block content
               span.icon-cloudy
           ul.next-days
             li
-              a(href='#43')
+              a(href='#43' onclick="$('#TheNextStep').text('2');submitBTON();")
                 p.next-days-date
                   span.day markdown
                   span.scnd-font-color 純文字編輯
@@ -183,7 +183,7 @@ block content
                   | (方便)
                   span.icon.icon-cloudy.scnd-font-color
             li
-              a(onclick="$('#TheNextStep').text('1');submitBTON();")
+              a( href='#' onclick="$('#TheNextStep').text('1');submitBTON();")
                 p.next-days-date
                   span.day word
                   span.scnd-font-color 上傳文件

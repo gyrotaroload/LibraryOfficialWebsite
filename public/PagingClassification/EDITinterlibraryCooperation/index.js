@@ -1,3 +1,8 @@
+/////////////////////////////////////對應到這個檔案/////////////////////////////////////////////
+// views/EDITinterlibraryCooperation.pug
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
 function submitBTON(/*ns*/) {
     $.post('/main/agh',
         {
@@ -9,7 +14,9 @@ function submitBTON(/*ns*/) {
             if ($('#TheNextStep').text() === '1') {
                 window.location.href = '/main/docx?ic=g&id=' + r;
             }
-            else if ($('#TheNextStep').text() === '2') { console.log(2); }
+            else if ($('#TheNextStep').text() === '2') { 
+                window.location.href = '/main/editmd?ic=g&id=' + r;
+            }
             else if
                 ($('#TheNextStep').text() === '3') { console.log(3); }
             else {
