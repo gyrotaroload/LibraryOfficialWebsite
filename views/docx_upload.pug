@@ -104,7 +104,7 @@ block content
     #TheNextStep
     h6.ui.right.floated.header 填寫「標題」、「標籤」、「摘要」後，按下右下方的下一步接續填寫「內容」
       .first-border.flex.color-3(style="display:none;")
-        #submit.button.flex(align="center" onclick="$.post('/main/addleast',{YYYY:$('#YYYY').val(),M:$('#M').val(),D:$('#D').val(),h:$('#h').val(),mm:$('#mm').val(),tp:$('#tp').val(),ab:$('#ab').val(),labels:$('#labels').text(),uri:'$(__#uri__).val()'},(r)=>{console.log(r);if($('#TheNextStep').text()==='1'){window.location.href = '/main/docx?ic=l&id='+r;}else if($('#TheNextStep').text()==='2'){console.log(2);}else if($('#TheNextStep').text()==='3'){console.log(3);}else{console.log('內容->下一步::未定義');}})")
+        #submit.button.flex(align="center" onclick="$.post('/main/addleast',{YYYY:$('#YYYY').val(),M:$('#M').val(),D:$('#D').val(),h:$('#h').val(),mm:$('#mm').val(),tp:$('#tp').val(),ab:$('#ab').val(),labels:$('#labels').text(),uri:'$(__#uri__).val()'},(r)=>{console.log(r);if($('#TheNextStep').text()==='1'){window.location.href = '/main/docx?ic=l&id='+r;}else if($('#TheNextStep').text()==='2'){window.location.href = '/main/editmd?ic=l&id=' + r;}else if($('#TheNextStep').text()==='3'){console.log(3);}else{console.log('內容->下一步::未定義');}})")
           | &#9745;提交
           svg(width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg')
             path(d='M9.77623 4.61867C10.4796 4.99574 10.4796 6.00427 9.77623 6.38133L2.39266 10.3397C1.72648 10.6969 0.920166 10.2143 0.920167 9.45841L0.920167 1.54159C0.920167 0.785717 1.72648 0.30311 2.39266 0.660254L9.77623 4.61867Z' fill='#333')
@@ -220,7 +220,7 @@ block content
             i.thumbtack.icon
             |   建議選擇這個
           .first-border.flex.color-3
-            #submit.button.flex(align="center")
+            .button.flex(align="center" onclick="$('#TheNextStep').text('2');$('#submit').click();")
               | 下一步[使用markdown編輯器編輯內容]
               svg(width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg')
                 path(d='M9.77623 4.61867C10.4796 4.99574 10.4796 6.00427 9.77623 6.38133L2.39266 10.3397C1.72648 10.6969 0.920166 10.2143 0.920167 9.45841L0.920167 1.54159C0.920167 0.785717 1.72648 0.30311 2.39266 0.660254L9.77623 4.61867Z' fill='#333')

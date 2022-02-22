@@ -302,7 +302,7 @@ block content
               i.map.marker.icon
               .content
                 a.header 索引號碼/永久鏈結
-                if infoID.includes('@')
+                if infoID&&infoID.includes('@')
                   a.description(href=`${infoID.split('@')[1]}`)= infoID.split('@')[0]
                 else
                   .description= infoID
