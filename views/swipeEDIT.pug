@@ -1,6 +1,8 @@
 extends layout
 
 block contentHEAD
+  if refh
+    meta(http-equiv='refresh' content='0; URL=/main/swipeEDIT')
   script(src='https://code.iconify.design/2/2.1.0/iconify.min.js')
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css' integrity='sha512-SJw7jzjMYJhsEnN/BuxTWXkezA2cRanuB8TdCNMXFJjxG9ZGSKOX5P3j03H6kdMxalKHZ7vlBMB4CagFP/de0A==' crossorigin='anonymous' referrerpolicy='no-referrer')
   link(rel='stylesheet' href='/stylesheets/swipe_table.css')
@@ -78,15 +80,15 @@ block content
             section
               - var totalUnread = Math.floor((Math.random() * 100) + 1);
               h2 操作
-                span (請小心...)
+                span &emsp;
                 //span (#{totalUnread} unread)
               table
                 thead
-                  th.hvr-grow
+                  th.hvr-grow(onclick=`window.location.href = "?rmu=${(indexOfList<flo.length)?flo[indexOfList].id:'[error: index exceeds array length]'}";`)
                     span.iconify.hvr-grow(data-icon='ant-design:up-circle-twotone' style="transform: scale(5);")
-                  th.hvr-grow
+                  th.hvr-grow(onclick=`window.location.href = "?rmd=${(indexOfList<flo.length)?flo[indexOfList].id:'[error: index exceeds array length]'}";`)
                     span.iconify.hvr-grow(data-icon='ant-design:down-circle-twotone' style="transform: scale(5);")
-                  th.hvr-grow
+                  th.hvr-grow(onclick=`window.location.href = "?del=${(indexOfList<flo.length)?flo[indexOfList].id:'[error: index exceeds array length]'}";`)
                     span.iconify.hvr-grow(data-icon='fluent:delete-16-regular' style="transform: scale(5);")
 
             section
@@ -203,6 +205,7 @@ block content
               //textarea.ff.message(rows='4' cols='50' name='subject' placeholder='Please enter your message' required='')
               input#fn0.ff.btn(name='submit' type='submit' value='加入儲列')
         h2(style='background-color:#ddb98b;margin-top:-2vh;color:#000000;text-align:center;') 摘要
+        #CJ=cj
         form.ff
           //input.ff.name(name='name' placeholder='What is your name?' required='')
           //input.ff.email(name='emailaddress' placeholder='What is your email?' type='email' required='')

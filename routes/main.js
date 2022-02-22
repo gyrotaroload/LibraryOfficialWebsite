@@ -329,27 +329,49 @@ router.post('/excelTransferOrder', ensureAuthenticated, function (req, res, next
 
 router.get('/swipeEDIT', ensureAuthenticated, function (req, res, next) {
     swipe_edit.getList(r => {
-        //console.log(parseInt((req.iol || 0), 10) || 0);
-        var pr = {};
-        r.forEach((e, i) => { var tmp = { [i]: String(e.topic) }; pr = { ...pr, ...tmp }; });
-        //console.log(r[8].btons);
-        //console.log(r[req.query.iol].pic);
-        sharp(Buffer.from(r[req.query.iol].pic.replace(/^data:image\/[a-z]+;base64,/, ""), 'base64'))
-            .resize(497, 1388, {
-                fit: 'fill',
-                position: 'right top',
-                background: { r: 255, g: 255, b: 255, alpha: 0.5 }
-            })
-            .webp({ lossless: true })
-            .toBuffer((err, data, info) => {
-                res.render('swipeEDIT', {
-                    title: 'swipeEDIT',
-                    fullList: pr || { x: 'x' },
-                    indexOfList: parseInt((req.query.iol || 0), 10) || 0,
-                    flo: r,
-                    px: err || 'data:image/webp;base64,' + data.toString('base64')
+        swipe_edit.MODFdn(req.query.rmd, () => {
+            swipe_edit.MODFup(req.query.rmu, () => {
+                swipe_edit.delById(req.query.del || 0, () => {
+                    //console.log(parseInt((req.iol || 0), 10) || 0);
+                    var pr = {};
+                    r.forEach((e, i) => { var tmp = { [i]: String(e.topic) }; pr = { ...pr, ...tmp }; });
+                    var ChansuNoJunban_all = [];
+                    r.forEach((e, i) => {
+                        if (Number.isInteger(e.ChansuNoJunban)) ChansuNoJunban_all.push(e.ChansuNoJunban);
+                    });
+                    Array.prototype.max = function () {
+                        return Math.max.apply(null, this);
+                    };
+
+                    Array.prototype.min = function () {
+                        return Math.min.apply(null, this);
+                    };
+                    //console.log(r[8].btons);
+                    //console.log(r[req.query.iol].pic);
+                    sharp(Buffer.from((r[parseInt((req.query.iol || 0), 10) || 0]) ? r[parseInt((req.query.iol || 0), 10) || 0].pic.replace(/^data:image\/[a-z]+;base64,/, "") : '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', 'base64'))
+                        .resize(497, 1388, {
+                            fit: 'fill',
+                            position: 'right top',
+                            background: { r: 255, g: 255, b: 255, alpha: 0.5 }
+                        })
+                        .webp({ lossless: true })
+                        .toBuffer((err, data, info) => {
+                            console.log(isFinite(ChansuNoJunban_all.max()));
+                            console.log(ChansuNoJunban_all.max());
+                            console.log(ChansuNoJunban_all);
+                            res.render('swipeEDIT', {
+                                title: 'swipeEDIT',
+                                fullList: pr || { x: 'x' },
+                                indexOfList: parseInt((req.query.iol || 0), 10) || 0,
+                                flo: r,
+                                px: err || 'data:image/webp;base64,' + data.toString('base64'),
+                                cj: isFinite(ChansuNoJunban_all.max()) ? ChansuNoJunban_all.max() + 1 : 0,
+                                refh: req.query.rmd || req.query.rmu || req.query.del
+                            });
+                        });
                 });
             });
+        });
     });
 });
 

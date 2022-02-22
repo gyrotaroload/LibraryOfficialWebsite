@@ -35,7 +35,8 @@ router.post('/swipe_edit', ensureAuthenticated, upload.single('pic'), function (
         topic: topic,
         txt: txt,
         btons: JSON.parse(btons),
-        pic: image
+        pic: image,
+        ChansuNoJunban: req.body.ChansuNoJunban
     });
 
     swipe_edit.addswipe_edit(newswipe_edit, function (err, user) {

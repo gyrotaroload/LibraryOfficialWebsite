@@ -46,7 +46,7 @@ function reg_to_backend(pic_base64) {
     formData.append('topic', topic);
     formData.append('txt', txt);
     formData.append('btons', btons);
-
+    formData.append('ChansuNoJunban', parseInt(document.getElementById('CJ').innerText, 10));
 
     $.ajax({
         url: "/upload/swipe_edit",
