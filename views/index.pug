@@ -101,7 +101,7 @@ block content
         // Additional required wrapper
         .swiper-wrapper
           // Slides
-          .swiper-slide
+          //.swiper-slide
             #img1.ui.massive.message.masterVision
               .ui.container
                 h1.ui.huge.header 最新消息
@@ -111,7 +111,7 @@ block content
                   | pieces of content. Use it as a starting point to create something more
                   | unique.
                 button.ui.large.primary.button 瀏覽最新消息 »
-          .swiper-slide
+          //.swiper-slide
             #img2.ui.massive.message.masterVision
               .ui.container
                 h1.ui.huge.header 常用連結
@@ -121,7 +121,7 @@ block content
                   | pieces of content. Use it as a starting point to create something more
                   | unique.
                 button.ui.large.primary.button 瀏覽常用連結 »
-          .swiper-slide
+          //.swiper-slide
             #img3.ui.massive.message.masterVision
               .ui.container
                 h1.ui.huge.header 服務項目及規則
@@ -130,7 +130,18 @@ block content
                   | includes a large callout called a jumbotron and three supporting
                   | pieces of content. Use it as a starting point to create something more
                   | unique.
-                button.ui.large.primary.button 瀏覽圖書目錄 »
+                button.ui.large.primary.button 瀏覽圖書目錄 
+          each z, ix in swl
+            .swiper-slide
+              .ui.massive.message.masterVision(style=`background-image: url("${z.pic}");`)
+                .ui.container
+                  h1.ui.huge.header=z.topic
+                  p=z.txt
+                  - var n = 0;
+                  while n < ((z.btons)?z.btons.length:0)
+                    button.ui.large.primary.button(href=`${z.btons[n+1]}` onclick=`window.location.href = "${z.btons[n+1]}";`)=(String(z.btons[n])+" »")
+                    h6(style="display:none;")= n++ 
+                    h6(style="display:none;")= n++ 
         // If we need pagination
         .swiper-pagination
         // If we need navigation buttons
