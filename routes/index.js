@@ -100,6 +100,27 @@ router.get(('/newbooks'), function (req, res, next) {
   /////////////////////////////////////////////////////////////////////////////////
 });
 
+router.get(('/ero'), function (req, res, next) {
+  //////////////////////////這一段是從main.js copy來的/////////////////////////////////////
+  excelDB.getMAXChansuNoJunban('addExternalResources', (VARcountClass) => {
+    
+      excelDB.getPayloadById('addExternalResources', req.query.pageid, (thistopic, HTMLpayload) => {
+        res.render('excel', {
+          title: 'newbooks',
+          VARcountClassJade: parseInt(VARcountClass, 10) + 1,
+          //innerHTMLofLlist: innerHTMLofLlistSTRING,
+          VARdbname: "this_is_a_user",
+          isADMIN: false,
+          PUGVARHTMLpayload: HTMLpayload,
+          topicORwait2load: thistopic,
+          Replace_text_to_re_enter_the_book_data_record: '外部資源添加-使用excel',
+          disable_accession_number_to_link_to_master_plan: true
+        });
+    });
+  });
+  /////////////////////////////////////////////////////////////////////////////////
+});
+
 router.get('/jjson', function (req, res, next) {
   console.log(req.query.alpha);
   if (req.query.alpha) {

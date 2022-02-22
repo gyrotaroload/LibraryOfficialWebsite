@@ -26,7 +26,7 @@ var excelData = module.exports = mongoose.model('excelData', excelSchema);
 
 //function
 module.exports.addexcelData = function (newexcelData, callback) {
-    newexcelData.save(callback);
+    newexcelData.save((e,r)=>{callback(e,r);});
 };
 
 module.exports.countClass = function (excelclass, callback) {
