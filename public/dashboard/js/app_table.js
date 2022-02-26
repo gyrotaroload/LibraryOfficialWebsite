@@ -49,7 +49,9 @@ window.operateEvents = {
         })*/
         fetch(`/main/delJ?id=${row.id}`)
             .then((r) => { return r.text() })
-            .then((t) => { console.log(t); });
+            .then((t) => {
+                // console.log(t);
+                 });
     }
 }
 
@@ -68,6 +70,42 @@ function totalPriceFormatter(data) {
     }).reduce(function (sum, i) {
         return sum + i
     }, 0)
+}
+
+function LinkFormatter(value, row, index) {
+
+    function reg_step_1(ins) {
+        const regex = /@url@([^@]*)@href@/gm;
+        const str = ins;//`qwdewfr@href@電子期@text@http://intlpress.com/site/pub/pages/journals/items/cjm/content/vols/index.html@url@(wqdefewfrwr)@href@電子期@text@http://intlpress.com/site/pub/pages/journals/items/cjm/content/vols/index.html@url@448pijij@href@電子期@text@http://intlpress.com/site/pub/pages/journals/items/cjm/content/vols/index.html@url@448pijij`;
+        const subst = `@url@;;;$1;;;@href@`;
+
+        // The substituted value will be contained in the result variable
+        const result = str.replace(regex, subst);
+
+        console.log('Substitution result: ', result);
+        return result;
+    }
+
+    function reg_step_2(ins) {
+        const regex = /@href@([^:|@]*)@text@(http[s]?:\/\/.*?\/[a-zA-Z-_]+[^@]*)@url@/gm;
+        const str = ins;//`qwdewfr@href@電子期@text@http://intlpress.com/site/pub/pages/journals/items/cjm/content/vols/index.html@url@wqdefewfrwr@href@電子期@text@http://intlpress.com/site/pub/pages/journals/items/cjm/content/vols/index.html@url@448pijij`;
+        const subst = `$\`<a href='$2'>$1</a>$'`;
+
+        // The substituted value will be contained in the result variable
+        const result = str.replace(regex, subst);
+
+        console.log('Substitution result: ', result);
+        return result;
+    }
+
+    var tmpa = reg_step_1(value).split(';;;');
+    var ous = '';
+    tmpa.forEach(element => {
+        ous += reg_step_2(element)||element;
+    });
+
+
+    return ous;
 }
 
 function initTable() {
@@ -132,6 +170,7 @@ function initTable() {
                     align: 'center',
                     valign: 'middle',
                     sortable: true, searchable: false,
+                    formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }, {
                     title: '紙本資源',
@@ -224,7 +263,7 @@ function initTable() {
         ]
     })
     $table.on('load-success.bs.table', function (e, name, args) {
-        console.log("load-success.bs.table");
+        //console.log("load-success.bs.table");
         if (document.querySelector(".bootstrap-table.semantic")) {
             document.querySelector(".bootstrap-table.semantic").setAttribute("style", "width:100%;");
             if (document.getElementsByClassName("fixed-table-toolbar")) {
@@ -248,7 +287,7 @@ function initTable() {
             // push or splice the selections if you want to save all data selections
         })
     $table.on('all.bs.table', function (e, name, args) {
-        console.log(name, args)
+        //console.log(name, args)
     })
     $remove.click(function () {
         var ids = getIdSelections()
