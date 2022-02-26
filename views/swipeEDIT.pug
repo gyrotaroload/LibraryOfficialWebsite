@@ -59,10 +59,10 @@ block content
       
         // Panel (Element)
         .dashboard-preview__panel(class=name == 'Bromo' ? 'dashboard-preview__panel--active' : ''
-                                  data-panel-id=val)
+                                  data-panel-id=val style=" height:80%; overflow-y: scroll;")
                                   
           // Header (Element)
-          .dashboard-preview__header
+          .dashboard-preview__header(style='color:black;')
             h2 詳細資料
             //h2=name
             h3=(indexOfList<flo.length)?flo[indexOfList].topic:'[error: index exceeds array length]'
@@ -93,7 +93,7 @@ block content
 
             section
               h2 超連結
-              table(style="width:100%;")
+              table(style="width:20vw;")
                 thead
                   tr
                     th 按鈕文字
@@ -103,8 +103,10 @@ block content
                     - var n = 0;
                     while n < ((flo[indexOfList].btons)?flo[indexOfList].btons.length:0)
                       tr
-                        td=flo[indexOfList].btons[n]
-                        td=flo[indexOfList].btons[n+1]
+                        td
+                          p(style="width:4.5vw; word-wrap: break-word;")=flo[indexOfList].btons[n]
+                        td
+                          p(style="width:10vw; word-wrap: break-word;")=flo[indexOfList].btons[n+1]
                         td(style="display:none;")= n++ 
                         td(style="display:none;")= n++ 
                   else
@@ -140,7 +142,7 @@ block content
     .dashboard-content
 
       // Dashboard Header (Block)
-      .dashboard-header
+      .dashboard-header(style="width:75%;overflow:scroll;")
       
         // Search (Element)
         .dashboard-header__search
