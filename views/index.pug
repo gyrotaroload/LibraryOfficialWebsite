@@ -30,6 +30,7 @@ block contentHEAD
     @import url('./jumbotron/stylesheets/open.css');
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.0/css/hover-min.css' integrity='sha512-glciccPoOqr5mfDGmlJ3bpbvomZmFK+5dRARpt62nZnlKwaYZSfFpFIgUoD8ujqBw4TmPa/F3TX28OctJzoLfg==' crossorigin='anonymous')
   link(rel='stylesheet', href='/stylesheets/foot.css')
+  link(rel='stylesheet' href="/PagingClassification/index/rwd.css")
   //TODO 部屬時要調整
   // Global site tag (gtag.js) - Google Analytics
   script(async='' src='https://www.googletagmanager.com/gtag/js?id=G-HFF1V5CLB2')
@@ -101,43 +102,15 @@ block content
         // Additional required wrapper
         .swiper-wrapper
           // Slides
-          //.swiper-slide
-            #img1.ui.massive.message.masterVision
-              .ui.container
-                h1.ui.huge.header 最新消息
-                p
-                  | This is a template for a simple marketing or informational website. It
-                  | includes a large callout called a jumbotron and three supporting
-                  | pieces of content. Use it as a starting point to create something more
-                  | unique.
-                button.ui.large.primary.button 瀏覽最新消息 »
-          //.swiper-slide
-            #img2.ui.massive.message.masterVision
-              .ui.container
-                h1.ui.huge.header 常用連結
-                p
-                  | This is a template for a simple marketing or informational website. It
-                  | includes a large callout called a jumbotron and three supporting
-                  | pieces of content. Use it as a starting point to create something more
-                  | unique.
-                button.ui.large.primary.button 瀏覽常用連結 »
-          //.swiper-slide
-            #img3.ui.massive.message.masterVision
-              .ui.container
-                h1.ui.huge.header 服務項目及規則
-                p
-                  | This is a template for a simple marketing or informational website. It
-                  | includes a large callout called a jumbotron and three supporting
-                  | pieces of content. Use it as a starting point to create something more
-                  | unique.
-                button.ui.large.primary.button 瀏覽圖書目錄 
           each z, ix in swl
             .swiper-slide
               .ui.massive.message.masterVision(style=`background-image: url("${z.pic}");`)
-                .ui.container
+                .ui.container.swipe_hight_BGCRTL
                   h1.ui.huge.header=z.topic
-                  each this_is_a_new_line in z.txt.split(/\r\n|\r|\n/)
-                    p=this_is_a_new_line
+                  p
+                    each this_is_a_new_line in z.txt.split(/\r\n|\r|\n/)
+                      | #{this_is_a_new_line}
+                      br
                   - var n = 0;
                   while n < ((z.btons)?z.btons.length:0)
                     button.ui.large.primary.button(href=`${z.btons[n+1]}` onclick=`window.location.href = "${z.btons[n+1]}";`)=(String(z.btons[n])+" »")
@@ -224,29 +197,28 @@ block content
               i.book.icon
               .content #{ functionButtonMainText1 }
                 .sub.header
-                  | Template ini dibuat dengan core dari framework CSS Semantic-UI
+                  | 查看當月新書清單與歷史「新書上架」紀錄，可連結至總圖書目資料
         .column
           .ui.segment.aLikeMouse(onClick="window.location.href = '/journals';")
             h2.ui.icon.header
               i.block.layout.icon
               .content #{ functionButtonMainText2 }
                 .sub.header
-                  | Template responsive dan akan menyesuaikan dengan ukuran device
+                  | 提供電子期刊與紙本期刊之資源，部分紙本合訂集位於總圖書館
         .column
           .ui.segment.aLikeMouse(onClick="window.location.href = '/inner?ic=g';")
             h2.ui.icon.header
               i.handshake.outline.icon
               .content #{ functionButtonMainText3 }
                 .sub.header
-                  | Menggunakan plugin-plugin base JQuery seperti Owl Carousel.
+                  | 數學系教職員可進入填寫跨館借閱表單，跨館借閱書籍到後將通知您
         .column
           .ui.segment.aLikeMouse(onClick="window.location.href = '/electronic-resources';")
             h2.ui.icon.header
               i.file.alternate.icon
               .content #{ functionButtonMainText4 }
                 .sub.header
-                  | Anda dapat berkontribusi mengembangkan template ini untuk di jadikan template
-                  | Wordpress, Bloger dll.
+                  | 閱覽校內外電子書與常用連結，部分資源可提供下載，連至外部網站以取得更多資料
   //-
     div class="ui four statistics">
     <div class="statistic">
@@ -275,10 +247,10 @@ block content
     </div>
     </div
   .section.two
-    .ui.container
+    .ui.container.NavigationBar
       h1
         i.location.arrow.icon
-        |  成功大學數學系 系館一樓
+        | 成功大學數學系 系館一樓
       a#qrcode.ui.basic.massive.image.label.brown.hvr-grow-shadow(href='https://goo.gl/maps/bBXnC5XJRsmPSXUj6' target='_blank')
         //
           這是一個地圖按鈕
