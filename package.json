@@ -78,7 +78,7 @@
     "mongoose": "^6.0.5",
     "morgan": "~1.9.1",
     "multer": "*",
-    "nckulib": "2.0.0",
+    "nckulib": "2.0.1",
     "ncr-decode": "*",
     "nlcst-to-string": "*",
     "node-auto-loader": "*",
