@@ -136,7 +136,8 @@ block content
               .ui.massive.message.masterVision(style=`background-image: url("${z.pic}");`)
                 .ui.container
                   h1.ui.huge.header=z.topic
-                  p #{z.txt}
+                  each this_is_a_new_line in z.txt.split(/\r\n|\r|\n/)
+                    p=this_is_a_new_line
                   - var n = 0;
                   while n < ((z.btons)?z.btons.length:0)
                     button.ui.large.primary.button(href=`${z.btons[n+1]}` onclick=`window.location.href = "${z.btons[n+1]}";`)=(String(z.btons[n])+" »")
