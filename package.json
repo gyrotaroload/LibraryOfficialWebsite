@@ -32,7 +32,7 @@
     "esm": "*",
     "express": "~4.16.1",
     "express-messages": "^1.0.1",
-    "express-rate-limit": "*",
+    "express-rate-limit": "~6.3.0",
     "express-session": "*",
     "express-validator": "*",
     "fix-esm": "*",
