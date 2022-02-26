@@ -1,8 +1,5 @@
 var DEF_DEBUG = false;
 var GLOBAL_url = "/users/login";
-/*require.config({
-    paths: { "bcrypt": "../javascripts/bcrypt.js-master/dist/bcrypt" }
-});*/
 
 document.getElementById('upload_img_using_logo').addEventListener('click', function () {
     if (document.getElementById('disp_mod').innerText === "1") { //login
@@ -60,8 +57,6 @@ function login_button_click() {
             }
         }
 
-        //require(["bcrypt"], function(bcrypt) {
-        //bcrypt.hash(pasw, JSON.parse("\"$2a$10$ebwnNDwkFyRNPa5Zpgc0h.\""), function(err, hash) {
         if (!usrn) {
             if (DEF_DEBUG) {
                 console.log("!usrn");
@@ -120,8 +115,8 @@ function login_button_click() {
                 if (whether_the_account_password_is_wrong)/*try*/ { // statements to try
 
                     window.location.href = newstr;
-                } /*catch (e)*/else {
-                    //console.log(e);
+                } else {
+                   
                     $("#waiting_block").css('display', "none")
                     document.getElementById("error_msg_gui_word_part_color_1").innerText = "red";
                     document.getElementById("error_msg_gui_word_part_color_2").innerText = "black";
@@ -134,8 +129,6 @@ function login_button_click() {
                 }
             });
         }
-        //});
-        //});
     } else {
         document.getElementById('add_an_user2').click();
     }
