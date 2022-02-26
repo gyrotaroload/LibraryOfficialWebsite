@@ -212,7 +212,8 @@ router.get('/inner', function (req, res, next) {
         moment: require('moment'),
         dbhtml: '',
         ISuser: false,
-        ProntEndBeautificationRendering: true
+        ProntEndBeautificationRendering: true,
+        wsport:process.env.wsPORT
       });
     } else {
       //res.cookie('token', token, { maxAge: EXPIRES_IN, httpOnly: false });
@@ -244,7 +245,8 @@ router.get('/inner', function (req, res, next) {
               moment: require('moment'),
               dbhtml: html,
               ISuser: false,
-              ProntEndBeautificationRendering: true
+              ProntEndBeautificationRendering: true,
+              wsport:process.env.wsPORT
             }//);//neighbor pairing
             tokenM = jwt.sign({ stuff: html/*aka上方的dbhtml*/ }, process.env.token_defaults_secret, { expiresIn: EXPIRES_IN });
           } else {
@@ -276,7 +278,8 @@ router.get('/inner', function (req, res, next) {
               dbhtml: html,
               ISuser: false,
               ProntEndBeautificationRendering: true,
-              External_connection_button_array: ro.b
+              External_connection_button_array: ro.b,
+                      wsport:process.env.wsPORT
             }//);//neighbor pairing
             tokenM = jwt.sign({ stuff: html/*aka上方的dbhtml*/ }, process.env.token_defaults_secret, { expiresIn: EXPIRES_IN });
           } else {
@@ -319,7 +322,8 @@ router.get('/inner', function (req, res, next) {
               moment: require('moment'),
               dbhtml: html,
               ISuser: false,
-              ProntEndBeautificationRendering: true
+              ProntEndBeautificationRendering: true,
+              wsport:process.env.wsPORT
             }//);//neighbor pairing
             tokenM = jwt.sign({ stuff: html/*aka上方的dbhtml*/ }, process.env.token_defaults_secret, { expiresIn: EXPIRES_IN });
           } else {
@@ -375,7 +379,8 @@ router.get('/interlibraryCooperation', function (req, res, next) {
     moment: require('moment'),
     //dbhtml: html,
     ISuser: false,
-    ProntEndBeautificationRendering: true
+    ProntEndBeautificationRendering: true,
+    wsport:process.env.wsPORT
   });
 
 });

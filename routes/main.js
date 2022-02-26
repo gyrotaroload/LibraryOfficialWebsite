@@ -549,7 +549,8 @@ router.get('/docx', ensureAuthenticated, function (req, res, next) {
         ttp: "編輯",//公告
         tp: "按下右側「上傳」按鈕以上傳docx檔案",
         alpha: { txt: "提交", uri: `/main/link?ic=${req.query.ic}&lid=${req.query.id}&` },
-        moment: require('moment')
+        moment: require('moment'),
+        wsport:process.env.wsPORT
     });
 });
 

@@ -126,13 +126,13 @@ var opentimeSchema = mongoose.Schema({
 var opentime = module.exports = mongoose.model('opentime', opentimeSchema);
 
 //function
-module.exports.addswipe_edit = function (newexcelData, callback) {//這只是一個別名，跟excel沒關係
-    newexcelData.save(callback);
+module.exports.renew = function (tmp, callback) {//這只是一個別名，跟excel沒關係
+    tmp.save(callback);
 };
 
 module.exports.getList = function (callback) {
     const filter = {};
-    swipe_edit.find(filter).sort({ ChansuNoJunban: 'descending' }).exec((err, SearchResult) => {
+    opentime.find(filter).sort({ new_date: 'descending' }).exec((err, SearchResult) => {
         if (err) {
             console.log("======================");
             console.log(err);

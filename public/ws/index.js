@@ -40,7 +40,7 @@ function base64ToArrayBuffer(data) {
 
 
 //使用 WebSocket 的網址向 Server 開啟連結
-let ws = new WebSocket(`ws://${window.location.hostname}:13030`);
+let ws = new WebSocket(`ws://${window.location.hostname}:${(document.getElementById('wsport')&&document.getElementById('wsport').innerText)?document.getElementById('wsport').innerText:'13030'}`);
 var pdf_b64 = "";
 function downpdf() {
     solution1(pdf_b64);
