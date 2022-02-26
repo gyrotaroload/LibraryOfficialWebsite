@@ -20,7 +20,7 @@ var mongoose = require('mongoose');
 var debug = require('debug')('libraryofficialwebsite:app');
 
 
-var limiter = new RateLimit({
+var limiter = RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 60 * 1000 * 1000 //1000*1000/1sec max
 });
