@@ -60,6 +60,11 @@ router.post('/register', upload.single('profileimage'), function (req, res, next
   console.log(name);
   console.log(email);
   console.log(username); //console.log(password); console.log(password2);
+
+if (Array.isArray(password)){
+  password=password[0];
+}
+
   var error_msg_res = {};
 
   if (name.length > 8)
