@@ -42,7 +42,7 @@ async function verifyJWT(jwt) {
 }
 
 //指定開啟的 port
-const PORT13030 = 13030
+const PORT13030 =process.env.wsPORT|| 13030;
 
 //創建 express 的物件，並綁定及監聽 3000 port ，且設定開啟後在 console 中提示
 const server = express()

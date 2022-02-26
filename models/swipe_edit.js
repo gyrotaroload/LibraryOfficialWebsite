@@ -48,35 +48,35 @@ module.exports.delById = function (MODid, callback) {//L側板上升
 
 module.exports.MODFdn = function (MODid, callback) {//L側板下降
     if (MODid) {
-        console.log(1);
+        //console.log(1);
         var ChansuNoJunban_tmp = -1;
-        console.log(2);
+        //console.log(2);
         swipe_edit.findById(MODid, function (err, stuff) {
-            console.log(3);
+            //console.log(3);
             if (err) {
                 console.log(err);
             }
             ChansuNoJunban_tmp = stuff.ChansuNoJunban;
-            console.log(4);
+            //console.log(4);
             //logic:
             if (ChansuNoJunban_tmp - 1 >= 0) {
-                console.log(5);
+                //console.log(5);
                 const filter = { ChansuNoJunban: { $lt: ChansuNoJunban_tmp } };
-                console.log(6);
+                //console.log(6);
                 swipe_edit.find(filter).sort({ ChansuNoJunban: 'descending' }).exec((err2, SearchResult) => {
-                    console.log(7);
+                    //console.log(7);
                     if (err2) {
                         console.log(err2);
                     }
-                    console.log(8);
+                    //console.log(8);
                     if (SearchResult.length > 0) {
-                        console.log(9);
+                        //console.log(9);
                         ChansuNoJunban_tmp = SearchResult[0].ChansuNoJunban;
-                        console.log(10);
+                        //console.log(10);
                         swipe_edit.findByIdAndUpdate(SearchResult[0].id, { $set: { ChansuNoJunban: stuff.ChansuNoJunban } }, {}, () => {
-                            console.log(11);
+                            //console.log(11);
                             swipe_edit.findByIdAndUpdate(MODid, { $set: { ChansuNoJunban: ChansuNoJunban_tmp } }, {}, callback);
-                            console.log(12);
+                            //console.log(12);
                         });
                     }
                 });
@@ -84,48 +84,48 @@ module.exports.MODFdn = function (MODid, callback) {//L側板下降
         });
     }
     else {
-        console.log(13);
+        //console.log(13);
         callback();
     }
 };
 
 module.exports.MODFup = function (MODid, callback) {//L側板上升
     if (MODid) {
-        console.log(14);
+        //console.log(14);
         var ChansuNoJunban_tmp = -1;
         swipe_edit.findById(MODid, function (err, stuff) {
-            console.log(15);
+            //console.log(15);
             if (err) {
                 console.log(err);
             }
-            console.log(16);
+            //console.log(16);
             ChansuNoJunban_tmp = stuff.ChansuNoJunban;
-            console.log(17);
+            //console.log(17);
             //logic:
             //if (ChansuNoJunban_tmp - 1 >= 0) {
             const filter = { ChansuNoJunban: { $gt: ChansuNoJunban_tmp } };
-            console.log(18);
+            //console.log(18);
             swipe_edit.find(filter).sort({ ChansuNoJunban: 'ascending' }).exec((err2, SearchResult) => {
-                console.log(19);
+                //console.log(19);
                 if (err2) {
                     console.log(err2);
                 }
-                console.log(20);
+                //console.log(20);
                 if (SearchResult.length > 0) {
-                    console.log(21);
+                    //console.log(21);
                     ChansuNoJunban_tmp = SearchResult[0].ChansuNoJunban;
-                    console.log(22);
+                    //console.log(22);
                     swipe_edit.findByIdAndUpdate(SearchResult[0].id, { $set: { ChansuNoJunban: stuff.ChansuNoJunban } }, {}, () => {
-                        console.log(23);
+                        //console.log(23);
                         swipe_edit.findByIdAndUpdate(MODid, { $set: { ChansuNoJunban: ChansuNoJunban_tmp } }, {}, callback);
-                        console.log(24);
+                        //console.log(24);
                     });
                 } else { callback(); }
             });
             //}
         });
     } else {
-        console.log(25);
+        //console.log(25);
         callback();
     }
 };

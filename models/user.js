@@ -8,7 +8,7 @@ const mongoDBpsw = process.env.linjsing;
 const mongoDBdataBaseName = "maindb";
 //console.log(mongoDBpsw);
 //mongodb+srv://linjsing:<password>@cluster0.iupxg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-const uri = `mongodb+srv://${mongoDBuserName}:${mongoDBpsw}@cluster0.iupxg.mongodb.net/${mongoDBdataBaseName}?retryWrites=true&w=majority`;
+const uri = process.env.DBurl||`mongodb+srv://${mongoDBuserName}:${mongoDBpsw}@cluster0.iupxg.mongodb.net/${mongoDBdataBaseName}?retryWrites=true&w=majority`;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 //console.log("WTF???");
 
