@@ -29,8 +29,6 @@ import { parse } from 'node-html-parser';
 var b64a = require('base64-arraybuffer');
 var pdf = require('html-pdf');
 //////////////////////////////////ws//////////////////////////////////////////
-/*TODO完成伺服器端優先訊
-https://medium.com/enjoy-life-enjoy-coding/javascript-websocket-%E8%AE%93%E5%89%8D%E5%BE%8C%E7%AB%AF%E6%B2%92%E6%9C%89%E8%B7%9D%E9%9B%A2-34536c333e1b */
 token.defaults.secret = process.env.token_defaults_secret;
 token.defaults.timeStep = 5 * 60; //5min
 async function verifyJWT(jwt) {
