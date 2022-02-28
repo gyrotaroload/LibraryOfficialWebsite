@@ -36,7 +36,7 @@ module.exports.getConvenient = function (callback) {
         //console.log(SearchResult);console.log(SearchResult[0].id);console.log(SearchResult[0]._id);
         //console.log(SearchResult[0].bts);console.log(SearchResult[0].docid);
         callback(
-            (SearchResult[0].bts && SearchResult[0].docid) ?
+            (SearchResult && SearchResult[0] && SearchResult[0].bts && SearchResult[0].docid) ?
                 {
                     b: SearchResult[0].bts,
                     d: SearchResult[0].docid
