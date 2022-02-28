@@ -33,8 +33,8 @@ module.exports.getConvenient = function (callback) {
         if (err) {
             console.log(err);
         }
-        console.log(SearchResult);console.log(SearchResult[0].id);console.log(SearchResult[0]._id);
-        console.log(SearchResult[0].bts);console.log(SearchResult[0].docid);
+        //console.log(SearchResult);console.log(SearchResult[0].id);console.log(SearchResult[0]._id);
+        //console.log(SearchResult[0].bts);console.log(SearchResult[0].docid);
         callback(
             {
                 b: SearchResult[0].bts,
