@@ -57,6 +57,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(limiter);
+require('express-file-logger')(app)//express log to file
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
