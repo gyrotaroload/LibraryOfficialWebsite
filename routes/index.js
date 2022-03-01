@@ -3,6 +3,7 @@ var nckulib = require('nckulib');
 var debug = require('debug')('libraryofficialwebsite:router');
 var router = express.Router();
 var randomstring = require("randomstring");
+var addZero = require('add-zero');
 ///////////////////////////////////////////////////////////////////////
 var jwt = require('jsonwebtoken');
 const EXPIRES_IN = 5 * 60 * 1000; // 5*60 sec
@@ -50,7 +51,8 @@ router.get('/', function (req, res, next) {
         pc: numberArray(stuff.c),
         ps: req.query.page ? stuff.s.slice(parseInt(req.query.page) * 4, (parseInt(req.query.page) + 1) * 4) : stuff.s.slice(0 * 4, (0 + 1) * 4),
         margin: parseInt(req.query.page, 10) || 0,
-        swl: r
+        swl: r,
+        addZero : addZero
       });
     });
   });

@@ -36,9 +36,9 @@ var leastSchema = mongoose.Schema({
 
 //export JournalInformation schema
 var least = module.exports = mongoose.model('least', leastSchema);
-
 //function
 module.exports.add = function (newOBJ, callback) {
+
     newOBJ.save((e, r) => {
         if (e) {
             console.log(e);
@@ -56,7 +56,6 @@ module.exports.frontend = function (callback) {
             if (err) {
                 console.log(err);
             }
-            //console.log(SearchResult);
             callback(
                 {
                     c: count < 4 ? 1 : 1 + (count - count % 4) / 4,

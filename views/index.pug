@@ -9,7 +9,7 @@ block contentHEAD
   meta(name='author' content='修改的部分_作者1')
   meta(name='theme-color' content='#DDB98B')
   meta(property='og:title' content='成大數學系圖書館')
-  meta(property='og:description' content='請補充描述')
+  meta(property='og:description' content='成大數學系圖書館有 328 平方公尺(大約佔樓層面積一半)的閱覽室，目前藏書約 24330 冊，期刊總類約 226 種，圖書室採開架式供師生借閱、資料查詢、影印等使用。')
   meta(property='og:type' content='website')
   meta(property='og:image' content='images/california-brown-wooden-shelves-in-a-library-usa-usa-image.jpg')
   //下面這是https://search.google.com/search-console
@@ -268,27 +268,26 @@ block content
         // Middle Content
         .twelve.wide.column.mobile.only
           .ui.relaxed.divided.list
-            .item(align='left')
-              .right.floated.content
-                .ui.button Add
-              img.ui.avatar.image.middle.aligned(src='./jumbotron/assets/img/400x400.png')
-              .content
-                a.header Semantic-Org/Semantic-UI
-                .description 10 分鐘前更新
-            .item(align='left')
-              .right.floated.content
-                .ui.button Add
-              img.ui.avatar.image.middle.aligned(src='./jumbotron/assets/img/400x400.png')
-              .content
-                a.header Semantic-Org/Semantic-UI
-                .description 10 分鐘前更新
-            .item(align='left')
-              .right.floated.content
-                .ui.button Add
-              img.ui.avatar.image.middle.aligned(src='./jumbotron/assets/img/400x400.png')
-              .content
-                a.header Semantic-Org/Semantic-UI
-                .description 10 分鐘前更新
+            each eps, index in ps
+              .item(align='left')
+                .right.floated.content
+                  .ui.button 詳全文...
+                img.ui.avatar.image.middle.aligned(src=`./tool/t2i?txt=${margin*4+index}`)
+                .content
+                  a.header= eps.tp
+                  .description= eps.ab
+          //start copy ******************************************************************************************************************
+          .ui.divider
+          .ui.buttons
+            button.ui.button(onclick="var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=0;i<pgs.length;i++){if(parseInt(pgs[i].innerText,10)-1<0){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)-1;}}") Previous
+            if margin>4||pc.length
+              each epc in pc.slice(margin-2<0?0:margin-2,margin+3)
+                a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc
+            else
+              each epc in pc
+                a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc
+            button.ui.button(onclick=`var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=pgs.length-1;i>=0;i--){if(parseInt(pgs[i].innerText,10)+1>=${pc.length}){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)+1;}}`) Next
+          //end copy ******************************************************************************************************************
         .twelve.wide.column.tablet.computer.only
           div(align='center')
             .ui.divider
@@ -302,7 +301,7 @@ block content
                     .meta
                       span
                         i.calendar.icon
-                        | #{String(eps.YYYY)+'/'+String(eps.M)+'/'+String(eps.D)+'-'+String(eps.h)+':'+String(eps.mm)}
+                        | #{String(eps.YYYY)+'/'+addZero(eps.M||0,2)+'/'+addZero(eps.D||0,2)+'-'+addZero(eps.h||0,2)+':'+addZero(eps.mm||0,2)}
                         //i.tag.icon= eps.lab
                         each epl, index in eps.lab
                           i.tag.icon
@@ -390,6 +389,7 @@ block content
                       | Lore
                   .extra
                     .ui.blue.right.floated.button Read More
+            //start copy ******************************************************************************************************************
             .ui.divider
             .ui.buttons
               button.ui.button(onclick="var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=0;i<pgs.length;i++){if(parseInt(pgs[i].innerText,10)-1<0){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)-1;}}") Previous
@@ -400,6 +400,7 @@ block content
                 each epc in pc
                   a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc
               button.ui.button(onclick=`var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=pgs.length-1;i>=0;i--){if(parseInt(pgs[i].innerText,10)+1>=${pc.length}){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)+1;}}`) Next
+            //end copy ******************************************************************************************************************
         // Right Sidebar
         .four.wide.column.mobile.only
           #copyRightSidebar_mobile2desktop.ui.fluid.vertical.menu.moderns
