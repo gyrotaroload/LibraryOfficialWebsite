@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node -r mjs-require ./bin/wwwcopy.mjs",
-    "test": "node ./bin/www",
+    "test": "ABLE_NEW_ACCOUNT='yes' node -r mjs-require ./bin/wwwcopy.mjs",
     "minify:js": "browserify ./public/javascripts/snapshoot.js -o ./public/bundle/snapshoot_f.js && uglifyjs ./public/bundle/snapshoot_f.js -o ./public/bundle/snapshoot.js",
     "watch": "watchify ./public/javascripts/snapshoot.js -o ./public/bundle/snapshoot_f.js --debug --verbose",
     "postinstall": "node ./public/js/createFolderIfNotExist.js && symdeps",
@@ -119,7 +119,7 @@
     "express-robots-txt": "1.0.0",
     "mongo-sanitize": "1.1.0",
     "query-string": "7.1.1",
-    "express-file-logger":"1.0.5"
+    "express-file-logger": "1.0.5"
   },
   "symdeps": {
     "paths": {
