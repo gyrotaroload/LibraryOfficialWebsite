@@ -39,117 +39,120 @@ router.get('/login', function routergetlogin(req, res, next) {
       var_jade_error_msg_gui_text_2: "X",
       do_you_want_to_log_in_or_register: "0"
     });
-  }else{
+  } else {
     res.redirect('/main');
   }
 });
 
 //POST request to register
 router.post('/register', upload.single('profileimage'), function (req, res, next) {
-  //console.log(req.body);
-  //console.log(req.file.buffer.toString('base64'));
-  //var profileimage = req.file.buffer.toString('base64');
-  var profileimage;
-  //using multer
-  var name = req.body.name;
-  var email = req.body.email;
-  var username = req.body.username;
-  var password = req.body.password;
-  var password2 = req.body.password2;
+  if (process.env.ABLE_NEW_ACCOUNT==='yes') {//console.log(req.body);
+    //console.log(req.file.buffer.toString('base64'));
+    //var profileimage = req.file.buffer.toString('base64');
+    var profileimage;
+    //using multer
+    var name = req.body.name;
+    var email = req.body.email;
+    var username = req.body.username;
+    var password = req.body.password;
+    var password2 = req.body.password2;
 
-  console.log(name);
-  console.log(email);
-  console.log(username); //console.log(password); console.log(password2);
+    console.log(name);
+    console.log(email);
+    console.log(username); //console.log(password); console.log(password2);
 
-if (Array.isArray(password)){
-  password=password[0];
-}
-
-  var error_msg_res = {};
-
-  if (name.length > 8)
-    name = name.substr(0, 8)
-
-  User.getUserByUsername(username, function (err, user) {//檢查是否重複
-    if (user) {
-      error_msg_res["id_error"] = "Account name already exists";
+    if (Array.isArray(password)) {
+      password = password[0];
     }
 
-    //Form Validator
-    if (empty(name)) {
-      error_msg_res["name"] = "empty";
-    }
-    if (!Isemail.validate(email)) {
-      error_msg_res["email"] = "UNvalidate";
-    }
-    if (empty(username)) {
-      error_msg_res["username"] = "empty";
-    }
-    if (empty(password)) {
-      error_msg_res["password"] = "empty";
-    }
-    if (!isEqual(password, password2)) {
-      error_msg_res["password2"] = "neq";
-    }
-    if (!req.file) {
-      error_msg_res["req.file"] = "empty";
-    }
+    var error_msg_res = {};
 
-    console.log(error_msg_res);
-    if (!empty(error_msg_res)) {
-      res.render('login', {
-        var_use_old_jquery: true,
-        var_jade_err_msg_show: true,
-        var_jade_error_msg_gui_text_1: "錯誤",
-        var_jade_error_msg_gui_text_2: JSON.stringify(error_msg_res),
-        do_you_want_to_log_in_or_register: "0"
-      });
-    } else {
+    if (name.length > 8)
+      name = name.substr(0, 8)
 
-      const img = req.file.buffer;
-      const image = sharp(img);
-      image
-        .metadata()
-        .then(metadata => {
-          return image
-            .resize({
-              width: 50,
-              height: 50,
-              fit: sharp.fit.cover,
-            })
-            .toBuffer();
-        })
-        .then(data => {
-          profileimage = "data:image/jpeg;base64," + data.toString('base64');
+    User.getUserByUsername(username, function (err, user) {//檢查是否重複
+      if (user) {
+        error_msg_res["id_error"] = "Account name already exists";
+      }
 
-          var newUser = new User({
-            name: name,
-            email: email,
-            username: username,
-            password: password,
-            profileimage: profileimage
-          });
+      //Form Validator
+      if (empty(name)) {
+        error_msg_res["name"] = "empty";
+      }
+      if (!Isemail.validate(email)) {
+        error_msg_res["email"] = "UNvalidate";
+      }
+      if (empty(username)) {
+        error_msg_res["username"] = "empty";
+      }
+      if (empty(password)) {
+        error_msg_res["password"] = "empty";
+      }
+      if (!isEqual(password, password2)) {
+        error_msg_res["password2"] = "neq";
+      }
+      if (!req.file) {
+        error_msg_res["req.file"] = "empty";
+      }
 
-          User.createUser(newUser, function (err, user) {
-            //track for error
-            if (err) throw err;
-            console.log(user);
-          });
-          //Show success message with flash
-          /*req.flash('success', 'You are now registered and can login');
-          res.location('/');
-          res.redirect('/');*/
-          res.render('login', {
-            var_use_old_jquery: true,
-            var_jade_err_msg_show: false,
-            var_jade_error_msg_gui_text_1: "提示訊息",
-            var_jade_error_msg_gui_text_2: "註冊成功",
-            do_you_want_to_log_in_or_register: "-1"
-          });
-        })
-        .catch(err => { throw err; });
-    }
-  });
+      console.log(error_msg_res);
+      if (!empty(error_msg_res)) {
+        res.render('login', {
+          var_use_old_jquery: true,
+          var_jade_err_msg_show: true,
+          var_jade_error_msg_gui_text_1: "錯誤",
+          var_jade_error_msg_gui_text_2: JSON.stringify(error_msg_res),
+          do_you_want_to_log_in_or_register: "0"
+        });
+      } else {
+
+        const img = req.file.buffer;
+        const image = sharp(img);
+        image
+          .metadata()
+          .then(metadata => {
+            return image
+              .resize({
+                width: 50,
+                height: 50,
+                fit: sharp.fit.cover,
+              })
+              .toBuffer();
+          })
+          .then(data => {
+            profileimage = "data:image/jpeg;base64," + data.toString('base64');
+
+            var newUser = new User({
+              name: name,
+              email: email,
+              username: username,
+              password: password,
+              profileimage: profileimage
+            });
+
+            User.createUser(newUser, function (err, user) {
+              //track for error
+              if (err) throw err;
+              console.log(user);
+            });
+            //Show success message with flash
+            /*req.flash('success', 'You are now registered and can login');
+            res.location('/');
+            res.redirect('/');*/
+            res.render('login', {
+              var_use_old_jquery: true,
+              var_jade_err_msg_show: false,
+              var_jade_error_msg_gui_text_1: "提示訊息",
+              var_jade_error_msg_gui_text_2: "註冊成功",
+              do_you_want_to_log_in_or_register: "-1"
+            });
+          })
+          .catch(err => { throw err; });
+      }
+    });
+  } else {
+    return res.status(400).send("leave, you don't belong here");
+  }
 });
 
 passport.use(new LocalStrategy(function (username, password, done) {
