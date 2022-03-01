@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node -r mjs-require ./bin/wwwcopy.mjs",
-    "test": "ABLE_NEW_ACCOUNT='yes' node -r mjs-require ./bin/wwwcopy.mjs",
+    "start": "node -r mjs-require dotenv/config ./bin/wwwcopy.mjs dotenv_config_path=./.env",
+    "test": "ABLE_NEW_ACCOUNT='yes' node -r mjs-require dotenv/config ./bin/wwwcopy.mjs dotenv_config_path=./.env",
     "minify:js": "browserify ./public/javascripts/snapshoot.js -o ./public/bundle/snapshoot_f.js && uglifyjs ./public/bundle/snapshoot_f.js -o ./public/bundle/snapshoot.js",
     "watch": "watchify ./public/javascripts/snapshoot.js -o ./public/bundle/snapshoot_f.js --debug --verbose",
     "postinstall": "node ./public/js/createFolderIfNotExist.js && symdeps",
@@ -120,7 +120,8 @@
     "mongo-sanitize": "1.1.0",
     "query-string": "7.1.1",
     "express-file-logger": "1.0.5",
-    "add-zero": "1.0.0"
+    "add-zero": "1.0.0",
+    "dotenv":"16.0.0"
   },
   "symdeps": {
     "paths": {
