@@ -119,7 +119,8 @@
     "express-robots-txt": "1.0.0",
     "mongo-sanitize": "1.1.0",
     "query-string": "7.1.1",
-    "express-file-logger": "1.0.5"
+    "express-file-logger": "1.0.5",
+    "add-zero": "1.0.0"
   },
   "symdeps": {
     "paths": {

@@ -302,7 +302,7 @@ block content
                     .meta
                       span
                         i.calendar.icon
-                        | #{String(eps.YYYY)+'/'+String(eps.M)+'/'+String(eps.D)+'-'+String(eps.h)+':'+String(eps.mm)}
+                        | #{String(eps.YYYY)+'/'+addZero(eps.M||0,2)+'/'+addZero(eps.D||0,2)+'-'+addZero(eps.h||0,2)+':'+addZero(eps.mm||0,2)}
                         //i.tag.icon= eps.lab
                         each epl, index in eps.lab
                           i.tag.icon
