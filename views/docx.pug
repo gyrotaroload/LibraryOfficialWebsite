@@ -224,7 +224,6 @@ block content
         | 好的
         i.checkmark.icon
   #tkn(style="display:none;")= tkn
-  script(src='/ws/index.js')
   script.
     function FUCNmakeALLtableTOsemanticUI(){
     var makeALLtableTOsemanticUI = document.getElementsByTagName("table");
@@ -513,6 +512,7 @@ block content
   //script(type="module" src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.es.min.js' integrity='sha512-ADI0Y5mOlKdWvNoFMqemyhsXH3ij2AB8GY1Y9wPAu6p3TH3FXzGOyVuOguHBtm/rPdS5eBxVUlbrfGwmZq066g==' crossorigin='anonymous' referrerpolicy='no-referrer')
   //script(src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js' integrity='sha512-s/XK4vYVXTGeUSv4bRPOuxSDmDlTedEpMEcAQk0t/FMd9V6ft8iXdwSBxV0eD60c6w/tjotSlKu9J2AAW1ckTA==' crossorigin='anonymous' referrerpolicy='no-referrer')
   script(src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js' integrity='sha512-UcDEnmFoMh0dYHu0wGsf5SKB7z7i5j3GuXHCnb3i4s44hfctoLihr896bxM0zL7jGkcHQXXrJsFIL62ehtd6yQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script(src='/ws/index.js')
   script.
     var commercialFileName = document.title + ((typeof moment !=='undefined') ? (`${moment().format('MMMM-Do-YYYY-h-mm-ss-a')}`) : 'could_not_load_current_moment') + '.pdf';
     function saveData(blob, filename) {
