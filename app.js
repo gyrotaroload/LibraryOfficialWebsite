@@ -67,9 +67,9 @@ app.use('/upload', uploadRouter);
 
 app.use(robots({
   UserAgent: '*',
-  Disallow: '',//allow every things
+  Disallow: [ '/users/login', '/main' ],//allow every things
   CrawlDelay: '5',
-  Sitemap: 'https://library-official-website.herokuapp.com/sitemap.xml',
+  Sitemap: 'https://library.math.ncku.edu.tw/sitemap.xml',
 }))
 
 //get/post

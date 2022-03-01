@@ -52,7 +52,7 @@ router.get('/', function (req, res, next) {
         ps: req.query.page ? stuff.s.slice(parseInt(req.query.page) * 4, (parseInt(req.query.page) + 1) * 4) : stuff.s.slice(0 * 4, (0 + 1) * 4),
         margin: parseInt(req.query.page, 10) || 0,
         swl: r,
-        addZero : addZero
+        addZero: addZero
       });
     });
   });
@@ -105,19 +105,19 @@ router.get(('/newbooks'), function (req, res, next) {
 router.get(('/ero'), function (req, res, next) {
   //////////////////////////這一段是從main.js copy來的/////////////////////////////////////
   excelDB.getMAXChansuNoJunban('addExternalResources', (VARcountClass) => {
-    
-      excelDB.getPayloadById('addExternalResources', req.query.pageid, (thistopic, HTMLpayload) => {
-        res.render('excel', {
-          title: 'newbooks',
-          VARcountClassJade: parseInt(VARcountClass, 10) + 1,
-          //innerHTMLofLlist: innerHTMLofLlistSTRING,
-          VARdbname: "this_is_a_user",
-          isADMIN: false,
-          PUGVARHTMLpayload: HTMLpayload,
-          topicORwait2load: thistopic,
-          Replace_text_to_re_enter_the_book_data_record: '外部資源添加-使用excel',
-          disable_accession_number_to_link_to_master_plan: true
-        });
+
+    excelDB.getPayloadById('addExternalResources', req.query.pageid, (thistopic, HTMLpayload) => {
+      res.render('excel', {
+        title: 'newbooks',
+        VARcountClassJade: parseInt(VARcountClass, 10) + 1,
+        //innerHTMLofLlist: innerHTMLofLlistSTRING,
+        VARdbname: "this_is_a_user",
+        isADMIN: false,
+        PUGVARHTMLpayload: HTMLpayload,
+        topicORwait2load: thistopic,
+        Replace_text_to_re_enter_the_book_data_record: '外部資源添加-使用excel',
+        disable_accession_number_to_link_to_master_plan: true
+      });
     });
   });
   /////////////////////////////////////////////////////////////////////////////////
@@ -215,7 +215,7 @@ router.get('/inner', function (req, res, next) {
         dbhtml: '',
         ISuser: false,
         ProntEndBeautificationRendering: true,
-        wsport:process.env.wsPORT
+        wsport: process.env.wsPORT
       });
     } else {
       //res.cookie('token', token, { maxAge: EXPIRES_IN, httpOnly: false });
@@ -248,7 +248,7 @@ router.get('/inner', function (req, res, next) {
               dbhtml: html,
               ISuser: false,
               ProntEndBeautificationRendering: true,
-              wsport:process.env.wsPORT
+              wsport: process.env.wsPORT
             }//);//neighbor pairing
             tokenM = jwt.sign({ stuff: html/*aka上方的dbhtml*/ }, process.env.token_defaults_secret, { expiresIn: EXPIRES_IN });
           } else {
@@ -281,7 +281,7 @@ router.get('/inner', function (req, res, next) {
               ISuser: false,
               ProntEndBeautificationRendering: true,
               External_connection_button_array: ro.b,
-                      wsport:process.env.wsPORT
+              wsport: process.env.wsPORT
             }//);//neighbor pairing
             tokenM = jwt.sign({ stuff: html/*aka上方的dbhtml*/ }, process.env.token_defaults_secret, { expiresIn: EXPIRES_IN });
           } else {
@@ -325,7 +325,7 @@ router.get('/inner', function (req, res, next) {
               dbhtml: html,
               ISuser: false,
               ProntEndBeautificationRendering: true,
-              wsport:process.env.wsPORT
+              wsport: process.env.wsPORT
             }//);//neighbor pairing
             tokenM = jwt.sign({ stuff: html/*aka上方的dbhtml*/ }, process.env.token_defaults_secret, { expiresIn: EXPIRES_IN });
           } else {
@@ -382,7 +382,7 @@ router.get('/interlibraryCooperation', function (req, res, next) {
     //dbhtml: html,
     ISuser: false,
     ProntEndBeautificationRendering: true,
-    wsport:process.env.wsPORT
+    wsport: process.env.wsPORT
   });
 
 });
@@ -428,7 +428,7 @@ router.get('/sitemap.xml', function (req, res) {
   }
 
   try {
-    const smStream = new SitemapStream({ hostname: 'https://library-official-website.herokuapp.com' });//TODO change hostname
+    const smStream = new SitemapStream({ hostname: 'https://library.math.ncku.edu.tw/' });
     const pipeline = smStream.pipe(createGzip())
 
     // pipe your entries or directly write them.
@@ -440,7 +440,7 @@ router.get('/sitemap.xml', function (req, res) {
     Readable.from([{url: '/page-1'}...]).pipe(smStream)
     if you are looking to avoid writing your own loop.
     */
-    smStream.write({ url: '/', changefreq: 'monthly', priority: 1.00 }); smStream.write({ url: '/inner?id=$(__', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: '/inner?id=61cdf503b346ec72f289aa09&amp;pid=61cdf3d7f75eb35714a35b45&amp;ic=l', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: '/inner?id=61cdf035f75eb35714a35b30&amp;pid=61cdf00bf75eb35714a35b2c&amp;ic=l', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: '/inner?id=61cdd3d52245725619503d1d&amp;pid=61cdd3a92245725619503d19&amp;ic=l', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: '/?page=0', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: '/?page=1', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: '/?page=2', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: '/users/login', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: '/?page=3', changefreq: 'monthly', priority: 0.64 }); smStream.write({ url: '/?page=4', changefreq: 'monthly', priority: 0.64 }); smStream.write({ url: '/?page=5', changefreq: 'monthly', priority: 0.51 }); smStream.write({ url: '/?page=6', changefreq: 'monthly', priority: 0.51 }); smStream.write({ url: '/?page=7', changefreq: 'monthly', priority: 0.41 }); smStream.write({ url: '/inner?id=undefined&amp;pid=61cce38d2f81b86f4f8381c6&amp;ic=l', changefreq: 'monthly', priority: 0.33 }); smStream.write({ url: '/inner?id=undefined&amp;pid=61cce2e1b19a78ec95b0229c&amp;ic=l', changefreq: 'monthly', priority: 0.33 }); smStream.write({ url: '/inner?id=61cdd3d52245725619503d1d&amp;pid=61cce2861052c1467ce136e5&amp;ic=l', changefreq: 'monthly', priority: 0.33 });
+    smStream.write({ url: 'https://library.math.ncku.edu.tw/', changefreq: 'monthly', priority: 1.00 }); smStream.write({ url: 'https://library.math.ncku.edu.tw/?page=0', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: 'https://library.math.ncku.edu.tw/inner?id=621dbab586d39441029b9bf6&amp;pid=621dba9a86d39441029b9bf2&amp;ic=l', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: 'https://library.math.ncku.edu.tw/inner?id=$(__', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: 'https://library.math.ncku.edu.tw/inner?id=621db9ff86d39441029b9bdb&amp;pid=621db9ea86d39441029b9bd7&amp;ic=l', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: 'https://library.math.ncku.edu.tw/users/login', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: 'https://library.math.ncku.edu.tw/', changefreq: 'monthly', priority: 1.00 }); smStream.write({ url: 'https://library.math.ncku.edu.tw/?page=0', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: 'https://library.math.ncku.edu.tw/inner?id=621dbab586d39441029b9bf6&amp;pid=621dba9a86d39441029b9bf2&amp;ic=l', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: 'https://library.math.ncku.edu.tw/inner?id=$(__', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: 'https://library.math.ncku.edu.tw/inner?id=621db9ff86d39441029b9bdb&amp;pid=621db9ea86d39441029b9bd7&amp;ic=l', changefreq: 'monthly', priority: 0.80 }); smStream.write({ url: 'https://library.math.ncku.edu.tw/users/login', changefreq: 'monthly', priority: 0.80 });
 
     // cache the response
     streamToPromise(pipeline).then(sm => sitemap = sm)
