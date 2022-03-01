@@ -268,27 +268,26 @@ block content
         // Middle Content
         .twelve.wide.column.mobile.only
           .ui.relaxed.divided.list
-            .item(align='left')
-              .right.floated.content
-                .ui.button Add
-              img.ui.avatar.image.middle.aligned(src='./jumbotron/assets/img/400x400.png')
-              .content
-                a.header Semantic-Org/Semantic-UI
-                .description 10 分鐘前更新
-            .item(align='left')
-              .right.floated.content
-                .ui.button Add
-              img.ui.avatar.image.middle.aligned(src='./jumbotron/assets/img/400x400.png')
-              .content
-                a.header Semantic-Org/Semantic-UI
-                .description 10 分鐘前更新
-            .item(align='left')
-              .right.floated.content
-                .ui.button Add
-              img.ui.avatar.image.middle.aligned(src='./jumbotron/assets/img/400x400.png')
-              .content
-                a.header Semantic-Org/Semantic-UI
-                .description 10 分鐘前更新
+            each eps, index in ps
+              .item(align='left')
+                .right.floated.content
+                  .ui.button 詳全文...
+                img.ui.avatar.image.middle.aligned(src=`./tool/t2i?txt=${margin*4+index}`)
+                .content
+                  a.header= eps.tp
+                  .description= eps.ab
+          //start copy ******************************************************************************************************************
+          .ui.divider
+          .ui.buttons
+            button.ui.button(onclick="var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=0;i<pgs.length;i++){if(parseInt(pgs[i].innerText,10)-1<0){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)-1;}}") Previous
+            if margin>4||pc.length
+              each epc in pc.slice(margin-2<0?0:margin-2,margin+3)
+                a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc
+            else
+              each epc in pc
+                a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc
+            button.ui.button(onclick=`var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=pgs.length-1;i>=0;i--){if(parseInt(pgs[i].innerText,10)+1>=${pc.length}){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)+1;}}`) Next
+          //end copy ******************************************************************************************************************
         .twelve.wide.column.tablet.computer.only
           div(align='center')
             .ui.divider
@@ -390,6 +389,7 @@ block content
                       | Lore
                   .extra
                     .ui.blue.right.floated.button Read More
+            //start copy ******************************************************************************************************************
             .ui.divider
             .ui.buttons
               button.ui.button(onclick="var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=0;i<pgs.length;i++){if(parseInt(pgs[i].innerText,10)-1<0){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)-1;}}") Previous
@@ -400,6 +400,7 @@ block content
                 each epc in pc
                   a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc
               button.ui.button(onclick=`var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=pgs.length-1;i>=0;i--){if(parseInt(pgs[i].innerText,10)+1>=${pc.length}){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)+1;}}`) Next
+            //end copy ******************************************************************************************************************
         // Right Sidebar
         .four.wide.column.mobile.only
           #copyRightSidebar_mobile2desktop.ui.fluid.vertical.menu.moderns
