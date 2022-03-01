@@ -271,7 +271,7 @@ block content
             each eps, index in ps
               .item(align='left')
                 .right.floated.content
-                  .ui.button 詳全文...
+                  .ui.button(href=`/inner?id=${eps.uri}&pid=${eps.id}&ic=l`) 詳全文...
                 img.ui.avatar.image.middle.aligned(src=`./tool/t2i?txt=${margin*4+index}`)
                 .content
                   a.header= eps.tp
