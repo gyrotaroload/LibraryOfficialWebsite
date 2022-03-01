@@ -47,7 +47,7 @@ block content
   .ui.middle.aligned.center.aligned.grid
     .column
       h2.ui.teal.center.aligned.header
-        img.image(src='/login/admin_control_panel_icon_150307.svg')
+        img#magicreg.image(src='/login/admin_control_panel_icon_150307.svg')
         |  Log-in to your
         |           account
       form#login_page.ui.large.form.loginAndRegistrationDataModule
@@ -114,3 +114,11 @@ block content
   button#disp_mod.loginAndRegistrationDataModule(style="display:none;") #{ do_you_want_to_log_in_or_register }
   script(src='./../javascripts/reg.js')
   script(src='./../javascripts/index_err_msg.js')
+  script.
+    document.getElementById('cre_acc_log_fk_bton').style.display = 'none';
+    document.getElementById('magicreg').addEventListener('click', function (evt) {
+    if (evt.detail === 3) {
+    console.log('triple click!');
+    document.getElementById('cre_acc_log_fk_bton').style.display = 'block';
+    }
+    });
