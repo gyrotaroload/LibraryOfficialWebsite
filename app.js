@@ -12,6 +12,7 @@ var randomstring = require("randomstring");
 const { body, validationResult } = require('express-validator');
 const SocketServer = require('ws').Server;
 const robots = require('express-robots-txt');
+var minifyHTML = require('express-minify-html-2');
 
 //add new module
 var flash = require('connect-flash');
@@ -58,6 +59,18 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(limiter);
 require('express-file-logger')(app)//express log to file
+app.use(minifyHTML({
+  override:      true,
+  exception_url: false,
+  htmlMinifier: {
+      removeComments:            true,
+      collapseWhitespace:        true,
+      collapseBooleanAttributes: true,
+      removeAttributeQuotes:     true,
+      removeEmptyAttributes:     true,
+      minifyJS:                  true
+  }
+}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
