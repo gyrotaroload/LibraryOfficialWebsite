@@ -163,6 +163,7 @@ router.get('/', ensureAuthenticated, function (req, res, next) {
         //var_jade_onsleep_stat: `${(!Personget) ? "-1" : (Personget.is_sleep) ? "yes" : "no"}`,
         //var_jade_user_exp_css: (!Middatatmpget) ? "width: calc(var(--var_vw)*25*0/100);" : (!Middatatmpget.tmp_to_set) ? "width: calc(var(--var_vw)*25*0/100);" : `width: calc(var(--var_vw)*25*${JSON.parse(Middatatmpget.tmp_to_set).exp_data_tmp}/100);`,
         //var_jade_user_lv_txt: `LV${(!Middatatmpget) ? "0" : (!Middatatmpget.tmp_to_set) ? "0" : JSON.parse(Middatatmpget.tmp_to_set).goal_data_4_tmp}`
+        window_location_href_main:'yes'
     });
 });
 //});
@@ -190,7 +191,8 @@ router.get('/add_periodical', ensureAuthenticated, function (req, res, next) {
         EDITLIVstart: (req.query.EDITLIVstart) ? Base64.decode(req.query.EDITLIVstart) : "",
         EDITLIVend: (req.query.EDITLIVend) ? Base64.decode(req.query.EDITLIVend) : "",
         EDITLIVx: (req.query.EDITLIVx) ? Base64.decode(req.query.EDITLIVx) : ""
-        , id: req.query.id || "", modeAE: (req.query.id) ? "編輯" : "新增"
+        , id: req.query.id || "", modeAE: (req.query.id) ? "編輯" : "新增",
+        window_location_href_main:'yes'
     });
 });
 
@@ -349,6 +351,7 @@ router.get(('/addNewBooks'), ensureAuthenticated, function (req, res, next) {
                 innerHTMLofLlist: innerHTMLofLlistSTRING,
                 VARdbname: "newbooksdb",
                 isADMIN: true,
+                window_location_href_main:'yes',
             });
         });
     });
@@ -364,7 +367,8 @@ router.get(('/ero'), ensureAuthenticated, function (req, res, next) {
             VARdbname: "addExternalResources",
             isADMIN: true,
             disable_accession_number_to_link_to_master_plan: true,
-            linkAFTERfinish: req.query.eroID
+            linkAFTERfinish: req.query.eroID,
+            window_location_href_main:'yes',
         });
     });
 });
@@ -424,7 +428,8 @@ router.get('/swipeEDIT', ensureAuthenticated, function (req, res, next) {
                                 flo: r,
                                 px: err || 'data:image/webp;base64,' + data.toString('base64'),
                                 cj: isFinite(ChansuNoJunban_all.max()) ? ChansuNoJunban_all.max() + 1 : 0,
-                                refh: req.query.rmd || req.query.rmu || req.query.del
+                                refh: req.query.rmd || req.query.rmu || req.query.del,
+                                window_location_href_main:'yes',
                             });
                         });
                 });
@@ -439,7 +444,8 @@ router.get('/journals', ensureAuthenticated, function (req, res, next) {
         isUSER: 'no',
         jjsonURL: "/jjson",
         a2z: generator('@', ['A-Z']),
-        alpha: '0'
+        alpha: '0',
+        window_location_href_main:'yes',
     });
 });
 
@@ -457,7 +463,8 @@ router.get('/infoJ', ensureAuthenticated, function (req, res, next) {
 router.get('/docxUpload', ensureAuthenticated, function (req, res, next) {
     res.render('docx_upload', {
         title: 'docx upload 2',
-        moment: require('moment')
+        moment: require('moment'),
+        window_location_href_main:'yes',
     });
 });
 
@@ -549,7 +556,8 @@ router.get('/docx', ensureAuthenticated, function (req, res, next) {
         tp: "按下右側「上傳」按鈕以上傳docx檔案",
         alpha: { txt: "提交", uri: `/main/link?ic=${req.query.ic}&lid=${req.query.id}&` },
         moment: require('moment'),
-        wsport:process.env.wsPORT
+        wsport:process.env.wsPORT,
+        window_location_href_main:'yes',
     });
 });
 
@@ -605,6 +613,7 @@ router.get('/interlibraryCooperation', ensureAuthenticated, function (req, res, 
         var_jade_err_msg_show: false,
         var_jade_error_msg_gui_text_1: "X",
         var_jade_error_msg_gui_text_2: "X",
+        window_location_href_main:'yes',
     });
 });
 
@@ -634,6 +643,7 @@ router.get('/AddElectronicResources', ensureAuthenticated, function (req, res, n
                     re1v: re1 || -1,
                     re2v: re2 || -1,
                     re3v: re3 || -1,
+                    window_location_href_main:'yes',
                 });
             });
         });
@@ -729,6 +739,7 @@ router.get('/editmd', ensureAuthenticated, function (req, res, next) {
         req_query_ic: req.query.ic,
         req_query_id: req.query.id//,算了這個功能不做了
         //defaultMDtextValue: req.query.defaultMDtextValue
+        ,window_location_href_main:'yes',
     });
 });
 
@@ -743,13 +754,15 @@ router.post('/editmd', ensureAuthenticated, function (req, res, next) {
             res.render('mdRaw', {
                 title: 'mdRaw-html',
                 VARformdtest: replaceall("[object Promise]", String(randomstring.generate()), String(result)),
-                docmdID: `@=@docmdid@=@${r.id}@~@docmdid@~@`
+                docmdID: `@=@docmdid@=@${r.id}@~@docmdid@~@`,
+                window_location_href_main:'yes',
             });
         } else {
             res.render('mdRaw', {
                 title: 'mdRaw-html',
                 VARformdtest: replaceall("[object Promise]", String(randomstring.generate()), String(result)),
-                docmdID: `@=@docmdid@=@error@~@docmdid@~@`
+                docmdID: `@=@docmdid@=@error@~@docmdid@~@`,
+                window_location_href_main:'yes',
             });
         }
     });
