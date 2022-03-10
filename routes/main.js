@@ -446,7 +446,6 @@ router.get('/journals', ensureAuthenticated, function (req, res, next) {
 router.get('/delJ', ensureAuthenticated, function (req, res, next) {
     JournalInformation.del(req.query.id, (stuff) => {
         res.status(200).send(stuff);
-        //TODO[對使用者不友善]如過錯了不會有提醒
     });
 });
 
