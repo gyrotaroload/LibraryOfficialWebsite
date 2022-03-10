@@ -80,7 +80,7 @@ block content
               input(placeholder='Search...')
     .ui.padded.grid
       if isUSER!=='no'
-        #sidebar.three.wide.tablet.only.three.wide.computer.only.column(style="overflow-y:scroll;")
+        #sidebar.one.wide.tablet.only.one.wide.computer.only.column(style="overflow-y:scroll;")
           .ui.vertical.borderless.fluid.text.menu
             // show all...etc
             a.item(class=(alpha === "0" ? "active" : "") onclick='$(".Viewbycategory").slideToggle()') 按類別檢視
@@ -96,7 +96,7 @@ block content
             // show eng...etc
             .ui.hidden.divider
             // show ch...etc
-      #content.sixteen.wide.mobile.thirteen.wide.tablet.thirteen.wide.computer.right.floated.column
+      #content.eighteen.wide.mobile.fifteen.wide.tablet.fifteen.wide.computer.right.floated.column
         .ui.padded.grid
           .Viewbycategory.row
             h1.ui.huge.dividing.header 期刊資料分類
