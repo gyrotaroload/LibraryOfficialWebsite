@@ -50,8 +50,17 @@ window.operateEvents = {
         fetch(`/main/delJ?id=${row.id}`)
             .then((r) => { return r.text() })
             .then((t) => {
-                // console.log(t);
-                 });
+                $('#quickPOPUPtopic').text('操作完成');
+                $('#quickPOPUPinfo').text(t ? '狀態:成功~' : `錯誤說明:${t}`);
+                $('#quickPOPUPyes').text('(按我!按我!)重新整理');
+                $('#quickPOPUPyes').on("click", function () {
+                    $('.ui.button[name="refresh"]').click();
+                });
+                $('#quickPOPUPno').text('不重新整理就繼續(不建議但較快)');
+                $('#quickPOPUPno')
+                    .modal('show')
+                    ;
+            });
     }
 }
 
@@ -101,7 +110,7 @@ function LinkFormatter(value, row, index) {
     var tmpa = reg_step_1(value).split(';;;');
     var ous = '';
     tmpa.forEach(element => {
-        ous += reg_step_2(element)||element;
+        ous += reg_step_2(element) || element;
     });
 
 
