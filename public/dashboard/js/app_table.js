@@ -57,7 +57,7 @@ window.operateEvents = {
                     $('.ui.button[name="refresh"]').click();
                 });
                 $('#quickPOPUPno').text('不重新整理就繼續(不建議但較快)');
-                $('#quickPOPUPno')
+                $('#quickPOPUP')
                     .modal('show')
                     ;
             });
