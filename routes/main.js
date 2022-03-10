@@ -388,6 +388,10 @@ router.post('/excelTransferOrder', ensureAuthenticated, function (req, res, next
     }
 });
 
+router.post('/checkissnExistence', ensureAuthenticated, function (req, res, next) {
+    JournalInformation.checkissnExistence(req.body.isbn,(stuff)=>res.status(200).send(stuff?"yes":"no"));
+});
+
 
 router.get('/swipeEDIT', ensureAuthenticated, function (req, res, next) {
     swipe_edit.getList(r => {

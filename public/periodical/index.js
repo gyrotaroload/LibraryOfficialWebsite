@@ -126,6 +126,25 @@ document.getElementById('isbnjson').addEventListener('click', function () {
             console.error("與總圖書館通聯時發生錯誤!");
         }
     });
+    $.post("/main/checkissnExistence", {
+        //TODO:沒有做例外處理
+        isbn: document.getElementById('ISSN').value
+    }, (res) => {
+        //console.log(res);
+        if(res==='yes'){
+$('#issnEX').text('已經存在');
+document.getElementById('issnEXs').classList.remove('info');
+document.getElementById('issnEXs').classList.add('warning');
+        }else if(res==='no'){
+            $('#issnEX').text('不存在');
+            document.getElementById('issnEXs').classList.remove('info');
+document.getElementById('issnEXs').classList.add('success');
+        }else{
+            $('#issnEX').text('測試錯誤');
+            document.getElementById('issnEXs').classList.remove('info');
+document.getElementById('issnEXs').classList.add('error');
+        }
+    });
 });
 
 $('.ui.mini.image').click(() => {

@@ -67,6 +67,23 @@ module.exports.getAll = function (callback) {
     });
 }
 
+module.exports.checkissnExistence = function (issn_num,callback) {
+    var ft = {ISSN: { $eq: issn_num} };
+    JournalInformation.exists(ft, function (err, doc) {
+        if (err){
+            console.log(err);
+            callback(false);
+        }else{
+            //console.log("Result :", doc) // false
+            if(doc){
+                callback(true);
+            }else{
+                callback(false);
+            }
+        }
+    });
+}
+
 module.exports.getByNameStart = function (headALPHA, callback) {
     var ft = null;
     if (headALPHA === "1") {//現勘
