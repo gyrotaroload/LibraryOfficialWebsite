@@ -75,7 +75,7 @@ router.get(('/newbooks'), function (req, res, next) {
       var innerHTMLofLlistSTRING = "";
       if (listallid.length === listallname.length) {
         var LL = listallid.length;
-        for (let index = 0; index < LL; index++) {
+        for (let index = LL - 1; index >= 0; index--) {//數字越大的在越上面
           var ELEid = listallid[index];
           var ELEname = listallname[index];
           innerHTMLofLlistSTRING = innerHTMLofLlistSTRING + `
