@@ -79,22 +79,23 @@ block content
             .ui.small.input
               input(placeholder='Search...')
     .ui.padded.grid
-      #sidebar.three.wide.tablet.only.three.wide.computer.only.column(style="overflow-y:scroll;")
-        .ui.vertical.borderless.fluid.text.menu
-          // show all...etc
-          a.item(class=(alpha === "0" ? "active" : "") onclick='$(".Viewbycategory").slideToggle()') 按類別檢視
-          .ui.hidden.divider
-          a.item
-            .ui.violet.message 按英文字母開頭檢視
-          each Ea2z in a2z
-            //-注意:不可用int當索引
-            if Ea2z == alpha
-              a.item.active(onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=${event.target.innerText}`")= Ea2z
-            else
-              a.item(onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=${event.target.innerText}`")= Ea2z
-          // show eng...etc
-          .ui.hidden.divider
-          // show ch...etc
+      if isUSER!=='no'
+        #sidebar.three.wide.tablet.only.three.wide.computer.only.column(style="overflow-y:scroll;")
+          .ui.vertical.borderless.fluid.text.menu
+            // show all...etc
+            a.item(class=(alpha === "0" ? "active" : "") onclick='$(".Viewbycategory").slideToggle()') 按類別檢視
+            .ui.hidden.divider
+            a.item
+              .ui.violet.message 按英文字母開頭檢視
+            each Ea2z in a2z
+              //-注意:不可用int當索引
+              if Ea2z == alpha
+                a.item.active(onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=${event.target.innerText}`")= Ea2z
+              else
+                a.item(onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=${event.target.innerText}`")= Ea2z
+            // show eng...etc
+            .ui.hidden.divider
+            // show ch...etc
       #content.sixteen.wide.mobile.thirteen.wide.tablet.thirteen.wide.computer.right.floated.column
         .ui.padded.grid
           .Viewbycategory.row

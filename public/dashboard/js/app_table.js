@@ -55,6 +55,7 @@ window.operateEvents = {
                 $('#quickPOPUPyes').text('(按我!按我!)重新整理');
                 $('#quickPOPUPyes').on("click", function () {
                     $('.ui.button[name="refresh"]').click();
+                    $('#sidebar').hide();
                 });
                 $('#quickPOPUPno').text('不重新整理就繼續(不建議但較快)');
                 $('#quickPOPUP')
@@ -275,6 +276,7 @@ function initTable() {
         //console.log("load-success.bs.table");
         if (document.querySelector(".bootstrap-table.semantic")) {
             document.querySelector(".bootstrap-table.semantic").setAttribute("style", "width:100%;");
+            
             if (document.getElementsByClassName("fixed-table-toolbar")) {
                 //document.getElementsByClassName("fixed-table-toolbar")[0].classList.add("ui");
                 //document.getElementsByClassName("fixed-table-toolbar")[0].classList.add("menu");

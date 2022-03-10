@@ -37,6 +37,47 @@ block content
     #jade_user_info_profileimage #{var_jade_user_info_profileimage}
     #jade_user_info_choosedanimal #{var_jade_user_info_choosedanimal}
   .ui.raised.very.padded.text.container.segment
+    .ui.right.attached.rail
+      .ui.segment 
+        br
+        br
+        br
+        br
+        br
+        .ui.info.message
+          | 輔助工具
+          br
+          | 插入超連結
+        br
+        ol.list
+          li 輸入超連結文字
+          br
+          li 輸入超連結
+          br
+          li 點擊目標欄位的紫色按鈕 
+          br
+          li 該按鈕會變咖啡色
+          br
+          li 移動游標至需求位置
+          br
+          li 輸入超連結文字
+          br
+          li 輸入超連結
+          br
+          li 按下插入
+        br
+        | 超連結文字
+        br
+        .ui.input
+          input#urltooltext(type='text' placeholder='超連結文字...')
+        br
+        | 超連結URL
+        br
+        .ui.input
+          input#urltoollink(type='url' placeholder='url...')
+        br
+        br
+        button.ui.button(onclick='if(document.getElementsByClassName("tooltargetplugin")[0]){insertAtCursor(document.getElementsByClassName("tooltargetplugin")[0],`@href@${$("#urltooltext").val()}@text@${$("#urltoollink").val()}@url@`)}') 插入
     .ui.divided.items
       .item
         //a.ui.red.ribbon.label Overview
@@ -45,7 +86,7 @@ block content
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
-            .ui.label
+            .ui.label.violet(style='cursor: pointer;' onclick="var brownstuff=document.querySelectorAll('.ui.label.brown');if(brownstuff){for(var i=0;i<brownstuff.length;i++){brownstuff[i].classList.remove('brown');brownstuff[i].classList.add('violet');}}event.target.parentNode.getElementsByTagName('input')[0].classList.add('tooltargetplugin');event.target.classList.add('brown');event.target.classList.remove('violet')")
                 | 架號
             input#frameNumber(type='text' placeholder='Z9999' value=`${EDITframeNumber}`)
       .item
@@ -53,7 +94,7 @@ block content
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
-            .ui.label
+            .ui.label.violet(style='cursor: pointer;' onclick="var brownstuff=document.querySelectorAll('.ui.label.brown');if(brownstuff){for(var i=0;i<brownstuff.length;i++){brownstuff[i].classList.remove('brown');brownstuff[i].classList.add('violet');}}event.target.parentNode.getElementsByTagName('input')[0].classList.add('tooltargetplugin');event.target.classList.add('brown');event.target.classList.remove('violet')")
                 | ISSN
             input#ISSN(type='text' placeholder='1234-5678' value=`${EDITISSN}`)
         .first-border.flex.color-2
@@ -68,7 +109,7 @@ block content
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
-            .ui.label
+            .ui.label.violet(style='cursor: pointer;' onclick="var brownstuff=document.querySelectorAll('.ui.label.brown');if(brownstuff){for(var i=0;i<brownstuff.length;i++){brownstuff[i].classList.remove('brown');brownstuff[i].classList.add('violet');}}event.target.parentNode.getElementsByTagName('input')[0].classList.add('tooltargetplugin');event.target.classList.add('brown');event.target.classList.remove('violet')")
                 | 刊名
             input#bookName(type='text' placeholder='1234-5678' value=`${EDITbookName}`)
         // 1
@@ -85,7 +126,7 @@ block content
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
-            .ui.label
+            .ui.label.violet(style='cursor: pointer;' onclick="var brownstuff=document.querySelectorAll('.ui.label.brown');if(brownstuff){for(var i=0;i<brownstuff.length;i++){brownstuff[i].classList.remove('brown');brownstuff[i].classList.add('violet');}}event.target.parentNode.getElementsByTagName('input')[0].classList.add('tooltargetplugin');event.target.classList.add('brown');event.target.classList.remove('violet')")
                 | E-ISSN
             input#eissn(type='text' placeholder='某些資料...' value=`${EDITeissn}`)
       .item
@@ -93,7 +134,7 @@ block content
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
-            .ui.label
+            .ui.label.violet(style='cursor: pointer;' onclick="var brownstuff=document.querySelectorAll('.ui.label.brown');if(brownstuff){for(var i=0;i<brownstuff.length;i++){brownstuff[i].classList.remove('brown');brownstuff[i].classList.add('violet');}}event.target.parentNode.getElementsByTagName('input')[0].classList.add('tooltargetplugin');event.target.classList.add('brown');event.target.classList.remove('violet')")
                 | 狀況
             input#STAT(type='text' placeholder='請輸入文字或用快速選單' value=`${EDITSTAT}`)
         select.ui.dropdown(onChange='DOCE(event)')
@@ -106,16 +147,17 @@ block content
         a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
-          .ui.labeled.input
-            .ui.label
+          .ui.labeled.input.fluid
+            .ui.label.violet(style='cursor: pointer;' onclick="var brownstuff=document.querySelectorAll('.ui.label.brown');if(brownstuff){for(var i=0;i<brownstuff.length;i++){brownstuff[i].classList.remove('brown');brownstuff[i].classList.add('violet');}}event.target.parentNode.getElementsByTagName('input')[0].classList.add('tooltargetplugin');event.target.classList.add('brown');event.target.classList.remove('violet')")
                 | 電子資源
             input#ES(type='text' placeholder='某些資料...' value=`${EDITES}`)
+            //TODO搞成textarea
       .item
         a.ui.mini.image
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
-          .ui.labeled.input
-            .ui.label
+          .ui.labeled.input.fluid
+            .ui.label.violet(style='cursor: pointer;' onclick="var brownstuff=document.querySelectorAll('.ui.label.brown');if(brownstuff){for(var i=0;i<brownstuff.length;i++){brownstuff[i].classList.remove('brown');brownstuff[i].classList.add('violet');}}event.target.parentNode.getElementsByTagName('input')[0].classList.add('tooltargetplugin');event.target.classList.add('brown');event.target.classList.remove('violet')")
                 | 紙本資源
             input#PS(type='text' placeholder='某些資料...' value=`${EDITPS}`)
       .item(style='display:none;')
@@ -123,7 +165,7 @@ block content
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
-            .ui.label
+            .ui.label.violet(style='cursor: pointer;' onclick="var brownstuff=document.querySelectorAll('.ui.label.brown');if(brownstuff){for(var i=0;i<brownstuff.length;i++){brownstuff[i].classList.remove('brown');brownstuff[i].classList.add('violet');}}event.target.parentNode.getElementsByTagName('input')[0].classList.add('tooltargetplugin');event.target.classList.add('brown');event.target.classList.remove('violet')")
                 | 卷期
             input#Volume(type='text' placeholder='應該可以自動填入的' value='Obsolete field')
       .item
@@ -131,7 +173,7 @@ block content
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
-            .ui.label
+            .ui.label.violet(style='cursor: pointer;' onclick="var brownstuff=document.querySelectorAll('.ui.label.brown');if(brownstuff){for(var i=0;i<brownstuff.length;i++){brownstuff[i].classList.remove('brown');brownstuff[i].classList.add('violet');}}event.target.parentNode.getElementsByTagName('input')[0].classList.add('tooltargetplugin');event.target.classList.add('brown');event.target.classList.remove('violet')")
                 | 備註
             input#REMK(type='text' placeholder='隨意打入一些資料吧' value=`${EDITREMK}`)
       .item
@@ -139,7 +181,7 @@ block content
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
-            .ui.label
+            .ui.label.violet(style='cursor: pointer;' onclick="var brownstuff=document.querySelectorAll('.ui.label.brown');if(brownstuff){for(var i=0;i<brownstuff.length;i++){brownstuff[i].classList.remove('brown');brownstuff[i].classList.add('violet');}}event.target.parentNode.getElementsByTagName('input')[0].classList.add('tooltargetplugin');event.target.classList.add('brown');event.target.classList.remove('violet')")
                 | 存在年分(起)[輸入-1代表「停用」存在年份表述]
             input#LIVstart(type='number' placeholder='1997' value=`${EDITLIVstart}`)
       .item
@@ -147,7 +189,7 @@ block content
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
-            .ui.label
+            .ui.label.violet(style='cursor: pointer;' onclick="var brownstuff=document.querySelectorAll('.ui.label.brown');if(brownstuff){for(var i=0;i<brownstuff.length;i++){brownstuff[i].classList.remove('brown');brownstuff[i].classList.add('violet');}}event.target.parentNode.getElementsByTagName('input')[0].classList.add('tooltargetplugin');event.target.classList.add('brown');event.target.classList.remove('violet')")
                 | 存在年分(訖)[輸入-1代表未停止]
             input#LIVend(type='number' placeholder='2022' value=`${EDITLIVend}`)
       .item
@@ -155,7 +197,7 @@ block content
           img(src='/periodical/reset-7-438845.png')
         .middle.aligned.content
           .ui.labeled.input
-            .ui.label
+            .ui.label.violet(style='cursor: pointer;' onclick="var brownstuff=document.querySelectorAll('.ui.label.brown');if(brownstuff){for(var i=0;i<brownstuff.length;i++){brownstuff[i].classList.remove('brown');brownstuff[i].classList.add('violet');}}event.target.parentNode.getElementsByTagName('input')[0].classList.add('tooltargetplugin');event.target.classList.add('brown');event.target.classList.remove('violet')")
                 | 存在年分(排除)
             input#LIVx(type='text' placeholder='-1' value=`${EDITLIVx}`)
           | &diams;以逗號分開多個年
