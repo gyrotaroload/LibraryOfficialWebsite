@@ -120,7 +120,7 @@ function LinkFormatter(value, row, index) {
 
 function initTable() {
     $table.bootstrapTable('destroy').bootstrapTable({
-        height: 0.8*vh,
+        height: 0.8*vh,search:true,
         locale: $('#locale').val(),
         columns: [
             [//{
@@ -137,7 +137,7 @@ function initTable() {
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    searchable: false,
+                    searchable: true,
                     //footerFormatter: totalTextFormatter
                 }
                 , {
@@ -146,7 +146,7 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: false,
+                    sortable: true, searchable: true,
                     //footerFormatter: totalTextFormatter
                 }, {
                     title: 'E-ISSN',
@@ -154,7 +154,7 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: false,
+                    sortable: true, searchable: true,
                     //footerFormatter: totalTextFormatter
                 }, {
                     title: '刊名',

@@ -85,8 +85,8 @@ block content
             // show all...etc
             a.item(class=alpha === "1" ? "active" : "" data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=1`") 現期期刊
             a.item(class=alpha === "0" ? "active" : "" data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]") 所有期刊
-            a.item(class=alpha === "2" ? "active" : "" data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=2`") 電子期刊
-            a.item(class=alpha === "3" ? "active" : "" data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=3`") 紙本期刊
+            a.item(style="display:none;" class=alpha === "2" ? "active" : "" data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=2`") 電子期刊
+            a.item(style="display:none;" class=alpha === "3" ? "active" : "" data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=3`") 紙本期刊
             a.item(style="display:none;" class=(alpha === "0" ? "active" : "") onclick='$(".Viewbycategory").slideToggle()') 按類別檢視
             //20220310更，按客戶需求^^^^^^^^^^
             .ui.hidden.divider
@@ -211,7 +211,7 @@ block content
                 i.fa.fa-trash
                 |  Delete
             // data-detail-view='true'把這行加到下方表格中，可以顯示加號
-            table#table(data-toolbar='#toolbar' data-search='true' data-show-refresh='true' data-show-toggle='true' data-show-fullscreen='true' data-show-columns='true' data-show-columns-toggle-all='true' data-show-export='true' data-click-to-select='true' data-detail-formatter='detailFormatter' data-minimum-count-columns='2' data-show-pagination-switch='true' data-pagination='true' data-id-field='id' data-page-list='[10, 25, 50, 100, all]' data-show-footer='true' data-side-pagination='server' data-url=`${jjsonURL}` data-response-handler='responseHandler')
+            table#table(data-toolbar='#toolbar' data-search='true' data-show-refresh='true' data-show-toggle='true' data-show-fullscreen='true' data-show-columns='true' data-show-columns-toggle-all='true' data-show-export='true' data-click-to-select='true' data-detail-formatter='detailFormatter' data-minimum-count-columns='2' data-show-pagination-switch='true' data-pagination='true' data-id-field='id' data-page-list='[10, 25, 50, 100, all]' data-show-footer='true' data-side-pagination='true' data-url=`${jjsonURL}` data-response-handler='responseHandler')
     #aLotOFjs(style='display: none;')
       // 請注意:所有script的順序都是嚴格要求的
       script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
