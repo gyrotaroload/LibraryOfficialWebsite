@@ -212,6 +212,7 @@ block content
                 |  Delete
             // data-detail-view='true'把這行加到下方表格中，可以顯示加號
             table#table(data-toolbar='#toolbar' data-search='true' data-show-refresh='true' data-show-toggle='true' data-show-fullscreen='true' data-show-columns='true' data-show-columns-toggle-all='true' data-show-export='true' data-click-to-select='true' data-detail-formatter='detailFormatter' data-minimum-count-columns='2' data-show-pagination-switch='true' data-pagination='true' data-id-field='id' data-page-list='[10, 25, 50, 100, all]' data-show-footer='true' data-side-pagination='true' data-url=`${jjsonURL}` data-response-handler='responseHandler')
+            //上一行的data-side-pagination='true'這個選項如果改成server就會把所有的搜尋條件轉成get參數，然後附加到json url上
     #aLotOFjs(style='display: none;')
       // 請注意:所有script的順序都是嚴格要求的
       script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')

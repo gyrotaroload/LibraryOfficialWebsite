@@ -122,6 +122,8 @@ function initTable() {
     $table.bootstrapTable('destroy').bootstrapTable({
         height: 0.8*vh,search:true,
         locale: $('#locale').val(),
+        sortOrder:'asc',
+        sortName:'placeNumber',
         columns: [
             [//{
                 // field: 'state',
