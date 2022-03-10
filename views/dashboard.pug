@@ -80,12 +80,17 @@ block content
               input(placeholder='Search...')
     .ui.padded.grid
       if isUSER!=='no'
-        #sidebar.one.wide.tablet.only.one.wide.computer.only.column(style="overflow-y:scroll;")
+        #sidebar.two.wide.tablet.only.two.wide.computer.only.column(style="overflow-y:scroll;")
           .ui.vertical.borderless.fluid.text.menu
             // show all...etc
-            a.item(class=(alpha === "0" ? "active" : "") onclick='$(".Viewbycategory").slideToggle()') 按類別檢視
+            a.item(class=alpha === "1" ? "active" : "" data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=1`") 現期期刊
+            a.item(class=alpha === "0" ? "active" : "" data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]") 所有期刊
+            a.item(class=alpha === "2" ? "active" : "" data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=2`") 電子期刊
+            a.item(class=alpha === "3" ? "active" : "" data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=3`") 紙本期刊
+            a.item(style="display:none;" class=(alpha === "0" ? "active" : "") onclick='$(".Viewbycategory").slideToggle()') 按類別檢視
+            //20220310更，按客戶需求^^^^^^^^^^
             .ui.hidden.divider
-            a.item
+            a.item(style="display:none;")
               .ui.violet.message 按英文字母開頭檢視
             each Ea2z in a2z
               //-注意:不可用int當索引
@@ -96,11 +101,12 @@ block content
             // show eng...etc
             .ui.hidden.divider
             // show ch...etc
-      #content.eighteen.wide.mobile.fifteen.wide.tablet.fifteen.wide.computer.right.floated.column
+      #content.seventeen.wide.mobile.fourteen.wide.tablet.fourteen.wide.computer.right.floated.column
         .ui.padded.grid
-          .Viewbycategory.row
+          //20220310更，按客戶需求VVVVVVVVVVVVVVVVVVVVV
+          .Viewbycategory.row(style='display:none;')
             h1.ui.huge.dividing.header 期刊資料分類
-          .Viewbycategory.bb-wizard.center.aligned.row
+          .Viewbycategory.bb-wizard.center.aligned.row(style='display:none;')
             .containter
               ul#bb-wizard-steps.bb-wizard-steps.markers.bb-justified
                 li(class=alpha === "1" ? "active" : "")
@@ -145,7 +151,8 @@ block content
               img.ui.centered.small.circular.image(src='/dashboard/static/images/wireframe/square-image.png')
               .ui.large.basic.label Label
               p Something else
-          .Viewbycategory.ui.hidden.section.divider
+          //20220310更，按客戶需求VVVVVVVVVVVVVVVVVVVVV
+          .Viewbycategory.ui.hidden.section.divider(style='display:none;')
           .row
             h1.ui.huge.dividing.header 所有期刊
           .row

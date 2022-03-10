@@ -120,7 +120,7 @@ function LinkFormatter(value, row, index) {
 
 function initTable() {
     $table.bootstrapTable('destroy').bootstrapTable({
-        height: vh,
+        height: 0.8*vh,
         locale: $('#locale').val(),
         columns: [
             [//{
