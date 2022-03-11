@@ -58,13 +58,14 @@ block content
     編輯人員注意:
     水平尋覽條須於手機與電腦版分別設定!
   .ui.tablet.computer.only.padded.grid
-    #headderBar.ui.top.fixed.borderless.inverted.fluid.menu
+    #headderBar.ui.top.fixed.borderless.fluid.menu
       .ui.container
-        a.header.item.hvr-hang(href="/") 成功大學數學系圖書室
+        a.header(href="/" class='logo') 
+          img(src='./images/nckumath.svg' width='200px')
         .right.menu
-          a.item.hvr-hang(href=`${browseHyperlinkedObjectsHorizontally1L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally1T }
-          a.item.hvr-hang(href=`${browseHyperlinkedObjectsHorizontally2L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally2T }
-          a.item.hvr-hang(href=`${browseHyperlinkedObjectsHorizontally3L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally3T }
+          a.item(href=`${browseHyperlinkedObjectsHorizontally1L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally1T }
+          a.item(href=`${browseHyperlinkedObjectsHorizontally2L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally2T }
+          a.item(href=`${browseHyperlinkedObjectsHorizontally3L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally3T }
           .item
             form.ui.form(onsubmit="event.target.querySelector('i').click();")
               //TODO preventDefault
@@ -76,13 +77,14 @@ block content
                     input(type='text' placeholder='Search...')
                     i.AugmentedExternalSearchModuleF.inverted.circular.search.link.icon(onclick="var AugmentedExternalSearchModule=event.target.closest('.AugmentedExternalSearchModule');AugmentedExternalSearchModule.getElementsByTagName('input')[0].value=AugmentedExternalSearchModule.getElementsByTagName('input')[1].value;AugmentedExternalSearchModule.getElementsByTagName('button')[0].click();")
   .ui.mobile.only.padded.grid
-    #headderBar.ui.top.fixed.borderless.fluid.inverted.huge.menu
-      a.header.item 成功大學數學系圖書室
+    #headderBarM.ui.top.fixed.borderless.fluid.huge.menu
+      a.header(href="/" class='logo logo-mobile') 
+          img(src='./images/nckumath.svg' width='150px')
       .right.menu
         .item
-          button.ui.icon.toggle.basic.inverted.button
+          button.ui.icon.toggle.basic.button
             i.content.icon
-      .ui.vertical.borderless.inverted.fluid.menu
+      .ui.vertical.borderless.fluid.menu
         a.item(href=`${browseHyperlinkedObjectsHorizontally1L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally1T }
         a.item(href=`${browseHyperlinkedObjectsHorizontally2L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally2T }
         a.item(href=`${browseHyperlinkedObjectsHorizontally3L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally3T }
@@ -93,7 +95,7 @@ block content
                 input(type='text' placeholder='Search...')
                 i.inverted.circular.search.link.icon(onclick='console.log("search...");$("#innerINDEX.ui.basic.modal").modal("show");')
   // 投影片
-  .ui.grid
+  .ui.grid(class="slide")
     .sixteen.wide.column
       // Slider main container
       .swiper
@@ -120,7 +122,7 @@ block content
         .swiper-button-prev
         .swiper-button-next
         // If we need scrollbar
-        .swiper-scrollbar
+        //- .swiper-scrollbar
     .ten.wide.column
     .six.wide.column
   //-
@@ -187,7 +189,7 @@ block content
     </div
   .section.one
     .ui.container
-      h1 Feature
+      //- h1 Feature
       .ui.four.column.stackable.doubling.grid
         .column
           .ui.segment.aLikeMouse(onClick="window.location.href = '/newbooks';")
@@ -244,27 +246,30 @@ block content
     <div class="label">寒暑假開放時間 </div>
     </div>
     </div
-  .section.two
-    .ui.container.NavigationBar
-      h1
-        i.location.arrow.icon
-        | 成功大學數學系 系館一樓
-      a#qrcode.ui.basic.massive.image.label.brown.hvr-grow-shadow(href='https://goo.gl/maps/bBXnC5XJRsmPSXUj6' target='_blank')
-        //
-          這是一個地圖按鈕
-          含有一個qrcode
-          請用qrcodeMapButton.js啟用他
-          需要semantic-ui與qrcode.js套件
-          屬性href就是按鈕的連結
-          內文是qrcode的內容
-          author:andythebreaker
-        | https://nckumap.ncku.edu.tw/map.php?type=activity&bid=B014&rid=B01401001&floor=1F
+  // 為了版面簡潔我暫時把地圖移到下方footer了 sorry
+  //- .section.two
+  //-   .ui.container.NavigationBar
+  //-     h1
+  //-       i.location.arrow.icon
+  //-       | 成功大學數學系 系館一樓
+  //-     a#qrcode.ui.basic.massive.image.label.brown.hvr-grow-shadow(href='https://goo.gl/maps/bBXnC5XJRsmPSXUj6' target='_blank')
+  //-       //
+  //-         這是一個地圖按鈕
+  //-         含有一個qrcode
+  //-         請用qrcodeMapButton.js啟用他
+  //-         需要semantic-ui與qrcode.js套件
+  //-         屬性href就是按鈕的連結
+  //-         內文是qrcode的內容
+  //-         author:andythebreaker
+  //-       | https://nckumap.ncku.edu.tw/map.php?type=activity&bid=B014&rid=B01401001&floor=1F
   //TODO新增導向ID與最新消息標題
   .section.three
     .ui.container.content
       .ui.stackable.doubling.grid
         // Middle Content
         .twelve.wide.column.mobile.only
+          .ui.dividing.header 
+           | 最新消息
           .ui.relaxed.divided.list
             each eps, index in ps
               .item(align='left')
@@ -287,6 +292,8 @@ block content
             button.ui.button(onclick=`var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=pgs.length-1;i>=0;i--){if(parseInt(pgs[i].innerText,10)+1>=${pc.length}){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)+1;}}`) Next
           //end copy ******************************************************************************************************************
         .twelve.wide.column.tablet.computer.only
+          .ui.header 
+           | 最新消息
           div(align='center')
             .ui.divider
             .ui.items
@@ -388,15 +395,15 @@ block content
                   .extra
                     .ui.blue.right.floated.button Read More
             //start copy ******************************************************************************************************************
-            .ui.divider
+            //- .ui.divider // unnecessary by AndyLee
             .ui.buttons
               button.ui.button(onclick="var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=0;i<pgs.length;i++){if(parseInt(pgs[i].innerText,10)-1<0){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)-1;}}") Previous
               if margin>4||pc.length
                 each epc in pc.slice(margin-2<0?0:margin-2,margin+3)
-                  a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc
+                  a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc+1
               else
                 each epc in pc
-                  a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc
+                  a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc+1
               button.ui.button(onclick=`var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=pgs.length-1;i>=0;i--){if(parseInt(pgs[i].innerText,10)+1>=${pc.length}){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)+1;}}`) Next
             //end copy ******************************************************************************************************************
         // Right Sidebar
@@ -493,6 +500,9 @@ block content
                     Or
                     </div>
                     </div
+                  
+
+                  //例假日遇到平日會有bug喔～～ AndyLee
                   table#the_open_chart_data.opening-hours-table.ui.celled.table.center.aligned
                     thead
                       tr
@@ -603,12 +613,16 @@ block content
       .ui.container
         .ui.stackable.grid
           .row
-            .seven.wide.column
+            .seven.wide.column(class="contact")
               h2.ui.header &copy; 2021 成功大學數學系圖書館
               i.phone.icon
-              | 服務電話：06-2757575#65105
+              | 服務電話：06-2757575轉65105
               i.building.icon
               | 館址：數學系1樓
+              i.location.arrow.icon
+              a(href='https://goo.gl/maps/bBXnC5XJRsmPSXUj6' target='_blank') Google 地圖 
+              br
+
             .three.wide.column
               //TODO 網頁認證
               h4.ui.header(style='margin-bottom: 2px;') &emsp;
@@ -620,13 +634,13 @@ block content
                 li(role='listitem')
                   a.jsx-2061850338(href='/') &emsp;
             .three.wide.column
-              h4.ui.header(style='margin-bottom: 2px;') API
-              //TODO API還沒做
-              .ui.list(role='list' style='margin-top: 2px;')
-                li(role='listitem')
-                  a.jsx-2061850338(href='/themes') 最新消息
-                li(role='listitem')
-                  a.jsx-2061850338(href='/templates') 常用連結
+              //- h4.ui.header(style='margin-bottom: 2px;') API
+              //- //TODO API還沒做 //還沒做就先拿掉ㄅ AndyLee
+              //- .ui.list(role='list' style='margin-top: 2px;')
+              //-   li(role='listitem')
+              //-     a.jsx-2061850338(href='/themes') 最新消息
+              //-   li(role='listitem')
+              //-     a.jsx-2061850338(href='/templates') 常用連結
             .three.wide.column
               h4.ui.header(style='margin-bottom: 2px;') 網站維護
               .ui.list(role='list' style='margin-top: 2px;')
