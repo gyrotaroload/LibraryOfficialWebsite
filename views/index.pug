@@ -190,30 +190,30 @@ block content
   .section.one
     .ui.container
       //- h1 Feature
-      .ui.four.column.stackable.doubling.grid
-        .column
-          .ui.segment.aLikeMouse(onClick="window.location.href = '/newbooks';")
+      .ui.four.cards.stackable.doubling.grid
+        .card
+          .ui.content.aLikeMouse(onClick="window.location.href = '/newbooks';")
             h2.ui.icon.header
               i.book.icon
               .content #{ functionButtonMainText1 }
                 .sub.header
                   | 查看當月新書清單與歷史「新書上架」紀錄，可連結至總圖書目資料
-        .column
-          .ui.segment.aLikeMouse(onClick="window.location.href = '/journals';")
+        .card
+          .ui.content.aLikeMouse(onClick="window.location.href = '/journals';")
             h2.ui.icon.header
               i.block.layout.icon
               .content #{ functionButtonMainText2 }
                 .sub.header
                   | 提供電子期刊與紙本期刊之資源，部分紙本合訂集位於總圖書館
-        .column
-          .ui.segment.aLikeMouse(onClick="window.location.href = '/inner?ic=g';")
+        .card
+          .ui.content.aLikeMouse(onClick="window.location.href = '/inner?ic=g';")
             h2.ui.icon.header
               i.handshake.outline.icon
               .content #{ functionButtonMainText3 }
                 .sub.header
                   | 數學系教職員可進入填寫跨館借閱表單，跨館借閱書籍到後將通知您
-        .column
-          .ui.segment.aLikeMouse(onClick="window.location.href = '/electronic-resources';")
+        .card
+          .ui.content.aLikeMouse(onClick="window.location.href = '/electronic-resources';")
             h2.ui.icon.header
               i.file.alternate.icon
               .content #{ functionButtonMainText4 }
@@ -280,15 +280,16 @@ block content
                   a.header= eps.tp
                   .description= eps.ab
           //start copy ******************************************************************************************************************
+          //我把epc shift成正整數數列比較好閱讀，我不確定你的button功能是啥你確定一下XD AndyLee
           .ui.divider
           .ui.buttons
-            button.ui.button(onclick="var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=0;i<pgs.length;i++){if(parseInt(pgs[i].innerText,10)-1<0){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)-1;}}") Previous
+            button.ui.button(onclick="var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=0;i<pgs.length;i++){if(parseInt(pgs[i].innerText,10)-1<0){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10);}}") Previous
             if margin>4||pc.length
               each epc in pc.slice(margin-2<0?0:margin-2,margin+3)
-                a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc
+                a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc+1
             else
               each epc in pc
-                a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc
+                a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc+1
             button.ui.button(onclick=`var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=pgs.length-1;i>=0;i--){if(parseInt(pgs[i].innerText,10)+1>=${pc.length}){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)+1;}}`) Next
           //end copy ******************************************************************************************************************
         .twelve.wide.column.tablet.computer.only
@@ -397,7 +398,7 @@ block content
             //start copy ******************************************************************************************************************
             //- .ui.divider // unnecessary by AndyLee
             .ui.buttons
-              button.ui.button(onclick="var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=0;i<pgs.length;i++){if(parseInt(pgs[i].innerText,10)-1<0){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)-1;}}") Previous
+              button.ui.button(onclick="var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=0;i<pgs.length;i++){if(parseInt(pgs[i].innerText,10)-1<0){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10);}}") Previous
               if margin>4||pc.length
                 each epc in pc.slice(margin-2<0?0:margin-2,margin+3)
                   a.ui.button(href=`?page=${epc}` class=margin === epc ? "blue" : "")= epc+1
@@ -407,9 +408,12 @@ block content
               button.ui.button(onclick=`var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=pgs.length-1;i>=0;i--){if(parseInt(pgs[i].innerText,10)+1>=${pc.length}){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10)+1;}}`) Next
             //end copy ******************************************************************************************************************
         // Right Sidebar
-        .four.wide.column.mobile.only
-          #copyRightSidebar_mobile2desktop.ui.fluid.vertical.menu.moderns
-            a.header.item(href='') 常用連結
+        
+
+        // 桌面版在手機上很棒啊～為啥要搞這麼複雜分手機電腦版XD AndyLee
+        .four.wide.column
+          #copyRightSidebar_mobile2desktop.ui.fluid.vertical.menu.bdgreen
+            a.header.item(href='#') 常用連結
             //
               這裡要放中研院...甚麼的
               要放多少東西TODO
@@ -418,25 +422,7 @@ block content
             a.item(href='http://www.isiknowledge.com/' target='_blank') SCI (Science Citation Index Expanded)
             a.item(href='http://www.emis.de/ZMATH/' target='_blank') Zentralblatt MATH
             a.item(href='http://www.springerlink.com/content/110312/' target='_blank') Lecture Notes in Mathematics
-          #copyRightSidebar_opentime_cli
-            //
-              佔位，勿移除
-              需要有ajax init .js
-              與下方表格中的id='openTimeChartLoaded_target'
-        .four.wide.column.computer.only
-          //-
-            div class="ui fluid vertical menu moderns" id="copyRightSidebar_mobile2desktop">
-            <a href="" class="header item">Category</a>
-            <a href="" class="item">Javascript</a>
-            <a href="" class="item">PHP</a>
-            <a href="" class="item">Angular</a>
-            <a href="" class="item">Semantic-UI</a>
-            </div
-          #copyRightSidebar_mobile2desktop_cli
-            //
-              佔位，物移除
-              需要有ajax init .js
-          #copyRightSidebar_opentime.ui.segments.moderns
+          #copyRightSidebar_opentime.ui.segments.bdgreen
             .ui.header.segment
               section.openinghours
                 //
@@ -455,55 +441,10 @@ block content
                     // 這裡不要動，這是"休館"字樣的中文字形，js沒有例外處理
                     .shutdownName1(style='display:none;') 休
                     .shutdownName2(style='display:none;') 館
-                  //-
-                    div class="ui segment mobile only inverted">
-                    <div class="ui two column very relaxed grid">
-                    <div class="column" style="border:5px #FFAC55 solid;">
-                    <p>一</p>
-                    </div>
-                    <div class="column">
-                    <p>09:00</p>
-                    <p>-</p>
-                    <p>18:00</p>
-                    </div>
-                    </div>
-                    <div class="ui vertical divider">
-                    </div><div class="ui horizontal divider">
-                    Or
-                    </div>
-                    <div class="ui two column very relaxed grid">
-                    <div class="column">
-                    <p>一</p>
-                    </div>
-                    <div class="column">
-                    <p>09:00</p>
-                    <p>-</p>
-                    <p>18:00</p>
-                    </div>
-                    </div>
-                    <div class="ui vertical divider">
-                    </div><div class="ui horizontal divider">
-                    Or
-                    </div>
-                    <div class="ui two column very relaxed grid">
-                    <div class="column">
-                    <p>一</p>
-                    </div>
-                    <div class="column">
-                    <p>09:00</p>
-                    <p>-</p>
-                    <p>18:00</p>
-                    </div>
-                    </div>
-                    <div class="ui vertical divider">
-                    </div><div class="ui horizontal divider">
-                    Or
-                    </div>
-                    </div
                   
 
                   //例假日遇到平日會有bug喔～～ AndyLee
-                  table#the_open_chart_data.opening-hours-table.ui.celled.table.center.aligned
+                  table#the_open_chart_data.opening-hours-table.ui.unstackable.celled.table.center.aligned
                     thead
                       tr
                         th.center.aligned 星期
@@ -561,64 +502,22 @@ block content
                     i.src = './jumbotron/js/https_dje0x8zlxc38k_cloudfront_net_loaders_s-min.js';
                     s.parentNode.insertBefore(i, s)
                     })(window._appt, window, document, "script")
-            //-
-              div class="ui segment">
-              <div class="owl-carousel owl-theme owl-loaded" id="single-slider">
-              <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-968px, 0px, 0px); transition: all 0.25s ease 0s; width: 1452px;"><div class="owl-item cloned" style="width: 232px; margin-right: 10px;"><div class="item">
-              <p><img class="ui rounded image" src="assets/img/400x400.png"></p>
-              <div align="justify">
-              <div class="ui header">Learn About Angular 2</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et perspiciatis velit ducimus, reiciendis eius dolor culpa, laudantium modi minus voluptatum eveniet beatae, aperiam totam praesentium aut doloribus nemo minima a.</p>
-              </div>
-              </div></div><div class="owl-item cloned" style="width: 232px; margin-right: 10px;"><div class="item">
-              <p><img class="ui rounded image" src="assets/img/400x400.png"></p>
-              <div align="justify">
-              <div class="ui header">How to make Chat App</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus fugit nesciunt omnis impedit veniam. Inventore praesentium quas, rerum similique, voluptatibus sit dolorum, voluptatum, voluptate fugiat asperiores reprehenderit cupiditate unde quibusdam!</p>
-              </div>
-              </div></div><div class="owl-item" style="width: 232px; margin-right: 10px;"><div class="item">
-              <p><img class="ui rounded image" src="assets/img/400x400.png"></p>
-              <div align="justify">
-              <div class="ui header">Learn About Angular 2</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et perspiciatis velit ducimus, reiciendis eius dolor culpa, laudantium modi minus voluptatum eveniet beatae, aperiam totam praesentium aut doloribus nemo minima a.</p>
-              </div>
-              </div></div><div class="owl-item" style="width: 232px; margin-right: 10px;"><div class="item">
-              <p><img class="ui rounded image" src="assets/img/400x400.png"></p>
-              <div align="justify">
-              <div class="ui header">How to make Chat App</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus fugit nesciunt omnis impedit veniam. Inventore praesentium quas, rerum similique, voluptatibus sit dolorum, voluptatum, voluptate fugiat asperiores reprehenderit cupiditate unde quibusdam!</p>
-              </div>
-              </div></div><div class="owl-item cloned active" style="width: 232px; margin-right: 10px;"><div class="item">
-              <p><img class="ui rounded image" src="assets/img/400x400.png"></p>
-              <div align="justify">
-              <div class="ui header">Learn About Angular 2</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et perspiciatis velit ducimus, reiciendis eius dolor culpa, laudantium modi minus voluptatum eveniet beatae, aperiam totam praesentium aut doloribus nemo minima a.</p>
-              </div>
-              </div></div><div class="owl-item cloned" style="width: 232px; margin-right: 10px;"><div class="item">
-              <p><img class="ui rounded image" src="assets/img/400x400.png"></p>
-              <div align="justify">
-              <div class="ui header">How to make Chat App</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus fugit nesciunt omnis impedit veniam. Inventore praesentium quas, rerum similique, voluptatibus sit dolorum, voluptatum, voluptate fugiat asperiores reprehenderit cupiditate unde quibusdam!</p>
-              </div>
-              </div></div></div></div><div class="owl-controls"><div class="owl-nav"><div class="owl-prev" style="display: none;">prev</div><div class="owl-next" style="display: none;">next</div></div><div class="owl-dots" style=""><div class="owl-dot active"><span></span></div><div class="owl-dot"><span></span></div></div></div></div>
-              </div>
-              <div class="ui secondary segment">
-              Other Content
-              </div>
-              </div
+                    
   .ui.hidden.divider
-  .ui.divider
+  //- .ui.divider
   footer.jsx-2061850338.ffoot
     .ui.vertical.segment(style='padding-top: 4rem; padding-bottom: 4rem; background-color: rgb(245, 245, 245);')
       .ui.container
         .ui.stackable.grid
           .row
             .seven.wide.column(class="contact")
-              h2.ui.header &copy; 2021 成功大學數學系圖書館
+              h3.ui.header &copy; 2022 成功大學數學系圖書館
               i.phone.icon
-              | 服務電話：06-2757575轉65105
+              | 服務電話：06-2757575 轉 65105
+              br
               i.building.icon
-              | 館址：數學系1樓
+              | 館址：70101 台南市大學路 1 號 國立成功大學成功校區數學系館 1 樓
+              br
               i.location.arrow.icon
               a(href='https://goo.gl/maps/bBXnC5XJRsmPSXUj6' target='_blank') Google 地圖 
               br

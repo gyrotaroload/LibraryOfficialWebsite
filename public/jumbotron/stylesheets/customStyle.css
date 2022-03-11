@@ -35,12 +35,8 @@ span > .user{
     margin-left : 10px;
 }
 
-.contact > .building{
-    margin-left: 10px;
-}
-
-.contact > .location{
-    margin-left: 10px;
+.ui.bdgreen{
+    border-top: .2em solid #00b5ad;
 }
 
 .ui.masterVision {

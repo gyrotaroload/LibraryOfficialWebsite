@@ -1,8 +1,5 @@
 var swiper = new Swiper('.swiper', {
-    effect: 'fade',
-    fadeEffect: {
-        crossFade: false
-    },
+    speed : 500,
     pagination: {
         el: ".swiper-pagination",
         clickable: true,
