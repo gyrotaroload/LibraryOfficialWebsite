@@ -515,7 +515,7 @@ router.get('/docxUpload', ensureAuthenticated, function (req, res, next) {
         req.query.edit && req.query.edit === 'yes' && req.query.id
     ) {
         least.getById(req.query.id, (s) => {
-            docs.getById(s.uri, (ss) => {
+            docs.isEditAble(s.uri, (ss) => {
                 res.render('docx_upload', {
                     title: 'docx upload 2',
                     moment: require('moment'),
@@ -524,7 +524,7 @@ router.get('/docxUpload', ensureAuthenticated, function (req, res, next) {
                     ab: s.ab,
                     lab: s.lab,
                     uri: s.uri,
-                    editable: ss.editable
+                    editable: ss
                 });
             });
         });
@@ -802,8 +802,8 @@ router.post('/e3', ensureAuthenticated, upload.single('file'), function (req, re
 });
 
 router.get('/editmd', ensureAuthenticated, function (req, res, next) {
-    if(req.query.edit&&req.query.edit==='l'&&req.query.id){
-        docs.getById(req.query.id,(s)=>{
+    if(req.query.edit&&req.query.edit==='l'&&req.query.oid){
+        docs.EditTX(req.query.oid,(s)=>{
         res.render('md', {
             title: '文字編輯',
             topic: '最新消息',
@@ -812,7 +812,7 @@ router.get('/editmd', ensureAuthenticated, function (req, res, next) {
             req_query_id: req.query.id//,算了這個功能不做了
             //defaultMDtextValue: req.query.defaultMDtextValue
             , window_location_href_main: 'yes',
-            defaultvalue:s.edittext
+            defaultvalue:s
         });});
     }else{
     res.render('md', {

@@ -104,7 +104,7 @@ block content
     #TheNextStep
     h6.ui.right.floated.header 填寫「標題」、「標籤」、「摘要」後，按下右下方的下一步接續填寫「內容」
       .first-border.flex.color-3(style="display:none;")
-        #submit.button.flex(align="center" onclick="$.post('/main/addleast',{YYYY:$('#YYYY').val(),M:$('#M').val(),D:$('#D').val(),h:$('#h').val(),mm:$('#mm').val(),tp:$('#tp').val(),ab:$('#ab').val(),labels:$('#labels').text(),uri:'$(__#uri__).val()'},(r)=>{console.log(r);if($('#TheNextStep').text()==='1'){window.location.href = '/main/docx?ic=l&id='+r;}else if($('#TheNextStep').text()==='2'){window.location.href = '/main/editmd?ic=l&id=' + r;}else if($('#TheNextStep').text()==='3'){console.log(3);}else{console.log('內容->下一步::未定義');}})")
+        #submit.button.flex(align="center" onclick="$.post('/main/addleast',{YYYY:$('#YYYY').val(),M:$('#M').val(),D:$('#D').val(),h:$('#h').val(),mm:$('#mm').val(),tp:$('#tp').val(),ab:$('#ab').val(),labels:$('#labels').text(),uri:'$(__#uri__).val()'},(r)=>{console.log(r);if($('#TheNextStep').text()==='1'){window.location.href = '/main/docx?ic=l&id='+r;}else if($('#TheNextStep').text()==='2'){window.location.href = '/main/editmd?ic=l&id=' + r;}else if($('#TheNextStep').text()==='3'){window.location.href = `/main/editmd?edit=l&oid=${document.getElementById('oidurl').dataset.oidurl}&ic=l&id=` + r;}else{console.log('內容->下一步::未定義');}})")
           | &#9745;提交
           svg(width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg')
             path(d='M9.77623 4.61867C10.4796 4.99574 10.4796 6.00427 9.77623 6.38133L2.39266 10.3397C1.72648 10.6969 0.920166 10.2143 0.920167 9.45841L0.920167 1.54159C0.920167 0.785717 1.72648 0.30311 2.39266 0.660254L9.77623 4.61867Z' fill='#333')
@@ -146,11 +146,11 @@ block content
         .ui.card
           .content
             .header 標籤
-            #labels.meta=`${lab||'{"label":[]}'}`
+            #labels.meta=`${lab?'{"label":'+JSON.stringify( lab)+'}':'{"label":[]}'}`
             .description
               .ui.right.labeled.left.icon.input
                 i.tags.icon
-                input#labeli(type='text' placeholder='輸入標籤' value=`${tp||''}`)
+                input#labeli(type='text' placeholder='輸入標籤')
                 a.ui.tag.label(onclick="var ls=JSON.parse(document.getElementById('labels').innerText);ls.label.push(document.getElementById('labeli').value);document.getElementById('labels').innerText=JSON.stringify(ls);") 新增標籤 
               h4.ui.horizontal.divider.header
                 i.flag.checkered.icon
@@ -158,7 +158,7 @@ block content
               .ui.labeled.input
                 .ui.label
                   | 標題
-                input#tp(type='text' placeholder='例如，形象影片發布瞜~~之類的文字' value=`${ab||''}`)
+                input#tp(type='text' placeholder='例如，形象影片發布瞜~~之類的文字' value=`${tp||''}`)
               .ui.fitted.divider
     .ui.vertical.divider |
   .ui.placeholder.segment
@@ -167,7 +167,7 @@ block content
         h2(style='background-color:#ddb98b;margin-top:-2vh;color:#000000;text-align:center;') 摘要
         //TODO 摘要過長會破圖
         form.ff(style="margin:0px;")
-          textarea#ab.ff.message(rows='4' cols='50' name='subject' placeholder='請輸入摘要...' required='')
+          textarea#ab.ff.message(rows='4' cols='50' name='subject' placeholder='請輸入摘要...' required='')= `${ab||''}`
         //.ui.card
           .content
             .header 新消息發布日期
@@ -227,8 +227,8 @@ block content
           if editable
             h4.ui.horizontal.divider.header
               i.thumbtack.icon
-              |   編輯markdown純文字
-            a.first-border.flex.color-1(href=`/main/editmd?edit=l&id=${uri}`)
+              |   編輯markdown純文字(使用舊資料)
+            a#oidurl.first-border.flex.color-1(data-oidurl=uri href=`/main/editmd?edit=l&oid=${uri}&ic=l&id=` onclick="$('#TheNextStep').text('3');$('#submit').click();")
               .round.flex
                 svg#svg2474(xmlns:inkscape='http://www.inkscape.org/namespaces/inkscape' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns='http://www.w3.org/2000/svg' xmlns:sodipodi='http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd' xmlns:cc='http://creativecommons.org/ns#' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:dc='http://purl.org/dc/elements/1.1/' xmlns:svg='http://www.w3.org/2000/svg' xmlns:ns1='http://sozi.baierouge.fr' sodipodi:docname='view-refresh.svg' viewBox='0 0 48 48' version='1.1' inkscape:version='0.47 r22583')
                   sodipodi:namedview#namedview31(bordercolor='#666666' inkscape:pageshadow='2' guidetolerance='10' pagecolor='#ffffff' gridtolerance='10' inkscape:window-maximized='1' inkscape:zoom='9.8333333' objecttolerance='10' borderopacity='1' inkscape:current-layer='svg2474' inkscape:cx='17.058689' inkscape:cy='28.777087' inkscape:window-y='24' inkscape:window-x='0' inkscape:window-width='1280' showgrid='false' inkscape:pageopacity='0' inkscape:window-height='973')

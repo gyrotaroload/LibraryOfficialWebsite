@@ -40,3 +40,27 @@ module.exports.getById = function (id, callback) {
     });
 
 }
+
+module.exports.isEditAble = function (id, callback) {
+    docs.findById(id, function (err, adventure) {
+        if (err) {
+            console.log(err);
+            callback(null);
+        } else {
+            callback((adventure) ? adventure.editable : null);
+        }
+    });
+
+}
+
+module.exports.EditTX = function (id, callback) {
+    docs.findById(id, function (err, adventure) {
+        if (err) {
+            console.log(err);
+            callback(null);
+        } else {
+            callback((adventure) ? adventure.edittext : null);
+        }
+    });
+
+}
