@@ -66,6 +66,8 @@ function form_callback_page(success_or_error) {//Collapse this text
 var express = require('express');
 var router = express.Router();
 var generator = require('character-generator');
+var addZero = require('add-zero');
+const numberArray = require('number-array');
 const { Base64 } = require('js-base64');
 const sharp = require('sharp');
 var sanitize = require('mongo-sanitize');
@@ -131,6 +133,7 @@ var gh = require('../models/gh');
 var e1 = require('../models/e1');
 var e2 = require('../models/e2');
 var e3 = require('../models/OnCampusElectronicResourceFiles');
+var least = require('../models/least');
 
 //const
 var IclassMap = new Map();
@@ -170,31 +173,44 @@ router.get('/', ensureAuthenticated, function (req, res, next) {
 //});
 //});
 
-router.get('/home', function (req, res, next) {
+//編輯最新消息
+router.get('/home', ensureAuthenticated, function (req, res, next) {//這個東西是從routes/index.js複製來的
     swipe_edit.getList(r => {
-      least.frontend((stuff) => {
-        res.render('index', {
-          title: '成大數學系圖書館',
-          functionButtonMainText1: '新書入庫',
-          functionButtonMainText2: '期刊服務',
-          functionButtonMainText3: '館際合作',
-          functionButtonMainText4: '電子資源',
-          browseHyperlinkedObjectsHorizontally1T: '成大首頁',
-          browseHyperlinkedObjectsHorizontally2T: '數學系網站',
-          browseHyperlinkedObjectsHorizontally3T: '成大總圖',
-          browseHyperlinkedObjectsHorizontally1L: 'https://www.ncku.edu.tw/',
-          browseHyperlinkedObjectsHorizontally2L: 'http://www.math.ncku.edu.tw/',
-          browseHyperlinkedObjectsHorizontally3L: 'https://www.lib.ncku.edu.tw/',
-          pc: numberArray(stuff.c),
-          ps: req.query.page ? stuff.s.slice(parseInt(req.query.page) * 4, (parseInt(req.query.page) + 1) * 4) : stuff.s.slice(0 * 4, (0 + 1) * 4),
-          margin: parseInt(req.query.page, 10) || 0,
-          swl: r,
-          addZero: addZero,
-          isADMIN:true
+        least.frontend((stuff) => {
+            res.render('index', {
+                title: '成大數學系圖書館',
+                functionButtonMainText1: '新書入庫',
+                functionButtonMainText2: '期刊服務',
+                functionButtonMainText3: '館際合作',
+                functionButtonMainText4: '電子資源',
+                browseHyperlinkedObjectsHorizontally1T: '成大首頁',
+                browseHyperlinkedObjectsHorizontally2T: '數學系網站',
+                browseHyperlinkedObjectsHorizontally3T: '成大總圖',
+                browseHyperlinkedObjectsHorizontally1L: 'https://www.ncku.edu.tw/',
+                browseHyperlinkedObjectsHorizontally2L: 'http://www.math.ncku.edu.tw/',
+                browseHyperlinkedObjectsHorizontally3L: 'https://www.lib.ncku.edu.tw/',
+                pc: numberArray(stuff.c),
+                ps: req.query.page ? stuff.s.slice(parseInt(req.query.page) * 4, (parseInt(req.query.page) + 1) * 4) : stuff.s.slice(0 * 4, (0 + 1) * 4),
+                margin: parseInt(req.query.page, 10) || 0,
+                swl: r,
+                addZero: addZero,
+                isADMIN: true
+            });
         });
-      });
     });
-  });
+});
+
+//DEL最新消息
+router.get('/home/del', ensureAuthenticated, function (req, res, next) {//這個東西是從routes/index.js複製來的
+
+    least.delById(req.query.id, (err, doc) => {
+        if (err) {
+            res.status(500).send(form_callback_page("錯誤"));
+        } else {
+            res.status(200).send(form_callback_page("成功"));
+        }
+    });
+});
 
 router.get('/add_periodical', ensureAuthenticated, function (req, res, next) {
     res.render('add_periodical', {
@@ -311,11 +327,11 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
             JournalInformation.addJournal(newJournalInformation, function (err) {
                 if (err) {
                     console.log(err);
-                    res.status(404).send("fail");
+                    res.status(404).send(form_callback_page("失敗"));
                 } else if (INLIVxARRAYfailed) {
-                    res.status(404).send("fail");
+                    res.status(404).send(form_callback_page("失敗"));
                 } else {
-                    res.status(200).send("success");
+                    res.status(200).send(form_callback_page("成功"));
                 }
             });
 
@@ -461,7 +477,7 @@ router.get('/swipeEDIT', ensureAuthenticated, function (req, res, next) {
                                 refh: req.query.rmd || req.query.rmu || req.query.del,
                                 window_location_href_main: 'yes',
                                 b64: Base64,
-                                editstuff_pic:r[parseInt((req.query.iol || 0), 10) || 0].pic,
+                                editstuff_pic: r[parseInt((req.query.iol || 0), 10) || 0].pic,
                             });
                         });
                 });
@@ -608,31 +624,31 @@ router.get('/link', ensureAuthenticated, function (req, res, next) {
     if (req.query.ic === 'l') {
         least.SETuri(req.query.lid, req.query.docid, r => {
             if (r === 'yes') {
-                res.status(200).send("success");
+                res.status(200).send(form_callback_page("成功"));
             }
             else {
-                res.status(404).send("failed");
+                res.status(404).send(form_callback_page("失敗"));
             }
         });
     } else if (req.query.ic === 'g') {
         gh.SETinnerdocID(req.query.lid, req.query.docid, r => {
             if (r === 'yes') {
-                res.status(200).send("success");
+                res.status(200).send(form_callback_page("成功"));
             }
             else {
-                res.status(404).send("failed");
+                res.status(404).send(form_callback_page("失敗"));
             }
         })
     } else if (req.query.ic === 'es') {
         e2.update_url(req.query.lid, `/inner?id=${req.query.docid}&pid=${req.query.lid}&ic=es`, r => {
             if (r === 'yes') {
-                res.status(200).send("success");
+                res.status(200).send(form_callback_page("成功"));
             }
             else {
-                res.status(404).send("failed");
+                res.status(404).send(form_callback_page("失敗"));
             }
         });
-    } else { res.status(400).send("failed"); }
+    } else { res.status(400).send(form_callback_page("失敗")); }
 });
 
 router.get('/interlibraryCooperation', ensureAuthenticated, function (req, res, next) {
@@ -660,7 +676,7 @@ router.post('/agh', ensureAuthenticated, function (req, res, next) {//丟資料�
             res.status(200).send(r.id);
         } else {
             console.log(r);
-            res.status(404).send("fail");
+            res.status(404).send(form_callback_page("失敗"));
         }
     });
 });
