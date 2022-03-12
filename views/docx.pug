@@ -7,15 +7,17 @@ block contentHEAD
   meta(http-equiv='X-UA-Compatible' content='ie=edge')
   link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/samantha.css')
   link(crossorigin="anonymous" rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css' type='text/css')
-  link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/ButtonsUIKit.css' type='text/css')
+  //- link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/ButtonsUIKit.css' type='text/css')
   link(crossorigin="anonymous" href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet')
-  link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/welovefontsicon.css')
+  //- link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/welovefontsicon.css')
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css' integrity='sha512-SJw7jzjMYJhsEnN/BuxTWXkezA2cRanuB8TdCNMXFJjxG9ZGSKOX5P3j03H6kdMxalKHZ7vlBMB4CagFP/de0A==' crossorigin='anonymous' referrerpolicy='no-referrer')
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/print-js/1.6.0/print.css' integrity='sha512-tKGnmy6w6vpt8VyMNuWbQtk6D6vwU8VCxUi0kEMXmtgwW+6F70iONzukEUC3gvb+KTJTLzDKAGGWc1R7rmIgxQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
   link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/print.css' type='text/css')
   link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/share_btns.css' type='text/css')
   //link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/free_3d_an.css' type='text/css')
   link(rel='stylesheet' href='/stylesheets/External_embedded_search_box.css' type='text/css')
+  style.
+    @import url('./jumbotron/stylesheets/customStyle.css');
 
 block content
   #sharepop.ui.modal
@@ -245,39 +247,71 @@ block content
   #jade_user_info_username #{var_jade_user_info_username}
   #jade_user_info_profileimage #{var_jade_user_info_profileimage}
   #jade_user_info_choosedanimal #{var_jade_user_info_choosedanimal}
-  .ui.container
-    nav.ui.inverted.grey.big.stackable.menu
-      .header.active.item
-        // this may be your photograph
-        img.logo(src='/docx/logo.png' alt='')
-        | #{ttp}
-        //| 公告
-      .item= tp
-      // (^上方文字^)標題
-      a#alpha.item(href=`${alpha.uri}`)= alpha.txt
-      //^^^^^^^^^^^^ 回到上一頁
-      // Search
+  
+  .ui.tablet.computer.only.padded.grid
+      #headderBar.ui.top.fixed.borderless.fluid.menu
+        .ui.container
+          a.header(href="/" class='logo') 
+            img(src='./images/nckumath.svg' width='200px')
+          .right.menu
+            a.item(href=`${browseHyperlinkedObjectsHorizontally1L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally1T }
+            a.item(href=`${browseHyperlinkedObjectsHorizontally2L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally2T }
+            a.item(href=`${browseHyperlinkedObjectsHorizontally3L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally3T }
+            .item
+              form.ui.form(onsubmit="event.target.querySelector('i').click();")
+                //TODO preventDefault
+                .inline.fields
+                  .field
+                    script(async='' src='https://cse.google.com/cse.js?cx=d613870f87198941e')
+                    .AugmentedExternalSearchModule.ui.icon.input
+                      .gcse-searchbox-only
+                      input(type='text' placeholder='Search...')
+                      i.AugmentedExternalSearchModuleF.inverted.circular.search.link.icon(onclick="var AugmentedExternalSearchModule=event.target.closest('.AugmentedExternalSearchModule');AugmentedExternalSearchModule.getElementsByTagName('input')[0].value=AugmentedExternalSearchModule.getElementsByTagName('input')[1].value;AugmentedExternalSearchModule.getElementsByTagName('button')[0].click();")
+  .ui.mobile.only.padded.grid
+    #headderBarM.ui.top.fixed.borderless.fluid.huge.menu
+      a.header(href="/" class='logo logo-mobile') 
+          img(src='./images/nckumath.svg' width='150px')
       .right.menu
         .item
-          form.ui.form(onsubmit="event.target.querySelector('i').click();")
-            //TODO preventDefault
-            .inline.fields
-              .field
-                script(async='' src='https://cse.google.com/cse.js?cx=d613870f87198941e')
-                .AugmentedExternalSearchModule.ui.icon.input
-                  .gcse-searchbox-only
-                  input(type='text' placeholder='Search...')
-                  i.AugmentedExternalSearchModuleF.inverted.circular.search.link.icon(onclick="var AugmentedExternalSearchModule=event.target.closest('.AugmentedExternalSearchModule');AugmentedExternalSearchModule.getElementsByTagName('input')[0].value=AugmentedExternalSearchModule.getElementsByTagName('input')[1].value;AugmentedExternalSearchModule.getElementsByTagName('button')[0].click();")
+          button.ui.icon.toggle.basic.button
+            i.content.icon
+      .ui.vertical.borderless.fluid.menu
+        a.item(href=`${browseHyperlinkedObjectsHorizontally1L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally1T }
+        a.item(href=`${browseHyperlinkedObjectsHorizontally2L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally2T }
+        a.item(href=`${browseHyperlinkedObjectsHorizontally3L}` target='_blank') #{ browseHyperlinkedObjectsHorizontally3T }
+        .item
+          form.ui.form
+            .field
+              .ui.icon.input
+                input(type='text' placeholder='Search...')
+                i.inverted.circular.search.link.icon(onclick='console.log("search...");$("#innerINDEX.ui.basic.modal").modal("show");')
+    //- nav.ui.inverted.grey.big.stackable.menu
+    //-   .header.active.item
+    //-     // this may be your photograph
+    //-     img.logo(src='/docx/logo.png' alt='')
+    //-     | #{ttp}
+    //-     //| 公告
+    //-   .item= tp
+    //-   // (^上方文字^)標題
+    //-   a#alpha.item(href=`${alpha.uri}`)= alpha.txt
+    //-   //^^^^^^^^^^^^ 回到上一頁
+    //-   // Search
+    //-   .right.menu
+    //-     .item
+    //-       form.ui.form(onsubmit="event.target.querySelector('i').click();")
+    //-         //TODO preventDefault
+    //-         .inline.fields
+    //-           .field
+    //-             script(async='' src='https://cse.google.com/cse.js?cx=d613870f87198941e')
+    //-             .AugmentedExternalSearchModule.ui.icon.input
+    //-               .gcse-searchbox-only
+    //-               input(type='text' placeholder='Search...')
+    //-               i.AugmentedExternalSearchModuleF.inverted.circular.search.link.icon(onclick="var AugmentedExternalSearchModule=event.target.closest('.AugmentedExternalSearchModule');AugmentedExternalSearchModule.getElementsByTagName('input')[0].value=AugmentedExternalSearchModule.getElementsByTagName('input')[1].value;AugmentedExternalSearchModule.getElementsByTagName('button')[0].click();")
+  .ui.main.container
+    h1.ui.header #{tp}
+
     .ui.stackable.grid
       main#htmlfromuser.eleven.wide.column!= dbhtml
-        //h1 Tote bag four dollar toast bitters taxidermy prism
-        //p 09 October 2018
-        //p
-          | Lorem ipsum dolor amet heirloom gentrify drinking vinegar, chillwave tote bag seitan shoreditch kombucha keffiyeh cred health goth shaman literally locavore wolf. Tofu kitsch scenester irony mixtape gochujang humblebrag 8-bit viral adaptogen aesthetic typewriter. Edison bulb banjo lo-fi, selvage synth pour-over keytar. 8-bit meh chartreuse asymmetrical readymade lumbersexual lyft craft beer kombucha roof party swag actually.
-        //p
-          | Post-ironic schlitz la croix direct trade, trust fund selfies wayfarers thundercats man braid offal iPhone paleo migas. Health goth fingerstache 8-bit hella DIY small batch thundercats, pour-over snackwave crucifix vice. Lyft photo booth fam freegan hot chicken chartreuse dreamcatcher. Cliche taxidermy bushwick cronut, small batch activated charcoal roof party man bun DIY hammock succulents street art raclette. Man bun slow-carb migas coloring book art party, listicle direct trade tousled. Kale chips bitters ennui chartreuse, pabst organic cold-pressed disrupt fanny pack plaid. Lomo meggings fixie, knausgaard migas you probably haven't heard of them waistcoat 8-bit marfa tilde jean shorts.
-        //p
-          | Succulents blog kinfolk craft beer tacos. Tumblr authentic single-origin coffee beard chambray. Fixie quinoa raw denim thundercats direct trade 3 wolf moon, intelligentsia gochujang leggings whatever jianbing. Squid art party fam authentic seitan tacos austin gluten-free next level adaptogen chia. Celiac 90's +1 godard. Crucifix sriracha sartorial street art put a bird on it intelligentsia VHS cronut, subway tile ramps 90's la croix meh next level.
       aside.five.wide.column
         if ExternalLargeButtonName
           link(rel='stylesheet' href='/stylesheets/https___raw_githubusercontent_com_loup-brun_buttons_master_main.css')
@@ -340,45 +374,43 @@ block content
           p
             a(href='#') Yet Another Interesting Blog
         .ui.divider
-  footer.ui.container
-    // Social
-    .social
-      a.ui.facebook.button(href='#' onclick='$("html, body").animate({scrollTop:0}, "300");')
-        i.caret.square.up.outline.icon
-        | &emsp;回頂端
-        //為甚麼這裡需要一個全行空白啊?
-      a#snap_shoot_screen.ui.linkedin.button(href='#')
-        i.camera.retro.icon
-        | 截圖
-        //TODO dont scroll up yo y=0 and crop to best, dont cut side!
-        #snap_shoot_html2canvas_group(style='display: none;')
-          //button#snap_shoot_screen(style='display: none;') snap_shoot_screen
-          #snap_shoot_finish(style='display: none;') -1
-          #snap_shoot_canvas_tmp(style='display: none;')
-          //-#imgdownloadOK(style='display: none;') 這個快速差建下載完成的時候這個dom會被點集...沒
-      a.ui.youtube.button(href='#' onclick="$('#sharepop').modal('show');")
-        i.share.alternate.icon
-        | 分享
-        //TODO https://css-tricks.com/how-to-use-the-web-share-api/;https://codepen.io/ayoisaiah/pen/WBpzBo
-      a.ui.instagram.button( onclick="printJS('root', 'html')")
-        i.print.icon
-        | 列印
-        //TODO fix text x,y pos...
-        //OR use svg background
-        #snap_shoot_html2canvas_group_pdf(style='display: none;')
-          #snap_shoot_finish_pdf(style='display: none;') -1
-          #snap_shoot_canvas_tmp_pdf(style='display: none;')
-      a.pdfutils.ui.vk.button( onclick="downpdf()")
-        //(onclick="var pdf = new jsPDF('p','pt','a4');var margins = {top: 25,bottom: 60,left: 20,width: 522};pdf.addHTML(document.body, margins.top, margins.left, {},function() {console.log('???');/*saveData(pdf.output('Blob'), commercialFileName);*/pdf.save(commercialFileName);});")
-        i.file.pdf.outline.icon
-        | 另存為PDF
-        //TODO fix print poor css
-      // 09 Oct 2018 R.I.P. Google Plus :-P
-      // <a class="ui google plus button" href="#"><i class="google plus icon"></i>Google Plus</a>
-    .copyright
-      | 成大數學系圖書館網站內頁 
-      i.ui.icon.bullseye
-      a(href='#')= `${moment().format('YYYY')}`
+    footer.inner
+      // Social
+      .social
+        a.ui.facebook.button(href='#' onclick='$("html, body").animate({scrollTop:0}, "300");')
+          i.caret.square.up.outline.icon
+          | &emsp;回頂端
+          //為甚麼這裡需要一個全行空白啊?
+        a#snap_shoot_screen.ui.linkedin.button(href='#')
+          i.camera.retro.icon
+          | 截圖
+          //TODO dont scroll up yo y=0 and crop to best, dont cut side!
+          #snap_shoot_html2canvas_group(style='display: none;')
+            //button#snap_shoot_screen(style='display: none;') snap_shoot_screen
+            #snap_shoot_finish(style='display: none;') -1
+            #snap_shoot_canvas_tmp(style='display: none;')
+            //-#imgdownloadOK(style='display: none;') 這個快速差建下載完成的時候這個dom會被點集...沒
+        a.ui.youtube.button(href='#' onclick="$('#sharepop').modal('show');")
+          i.share.alternate.icon
+          | 分享
+          //TODO https://css-tricks.com/how-to-use-the-web-share-api/;https://codepen.io/ayoisaiah/pen/WBpzBo
+        a.ui.instagram.button( onclick="printJS('root', 'html')")
+          i.print.icon
+          | 列印
+          //TODO fix text x,y pos...
+          //OR use svg background
+          #snap_shoot_html2canvas_group_pdf(style='display: none;')
+            #snap_shoot_finish_pdf(style='display: none;') -1
+            #snap_shoot_canvas_tmp_pdf(style='display: none;')
+        a.pdfutils.ui.vk.button( onclick="downpdf()")
+          //(onclick="var pdf = new jsPDF('p','pt','a4');var margins = {top: 25,bottom: 60,left: 20,width: 522};pdf.addHTML(document.body, margins.top, margins.left, {},function() {console.log('???');/*saveData(pdf.output('Blob'), commercialFileName);*/pdf.save(commercialFileName);});")
+          i.file.pdf.outline.icon
+          | 另存為PDF
+          //TODO fix print poor css
+        // 09 Oct 2018 R.I.P. Google Plus :-P
+        // <a class="ui google plus button" href="#"><i class="google plus icon"></i>Google Plus</a>
+      .copyright
+        | &copy; #{moment().format('YYYY')} 成功大學數學系
   // Free html personal blog theme "Samantha" (Semantic UI + jQuery) by Tim B. https://github.com/shawooha
   //-label.ui.primary.button
     input(type='file' style='display:none;')

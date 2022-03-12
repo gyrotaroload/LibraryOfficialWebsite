@@ -30,30 +30,33 @@ var e2 = require('../models/e2');
 var e1 = require('../models/e1');
 var swipe_edit = require('../models/swipe_edit');
 
+var header_link = {
+  browseHyperlinkedObjectsHorizontally1T: '成大首頁',
+  browseHyperlinkedObjectsHorizontally2T: '數學系網站',
+  browseHyperlinkedObjectsHorizontally3T: '成大總圖',
+  browseHyperlinkedObjectsHorizontally1L: 'https://www.ncku.edu.tw/',
+  browseHyperlinkedObjectsHorizontally2L: 'http://www.math.ncku.edu.tw/',
+  browseHyperlinkedObjectsHorizontally3L: 'https://www.lib.ncku.edu.tw/'
+}
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
   swipe_edit.getList(r => {
     least.frontend((stuff) => {
       //console.log(c);console.log(numberArray(c));
-      res.render('index', {
+      var homeinfo = {
         title: '成大數學系圖書館',
         functionButtonMainText1: '新書入庫',
         functionButtonMainText2: '期刊服務',
         functionButtonMainText3: '館際合作',
         functionButtonMainText4: '電子資源',
-        browseHyperlinkedObjectsHorizontally1T: '成大首頁',
-        browseHyperlinkedObjectsHorizontally2T: '數學系網站',
-        browseHyperlinkedObjectsHorizontally3T: '成大總圖',
-        browseHyperlinkedObjectsHorizontally1L: 'https://www.ncku.edu.tw/',
-        browseHyperlinkedObjectsHorizontally2L: 'http://www.math.ncku.edu.tw/',
-        browseHyperlinkedObjectsHorizontally3L: 'https://www.lib.ncku.edu.tw/',
         pc: numberArray(stuff.c),
         ps: req.query.page ? stuff.s.slice(parseInt(req.query.page) * 4, (parseInt(req.query.page) + 1) * 4) : stuff.s.slice(0 * 4, (0 + 1) * 4),
         margin: parseInt(req.query.page, 10) || 0,
         swl: r,
         addZero: addZero
-      });
+      }
+      res.render('index', Object.assign(homeinfo, header_link));
     });
   });
 });
@@ -199,9 +202,10 @@ router.get('/inner', function (req, res, next) {
   var tokenM = randomstring.generate();
   //debug(process.env.token_defaults_secret);
   ///////////////////////////////////////
+  
   function cb() {
     if (give404) {
-      res.render('docx', {
+      var errorinfo = {
         title: '錯誤',
         infoClass: '',
         infoDT: '',
@@ -216,14 +220,15 @@ router.get('/inner', function (req, res, next) {
         ISuser: false,
         ProntEndBeautificationRendering: true,
         wsport: process.env.wsPORT
-      });
+      }
+      res.render('docx', Object.assign(errorinfo, header_link));
     } else {
       //res.cookie('token', token, { maxAge: EXPIRES_IN, httpOnly: false });
       var ht = Base64.encode(res_render_docx.dbhtml);
       var tm = Base64.encode(tokenM);
       token.defaults.secret = process.env.token_defaults_secret;
       res_render_docx.tkn = Base64.encode(JSON.stringify({ id: ht, role: tm, auth: token.generate(`${ht}|${tm}`) }));
-      res.render('docx', res_render_docx);
+      res.render('docx', Object.assign(res_render_docx, header_link) );
     }
   }
   ///////////////////end of res////////////////////////

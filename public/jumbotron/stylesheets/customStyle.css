@@ -44,3 +44,11 @@ span > .user{
     background-size: cover;
     background-position: center;
 }
+
+.main.container{
+    padding-top: 100px;
+}
+
+footer.inner{
+    padding-bottom: 50px;
+}
