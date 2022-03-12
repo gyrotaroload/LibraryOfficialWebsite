@@ -508,12 +508,33 @@ router.get('/infoJ', ensureAuthenticated, function (req, res, next) {
         res.status(200).send(stuff);
     });
 });
+
+//最新消息add
 router.get('/docxUpload', ensureAuthenticated, function (req, res, next) {
-    res.render('docx_upload', {
-        title: 'docx upload 2',
-        moment: require('moment'),
-        window_location_href_main: 'yes',
-    });
+    if (
+        req.query.edit && req.query.edit === 'yes' && req.query.id
+    ) {
+        least.getById(req.query.id, (s) => {
+            docs.isEditAble(s.uri, (ss) => {
+                res.render('docx_upload', {
+                    title: 'docx upload 2',
+                    moment: require('moment'),
+                    window_location_href_main: 'yes',
+                    tp: s.tp,
+                    ab: s.ab,
+                    lab: s.lab,
+                    uri: s.uri,
+                    editable: ss
+                });
+            });
+        });
+    } else {
+        res.render('docx_upload', {
+            title: 'docx upload 2',
+            moment: require('moment'),
+            window_location_href_main: 'yes',
+        });
+    }
 });
 
 router.post('/addleast', ensureAuthenticated, function (req, res, next) {
@@ -665,6 +686,7 @@ router.get('/interlibraryCooperation', ensureAuthenticated, function (req, res, 
     });
 });
 
+//館際合作
 router.post('/agh', ensureAuthenticated, function (req, res, next) {//丟資料到models\gh.js
     console.log(req.body.gs);
     var newobj = new gh({
@@ -780,6 +802,19 @@ router.post('/e3', ensureAuthenticated, upload.single('file'), function (req, re
 });
 
 router.get('/editmd', ensureAuthenticated, function (req, res, next) {
+    if(req.query.edit&&req.query.edit==='l'&&req.query.oid){
+        docs.EditTX(req.query.oid,(s)=>{
+        res.render('md', {
+            title: '文字編輯',
+            topic: '最新消息',
+            topic_small: '新增',
+            req_query_ic: req.query.ic,
+            req_query_id: req.query.id//,算了這個功能不做了
+            //defaultMDtextValue: req.query.defaultMDtextValue
+            , window_location_href_main: 'yes',
+            defaultvalue:s
+        });});
+    }else{
     res.render('md', {
         title: '文字編輯',
         topic: '最新消息',
@@ -788,14 +823,16 @@ router.get('/editmd', ensureAuthenticated, function (req, res, next) {
         req_query_id: req.query.id//,算了這個功能不做了
         //defaultMDtextValue: req.query.defaultMDtextValue
         , window_location_href_main: 'yes',
-    });
+    });}
 });
 
 router.post('/editmd', ensureAuthenticated, function (req, res, next) {
     var result = md.render(req.body.usrinpt);
     var no = new docs({
         dt: Date.now(),
-        html: replaceall("[object Promise]", String(randomstring.generate()), String(result))
+        html: replaceall("[object Promise]", String(randomstring.generate()), String(result)),
+        editable: true,
+        edittext: req.body.usrinpt
     });
     docs.add(no, function (r) {
         if (r) {
@@ -805,7 +842,7 @@ router.post('/editmd', ensureAuthenticated, function (req, res, next) {
                 docmdID: `@=@docmdid@=@${r.id}@~@docmdid@~@`,
                 window_location_href_main: 'yes',
             });
-        } else {
+        } else {//error
             res.render('mdRaw', {
                 title: 'mdRaw-html',
                 VARformdtest: replaceall("[object Promise]", String(randomstring.generate()), String(result)),
