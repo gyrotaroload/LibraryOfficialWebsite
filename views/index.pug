@@ -125,68 +125,6 @@ block content
         //- .swiper-scrollbar
     .ten.wide.column
     .six.wide.column
-  //-
-    div class="ui container">
-    <div class="ui three column stackable grid">
-    <div class="column">
-    <h1 class="ui header">期刊服務</h1>
-    <p>
-    Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-    tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-    fermentum massa justo sit amet risus. Etiam porta sem malesuada
-    magna mollis euismod. Donec sed odio dui.
-    </p>
-    <div class="ui small basic button">瀏覽期刊目錄 &raquo;</div>
-    </div>
-    <div class="column">
-    <h1 class="ui header">館際合作</h1>
-    <p>
-    Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-    tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-    fermentum massa justo sit amet risus. Etiam porta sem malesuada
-    magna mollis euismod. Donec sed odio dui.
-    </p>
-    <div class="ui small basic button">線上申請 &raquo;</div>
-    </div>
-    <div class="column">
-    <h1 class="ui header">其他服務</h1>
-    <div class="ui relaxed divided list">
-    <div class="item">
-    <i class="large github middle aligned icon"></i>
-    <div class="content">
-    <a class="header">Semantic-Org/Semantic-UI</a>
-    <div class="description">10 分鐘前更新</div>
-    </div>
-    </div>
-    <div class="item">
-    <i class="large github middle aligned icon"></i>
-    <div class="content">
-    <a class="header">Semantic-Org/Semantic-UI-Docs</a>
-    <div class="description">22 分鐘前更新</div>
-    </div>
-    </div>
-    <div class="item">
-    <i class="large github middle aligned icon"></i>
-    <div class="content">
-    <a class="header">Semantic-Org/Semantic-UI-Meteor</a>
-    <div class="description">34 分鐘前更新</div>
-    </div>
-    </div>
-    </div>
-    <div class="ui small basic button">檢視更多 &raquo;</div>
-    </div>
-    </div>
-    <div class="ui hidden divider"></div>
-    <div class="ui divider"></div>
-    <footer>&copy; 2021 成功大學圖書館
-    <i class="phone icon"></i>
-    0987587487
-    <i class="building icon"></i>
-    台南市大學路1號某某大樓
-    <i class="envelope icon"></i>
-    <a href="mailto:mathlib@math.ncku.edu.tw">服務信箱</a>
-    </footer>
-    </div
   .section.one
     .ui.container
       //- h1 Feature
@@ -281,6 +219,7 @@ block content
                   .description= eps.ab
           //start copy ******************************************************************************************************************
           //我把epc shift成正整數數列比較好閱讀，我不確定你的button功能是啥你確定一下XD AndyLee
+          //RE:迷之音:完了，我自己在寫三小....andythebreaker20220312
           .ui.divider
           .ui.buttons
             button.ui.button(onclick="var pgs=event.target.parentElement.getElementsByTagName('a');for(var i=0;i<pgs.length;i++){if(parseInt(pgs[i].innerText,10)-1<0){break;}else{pgs[i].innerText=parseInt(pgs[i].innerText,10);}}") Previous
@@ -335,6 +274,7 @@ block content
         
 
         // 桌面版在手機上很棒啊～為啥要搞這麼複雜分手機電腦版XD AndyLee
+        // 回:痾....humm....(rwd的css好像是後來才加上去的)....我的鍋....andythebreaker20220312
         .four.wide.column
           #copyRightSidebar_mobile2desktop.ui.fluid.vertical.menu.bdgreen
             a.header.item(href='#') 常用連結
@@ -368,6 +308,7 @@ block content
                   
 
                   //例假日遇到平日會有bug喔～～ AndyLee
+                  //回:慘，我應該要呼叫行政院人事行政的api....andythebreaker，我先發issue(笑)....晚點處理
                   table#the_open_chart_data.opening-hours-table.ui.unstackable.celled.table.center.aligned
                     thead
                       tr
