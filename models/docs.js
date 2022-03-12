@@ -7,7 +7,11 @@ var docsSchema = mongoose.Schema({
     },
     html: {
         type: String
-    }
+    },
+    editable: {
+        type: Boolean
+    },
+    edittext: { type: String }
 });
 
 //export JournalInformation schema
