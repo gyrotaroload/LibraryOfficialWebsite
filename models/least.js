@@ -98,3 +98,7 @@ module.exports.getById = function (id, callback) {
         }
     });
 }
+
+module.exports.delById = function (MODid, callback) {
+    least.findByIdAndDelete(MODid,(err,doc)=>callback(err,doc));
+};

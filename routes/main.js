@@ -1,4 +1,4 @@
-function form_callback_page(success_or_error) {
+function form_callback_page(success_or_error) {//Collapse this text
     return (`<!DOCTYPE html>
 <html lang="zh-cmn-Hant">
 <head>
@@ -66,6 +66,8 @@ function form_callback_page(success_or_error) {
 var express = require('express');
 var router = express.Router();
 var generator = require('character-generator');
+var addZero = require('add-zero');
+const numberArray = require('number-array');
 const { Base64 } = require('js-base64');
 const sharp = require('sharp');
 var sanitize = require('mongo-sanitize');
@@ -131,6 +133,7 @@ var gh = require('../models/gh');
 var e1 = require('../models/e1');
 var e2 = require('../models/e2');
 var e3 = require('../models/OnCampusElectronicResourceFiles');
+var least = require('../models/least');
 
 //const
 var IclassMap = new Map();
@@ -163,12 +166,51 @@ router.get('/', ensureAuthenticated, function (req, res, next) {
         //var_jade_onsleep_stat: `${(!Personget) ? "-1" : (Personget.is_sleep) ? "yes" : "no"}`,
         //var_jade_user_exp_css: (!Middatatmpget) ? "width: calc(var(--var_vw)*25*0/100);" : (!Middatatmpget.tmp_to_set) ? "width: calc(var(--var_vw)*25*0/100);" : `width: calc(var(--var_vw)*25*${JSON.parse(Middatatmpget.tmp_to_set).exp_data_tmp}/100);`,
         //var_jade_user_lv_txt: `LV${(!Middatatmpget) ? "0" : (!Middatatmpget.tmp_to_set) ? "0" : JSON.parse(Middatatmpget.tmp_to_set).goal_data_4_tmp}`
-        window_location_href_main:'yes'
+        window_location_href_main: 'yes'
     });
 });
 //});
 //});
 //});
+
+//編輯最新消息
+router.get('/home', ensureAuthenticated, function (req, res, next) {//這個東西是從routes/index.js複製來的
+    swipe_edit.getList(r => {
+        least.frontend((stuff) => {
+            res.render('index', {
+                title: '成大數學系圖書館',
+                functionButtonMainText1: '新書入庫',
+                functionButtonMainText2: '期刊服務',
+                functionButtonMainText3: '館際合作',
+                functionButtonMainText4: '電子資源',
+                browseHyperlinkedObjectsHorizontally1T: '成大首頁',
+                browseHyperlinkedObjectsHorizontally2T: '數學系網站',
+                browseHyperlinkedObjectsHorizontally3T: '成大總圖',
+                browseHyperlinkedObjectsHorizontally1L: 'https://www.ncku.edu.tw/',
+                browseHyperlinkedObjectsHorizontally2L: 'http://www.math.ncku.edu.tw/',
+                browseHyperlinkedObjectsHorizontally3L: 'https://www.lib.ncku.edu.tw/',
+                pc: numberArray(stuff.c),
+                ps: req.query.page ? stuff.s.slice(parseInt(req.query.page) * 4, (parseInt(req.query.page) + 1) * 4) : stuff.s.slice(0 * 4, (0 + 1) * 4),
+                margin: parseInt(req.query.page, 10) || 0,
+                swl: r,
+                addZero: addZero,
+                isADMIN: true
+            });
+        });
+    });
+});
+
+//DEL最新消息
+router.get('/home/del', ensureAuthenticated, function (req, res, next) {//這個東西是從routes/index.js複製來的
+
+    least.delById(req.query.id, (err, doc) => {
+        if (err) {
+            res.status(500).send(form_callback_page("錯誤"));
+        } else {
+            res.status(200).send(form_callback_page("成功"));
+        }
+    });
+});
 
 router.get('/add_periodical', ensureAuthenticated, function (req, res, next) {
     res.render('add_periodical', {
@@ -192,7 +234,7 @@ router.get('/add_periodical', ensureAuthenticated, function (req, res, next) {
         EDITLIVend: (req.query.EDITLIVend) ? Base64.decode(req.query.EDITLIVend) : "",
         EDITLIVx: (req.query.EDITLIVx) ? Base64.decode(req.query.EDITLIVx) : ""
         , id: req.query.id || "", modeAE: (req.query.id) ? "編輯" : "新增",
-        window_location_href_main:'yes'
+        window_location_href_main: 'yes'
     });
 });
 
@@ -285,11 +327,11 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
             JournalInformation.addJournal(newJournalInformation, function (err) {
                 if (err) {
                     console.log(err);
-                    res.status(404).send("fail");
+                    res.status(404).send(form_callback_page("失敗"));
                 } else if (INLIVxARRAYfailed) {
-                    res.status(404).send("fail");
+                    res.status(404).send(form_callback_page("失敗"));
                 } else {
-                    res.status(200).send("success");
+                    res.status(200).send(form_callback_page("成功"));
                 }
             });
 
@@ -351,7 +393,7 @@ router.get(('/addNewBooks'), ensureAuthenticated, function (req, res, next) {
                 innerHTMLofLlist: innerHTMLofLlistSTRING,
                 VARdbname: "newbooksdb",
                 isADMIN: true,
-                window_location_href_main:'yes',
+                window_location_href_main: 'yes',
             });
         });
     });
@@ -368,7 +410,7 @@ router.get(('/ero'), ensureAuthenticated, function (req, res, next) {
             isADMIN: true,
             disable_accession_number_to_link_to_master_plan: true,
             linkAFTERfinish: req.query.eroID,
-            window_location_href_main:'yes',
+            window_location_href_main: 'yes',
         });
     });
 });
@@ -389,7 +431,7 @@ router.post('/excelTransferOrder', ensureAuthenticated, function (req, res, next
 });
 
 router.post('/checkissnExistence', ensureAuthenticated, function (req, res, next) {
-    JournalInformation.checkissnExistence(req.body.isbn,(stuff)=>res.status(200).send(stuff?"yes":"no"));
+    JournalInformation.checkissnExistence(req.body.isbn, (stuff) => res.status(200).send(stuff ? "yes" : "no"));
 });
 
 
@@ -433,7 +475,9 @@ router.get('/swipeEDIT', ensureAuthenticated, function (req, res, next) {
                                 px: err || 'data:image/webp;base64,' + data.toString('base64'),
                                 cj: isFinite(ChansuNoJunban_all.max()) ? ChansuNoJunban_all.max() + 1 : 0,
                                 refh: req.query.rmd || req.query.rmu || req.query.del,
-                                window_location_href_main:'yes',
+                                window_location_href_main: 'yes',
+                                b64: Base64,
+                                editstuff_pic: r[parseInt((req.query.iol || 0), 10) || 0].pic,
                             });
                         });
                 });
@@ -449,7 +493,7 @@ router.get('/journals', ensureAuthenticated, function (req, res, next) {
         jjsonURL: "/jjson",
         a2z: generator('@', ['A-Z']),
         alpha: '0',
-        window_location_href_main:'yes',
+        window_location_href_main: 'yes'
     });
 });
 
@@ -468,7 +512,7 @@ router.get('/docxUpload', ensureAuthenticated, function (req, res, next) {
     res.render('docx_upload', {
         title: 'docx upload 2',
         moment: require('moment'),
-        window_location_href_main:'yes',
+        window_location_href_main: 'yes',
     });
 });
 
@@ -560,8 +604,8 @@ router.get('/docx', ensureAuthenticated, function (req, res, next) {
         tp: "按下右側「上傳」按鈕以上傳docx檔案",
         alpha: { txt: "提交", uri: `/main/link?ic=${req.query.ic}&lid=${req.query.id}&` },
         moment: require('moment'),
-        wsport:process.env.wsPORT,
-        window_location_href_main:'yes',
+        wsport: process.env.wsPORT,
+        window_location_href_main: 'yes',
     });
 });
 
@@ -580,31 +624,31 @@ router.get('/link', ensureAuthenticated, function (req, res, next) {
     if (req.query.ic === 'l') {
         least.SETuri(req.query.lid, req.query.docid, r => {
             if (r === 'yes') {
-                res.status(200).send("success");
+                res.status(200).send(form_callback_page("成功"));
             }
             else {
-                res.status(404).send("failed");
+                res.status(404).send(form_callback_page("失敗"));
             }
         });
     } else if (req.query.ic === 'g') {
         gh.SETinnerdocID(req.query.lid, req.query.docid, r => {
             if (r === 'yes') {
-                res.status(200).send("success");
+                res.status(200).send(form_callback_page("成功"));
             }
             else {
-                res.status(404).send("failed");
+                res.status(404).send(form_callback_page("失敗"));
             }
         })
     } else if (req.query.ic === 'es') {
         e2.update_url(req.query.lid, `/inner?id=${req.query.docid}&pid=${req.query.lid}&ic=es`, r => {
             if (r === 'yes') {
-                res.status(200).send("success");
+                res.status(200).send(form_callback_page("成功"));
             }
             else {
-                res.status(404).send("failed");
+                res.status(404).send(form_callback_page("失敗"));
             }
         });
-    } else { res.status(400).send("failed"); }
+    } else { res.status(400).send(form_callback_page("失敗")); }
 });
 
 router.get('/interlibraryCooperation', ensureAuthenticated, function (req, res, next) {
@@ -617,7 +661,7 @@ router.get('/interlibraryCooperation', ensureAuthenticated, function (req, res, 
         var_jade_err_msg_show: false,
         var_jade_error_msg_gui_text_1: "X",
         var_jade_error_msg_gui_text_2: "X",
-        window_location_href_main:'yes',
+        window_location_href_main: 'yes',
     });
 });
 
@@ -632,7 +676,7 @@ router.post('/agh', ensureAuthenticated, function (req, res, next) {//丟資料�
             res.status(200).send(r.id);
         } else {
             console.log(r);
-            res.status(404).send("fail");
+            res.status(404).send(form_callback_page("失敗"));
         }
     });
 });
@@ -647,7 +691,7 @@ router.get('/AddElectronicResources', ensureAuthenticated, function (req, res, n
                     re1v: re1 || -1,
                     re2v: re2 || -1,
                     re3v: re3 || -1,
-                    window_location_href_main:'yes',
+                    window_location_href_main: 'yes',
                 });
             });
         });
@@ -743,7 +787,7 @@ router.get('/editmd', ensureAuthenticated, function (req, res, next) {
         req_query_ic: req.query.ic,
         req_query_id: req.query.id//,算了這個功能不做了
         //defaultMDtextValue: req.query.defaultMDtextValue
-        ,window_location_href_main:'yes',
+        , window_location_href_main: 'yes',
     });
 });
 
@@ -759,14 +803,14 @@ router.post('/editmd', ensureAuthenticated, function (req, res, next) {
                 title: 'mdRaw-html',
                 VARformdtest: replaceall("[object Promise]", String(randomstring.generate()), String(result)),
                 docmdID: `@=@docmdid@=@${r.id}@~@docmdid@~@`,
-                window_location_href_main:'yes',
+                window_location_href_main: 'yes',
             });
         } else {
             res.render('mdRaw', {
                 title: 'mdRaw-html',
                 VARformdtest: replaceall("[object Promise]", String(randomstring.generate()), String(result)),
                 docmdID: `@=@docmdid@=@error@~@docmdid@~@`,
-                window_location_href_main:'yes',
+                window_location_href_main: 'yes',
             });
         }
     });
