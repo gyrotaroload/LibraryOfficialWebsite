@@ -112,36 +112,41 @@ block content
       | 「新增」最新消息
   .ui.placeholder.segment
     .ui.two.column.very.relaxed.stackable.grid
-      .column
-        .ui.card
-          .content
-            .header 新消息發布日期
-            .meta 不一定要是當天的日期
-            .description
-              .ui.labeled.input
-                .ui.label
-                  | 年
-                input#YYYY(type='number' placeholder='1998' value=`${moment().format('YYYY')}`)
-              .ui.fitted.divider
-              .ui.labeled.input
-                .ui.label
-                  | 月
-                input#M(type='number' placeholder='12' value=`${moment().format('M')}`)
-              .ui.fitted.divider
-              .ui.labeled.input
-                .ui.label
-                  | 日
-                input#D(type='number' placeholder='12' value=`${moment().format('D')}`)
-              .ui.fitted.divider
-              .ui.labeled.input
-                .ui.label
-                  | 時
-                input#h(type='number' placeholder='12' value=`${moment().format('h')}`)
-              .ui.fitted.divider
-              .ui.labeled.input
-                .ui.label
-                  | 分
-                input#mm(type='number' placeholder='12' value=`${moment().format('mm')}`)
+      .ui.two.column.grid
+        .row
+          .column
+            .ui.card
+              .content
+                .header 新消息發布日期
+                .meta 不一定要是當天的日期
+                .description
+                  .ui.labeled.input
+                    .ui.label
+                      | 年
+                    input#YYYY(type='number' placeholder='1998' value=`${moment().format('YYYY')}`)
+                  .ui.fitted.divider
+                  .ui.labeled.input
+                    .ui.label
+                      | 月
+                    input#M(type='number' placeholder='12' value=`${moment().format('M')}`)
+                  .ui.fitted.divider
+                  .ui.labeled.input
+                    .ui.label
+                      | 日
+                    input#D(type='number' placeholder='12' value=`${moment().format('D')}`)
+                  .ui.fitted.divider
+                  .ui.labeled.input
+                    .ui.label
+                      | 時
+                    input#h(type='number' placeholder='12' value=`${moment().format('h')}`)
+                  .ui.fitted.divider
+                  .ui.labeled.input
+                    .ui.label
+                      | 分
+                    input#mm(type='number' placeholder='12' value=`${moment().format('mm')}`)
+          .column
+            .ui.card
+              button.ui.button(onClick=`document.getElementById('labels').innerText=atob('eyJsYWJlbCI6W119');/*this is string of  {"label":[]}  in base64 format*/`) 重置標籤欄位
       .middle.aligned.column
         .ui.card
           .content
