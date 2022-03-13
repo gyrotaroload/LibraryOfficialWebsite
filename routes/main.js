@@ -624,14 +624,14 @@ router.get('/docx', ensureAuthenticated, function (req, res, next) {
         urls: null,
         ttp: "編輯",//公告
         tp: "按下右側「上傳」按鈕以上傳docx檔案",
-        alpha: { txt: "提交", uri: `/main/link?ic=${req.query.ic}&lid=${req.query.id}&` },
+        alpha: { txt: "提交", uri: `/main/link?ic=${req.query.ic}&lid=${req.query.id}&` },//for logic -> see get-/link
         moment: require('moment'),
         wsport: process.env.wsPORT,
         window_location_href_main: 'yes',
     });
 });
 
-router.get('/eroLink', ensureAuthenticated, function (req, res, next) {
+router.get('/eroLink', ensureAuthenticated, function (req, res, next) {//電子資源的link
     e2.update_url(req.query.rlID, `/ero?pageid=${req.query.eID}&rlID=${req.query.rlID}`, r => {
         if (r === 'yes') {
             res.status(200).send(form_callback_page('成功'));
@@ -642,7 +642,7 @@ router.get('/eroLink', ensureAuthenticated, function (req, res, next) {
     });
 });
 
-router.get('/link', ensureAuthenticated, function (req, res, next) {
+router.get('/link', ensureAuthenticated, function (req, res, next) {//connect docx file and obj
     if (req.query.ic === 'l') {
         least.SETuri(req.query.lid, req.query.docid, r => {
             if (r === 'yes') {
@@ -670,6 +670,15 @@ router.get('/link', ensureAuthenticated, function (req, res, next) {
                 res.status(404).send(form_callback_page("失敗"));
             }
         });
+    }else if (req.query.ic === 'ade') {
+        administrativeDocumentEditing.setDocx(req.query.lid, req.query.docid, r => {
+            if (r === 'yes') {
+                res.status(200).send(form_callback_page("成功"));
+            }
+            else {
+                res.status(404).send(form_callback_page("失敗"));
+            }
+        })
     } else { res.status(400).send(form_callback_page("失敗")); }
 });
 
@@ -860,14 +869,17 @@ router.get('/administrativeDocumentEditing', ensureAuthenticated, function (req,
     //console.log(req.query.name);
     //console.log(req.query.uri);
     function res_render() {
-        administrativeDocumentEditing.getAll((r) => {
-            res.render('NO_layout_webflow_S', {
-                window_location_href_main: true,
-                list_of_all_obj: r.r
+        administrativeDocumentEditing.getMAXno((maxNo) => {
+            administrativeDocumentEditing.getAll((r) => {
+                res.render('NO_layout_webflow_S', {
+                    window_location_href_main: true,
+                    list_of_all_obj: r.r,
+                    maxNo: maxNo
+                });
             });
         });
     }
-    if (req.query.name && req.query.no) {
+    if (req.query.name && req.query.no && !req.query.id && !req.query.upordown) {//add
         var no = new administrativeDocumentEditing({
             dt: Date.now(),
             name: req.query.name,
@@ -882,6 +894,14 @@ router.get('/administrativeDocumentEditing', ensureAuthenticated, function (req,
                 res_render();
             }
         });
+    } else if (!req.query.name && !req.query.no && req.query.id && req.query.upordown) {//updown
+        if (req.query.upordown === 'up') {
+            administrativeDocumentEditing.MODFdn(req.query.id, () => res_render());
+        } else if (req.query.upordown === 'down') {
+            administrativeDocumentEditing.MODFup(req.query.id, () => res_render());
+        } else {
+            res.status(500).send(form_callback_page("錯誤"));
+        }
     } else {
         res_render();
     }
@@ -904,7 +924,22 @@ router.delete('/administrativeDocumentEditing', ensureAuthenticated, function (r
     }
 });
 
-
+router.delete('/administrativeDocumentEditing', ensureAuthenticated, function (req, res, next) {
+    function res_default() {
+        res.status(200).send(form_callback_page("成功"));
+    }
+    if (req.query.id) {
+        administrativeDocumentEditing.delById(req.query.id, (e, r) => {
+            if (e) {
+                res.status(500).send(form_callback_page("錯誤"));
+            } else {
+                res_default();
+            }
+        })
+    } else {
+        res_default();
+    }
+});
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {

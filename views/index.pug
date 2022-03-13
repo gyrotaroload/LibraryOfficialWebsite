@@ -271,14 +271,12 @@ block content
           .four.wide.column
             #copyRightSidebar_mobile2desktop.ui.fluid.vertical.menu.bdcolor
               a.header.item(href='#') 常用連結
-              //
-                這裡要放中研院...甚麼的
-                要放多少東西TODO
-                如果太多就要開新頁/新視窗
-              a.item(href='http://www.ams.org/mathscinet/' target='_blank') MathSciNet
-              a.item(href='http://www.isiknowledge.com/' target='_blank') SCI (Science Citation Index Expanded)
-              a.item(href='http://www.emis.de/ZMATH/' target='_blank') Zentralblatt MATH
-              a.item(href='http://www.springerlink.com/content/110312/' target='_blank') Lecture Notes in Mathematics
+              if ade!=='error'
+                each adeval, adeindex in ade
+                  a.item(data-adeindex=adeindex href=adeval?(adeval.uri?adeval.uri:(adeval.doclink?`/inner?ic=ade&pid=${adeval.id}&id=${adeval.doclink}`:'#')):'#' target='_blank') #{adeval?adeval.name:' '}
+                  //pid是物件的；id是文件的
+              else 
+                a.item(href="#" data-errorcode="DBerror") &ensp;
             #copyRightSidebar_opentime.ui.segments.bdcolor
               .ui.header.segment
                 section.openinghours
