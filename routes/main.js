@@ -134,6 +134,7 @@ var e1 = require('../models/e1');
 var e2 = require('../models/e2');
 var e3 = require('../models/OnCampusElectronicResourceFiles');
 var least = require('../models/least');
+var administrativeDocumentEditing = require('../models/administrativeDocumentEditing');
 
 //const
 var IclassMap = new Map();
@@ -802,8 +803,20 @@ router.post('/e3', ensureAuthenticated, upload.single('file'), function (req, re
 });
 
 router.get('/editmd', ensureAuthenticated, function (req, res, next) {
-    if(req.query.edit&&req.query.edit==='l'&&req.query.oid){
-        docs.EditTX(req.query.oid,(s)=>{
+    if (req.query.edit && req.query.edit === 'l' && req.query.oid) {
+        docs.EditTX(req.query.oid, (s) => {
+            res.render('md', {
+                title: '文字編輯',
+                topic: '最新消息',
+                topic_small: '新增',
+                req_query_ic: req.query.ic,
+                req_query_id: req.query.id//,算了這個功能不做了
+                //defaultMDtextValue: req.query.defaultMDtextValue
+                , window_location_href_main: 'yes',
+                defaultvalue: s
+            });
+        });
+    } else {
         res.render('md', {
             title: '文字編輯',
             topic: '最新消息',
@@ -812,18 +825,8 @@ router.get('/editmd', ensureAuthenticated, function (req, res, next) {
             req_query_id: req.query.id//,算了這個功能不做了
             //defaultMDtextValue: req.query.defaultMDtextValue
             , window_location_href_main: 'yes',
-            defaultvalue:s
-        });});
-    }else{
-    res.render('md', {
-        title: '文字編輯',
-        topic: '最新消息',
-        topic_small: '新增',
-        req_query_ic: req.query.ic,
-        req_query_id: req.query.id//,算了這個功能不做了
-        //defaultMDtextValue: req.query.defaultMDtextValue
-        , window_location_href_main: 'yes',
-    });}
+        });
+    }
 });
 
 router.post('/editmd', ensureAuthenticated, function (req, res, next) {
@@ -852,6 +855,56 @@ router.post('/editmd', ensureAuthenticated, function (req, res, next) {
         }
     });
 });
+
+router.get('/administrativeDocumentEditing', ensureAuthenticated, function (req, res, next) {
+    //console.log(req.query.name);
+    //console.log(req.query.uri);
+    function res_render() {
+        administrativeDocumentEditing.getAll((r) => {
+            res.render('NO_layout_webflow_S', {
+                window_location_href_main: true,
+                list_of_all_obj: r.r
+            });
+        });
+    }
+    if (req.query.name && req.query.no) {
+        var no = new administrativeDocumentEditing({
+            dt: Date.now(),
+            name: req.query.name,
+            uri: req.query.uri || '',
+            doclink: null,
+            no: isNumeric(req.query.no) ? parseInt(req.query.no) : -1
+        });
+        administrativeDocumentEditing.add(no, (E) => {
+            if (!E) {
+                res.status(500).send(form_callback_page("錯誤"));
+            } else {
+                res_render();
+            }
+        });
+    } else {
+        res_render();
+    }
+});
+
+router.delete('/administrativeDocumentEditing', ensureAuthenticated, function (req, res, next) {
+    function res_default() {
+        res.status(200).send(form_callback_page("成功"));
+    }
+    if (req.query.id) {
+        administrativeDocumentEditing.delById(req.query.id, (e, r) => {
+            if (e) {
+                res.status(500).send(form_callback_page("錯誤"));
+            } else {
+                res_default();
+            }
+        })
+    } else {
+        res_default();
+    }
+});
+
+
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
@@ -922,4 +975,10 @@ function TOINT(x, base) {
         return 0;
     }
     return parsed;
+}
+
+function isNumeric(str) {//https://stackoverflow.com/questions/175739/how-can-i-check-if-a-string-is-a-valid-number
+    if (typeof str != "string") return false // we only process strings!  
+    return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+        !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
 }
