@@ -15,9 +15,10 @@ block contentHEAD
   link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/print.css' type='text/css')
   link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/share_btns.css' type='text/css')
   //link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/free_3d_an.css' type='text/css')
+  link(rel='stylesheet' href='/jumbotron/stylesheets/index.css')
   link(rel='stylesheet' href='/stylesheets/External_embedded_search_box.css' type='text/css')
   style.
-    @import url('./jumbotron/stylesheets/customStyle.css');
+    @import url('/jumbotron/stylesheets/customStyle.css');
 
 block content
   #sharepop.ui.modal
@@ -121,15 +122,13 @@ block content
       #headderBar.ui.top.fixed.borderless.fluid.menu
         .ui.container
           a.header(href="/" class='logo') 
-            img(src='./images/nckumath.svg' width='200px')
+            img(src='/images/nckumath.svg' width='200px')
           
           if !ISuser
             //我把這理複製到底下手機版
-            .header.active.item
+            .header.active.item(style="margin-left:20px")
               | #{ttp}
-              //這一區是給後台上傳檔案用的
-            .item= tp
-            // 後台說明文字
+              //這一區是給後台上傳檔案用的 
             a#alpha.item(href=`${alpha.uri}`)= alpha.txt
             //^^^^^^^^^^^^ 上傳按鈕
 
@@ -150,14 +149,12 @@ block content
   .ui.mobile.only.padded.grid
     #headderBarM.ui.top.fixed.borderless.fluid.huge.menu
       a.header(href="/" class='logo logo-mobile') 
-          img(src='./images/nckumath.svg' width='150px')
+          img(src='/images/nckumath.svg' width='150px')
       if !ISuser
         //我把這理複製到上面電腦版
         .this_is_admin_only.header.active.item
           | #{ttp}
           //這一區是給後台上傳檔案用的
-        .item= tp
-        // 後台說明文字
         a#alpha.item(href=`${alpha.uri}`)= alpha.txt
         //^^^^^^^^^^^^ 上傳按鈕
       .right.menu
@@ -283,6 +280,8 @@ block content
     |  上傳圖片...反正我確定這根片一點關西都沒有WWW到底在幹嘛
   script(crossorigin="anonymous" src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
   script(crossorigin="anonymous" src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
+  script(src='/jumbotron/js/index.js')
+
   #wsport(style='display:none;')=wsport
   if !ISuser
     script(crossorigin="anonymous" src='/docx/upload.js')
