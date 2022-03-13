@@ -190,8 +190,10 @@ block content
             each eps, index in ps
               .item(align='left')
                 .right.floated.content
-                  .ui.button(href=`/inner?id=${eps.uri}&pid=${eps.id}&ic=l`) 詳全文...
-                img.ui.avatar.image.middle.aligned(src=`./tool/t2i?txt=${margin*4+index}`)
+                  a.ui.button(href=`/inner?id=${eps.uri}&pid=${eps.id}&ic=l`) 詳全文...
+                    //- img.ui.avatar.image.middle.aligned(src=`./tool/t2i?txt=${margin*4+index}`)
+                img.ui.avatar.image.middle.aligned(src=`./images/0${(margin*4+index)%3+1}.svg`,width='200px')
+
                 .content
                   a.header= eps.tp
                   .description= eps.ab
@@ -222,7 +224,8 @@ block content
               each eps, index in ps
                 .item(align='left')
                   .ui.tiny.image
-                    img(src=`./tool/t2i?txt=${margin*4+index}`)
+                    //- img(src=`./tool/t2i?txt=${margin*4+index}`)
+                    img(src=`./images/0${(margin*4+index)%3+1}.svg`,width='200px')
                   .content
                     a.header= eps.tp
                     .meta
@@ -266,7 +269,7 @@ block content
         // 回:痾....humm....(rwd的css好像是後來才加上去的)....我的鍋....andythebreaker20220312
         if !isADMIN
           .four.wide.column
-            #copyRightSidebar_mobile2desktop.ui.fluid.vertical.menu.bdgreen
+            #copyRightSidebar_mobile2desktop.ui.fluid.vertical.menu.bdcolor
               a.header.item(href='#') 常用連結
               //
                 這裡要放中研院...甚麼的
@@ -276,7 +279,7 @@ block content
               a.item(href='http://www.isiknowledge.com/' target='_blank') SCI (Science Citation Index Expanded)
               a.item(href='http://www.emis.de/ZMATH/' target='_blank') Zentralblatt MATH
               a.item(href='http://www.springerlink.com/content/110312/' target='_blank') Lecture Notes in Mathematics
-            #copyRightSidebar_opentime.ui.segments.bdgreen
+            #copyRightSidebar_opentime.ui.segments.bdcolor
               .ui.header.segment
                 section.openinghours
                   //
@@ -366,7 +369,7 @@ block content
         .ui.stackable.grid
           .row
             .seven.wide.column(class="contact")
-              h3.ui.header &copy; 2022 成功大學數學系圖書館
+              h3.ui.header &copy; 2022 成功大學數學系
               i.phone.icon
               | 服務電話：06-2757575 轉 65105
               br
