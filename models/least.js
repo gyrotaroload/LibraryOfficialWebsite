@@ -1,8 +1,12 @@
 var mongoose = require('mongoose');
+var moment = require('moment');
 
 var leastSchema = mongoose.Schema({
     //Boolean
     new_date: {//?
+        type: Date
+    },
+    old_date: {//?
         type: Date
     },
     YYYY: {
@@ -38,7 +42,8 @@ var leastSchema = mongoose.Schema({
 var least = module.exports = mongoose.model('least', leastSchema);
 //function
 module.exports.add = function (newOBJ, callback) {
-
+    var day_time = moment(`${newOBJ.YYYY||1970}-${newOBJ.M||1}-${newOBJ.D||1} ${newOBJ.h||0}:${newOBJ.mm||0}`);
+    newOBJ.old_date=day_time.toDate();
     newOBJ.save((e, r) => {
         if (e) {
             console.log(e);
@@ -52,7 +57,7 @@ module.exports.add = function (newOBJ, callback) {
 module.exports.frontend = function (callback) {
     least.countDocuments({}, function (err, count) {
         //console.log((count - count % 4) / 4);
-        least.find({}).sort({ new_date: 'descending' }).exec((err, SearchResult) => {
+        least.find({}).sort({ old_date: 'descending' }).exec((err, SearchResult) => {
             if (err) {
                 console.log(err);
             }

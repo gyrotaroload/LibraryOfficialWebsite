@@ -628,6 +628,7 @@ router.get('/docx', ensureAuthenticated, function (req, res, next) {
         moment: require('moment'),
         wsport: process.env.wsPORT,
         window_location_href_main: 'yes',
+        isADMIN:true
     });
 });
 
