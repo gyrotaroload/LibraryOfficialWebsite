@@ -60,7 +60,8 @@ router.get('/', function (req, res, next) {
           margin: parseInt(req.query.page, 10) || 0,
           swl: r,
           addZero: addZero,
-          ade: ade.e ? 'error' : ade.r
+          ade: ade.e ? 'error' : ade.r,
+          isHome:true,
         }
         res.render('index', Object.assign(homeinfo, header_link));
       });
@@ -83,6 +84,7 @@ router.get(('/newbooks'), function (req, res, next) {
   excelDB.getMAXChansuNoJunban('newbooksdb', (VARcountClass) => {
     excelDB.arrayAllClass('newbooksdb', (listallid, listallname) => {
       var innerHTMLofLlistSTRING = "";
+      var oriLlist = [];
       if (listallid.length === listallname.length) {
         var LL = listallid.length;
         for (let index = LL - 1; index >= 0; index--) {//數字越大的在越上面
@@ -91,21 +93,25 @@ router.get(('/newbooks'), function (req, res, next) {
           innerHTMLofLlistSTRING = innerHTMLofLlistSTRING + `
 <a class="item" id="${ELEid}" href="/newbooks?pageid=${ELEid}">${ELEname}</a>
 `;
+          var thispage = req.query.pageid == ELEid ? true:false;
+          oriLlist.push({'id':ELEid, 'name':ELEname, 'thispage': thispage})
         }
       } else {
         innerHTMLofLlistSTRING = "<h1>[ERROR] DB Sequence length does not match!</h1>";
       }
       //這裡有一段是這裡新加的
       excelDB.getPayloadById('newbooksdb', req.query.pageid, (thistopic, HTMLpayload) => {
-        res.render('excel', {
+        var newbookinfo = {
           title: 'newbooks',
           VARcountClassJade: parseInt(VARcountClass, 10) + 1,
           innerHTMLofLlist: innerHTMLofLlistSTRING,
+          oriLlist: oriLlist,
           VARdbname: "this_is_a_user",
           isADMIN: false,
           PUGVARHTMLpayload: HTMLpayload,
           topicORwait2load: thistopic
-        });
+        }
+        res.render('newbook', Object.assign(newbookinfo, header_link));
       });//在說你啦
     });
   });

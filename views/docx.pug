@@ -126,7 +126,7 @@ block content
           
           if !ISuser
             //我把這理複製到底下手機版
-            .header.active.item(style="margin-left:20px")
+            .header.active.item
               | #{ttp}
               //這一區是給後台上傳檔案用的 
             a#alpha.item(href=`${alpha.uri}`)= alpha.txt
@@ -146,7 +146,7 @@ block content
                       .gcse-searchbox-only
                       input(type='text' placeholder='Search...')
                       i.AugmentedExternalSearchModuleF.inverted.circular.search.link.icon(onclick="var AugmentedExternalSearchModule=event.target.closest('.AugmentedExternalSearchModule');AugmentedExternalSearchModule.getElementsByTagName('input')[0].value=AugmentedExternalSearchModule.getElementsByTagName('input')[1].value;AugmentedExternalSearchModule.getElementsByTagName('button')[0].click();")
-  .ui.mobile.only.padded.grid
+  .ui.mobile.only.padded.grid(style="margin-bottom:-20px!important;")
     #headderBarM.ui.top.fixed.borderless.fluid.huge.menu
       a.header(href="/" class='logo logo-mobile') 
           img(src='/images/nckumath.svg' width='150px')
