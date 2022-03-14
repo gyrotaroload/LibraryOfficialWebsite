@@ -54,7 +54,7 @@ module.exports.isEditAble = function (id, callback) {
 }
 
 module.exports.EditTX = function (id, callback) {
-    docs.findById(id, function (err, adventure) {
+    docs.findById({$eq:id}, function (err, adventure) {
         if (err) {
             console.log(err);
             callback(null);

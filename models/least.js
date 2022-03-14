@@ -72,7 +72,7 @@ module.exports.frontend = function (callback) {
 }
 
 module.exports.SETuri = function (id, uri, callback) {
-    least.findById(id, function (err, contact) {
+    least.findById({$eq:id}, function (err, contact) {
         if (!err) {
             if (contact) {
                 console.log(contact.tp);
@@ -93,7 +93,7 @@ module.exports.SETuri = function (id, uri, callback) {
 }
 
 module.exports.getById = function (id, callback) {
-    least.findById(id, function (err, adventure) {
+    least.findById({$eq:id}, function (err, adventure) {
         if (err) {
             console.log("可忽略的警告");
             console.log(err);
@@ -105,5 +105,5 @@ module.exports.getById = function (id, callback) {
 }
 
 module.exports.delById = function (MODid, callback) {
-    least.findByIdAndDelete(MODid,(err,doc)=>callback(err,doc));
+    least.findByIdAndDelete({eq:MODid},(err,doc)=>callback(err,doc));
 };

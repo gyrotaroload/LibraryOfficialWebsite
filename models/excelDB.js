@@ -93,7 +93,7 @@ module.exports.getPayloadById = function (dbclassname, MODid, callback) {
     var ST = "Sorry, there seems to be something wrong!";
     var SP = "Sorry, there seems to be something wrong!";
     var doAGAINwithDEFAULT = false;
-    excelData.findById(MODid, function (err, stuff) {
+    excelData.findById({$eq:MODid}, function (err, stuff) {
         if (err) {
             console.log(err);
             doAGAINwithDEFAULT = true;
@@ -136,7 +136,7 @@ module.exports.getPayloadById = function (dbclassname, MODid, callback) {
 
 module.exports.MODFdn = function (MODid, callback) {//L側板下降
     var ChansuNoJunban_tmp = -1;
-    excelData.findById(MODid, function (err, stuff) {
+    excelData.findById({$eq:MODid}, function (err, stuff) {
         if (err) {
             console.log(err);
         }
@@ -150,7 +150,7 @@ module.exports.MODFdn = function (MODid, callback) {//L側板下降
                 }
                 if (SearchResult.length > 0) {
                     ChansuNoJunban_tmp = SearchResult[0].ChansuNoJunban;
-                    excelData.findByIdAndUpdate(SearchResult[0].id, { $set: { ChansuNoJunban: stuff.ChansuNoJunban } }, {}, () => {
+                    excelData.findByIdAndUpdate({$eq:SearchResult[0].id}, { $set: { ChansuNoJunban: stuff.ChansuNoJunban } }, {}, () => {
                         excelData.findByIdAndUpdate(MODid, { $set: { ChansuNoJunban: ChansuNoJunban_tmp } }, {}, callback);
                     });
                 }
@@ -161,7 +161,7 @@ module.exports.MODFdn = function (MODid, callback) {//L側板下降
 
 module.exports.MODFup = function (MODid, callback) {//L側板上升
     var ChansuNoJunban_tmp = -1;
-    excelData.findById(MODid, function (err, stuff) {
+    excelData.findById({$eq:MODid}, function (err, stuff) {
         if (err) {
             console.log(err);
         }
@@ -175,8 +175,8 @@ module.exports.MODFup = function (MODid, callback) {//L側板上升
             }
             if (SearchResult.length > 0) {
                 ChansuNoJunban_tmp = SearchResult[0].ChansuNoJunban;
-                excelData.findByIdAndUpdate(SearchResult[0].id, { $set: { ChansuNoJunban: stuff.ChansuNoJunban } }, {}, () => {
-                    excelData.findByIdAndUpdate(MODid, { $set: { ChansuNoJunban: ChansuNoJunban_tmp } }, {}, callback);
+                excelData.findByIdAndUpdate({$eq:SearchResult[0].id}, { $set: { ChansuNoJunban: stuff.ChansuNoJunban } }, {}, () => {
+                    excelData.findByIdAndUpdate({$eq:MODid}, { $set: { ChansuNoJunban: ChansuNoJunban_tmp } }, {}, callback);
                 });
             }
         });
@@ -185,5 +185,5 @@ module.exports.MODFup = function (MODid, callback) {//L側板上升
 };
 
 module.exports.delById = function (MODid, callback) {//L側板上升
-    excelData.findByIdAndDelete(MODid, callback);
+    excelData.findByIdAndDelete({eq:MODid}, callback);
 };

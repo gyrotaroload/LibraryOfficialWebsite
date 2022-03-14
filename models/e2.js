@@ -95,7 +95,7 @@ module.exports.lastTime = function (callback) {
 
 module.exports.update_url = function (id, uri, callback) {
     //console.log(id, uri);
-    e2.findById(id, function (err, contact) {
+    e2.findById({$eq:id}, function (err, contact) {
         if (!err) {
             if (contact) {
                 //console.log(contact.bts);
@@ -116,7 +116,7 @@ module.exports.update_url = function (id, uri, callback) {
 }
 
 module.exports.getById = function (id, callback) {
-    e2.findById(id, function (err, adventure) {
+    e2.findById({$eq:id}, function (err, adventure) {
         if (err) {
             console.log("可忽略的警告");
             console.log(err);
