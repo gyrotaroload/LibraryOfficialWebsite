@@ -7,6 +7,7 @@ html
     script(crossorigin="anonymous" src='https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js')
     script(crossorigin="anonymous" src='https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js')
     script(crossorigin="anonymous" src='https://cdn.jsdelivr.net/npm/markdown-it-texmath/texmath.min.js')
+    link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/main_page_back.css')
     //The top is the end of the check point
     title= title
     //link(rel='stylesheet', href='/stylesheets/style.css')
@@ -14,6 +15,8 @@ html
       *{font-family:'Noto Sans TC'}
     block contentHEAD
   body#root
+    if window_location_href_main
+      button#main_page_back_btn(onclick='window.location.href = "/main";' title='Go to top') 回後台首頁
     script.
         const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
         const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);

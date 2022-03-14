@@ -19,7 +19,7 @@ form {
   overflow: hidden; }
 
 textarea {
-  background: rgba(255, 255, 255, 0.4) url(http://luismruiz.com/img/gemicon_message.png) no-repeat scroll 16px 16px;
+  background: rgba(255, 255, 255, 0.4) url(/swipe_edit/color.png) no-repeat scroll 0px 0px;
   width: 276px;
   height: 110px;
   border: 1px solid rgba(255, 255, 255, 0.6);
@@ -59,13 +59,13 @@ input.ff {
   input.ff[type=submit] {
     cursor: pointer; }
   input.ff.name {
-    background: rgba(255, 255, 255, 0.4) url(http://luismruiz.com/img/gemicon_name.png) no-repeat scroll 16px 16px;
+    background: rgba(255, 255, 255, 0.4) url(/swipe_edit/color.png) no-repeat scroll 0px 0px;
     padding-left: 45px; }
   input.ff.email {
-    background: rgba(255, 255, 255, 0.4) url(http://luismruiz.com/img/gemicon_email.png) no-repeat scroll 16px 20px;
+    background: rgba(255, 255, 255, 0.4) url(/swipe_edit/color.png) no-repeat scroll 0px 0px;
     padding-left: 45px; }
   input.ff.message {
-    background: rgba(255, 255, 255, 0.4) url(http://luismruiz.com/img/gemicon_message.png) no-repeat scroll 16px 16px;
+    background: rgba(255, 255, 255, 0.4) url(/swipe_edit/color.png) no-repeat scroll 0px 0px;
     padding-left: 45px; }
 
 ::-webkit-input-placeholder, :-moz-placeholder, ::-moz-placeholder, :-ms-input-placeholder {

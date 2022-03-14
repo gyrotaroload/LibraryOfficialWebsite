@@ -1,4 +1,4 @@
-function form_callback_page(success_or_error) {
+function form_callback_page(success_or_error) {//Collapse this text
     return (`<!DOCTYPE html>
 <html lang="zh-cmn-Hant">
 <head>
@@ -66,6 +66,8 @@ function form_callback_page(success_or_error) {
 var express = require('express');
 var router = express.Router();
 var generator = require('character-generator');
+var addZero = require('add-zero');
+const numberArray = require('number-array');
 const { Base64 } = require('js-base64');
 const sharp = require('sharp');
 var sanitize = require('mongo-sanitize');
@@ -131,6 +133,8 @@ var gh = require('../models/gh');
 var e1 = require('../models/e1');
 var e2 = require('../models/e2');
 var e3 = require('../models/OnCampusElectronicResourceFiles');
+var least = require('../models/least');
+var administrativeDocumentEditing = require('../models/administrativeDocumentEditing');
 
 //const
 var IclassMap = new Map();
@@ -163,11 +167,51 @@ router.get('/', ensureAuthenticated, function (req, res, next) {
         //var_jade_onsleep_stat: `${(!Personget) ? "-1" : (Personget.is_sleep) ? "yes" : "no"}`,
         //var_jade_user_exp_css: (!Middatatmpget) ? "width: calc(var(--var_vw)*25*0/100);" : (!Middatatmpget.tmp_to_set) ? "width: calc(var(--var_vw)*25*0/100);" : `width: calc(var(--var_vw)*25*${JSON.parse(Middatatmpget.tmp_to_set).exp_data_tmp}/100);`,
         //var_jade_user_lv_txt: `LV${(!Middatatmpget) ? "0" : (!Middatatmpget.tmp_to_set) ? "0" : JSON.parse(Middatatmpget.tmp_to_set).goal_data_4_tmp}`
+        window_location_href_main: 'yes'
     });
 });
 //});
 //});
 //});
+
+//編輯最新消息
+router.get('/home', ensureAuthenticated, function (req, res, next) {//這個東西是從routes/index.js複製來的
+    swipe_edit.getList(r => {
+        least.frontend((stuff) => {
+            res.render('index', {
+                title: '成大數學系圖書館',
+                functionButtonMainText1: '新書入庫',
+                functionButtonMainText2: '期刊服務',
+                functionButtonMainText3: '館際合作',
+                functionButtonMainText4: '電子資源',
+                browseHyperlinkedObjectsHorizontally1T: '成大首頁',
+                browseHyperlinkedObjectsHorizontally2T: '數學系網站',
+                browseHyperlinkedObjectsHorizontally3T: '成大總圖',
+                browseHyperlinkedObjectsHorizontally1L: 'https://www.ncku.edu.tw/',
+                browseHyperlinkedObjectsHorizontally2L: 'http://www.math.ncku.edu.tw/',
+                browseHyperlinkedObjectsHorizontally3L: 'https://www.lib.ncku.edu.tw/',
+                pc: numberArray(stuff.c),
+                ps: req.query.page ? stuff.s.slice(parseInt(req.query.page) * 4, (parseInt(req.query.page) + 1) * 4) : stuff.s.slice(0 * 4, (0 + 1) * 4),
+                margin: parseInt(req.query.page, 10) || 0,
+                swl: r,
+                addZero: addZero,
+                isADMIN: true
+            });
+        });
+    });
+});
+
+//DEL最新消息
+router.get('/home/del', ensureAuthenticated, function (req, res, next) {//這個東西是從routes/index.js複製來的
+
+    least.delById(req.query.id, (err, doc) => {
+        if (err) {
+            res.status(500).send(form_callback_page("錯誤"));
+        } else {
+            res.status(200).send(form_callback_page("成功"));
+        }
+    });
+});
 
 router.get('/add_periodical', ensureAuthenticated, function (req, res, next) {
     res.render('add_periodical', {
@@ -190,7 +234,8 @@ router.get('/add_periodical', ensureAuthenticated, function (req, res, next) {
         EDITLIVstart: (req.query.EDITLIVstart) ? Base64.decode(req.query.EDITLIVstart) : "",
         EDITLIVend: (req.query.EDITLIVend) ? Base64.decode(req.query.EDITLIVend) : "",
         EDITLIVx: (req.query.EDITLIVx) ? Base64.decode(req.query.EDITLIVx) : ""
-        , id: req.query.id || "", modeAE: (req.query.id) ? "編輯" : "新增"
+        , id: req.query.id || "", modeAE: (req.query.id) ? "編輯" : "新增",
+        window_location_href_main: 'yes'
     });
 });
 
@@ -283,11 +328,11 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
             JournalInformation.addJournal(newJournalInformation, function (err) {
                 if (err) {
                     console.log(err);
-                    res.status(404).send("fail");
+                    res.status(404).send(form_callback_page("失敗"));
                 } else if (INLIVxARRAYfailed) {
-                    res.status(404).send("fail");
+                    res.status(404).send(form_callback_page("失敗"));
                 } else {
-                    res.status(200).send("success");
+                    res.status(200).send(form_callback_page("成功"));
                 }
             });
 
@@ -349,6 +394,7 @@ router.get(('/addNewBooks'), ensureAuthenticated, function (req, res, next) {
                 innerHTMLofLlist: innerHTMLofLlistSTRING,
                 VARdbname: "newbooksdb",
                 isADMIN: true,
+                window_location_href_main: 'yes',
             });
         });
     });
@@ -364,7 +410,8 @@ router.get(('/ero'), ensureAuthenticated, function (req, res, next) {
             VARdbname: "addExternalResources",
             isADMIN: true,
             disable_accession_number_to_link_to_master_plan: true,
-            linkAFTERfinish: req.query.eroID
+            linkAFTERfinish: req.query.eroID,
+            window_location_href_main: 'yes',
         });
     });
 });
@@ -382,6 +429,10 @@ router.post('/excelTransferOrder', ensureAuthenticated, function (req, res, next
     } else {
         res.status(400).send("Illegal data manipulation!");
     }
+});
+
+router.post('/checkissnExistence', ensureAuthenticated, function (req, res, next) {
+    JournalInformation.checkissnExistence(req.body.isbn, (stuff) => res.status(200).send(stuff ? "yes" : "no"));
 });
 
 
@@ -424,7 +475,10 @@ router.get('/swipeEDIT', ensureAuthenticated, function (req, res, next) {
                                 flo: r,
                                 px: err || 'data:image/webp;base64,' + data.toString('base64'),
                                 cj: isFinite(ChansuNoJunban_all.max()) ? ChansuNoJunban_all.max() + 1 : 0,
-                                refh: req.query.rmd || req.query.rmu || req.query.del
+                                refh: req.query.rmd || req.query.rmu || req.query.del,
+                                window_location_href_main: 'yes',
+                                b64: Base64,
+                                editstuff_pic: r[parseInt((req.query.iol || 0), 10) || 0].pic,
                             });
                         });
                 });
@@ -439,7 +493,8 @@ router.get('/journals', ensureAuthenticated, function (req, res, next) {
         isUSER: 'no',
         jjsonURL: "/jjson",
         a2z: generator('@', ['A-Z']),
-        alpha: '0'
+        alpha: '0',
+        window_location_href_main: 'yes'
     });
 });
 
@@ -454,11 +509,33 @@ router.get('/infoJ', ensureAuthenticated, function (req, res, next) {
         res.status(200).send(stuff);
     });
 });
+
+//最新消息add
 router.get('/docxUpload', ensureAuthenticated, function (req, res, next) {
-    res.render('docx_upload', {
-        title: 'docx upload 2',
-        moment: require('moment')
-    });
+    if (
+        req.query.edit && req.query.edit === 'yes' && req.query.id
+    ) {
+        least.getById(req.query.id, (s) => {
+            docs.isEditAble(s.uri, (ss) => {
+                res.render('docx_upload', {
+                    title: 'docx upload 2',
+                    moment: require('moment'),
+                    window_location_href_main: 'yes',
+                    tp: s.tp,
+                    ab: s.ab,
+                    lab: s.lab,
+                    uri: s.uri,
+                    editable: ss
+                });
+            });
+        });
+    } else {
+        res.render('docx_upload', {
+            title: 'docx upload 2',
+            moment: require('moment'),
+            window_location_href_main: 'yes',
+        });
+    }
 });
 
 router.post('/addleast', ensureAuthenticated, function (req, res, next) {
@@ -547,13 +624,14 @@ router.get('/docx', ensureAuthenticated, function (req, res, next) {
         urls: null,
         ttp: "編輯",//公告
         tp: "按下右側「上傳」按鈕以上傳docx檔案",
-        alpha: { txt: "提交", uri: `/main/link?ic=${req.query.ic}&lid=${req.query.id}&` },
+        alpha: { txt: "提交", uri: `/main/link?ic=${req.query.ic}&lid=${req.query.id}&` },//for logic -> see get-/link
         moment: require('moment'),
-        wsport:process.env.wsPORT
+        wsport: process.env.wsPORT,
+        window_location_href_main: 'yes',
     });
 });
 
-router.get('/eroLink', ensureAuthenticated, function (req, res, next) {
+router.get('/eroLink', ensureAuthenticated, function (req, res, next) {//電子資源的link
     e2.update_url(req.query.rlID, `/ero?pageid=${req.query.eID}&rlID=${req.query.rlID}`, r => {
         if (r === 'yes') {
             res.status(200).send(form_callback_page('成功'));
@@ -564,35 +642,44 @@ router.get('/eroLink', ensureAuthenticated, function (req, res, next) {
     });
 });
 
-router.get('/link', ensureAuthenticated, function (req, res, next) {
+router.get('/link', ensureAuthenticated, function (req, res, next) {//connect docx file and obj
     if (req.query.ic === 'l') {
         least.SETuri(req.query.lid, req.query.docid, r => {
             if (r === 'yes') {
-                res.status(200).send("success");
+                res.status(200).send(form_callback_page("成功"));
             }
             else {
-                res.status(404).send("failed");
+                res.status(404).send(form_callback_page("失敗"));
             }
         });
     } else if (req.query.ic === 'g') {
         gh.SETinnerdocID(req.query.lid, req.query.docid, r => {
             if (r === 'yes') {
-                res.status(200).send("success");
+                res.status(200).send(form_callback_page("成功"));
             }
             else {
-                res.status(404).send("failed");
+                res.status(404).send(form_callback_page("失敗"));
             }
         })
     } else if (req.query.ic === 'es') {
         e2.update_url(req.query.lid, `/inner?id=${req.query.docid}&pid=${req.query.lid}&ic=es`, r => {
             if (r === 'yes') {
-                res.status(200).send("success");
+                res.status(200).send(form_callback_page("成功"));
             }
             else {
-                res.status(404).send("failed");
+                res.status(404).send(form_callback_page("失敗"));
             }
         });
-    } else { res.status(400).send("failed"); }
+    }else if (req.query.ic === 'ade') {
+        administrativeDocumentEditing.setDocx(req.query.lid, req.query.docid, r => {
+            if (r === 'yes') {
+                res.status(200).send(form_callback_page("成功"));
+            }
+            else {
+                res.status(404).send(form_callback_page("失敗"));
+            }
+        })
+    } else { res.status(400).send(form_callback_page("失敗")); }
 });
 
 router.get('/interlibraryCooperation', ensureAuthenticated, function (req, res, next) {
@@ -605,9 +692,11 @@ router.get('/interlibraryCooperation', ensureAuthenticated, function (req, res, 
         var_jade_err_msg_show: false,
         var_jade_error_msg_gui_text_1: "X",
         var_jade_error_msg_gui_text_2: "X",
+        window_location_href_main: 'yes',
     });
 });
 
+//館際合作
 router.post('/agh', ensureAuthenticated, function (req, res, next) {//丟資料到models\gh.js
     console.log(req.body.gs);
     var newobj = new gh({
@@ -619,7 +708,7 @@ router.post('/agh', ensureAuthenticated, function (req, res, next) {//丟資料�
             res.status(200).send(r.id);
         } else {
             console.log(r);
-            res.status(404).send("fail");
+            res.status(404).send(form_callback_page("失敗"));
         }
     });
 });
@@ -634,6 +723,7 @@ router.get('/AddElectronicResources', ensureAuthenticated, function (req, res, n
                     re1v: re1 || -1,
                     re2v: re2 || -1,
                     re3v: re3 || -1,
+                    window_location_href_main: 'yes',
                 });
             });
         });
@@ -722,37 +812,133 @@ router.post('/e3', ensureAuthenticated, upload.single('file'), function (req, re
 });
 
 router.get('/editmd', ensureAuthenticated, function (req, res, next) {
-    res.render('md', {
-        title: '文字編輯',
-        topic: '最新消息',
-        topic_small: '新增',
-        req_query_ic: req.query.ic,
-        req_query_id: req.query.id//,算了這個功能不做了
-        //defaultMDtextValue: req.query.defaultMDtextValue
-    });
+    if (req.query.edit && req.query.edit === 'l' && req.query.oid) {
+        docs.EditTX(req.query.oid, (s) => {
+            res.render('md', {
+                title: '文字編輯',
+                topic: '最新消息',
+                topic_small: '新增',
+                req_query_ic: req.query.ic,
+                req_query_id: req.query.id//,算了這個功能不做了
+                //defaultMDtextValue: req.query.defaultMDtextValue
+                , window_location_href_main: 'yes',
+                defaultvalue: s
+            });
+        });
+    } else {
+        res.render('md', {
+            title: '文字編輯',
+            topic: '最新消息',
+            topic_small: '新增',
+            req_query_ic: req.query.ic,
+            req_query_id: req.query.id//,算了這個功能不做了
+            //defaultMDtextValue: req.query.defaultMDtextValue
+            , window_location_href_main: 'yes',
+        });
+    }
 });
 
 router.post('/editmd', ensureAuthenticated, function (req, res, next) {
     var result = md.render(req.body.usrinpt);
     var no = new docs({
         dt: Date.now(),
-        html: replaceall("[object Promise]", String(randomstring.generate()), String(result))
+        html: replaceall("[object Promise]", String(randomstring.generate()), String(result)),
+        editable: true,
+        edittext: req.body.usrinpt
     });
     docs.add(no, function (r) {
         if (r) {
             res.render('mdRaw', {
                 title: 'mdRaw-html',
                 VARformdtest: replaceall("[object Promise]", String(randomstring.generate()), String(result)),
-                docmdID: `@=@docmdid@=@${r.id}@~@docmdid@~@`
+                docmdID: `@=@docmdid@=@${r.id}@~@docmdid@~@`,
+                window_location_href_main: 'yes',
             });
-        } else {
+        } else {//error
             res.render('mdRaw', {
                 title: 'mdRaw-html',
                 VARformdtest: replaceall("[object Promise]", String(randomstring.generate()), String(result)),
-                docmdID: `@=@docmdid@=@error@~@docmdid@~@`
+                docmdID: `@=@docmdid@=@error@~@docmdid@~@`,
+                window_location_href_main: 'yes',
             });
         }
     });
+});
+
+router.get('/administrativeDocumentEditing', ensureAuthenticated, function (req, res, next) {
+    //console.log(req.query.name);
+    //console.log(req.query.uri);
+    function res_render() {
+        administrativeDocumentEditing.getMAXno((maxNo) => {
+            administrativeDocumentEditing.getAll((r) => {
+                res.render('NO_layout_webflow_S', {
+                    window_location_href_main: true,
+                    list_of_all_obj: r.r,
+                    maxNo: maxNo
+                });
+            });
+        });
+    }
+    if (req.query.name && req.query.no && !req.query.id && !req.query.upordown) {//add
+        var no = new administrativeDocumentEditing({
+            dt: Date.now(),
+            name: req.query.name,
+            uri: req.query.uri || '',
+            doclink: null,
+            no: isNumeric(req.query.no) ? parseInt(req.query.no) : -1
+        });
+        administrativeDocumentEditing.add(no, (E) => {
+            if (!E) {
+                res.status(500).send(form_callback_page("錯誤"));
+            } else {
+                res_render();
+            }
+        });
+    } else if (!req.query.name && !req.query.no && req.query.id && req.query.upordown) {//updown
+        if (req.query.upordown === 'up') {
+            administrativeDocumentEditing.MODFdn(req.query.id, () => res_render());
+        } else if (req.query.upordown === 'down') {
+            administrativeDocumentEditing.MODFup(req.query.id, () => res_render());
+        } else {
+            res.status(500).send(form_callback_page("錯誤"));
+        }
+    } else {
+        res_render();
+    }
+});
+
+router.delete('/administrativeDocumentEditing', ensureAuthenticated, function (req, res, next) {
+    function res_default() {
+        res.status(200).send(form_callback_page("成功"));
+    }
+    if (req.query.id) {
+        administrativeDocumentEditing.delById(req.query.id, (e, r) => {
+            if (e) {
+                res.status(500).send(form_callback_page("錯誤"));
+            } else {
+                res_default();
+            }
+        })
+    } else {
+        res_default();
+    }
+});
+
+router.delete('/administrativeDocumentEditing', ensureAuthenticated, function (req, res, next) {
+    function res_default() {
+        res.status(200).send(form_callback_page("成功"));
+    }
+    if (req.query.id) {
+        administrativeDocumentEditing.delById(req.query.id, (e, r) => {
+            if (e) {
+                res.status(500).send(form_callback_page("錯誤"));
+            } else {
+                res_default();
+            }
+        })
+    } else {
+        res_default();
+    }
 });
 
 function ensureAuthenticated(req, res, next) {
@@ -824,4 +1010,10 @@ function TOINT(x, base) {
         return 0;
     }
     return parsed;
+}
+
+function isNumeric(str) {//https://stackoverflow.com/questions/175739/how-can-i-check-if-a-string-is-a-valid-number
+    if (typeof str != "string") return false // we only process strings!  
+    return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+        !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
 }

@@ -65,7 +65,7 @@ block content
           .dashboard-preview__header(style='color:black;')
             h2 詳細資料
             //h2=name
-            h3=(indexOfList<flo.length)?flo[indexOfList].topic:'[error: index exceeds array length]'
+            h3#dataedittopic(data-dataedittopic=(indexOfList<flo.length)?flo[indexOfList].topic:'[error: index exceeds array length]')=(indexOfList<flo.length)?flo[indexOfList].topic:'[error: index exceeds array length]'
               //if name == 'Bromo'
                 =bromo.temp
                 span C
@@ -73,7 +73,7 @@ block content
                 = kulon_progo.temp
                 span C
               br
-              span=(indexOfList<flo.length)?flo[indexOfList].txt:'[error: index exceeds array length]'
+              span#dataeditsubtopic(data-dataeditsubtopic=`${b64.encode((indexOfList<flo.length)?flo[indexOfList].txt:'[error: index exceeds array length]')}`)=(indexOfList<flo.length)?flo[indexOfList].txt:'[error: index exceeds array length]'
                                   
           // Content (Element)
           .dashboard-preview__content(style="margin-Top:-15vh")
@@ -90,6 +90,11 @@ block content
                     span.iconify.hvr-grow(data-icon='ant-design:down-circle-twotone' style="transform: scale(5);")
                   th.hvr-grow(onclick=`window.location.href = "?del=${(indexOfList<flo.length)?flo[indexOfList].id:'[error: index exceeds array length]'}";`)
                     span.iconify.hvr-grow(data-icon='fluent:delete-16-regular' style="transform: scale(5);")
+                  //https://fluenticons.co/
+                  th.hvr-grow(onclick='document.getElementById("editstuff_pic").click();document.getElementsByClassName("basic-slide")[0].value=document.getElementById("dataedittopic").dataset.dataedittopic;document.getElementById("f3").value=b64_to_utf8(document.getElementById("dataeditsubtopic").dataset.dataeditsubtopic);document.getElementById("f2").innerText="儲列:"+document.getElementById("arraybsixfour").dataset.arraybsixfour;')
+                    span.iconify.hvr-grow(data-icon='fluent:edit-16-regular' style="transform: scale(5);")
+
+            p#editstuff_pic(style="display:none" onclick=`document.getElementById('editor').innerText="${editstuff_pic}"`)
 
             section
               h2 超連結
@@ -98,7 +103,7 @@ block content
                   tr
                     th 按鈕文字
                     th 按鈕超連結
-                tbody
+                tbody#arraybsixfour(data-arraybsixfour=JSON.stringify(flo[indexOfList].btons))
                   if indexOfList<flo.length
                     - var n = 0;
                     while n < ((flo[indexOfList].btons)?flo[indexOfList].btons.length:0)
@@ -154,8 +159,8 @@ block content
         #f4.dashboard-header__new
           img(src='/images/photo-47.svg' style="transform: scale(3);")
           input#fileinput(type='file' style="display:none;")
-          #editor
-          #editor_base64_fin
+          #editor(style="display:none;")
+          #editor_base64_fin(style="display:none;")
         input#btnLoad(type='button' value='Load' onclick='handleFileSelect();' style="display:none;")
         //備註:^^^^^^這裡有修正，從F4中抽離
         #f0.dashboard-header__new
@@ -373,4 +378,16 @@ block content
           label(for='galaxy') Galaxy
   script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
   script(src='/swipe_edit/index.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/Base64/1.1.0/base64.min.js' integrity='sha512-gysqkfMGKYvQSEPi68aIzL4ffmrQ0I6azOoPJ+ocle8k1bblsHJh7QVVoy4HHQG2iPzvFmRbs81d8kkVSyCkjA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script.
+    //https://gist.githubusercontent.com/Hyvi/1350603/raw/b65c127802dbc6949c181044416adbb4b7aed534/utf-8-base64.js
+    function utf8_to_b64( str ) {
+    return window.btoa(unescape(encodeURIComponent( str )));
+    }
+    function b64_to_utf8( str ) {
+    return decodeURIComponent(escape(window.atob( str )));
+    }
+    // Usage:
+    utf8_to_b64('✓ à la mode'); // "4pyTIMOgIGxhIG1vZGU="
+    b64_to_utf8('4pyTIMOgIGxhIG1vZGU='); // "✓ à la mode"
 

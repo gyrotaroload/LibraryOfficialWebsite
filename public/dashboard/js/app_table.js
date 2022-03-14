@@ -55,6 +55,7 @@ window.operateEvents = {
                 $('#quickPOPUPyes').text('(按我!按我!)重新整理');
                 $('#quickPOPUPyes').on("click", function () {
                     $('.ui.button[name="refresh"]').click();
+                    $('#sidebar').hide();
                 });
                 $('#quickPOPUPno').text('不重新整理就繼續(不建議但較快)');
                 $('#quickPOPUP')
@@ -119,8 +120,10 @@ function LinkFormatter(value, row, index) {
 
 function initTable() {
     $table.bootstrapTable('destroy').bootstrapTable({
-        height: vh,
+        height: 0.8*vh,search:true,
         locale: $('#locale').val(),
+        sortOrder:'asc',
+        sortName:'placeNumber',
         columns: [
             [//{
                 // field: 'state',
@@ -136,7 +139,7 @@ function initTable() {
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    searchable: false,
+                    searchable: true,
                     //footerFormatter: totalTextFormatter
                 }
                 , {
@@ -145,7 +148,7 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: false,
+                    sortable: true, searchable: true,
                     //footerFormatter: totalTextFormatter
                 }, {
                     title: 'E-ISSN',
@@ -153,7 +156,7 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: false,
+                    sortable: true, searchable: true,
                     //footerFormatter: totalTextFormatter
                 }, {
                     title: '刊名',
@@ -275,6 +278,7 @@ function initTable() {
         //console.log("load-success.bs.table");
         if (document.querySelector(".bootstrap-table.semantic")) {
             document.querySelector(".bootstrap-table.semantic").setAttribute("style", "width:100%;");
+            
             if (document.getElementsByClassName("fixed-table-toolbar")) {
                 //document.getElementsByClassName("fixed-table-toolbar")[0].classList.add("ui");
                 //document.getElementsByClassName("fixed-table-toolbar")[0].classList.add("menu");

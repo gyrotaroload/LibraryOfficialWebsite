@@ -24,9 +24,12 @@ head
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]
   script(src='/dw/respond.min.js')
+  link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/main_page_back.css')
   block contentHEAD
 
 body(topmargin='5vh')
+  if window_location_href_main
+    button#main_page_back_btn(onclick='window.location.href = "/main";' title='Go to top') 回後台首頁
   block content
   //下方script是複製的
   script.

@@ -63,7 +63,7 @@ block content
           //a.item Help
     .ui.mobile.only.padded.grid
       .ui.top.fixed.borderless.fluid.inverted.menu
-        a.header.item 期刊服務
+        a.ui.header.item 期刊服務
         .right.menu
           .item
             button.ui.icon.toggle.basic.inverted.button
@@ -79,27 +79,34 @@ block content
             .ui.small.input
               input(placeholder='Search...')
     .ui.padded.grid
-      #sidebar.three.wide.tablet.only.three.wide.computer.only.column(style="overflow-y:scroll;")
-        .ui.vertical.borderless.fluid.text.menu
-          // show all...etc
-          a.item(class=(alpha === "0" ? "active" : "") onclick='$(".Viewbycategory").slideToggle()') 按類別檢視
-          .ui.hidden.divider
-          a.item
-            .ui.violet.message 按英文字母開頭檢視
-          each Ea2z in a2z
-            //-注意:不可用int當索引
-            if Ea2z == alpha
-              a.item.active(onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=${event.target.innerText}`")= Ea2z
-            else
-              a.item(onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=${event.target.innerText}`")= Ea2z
-          // show eng...etc
-          .ui.hidden.divider
-          // show ch...etc
-      #content.sixteen.wide.mobile.thirteen.wide.tablet.thirteen.wide.computer.right.floated.column
+      if isUSER!=='no'
+        #sidebar.two.wide.tablet.only.two.wide.computer.only.column(style="overflow-y:scroll;")
+          .ui.vertical.borderless.fluid.text.menu
+            // show all...etc
+            a.item(class=alpha === "1" ? "active" : "" data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=1`") 現期期刊
+            a.item(class=alpha === "0" ? "active" : "" data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]") 所有期刊
+            a.item(style="display:none;" class=alpha === "2" ? "active" : "" data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=2`") 電子期刊
+            a.item(style="display:none;" class=alpha === "3" ? "active" : "" data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=3`") 紙本期刊
+            a.item(style="display:none;" class=(alpha === "0" ? "active" : "") onclick='$(".Viewbycategory").slideToggle()') 按類別檢視
+            //20220310更，按客戶需求^^^^^^^^^^
+            .ui.hidden.divider
+            a.item(style="display:none;")
+              .ui.violet.message 按英文字母開頭檢視
+            each Ea2z in a2z
+              //-注意:不可用int當索引
+              if Ea2z == alpha
+                a.item.active(onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=${event.target.innerText}`")= Ea2z
+              else
+                a.item(onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=${event.target.innerText}`")= Ea2z
+            // show eng...etc
+            .ui.hidden.divider
+            // show ch...etc
+      #content.seventeen.wide.mobile.fourteen.wide.tablet.fourteen.wide.computer.right.floated.column
         .ui.padded.grid
-          .Viewbycategory.row
+          //20220310更，按客戶需求VVVVVVVVVVVVVVVVVVVVV
+          .Viewbycategory.row(style='display:none;')
             h1.ui.huge.dividing.header 期刊資料分類
-          .Viewbycategory.bb-wizard.center.aligned.row
+          .Viewbycategory.bb-wizard.center.aligned.row(style='display:none;')
             .containter
               ul#bb-wizard-steps.bb-wizard-steps.markers.bb-justified
                 li(class=alpha === "1" ? "active" : "")
@@ -144,7 +151,8 @@ block content
               img.ui.centered.small.circular.image(src='/dashboard/static/images/wireframe/square-image.png')
               .ui.large.basic.label Label
               p Something else
-          .Viewbycategory.ui.hidden.section.divider
+          //20220310更，按客戶需求VVVVVVVVVVVVVVVVVVVVV
+          .Viewbycategory.ui.hidden.section.divider(style='display:none;')
           .row
             h1.ui.huge.dividing.header 所有期刊
           .row
@@ -203,7 +211,8 @@ block content
                 i.fa.fa-trash
                 |  Delete
             // data-detail-view='true'把這行加到下方表格中，可以顯示加號
-            table#table(data-toolbar='#toolbar' data-search='true' data-show-refresh='true' data-show-toggle='true' data-show-fullscreen='true' data-show-columns='true' data-show-columns-toggle-all='true' data-show-export='true' data-click-to-select='true' data-detail-formatter='detailFormatter' data-minimum-count-columns='2' data-show-pagination-switch='true' data-pagination='true' data-id-field='id' data-page-list='[10, 25, 50, 100, all]' data-show-footer='true' data-side-pagination='server' data-url=`${jjsonURL}` data-response-handler='responseHandler')
+            table#table(data-toolbar='#toolbar' data-search='true' data-show-refresh='true' data-show-toggle='true' data-show-fullscreen='true' data-show-columns='true' data-show-columns-toggle-all='true' data-show-export='true' data-click-to-select='true' data-detail-formatter='detailFormatter' data-minimum-count-columns='2' data-show-pagination-switch='true' data-pagination='true' data-id-field='id' data-page-list='[10, 25, 50, 100, all]' data-show-footer='true' data-side-pagination='true' data-url=`${jjsonURL}` data-response-handler='responseHandler')
+            //上一行的data-side-pagination='true'這個選項如果改成server就會把所有的搜尋條件轉成get參數，然後附加到json url上
     #aLotOFjs(style='display: none;')
       // 請注意:所有script的順序都是嚴格要求的
       script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')

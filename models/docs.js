@@ -7,7 +7,11 @@ var docsSchema = mongoose.Schema({
     },
     html: {
         type: String
-    }
+    },
+    editable: {
+        type: Boolean
+    },
+    edittext: { type: String }
 });
 
 //export JournalInformation schema
@@ -32,6 +36,30 @@ module.exports.getById = function (id, callback) {
             callback(null);
         } else {
             callback((adventure) ? adventure.html : null);
+        }
+    });
+
+}
+
+module.exports.isEditAble = function (id, callback) {
+    docs.findById(id, function (err, adventure) {
+        if (err) {
+            console.log(err);
+            callback(null);
+        } else {
+            callback((adventure) ? adventure.editable : null);
+        }
+    });
+
+}
+
+module.exports.EditTX = function (id, callback) {
+    docs.findById({$eq:id}, function (err, adventure) {
+        if (err) {
+            console.log(err);
+            callback(null);
+        } else {
+            callback((adventure) ? adventure.edittext : null);
         }
     });
 

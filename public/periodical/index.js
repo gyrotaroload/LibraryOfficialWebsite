@@ -126,6 +126,25 @@ document.getElementById('isbnjson').addEventListener('click', function () {
             console.error("與總圖書館通聯時發生錯誤!");
         }
     });
+    $.post("/main/checkissnExistence", {
+        //TODO:沒有做例外處理
+        isbn: document.getElementById('ISSN').value
+    }, (res) => {
+        //console.log(res);
+        if(res==='yes'){
+$('#issnEX').text('已經存在');
+document.getElementById('issnEXs').classList.remove('info');
+document.getElementById('issnEXs').classList.add('warning');
+        }else if(res==='no'){
+            $('#issnEX').text('不存在');
+            document.getElementById('issnEXs').classList.remove('info');
+document.getElementById('issnEXs').classList.add('success');
+        }else{
+            $('#issnEX').text('測試錯誤');
+            document.getElementById('issnEXs').classList.remove('info');
+document.getElementById('issnEXs').classList.add('error');
+        }
+    });
 });
 
 $('.ui.mini.image').click(() => {
@@ -135,3 +154,22 @@ $('.ui.mini.image').click(() => {
         .modal('show')
         ;
 });
+
+function insertAtCursor(myField, myValue) {
+    //IE support
+    if (document.selection) {
+        myField.focus();
+        sel = document.selection.createRange();
+        sel.text = myValue;
+    }
+    //MOZILLA and others
+    else if (myField.selectionStart || myField.selectionStart == '0') {
+        var startPos = myField.selectionStart;
+        var endPos = myField.selectionEnd;
+        myField.value = myField.value.substring(0, startPos)
+            + myValue
+            + myField.value.substring(endPos, myField.value.length);
+    } else {
+        myField.value += myValue;
+    }
+}

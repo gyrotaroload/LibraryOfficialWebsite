@@ -67,6 +67,23 @@ module.exports.getAll = function (callback) {
     });
 }
 
+module.exports.checkissnExistence = function (issn_num,callback) {
+    var ft = {ISSN: { $eq: issn_num} };
+    JournalInformation.exists(ft, function (err, doc) {
+        if (err){
+            console.log(err);
+            callback(false);
+        }else{
+            //console.log("Result :", doc) // false
+            if(doc){
+                callback(true);
+            }else{
+                callback(false);
+            }
+        }
+    });
+}
+
 module.exports.getByNameStart = function (headALPHA, callback) {
     var ft = null;
     if (headALPHA === "1") {//現勘
@@ -148,7 +165,7 @@ module.exports.getByNameStartFormat = function (headALPHA, callback) {
 }
 
 module.exports.gethis = function (id2del, callback) {
-    JournalInformation.findById(id2del, (e, ans) => {
+    JournalInformation.findById({$eq:id2del}, (e, ans) => {
         if (e) {//error occurs
             callback(null);
         } else {
@@ -164,5 +181,5 @@ module.exports.gethis = function (id2del, callback) {
 }
 
 module.exports.del = function (id2del, callback) {
-    JournalInformation.findByIdAndDelete(id2del, callback);
+    JournalInformation.findByIdAndDelete({$eq:id2del}, callback);
 }

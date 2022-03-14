@@ -4,6 +4,8 @@ var debug = require('debug')('libraryofficialwebsite:router');
 var router = express.Router();
 var randomstring = require("randomstring");
 var addZero = require('add-zero');
+var moment = require('moment');
+var momentTZ = require('moment-timezone');
 ///////////////////////////////////////////////////////////////////////
 var jwt = require('jsonwebtoken');
 const EXPIRES_IN = 5 * 60 * 1000; // 5*60 sec
@@ -29,30 +31,38 @@ var e3 = require('../models/OnCampusElectronicResourceFiles');
 var e2 = require('../models/e2');
 var e1 = require('../models/e1');
 var swipe_edit = require('../models/swipe_edit');
+var administrativeDocumentEditing = require('../models/administrativeDocumentEditing');
 
+
+var header_link = {
+  browseHyperlinkedObjectsHorizontally1T: '成大首頁',
+  browseHyperlinkedObjectsHorizontally2T: '數學系網站',
+  browseHyperlinkedObjectsHorizontally3T: '成大總圖',
+  browseHyperlinkedObjectsHorizontally1L: 'https://www.ncku.edu.tw/',
+  browseHyperlinkedObjectsHorizontally2L: 'http://www.math.ncku.edu.tw/',
+  browseHyperlinkedObjectsHorizontally3L: 'https://www.lib.ncku.edu.tw/'
+}
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  swipe_edit.getList(r => {
-    least.frontend((stuff) => {
-      //console.log(c);console.log(numberArray(c));
-      res.render('index', {
-        title: '成大數學系圖書館',
-        functionButtonMainText1: '新書入庫',
-        functionButtonMainText2: '期刊服務',
-        functionButtonMainText3: '館際合作',
-        functionButtonMainText4: '電子資源',
-        browseHyperlinkedObjectsHorizontally1T: '成大首頁',
-        browseHyperlinkedObjectsHorizontally2T: '數學系網站',
-        browseHyperlinkedObjectsHorizontally3T: '成大總圖',
-        browseHyperlinkedObjectsHorizontally1L: 'https://www.ncku.edu.tw/',
-        browseHyperlinkedObjectsHorizontally2L: 'http://www.math.ncku.edu.tw/',
-        browseHyperlinkedObjectsHorizontally3L: 'https://www.lib.ncku.edu.tw/',
-        pc: numberArray(stuff.c),
-        ps: req.query.page ? stuff.s.slice(parseInt(req.query.page) * 4, (parseInt(req.query.page) + 1) * 4) : stuff.s.slice(0 * 4, (0 + 1) * 4),
-        margin: parseInt(req.query.page, 10) || 0,
-        swl: r,
-        addZero: addZero
+  administrativeDocumentEditing.getAll((ade) => {
+    swipe_edit.getList(r => {
+      least.frontend((stuff) => {
+        //console.log(c);console.log(numberArray(c));
+        var homeinfo = {
+          title: '成大數學系圖書館',
+          functionButtonMainText1: '新書入庫',
+          functionButtonMainText2: '期刊服務',
+          functionButtonMainText3: '館際合作',
+          functionButtonMainText4: '電子資源',
+          pc: numberArray(stuff.c),
+          ps: req.query.page ? stuff.s.slice(parseInt(req.query.page) * 4, (parseInt(req.query.page) + 1) * 4) : stuff.s.slice(0 * 4, (0 + 1) * 4),
+          margin: parseInt(req.query.page, 10) || 0,
+          swl: r,
+          addZero: addZero,
+          ade: ade.e ? 'error' : ade.r
+        }
+        res.render('index', Object.assign(homeinfo, header_link));
       });
     });
   });
@@ -75,7 +85,7 @@ router.get(('/newbooks'), function (req, res, next) {
       var innerHTMLofLlistSTRING = "";
       if (listallid.length === listallname.length) {
         var LL = listallid.length;
-        for (let index = 0; index < LL; index++) {
+        for (let index = LL - 1; index >= 0; index--) {//數字越大的在越上面
           var ELEid = listallid[index];
           var ELEname = listallname[index];
           innerHTMLofLlistSTRING = innerHTMLofLlistSTRING + `
@@ -193,15 +203,19 @@ router.get('/jjson', function (req, res, next) {
 });
 
 router.get('/inner', function (req, res, next) {
-  //debug('a');
+  /*注意
+  ISuser: 'yes'
+  這是一個字串不是bool
+  */
   var give404 = false;
   var res_render_docx = {};
   var tokenM = randomstring.generate();
   //debug(process.env.token_defaults_secret);
   ///////////////////////////////////////
+
   function cb() {
     if (give404) {
-      res.render('docx', {
+      var errorinfo = {
         title: '錯誤',
         infoClass: '',
         infoDT: '',
@@ -211,19 +225,20 @@ router.get('/inner', function (req, res, next) {
         ttp: "頁面不存在",//公告
         tp: "404 error",
         alpha: { txt: "回首頁", uri: `/` },
-        moment: require('moment'),
+        moment: moment,
         dbhtml: '',
-        ISuser: false,
+        ISuser: 'yes',
         ProntEndBeautificationRendering: true,
         wsport: process.env.wsPORT
-      });
+      }
+      res.render('docx', Object.assign(errorinfo, header_link));
     } else {
       //res.cookie('token', token, { maxAge: EXPIRES_IN, httpOnly: false });
       var ht = Base64.encode(res_render_docx.dbhtml);
       var tm = Base64.encode(tokenM);
       token.defaults.secret = process.env.token_defaults_secret;
       res_render_docx.tkn = Base64.encode(JSON.stringify({ id: ht, role: tm, auth: token.generate(`${ht}|${tm}`) }));
-      res.render('docx', res_render_docx);
+      res.render('docx', Object.assign(res_render_docx, header_link));
     }
   }
   ///////////////////end of res////////////////////////
@@ -244,9 +259,9 @@ router.get('/inner', function (req, res, next) {
               ttp: "最新消息",//公告
               tp: ro.tp,
               alpha: { txt: "回上一頁", uri: `/` },
-              moment: require('moment'),
+              moment: moment,
               dbhtml: html,
-              ISuser: false,
+              ISuser: 'yes',
               ProntEndBeautificationRendering: true,
               wsport: process.env.wsPORT
             }//);//neighbor pairing
@@ -276,9 +291,9 @@ router.get('/inner', function (req, res, next) {
               ttp: "成大數學系圖書館",//公告
               tp: "館際合作服務",
               alpha: { txt: "回首頁", uri: `/` },
-              moment: require('moment'),
+              moment: moment,
               dbhtml: html,
-              ISuser: false,
+              ISuser: 'yes',
               ProntEndBeautificationRendering: true,
               External_connection_button_array: ro.b,
               wsport: process.env.wsPORT
@@ -321,9 +336,43 @@ router.get('/inner', function (req, res, next) {
               ttp: "電子資源-外部資源清單",//公告
               tp: ro.osn,
               alpha: { txt: "回上一頁", uri: `/electronic-resources?tab=1` },
-              moment: require('moment'),
+              moment: moment,
               dbhtml: html,
-              ISuser: false,
+              ISuser: 'yes',
+              ProntEndBeautificationRendering: true,
+              wsport: process.env.wsPORT
+            }//);//neighbor pairing
+            tokenM = jwt.sign({ stuff: html/*aka上方的dbhtml*/ }, process.env.token_defaults_secret, { expiresIn: EXPIRES_IN });
+          } else {
+            give404 = true;
+          }
+          //.then(() => { cb(); })
+          cb();
+        }
+        );
+      } else {
+        give404 = true; cb();
+      }
+    });
+  } else if (req.query.ic === 'ade') {
+    administrativeDocumentEditing.getById(req.query.pid, ro => {
+      if (ro) {
+        docs.getById(ro.doclink, html => {
+          if (html) {
+            res_render_docx = {
+              // res.render('docx', {//neighbor pairing
+              title: 'inner',
+              infoClass: "服務規則",
+              infoDT: momentTZ(ro.new_date).tz("Asia/Taipei").format('YYYY年MM月DD日HH時mm分ss秒'),
+              infoID: ro.uri + '@' + `/inner?id=${ro.doclink}&pid=${ro.id}&ic=ade`,//flex string copy from index.pug search in code "詳全文" 之href
+              infoOther: ro.name,
+              urls: null,//TODO添加近期URL
+              ttp: "服務規則",//公告
+              tp: ro.tp,
+              alpha: { txt: "回上一頁", uri: `/` },
+              moment: moment,
+              dbhtml: html,
+              ISuser: 'yes',
               ProntEndBeautificationRendering: true,
               wsport: process.env.wsPORT
             }//);//neighbor pairing
@@ -358,7 +407,7 @@ router.get('/inner', function (req, res, next) {
         ttp: req.query.ic,//公告
         tp: req.query.tp,
         alpha: { txt: "回上一頁", uri: `/${req.query.rt}` },
-        moment: require('moment'),
+        moment: moment,
         dbhtml: html
       });
     } else {
@@ -378,9 +427,9 @@ router.get('/interlibraryCooperation', function (req, res, next) {
     ttp: "成大數學系圖書館",//公告
     tp: "館際合作服務",
     alpha: { txt: "回首頁", uri: `/` },
-    moment: require('moment'),
+    moment: moment,
     //dbhtml: html,
-    ISuser: false,
+    ISuser: 'yes',
     ProntEndBeautificationRendering: true,
     wsport: process.env.wsPORT
   });
