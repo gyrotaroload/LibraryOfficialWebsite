@@ -165,7 +165,7 @@ module.exports.getByNameStartFormat = function (headALPHA, callback) {
 }
 
 module.exports.gethis = function (id2del, callback) {
-    JournalInformation.findById(id2del, (e, ans) => {
+    JournalInformation.findById({$eq:id2del}, (e, ans) => {
         if (e) {//error occurs
             callback(null);
         } else {
@@ -181,5 +181,5 @@ module.exports.gethis = function (id2del, callback) {
 }
 
 module.exports.del = function (id2del, callback) {
-    JournalInformation.findByIdAndDelete(id2del, callback);
+    JournalInformation.findByIdAndDelete({$eq:id2del}, callback);
 }

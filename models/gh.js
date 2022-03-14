@@ -46,8 +46,7 @@ module.exports.getConvenient = function (callback) {
 }
 
 module.exports.SETinnerdocID = function (id, uri, callback) {
-    console.log(id, uri);
-    gh.findById(id, function (err, contact) {
+    gh.findById({$eq:id}, function (err, contact) {
         if (!err) {
             if (contact) {
                 console.log(contact.bts);
