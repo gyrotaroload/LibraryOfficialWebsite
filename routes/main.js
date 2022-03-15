@@ -942,12 +942,22 @@ router.delete('/administrativeDocumentEditing', ensureAuthenticated, function (r
 });
 
 router.get('/time', ensureAuthenticated, function (req, res, next) {
+    var weekday = parseInt(req.query.weekday, 10).isNaN ? 7 : parseInt(req.query.weekday, 10);//if is 7=> RPS. today; else 0=monday, 1=tues...
     function res_render() {
         res.render('NO_LAYOUT_webflow_time', {
-            weekday: 1
+            weekday: weekday,
+            dataobj: {
+                weekday: weekday,
+                oh: 9,
+                o: 0,
+                ch: 5,
+                cm: 30,
+                cl:false
+            }
         });
     }
-})
+    res_render();
+});//TODO還沒好
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
