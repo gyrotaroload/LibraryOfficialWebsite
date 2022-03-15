@@ -60,7 +60,8 @@ router.get('/', function (req, res, next) {
           margin: parseInt(req.query.page, 10) || 0,
           swl: r,
           addZero: addZero,
-          ade: ade.e ? 'error' : ade.r
+          ade: ade.e ? 'error' : ade.r,
+          isHome:true,
         }
         res.render('index', Object.assign(homeinfo, header_link));
       });
@@ -69,13 +70,14 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/journals', function (req, res, next) {
-  res.render('dashboard', {
+  var journalinfo = {
     title: '成大數學系圖書館',
     isUSER: 'yes',
     jjsonURL: (req.query.alpha) ? ("/jjson?alpha=" + req.query.alpha) : "/jjson",
     a2z: genCharArray('A', 'Z'),
     alpha: req.query.alpha || '0'
-  });
+  }
+  res.render('journal', Object.assign(journalinfo, header_link));
 });
 
 router.get(('/newbooks'), function (req, res, next) {
@@ -83,6 +85,7 @@ router.get(('/newbooks'), function (req, res, next) {
   excelDB.getMAXChansuNoJunban('newbooksdb', (VARcountClass) => {
     excelDB.arrayAllClass('newbooksdb', (listallid, listallname) => {
       var innerHTMLofLlistSTRING = "";
+      var oriLlist = [];
       if (listallid.length === listallname.length) {
         var LL = listallid.length;
         for (let index = LL - 1; index >= 0; index--) {//數字越大的在越上面
@@ -91,21 +94,25 @@ router.get(('/newbooks'), function (req, res, next) {
           innerHTMLofLlistSTRING = innerHTMLofLlistSTRING + `
 <a class="item" id="${ELEid}" href="/newbooks?pageid=${ELEid}">${ELEname}</a>
 `;
+          var thispage = req.query.pageid == ELEid ? true:false;
+          oriLlist.push({'id':ELEid, 'name':ELEname, 'thispage': thispage})
         }
       } else {
         innerHTMLofLlistSTRING = "<h1>[ERROR] DB Sequence length does not match!</h1>";
       }
       //這裡有一段是這裡新加的
       excelDB.getPayloadById('newbooksdb', req.query.pageid, (thistopic, HTMLpayload) => {
-        res.render('excel', {
+        var newbookinfo = {
           title: 'newbooks',
           VARcountClassJade: parseInt(VARcountClass, 10) + 1,
           innerHTMLofLlist: innerHTMLofLlistSTRING,
+          oriLlist: oriLlist,
           VARdbname: "this_is_a_user",
           isADMIN: false,
           PUGVARHTMLpayload: HTMLpayload,
           topicORwait2load: thistopic
-        });
+        }
+        res.render('newbook', Object.assign(newbookinfo, header_link));
       });//在說你啦
     });
   });
@@ -439,30 +446,30 @@ router.get('/interlibraryCooperation', function (req, res, next) {
 router.get('/electronic-resources', function (req, res, next) {
   if (req.query.tab === '1') {
     e2.frontend(r => {
-      res.render('https___technext_github_io_product_admin_index_html', {
+      res.render('resource', Object.assign( {
         title: '電子資源',
         e2: r.s,
         emt: 'tab1',
         ly: r.r
-      });
+      }, header_link));
     });
   } else if (req.query.tab === '2') {
     e1.frontend(r => {
-      res.render('https___technext_github_io_product_admin_index_html', {
+      res.render('resource', Object.assign({
         title: '電子資源',
         e1: r.s,
         emt: 'tab2',
         ly: r.r
-      });
+      }, header_link));
     });
   } else {
     e3.frontend(r => {
-      res.render('https___technext_github_io_product_admin_index_html', {
+      res.render('resource', Object.assign({
         title: '電子資源',
         e3: r.s,
         emt: 'tab0',
         ly: r.r
-      });
+      }, header_link));
     });
   }
 });
