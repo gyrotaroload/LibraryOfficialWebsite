@@ -11,7 +11,6 @@ var jwt = require('jsonwebtoken');
 const EXPIRES_IN = 5 * 60 * 1000; // 5*60 sec
 const { Base64 } = require('js-base64');
 var token = require('token');
-///debug(process.env.token_defaults_secret);這裡還沒撙備好
 token.defaults.timeStep = 5 * 60; //5min
 ///////////////////////////////////////////////
 const { SitemapStream, streamToPromise } = require('sitemap');
@@ -475,6 +474,7 @@ router.get('/electronic-resources', function (req, res, next) {
 });
 
 router.get('/sitemap.xml', function (req, res) {
+  //TODO:fix site map
   res.header('Content-Type', 'application/xml');
   res.header('Content-Encoding', 'gzip');
   // if we have a cached entry send it

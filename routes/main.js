@@ -670,7 +670,7 @@ router.get('/link', ensureAuthenticated, function (req, res, next) {//connect do
                 res.status(404).send(form_callback_page("失敗"));
             }
         });
-    }else if (req.query.ic === 'ade') {
+    } else if (req.query.ic === 'ade') {
         administrativeDocumentEditing.setDocx(req.query.lid, req.query.docid, r => {
             if (r === 'yes') {
                 res.status(200).send(form_callback_page("成功"));
@@ -940,6 +940,14 @@ router.delete('/administrativeDocumentEditing', ensureAuthenticated, function (r
         res_default();
     }
 });
+
+router.get('/time', ensureAuthenticated, function (req, res, next) {
+    function res_render() {
+        res.render('NO_LAYOUT_webflow_time', {
+            weekday: 1
+        });
+    }
+})
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
