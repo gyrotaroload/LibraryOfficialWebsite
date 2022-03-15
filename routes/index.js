@@ -70,13 +70,14 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/journals', function (req, res, next) {
-  res.render('dashboard', {
+  var journalinfo = {
     title: '成大數學系圖書館',
     isUSER: 'yes',
     jjsonURL: (req.query.alpha) ? ("/jjson?alpha=" + req.query.alpha) : "/jjson",
     a2z: genCharArray('A', 'Z'),
     alpha: req.query.alpha || '0'
-  });
+  }
+  res.render('journal', Object.assign(journalinfo, header_link));
 });
 
 router.get(('/newbooks'), function (req, res, next) {
