@@ -12,3 +12,7 @@
     height: 300px;
     overflow-y: auto;
 }
+
+#content .ui.dividing.header {
+    width: 100%;
+}

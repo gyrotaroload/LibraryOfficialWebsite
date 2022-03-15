@@ -446,30 +446,30 @@ router.get('/interlibraryCooperation', function (req, res, next) {
 router.get('/electronic-resources', function (req, res, next) {
   if (req.query.tab === '1') {
     e2.frontend(r => {
-      res.render('https___technext_github_io_product_admin_index_html', {
+      res.render('resource', Object.assign( {
         title: '電子資源',
         e2: r.s,
         emt: 'tab1',
         ly: r.r
-      });
+      }, header_link));
     });
   } else if (req.query.tab === '2') {
     e1.frontend(r => {
-      res.render('https___technext_github_io_product_admin_index_html', {
+      res.render('resource', Object.assign({
         title: '電子資源',
         e1: r.s,
         emt: 'tab2',
         ly: r.r
-      });
+      }, header_link));
     });
   } else {
     e3.frontend(r => {
-      res.render('https___technext_github_io_product_admin_index_html', {
+      res.render('resource', Object.assign({
         title: '電子資源',
         e3: r.s,
         emt: 'tab0',
         ly: r.r
-      });
+      }, header_link));
     });
   }
 });
