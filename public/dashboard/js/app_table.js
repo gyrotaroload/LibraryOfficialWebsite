@@ -316,6 +316,9 @@ $(function () {
     initTable()
 
     $('#locale').change(initTable)
+    var el = $("#sidebar").find('.active');
+    el[0].scrollIntoView(true);
+    $("#menutxt").text($("#mobilemenu").find('.active')[0].text);
 })
 
 /*TODO
