@@ -40,7 +40,7 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json({ limit: 10485760 }));//rest-payload-10mb-max
-app.use(express.urlencoded({ extended: false , limit: 10485760 }));
+app.use(express.urlencoded({ extended: false, limit: 10485760 }));
 app.use(cookieParser());
 app.use(sassMiddleware({
   src: path.join(__dirname, 'public'),
@@ -58,17 +58,20 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(limiter);
-require('express-file-logger')(app)//express log to file
+require('express-file-logger')(app, {
+  showOnConsole: false,
+  bodyDetails: false
+})//express log to file
 app.use(minifyHTML({
-  override:      true,
+  override: true,
   exception_url: false,
   htmlMinifier: {
-      removeComments:            true,
-      collapseWhitespace:        true,
-      collapseBooleanAttributes: true,
-      removeAttributeQuotes:     true,
-      removeEmptyAttributes:     true,
-      minifyJS:                  true
+    removeComments: true,
+    collapseWhitespace: true,
+    collapseBooleanAttributes: true,
+    removeAttributeQuotes: true,
+    removeEmptyAttributes: true,
+    minifyJS: true
   }
 }));
 
@@ -80,15 +83,14 @@ app.use('/upload', uploadRouter);
 
 app.use(robots({
   UserAgent: '*',
-  Disallow: [ '/users/login', '/main' ],//allow every things
+  Disallow: ['/users/login', '/main'],//allow every things
   CrawlDelay: '5',
   Sitemap: 'https://library.math.ncku.edu.tw/sitemap.xml',
 }))
 
 //get/post
 app.get('*', function (req, res, next) {
-  console.log("???????");
-  console.log((!req.user) ? "[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[nouser]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]" : req.user);
+  //console.log((!req.user) ? "[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[nouser]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]" : req.user);
   res.locals.user = req.user || null;
   next();
 });
@@ -106,7 +108,6 @@ app.post(
       username: req.body.username,
       password: req.body.password,
     }).then(user => res.json(user));
-    console.log("???????");
   },
 );
 

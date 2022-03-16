@@ -272,29 +272,29 @@ block content
                       tbody
                         tr#Monday(itemprop='openingHours' title='Open Monday at 9am to 6pm')
                           td#monday_chinese 一
-                          td.opens.no_right_border 09:00
-                          td.no_right_border.no_left_border -
-                          td.closes.no_left_border 18:00
+                          td.opens.no_right_border #{`${ot[0].oh}:${ot[0].o}`}
+                          td.no_right_border.no_left_border(class={shutdown: ot[0].cl}) -
+                          td.closes.no_left_border #{`${ot[0].ch}:${ot[0].cm}`}
                         tr#Tuesday(itemprop='openingHours' title='Open Tuesday at 9am to 6pm')
                           td#tuesday_chinese 二
-                          td.opens.no_right_border 09:00
-                          td.no_right_border.no_left_border -
-                          td.closes.no_left_border 18:00
+                          td.opens.no_right_border #{`${ot[1].oh}:${ot[1].o}`}
+                          td.no_right_border.no_left_border(class={shutdown: ot[1].cl}) -
+                          td.closes.no_left_border #{`${ot[1].ch}:${ot[1].cm}`}
                         tr#Wednesday(itemprop='openingHours' title='Open Wednesday at 9am to 6pm')
                           td#wednesday_chinese 三
-                          td.opens.no_right_border 09:00
-                          td.no_right_border.no_left_border -
-                          td.closes.no_left_border 18:00
+                          td.opens.no_right_border #{`${ot[2].oh}:${ot[2].o}`}
+                          td.no_right_border.no_left_border(class={shutdown: ot[2].cl}) -
+                          td.closes.no_left_border #{`${ot[2].ch}:${ot[2].cm}`}
                         tr#Thursday(itemprop='openingHours' title='Open Thursday at 9am to 8pm')
                           td#thursday_chinese 四
-                          td.opens.no_right_border 09:00
-                          td.no_right_border.no_left_border -
-                          td.closes.no_left_border 20:00
+                          td.opens.no_right_border #{`${ot[3].oh}:${ot[3].o}`}
+                          td.no_right_border.no_left_border(class={shutdown: ot[3].cl}) -
+                          td.closes.no_left_border #{`${ot[3].ch}:${ot[3].cm}`}
                         tr#Friday(itemprop='openingHours' title='Open Friday at 9am to 6pm')
                           td#friday_chinese 五
-                          td.opens.no_right_border 09:00
-                          td.no_right_border.no_left_border -
-                          td.closes.no_left_border 18:00
+                          td.opens.no_right_border #{`${ot[4].oh}:${ot[4].o}`}
+                          td.no_right_border.no_left_border(class={shutdown: ot[4].cl}) -
+                          td.closes.no_left_border #{`${ot[4].ch}:${ot[4].cm}`}
                         //
                           如果當日閉館
                           class="no_right_border no_left_border"的地方
@@ -302,14 +302,14 @@ block content
                           然後開館時間閉館時間就不重要了
                         tr#Saturday(itemprop='openingHours' title='Open Saturday at 10am to 11pm')
                           td#saturday_chinese 六
-                          td.opens.no_right_border 10:00
-                          td.shutdown.no_right_border.no_left_border -
-                          td.closes.no_left_border 23:00
+                          td.opens.no_right_border #{`${ot[5].oh}:${ot[5].o}`}
+                          td.no_right_border.no_left_border(class={shutdown: ot[5].cl}) -
+                          td.closes.no_left_border #{`${ot[5].ch}:${ot[5].cm}`}
                         tr#Sunday(itemprop='openingHours' title='Open Sunday at 11am to 4pm')
                           td#sunday_chinese 日
-                          td.opens.no_right_border 12:00
-                          td.shutdown.no_right_border.no_left_border -
-                          td.closes.no_left_border 16:00
+                          td.opens.no_right_border #{`${ot[6].oh}:${ot[6].o}`}
+                          td.no_right_border.no_left_border(class={shutdown: ot[6].cl}) -
+                          td.closes.no_left_border #{`${ot[6].ch}:${ot[6].cm}`}
                     // 按鈕已廢止
                     button(style='cursor: pointer;display:none;' title='Make an Apointment Online' data-appointlet='u387') Make an Apointment Online
                     script.
