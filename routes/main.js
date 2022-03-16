@@ -70,6 +70,8 @@ var addZero = require('add-zero');
 const numberArray = require('number-array');
 const { Base64 } = require('js-base64');
 const sharp = require('sharp');
+var moment = require('moment');
+var momentTZ = require('moment-timezone');
 var sanitize = require('mongo-sanitize');
 var mammoth = require("mammoth");//main
 var multer = require('multer');
@@ -135,6 +137,8 @@ var e2 = require('../models/e2');
 var e3 = require('../models/OnCampusElectronicResourceFiles');
 var least = require('../models/least');
 var administrativeDocumentEditing = require('../models/administrativeDocumentEditing');
+var opentime = require('../models/opentime');
+
 
 //const
 var IclassMap = new Map();
@@ -944,20 +948,98 @@ router.delete('/administrativeDocumentEditing', ensureAuthenticated, function (r
 router.get('/time', ensureAuthenticated, function (req, res, next) {
     var weekday = parseInt(req.query.weekday, 10).isNaN ? 7 : parseInt(req.query.weekday, 10);//if is 7=> RPS. today; else 0=monday, 1=tues...
     function res_render() {
-        res.render('NO_LAYOUT_webflow_time', {
-            weekday: weekday,
-            dataobj: {
-                weekday: weekday,
-                oh: 9,
-                o: 0,
-                ch: 5,
-                cm: 30,
-                cl:false
-            }
-        });
+        if (weekday === 0 || weekday === 1 || weekday === 2 || weekday === 3 || weekday === 4 || weekday === 5 || weekday === 6) {
+            opentime.getbyweekday(weekday, (tw) => {
+                if (tw && !tw.e) {
+                    res.render('NO_LAYOUT_webflow_time', {
+                        weekday: weekday,
+                        window_location_href_main: true, dataobj: {
+                            weekday: weekday === 0 || weekday === 1 || weekday === 2 || weekday === 3 || weekday === 4 || weekday === 5 || weekday === 6 || weekday === 7 ? weekday : 7,
+                            oh: tw.oh,
+                            o: tw.o,
+                            ch: tw.ch,
+                            cm: tw.cm,
+                            cl: tw.cl
+                        }
+                    });
+                } else {
+                    console.warn('DB error @ routes/main.js, line *** (ctrl+F and find the line [gotodefault-reading_getbyweekday])');
+                    res.render('NO_LAYOUT_webflow_time', {
+                        weekday: weekday,
+                        window_location_href_main: true, dataobj: {
+                            weekday: weekday === 0 || weekday === 1 || weekday === 2 || weekday === 3 || weekday === 4 || weekday === 5 || weekday === 6 || weekday === 7 ? weekday : 7,
+                            oh: 9,
+                            o: 0,
+                            ch: 15,
+                            cm: 30,
+                            cl: false
+                        }
+                    });
+                }
+            });
+        } else {
+            opentime.today((tr) => {
+                if (tr && !tr.e) {
+                    res.render('NO_LAYOUT_webflow_time', {
+                        weekday: weekday,
+                        window_location_href_main: true, dataobj: {
+                            weekday: weekday === 0 || weekday === 1 || weekday === 2 || weekday === 3 || weekday === 4 || weekday === 5 || weekday === 6 || weekday === 7 ? weekday : 7,
+                            oh: tr.oh,
+                            o: tr.o,
+                            ch: tr.ch,
+                            cm: tr.cm,
+                            cl: tr.cl
+                        }
+                    });
+                } else {
+                    console.warn('DB error @ routes/main.js, line *** (ctrl+F and find the line [gotodefault-reading_today])');
+                    opentime.getbyweekday(momentTZ().tz("Asia/Taipei").day() - 1, (tw) => {
+                        if (tw && !tw.e) {
+                            res.render('NO_LAYOUT_webflow_time', {
+                                weekday: weekday,
+                                window_location_href_main: true, dataobj: {
+                                    weekday: weekday === 0 || weekday === 1 || weekday === 2 || weekday === 3 || weekday === 4 || weekday === 5 || weekday === 6 || weekday === 7 ? weekday : 7,
+                                    oh: tw.oh,
+                                    o: tw.o,
+                                    ch: tw.ch,
+                                    cm: tw.cm,
+                                    cl: tw.cl
+                                }
+                            });
+                        } else {
+                            console.warn('DB error @ routes/main.js, line *** (ctrl+F and find the line [gotodefault-reading_getbyweekday-after_today])');
+                            res.render('NO_LAYOUT_webflow_time', {
+                                weekday: weekday,
+                                window_location_href_main: true, dataobj: {
+                                    weekday: weekday === 0 || weekday === 1 || weekday === 2 || weekday === 3 || weekday === 4 || weekday === 5 || weekday === 6 || weekday === 7 ? weekday : 7,
+                                    oh: 9,
+                                    o: 0,
+                                    ch: 15,
+                                    cm: 30,
+                                    cl: false
+                                }
+                            });
+                        }
+                    });
+
+                }
+            });
+        }
+
     }
-    res_render();
-});//TODO還沒好
+    if (req.query.wk && req.query.oh && req.query.o && req.query.ch && req.query.cm) {
+        opentime.add(new opentime({
+            todayONOFF: req.query.cl ? true : false,
+            sh: parseInt(req.query.oh).isNaN ? -1 : req.query.oh,
+            sm: parseInt(req.query.o).isNaN ? -1 : req.query.o,
+            eh: parseInt(req.query.ch).isNaN ? -1 : req.query.ch,
+            em: parseInt(req.query.cm).isNaN ? -1 : req.query.cm,
+            p: parseInt(req.query.wk).isNaN ? -1 : req.query.wk
+        }), () => { res_render(); })
+    } else {
+        res_render();
+    }
+});
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {

@@ -31,6 +31,7 @@ var e2 = require('../models/e2');
 var e1 = require('../models/e1');
 var swipe_edit = require('../models/swipe_edit');
 var administrativeDocumentEditing = require('../models/administrativeDocumentEditing');
+var opentime = require('../models/opentime');
 
 
 var header_link = {
@@ -44,25 +45,28 @@ var header_link = {
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  administrativeDocumentEditing.getAll((ade) => {
-    swipe_edit.getList(r => {
-      least.frontend((stuff) => {
-        //console.log(c);console.log(numberArray(c));
-        var homeinfo = {
-          title: '成大數學系圖書館',
-          functionButtonMainText1: '新書入庫',
-          functionButtonMainText2: '期刊服務',
-          functionButtonMainText3: '館際合作',
-          functionButtonMainText4: '電子資源',
-          pc: numberArray(stuff.c),
-          ps: req.query.page ? stuff.s.slice(parseInt(req.query.page) * 4, (parseInt(req.query.page) + 1) * 4) : stuff.s.slice(0 * 4, (0 + 1) * 4),
-          margin: parseInt(req.query.page, 10) || 0,
-          swl: r,
-          addZero: addZero,
-          ade: ade.e ? 'error' : ade.r,
-          isHome:true,
-        }
-        res.render('index', Object.assign(homeinfo, header_link));
+  opentime.frontend((ot) => {
+    administrativeDocumentEditing.getAll((ade) => {
+      swipe_edit.getList(r => {
+        least.frontend((stuff) => {
+          //console.log(c);console.log(numberArray(c));
+          var homeinfo = {
+            title: '成大數學系圖書館',
+            functionButtonMainText1: '新書入庫',
+            functionButtonMainText2: '期刊服務',
+            functionButtonMainText3: '館際合作',
+            functionButtonMainText4: '電子資源',
+            pc: numberArray(stuff.c),
+            ps: req.query.page ? stuff.s.slice(parseInt(req.query.page) * 4, (parseInt(req.query.page) + 1) * 4) : stuff.s.slice(0 * 4, (0 + 1) * 4),
+            margin: parseInt(req.query.page, 10) || 0,
+            swl: r,
+            addZero: addZero,
+            ade: ade.e ? 'error' : ade.r,
+            isHome: true,
+            ot:ot.ary
+          }
+          res.render('index', Object.assign(homeinfo, header_link));
+        });
       });
     });
   });
@@ -93,8 +97,8 @@ router.get(('/newbooks'), function (req, res, next) {
           innerHTMLofLlistSTRING = innerHTMLofLlistSTRING + `
 <a class="item" id="${ELEid}" href="/newbooks?pageid=${ELEid}">${ELEname}</a>
 `;
-          var thispage = req.query.pageid == ELEid ? true:false;
-          oriLlist.push({'id':ELEid, 'name':ELEname, 'thispage': thispage})
+          var thispage = req.query.pageid == ELEid ? true : false;
+          oriLlist.push({ 'id': ELEid, 'name': ELEname, 'thispage': thispage })
         }
       } else {
         innerHTMLofLlistSTRING = "<h1>[ERROR] DB Sequence length does not match!</h1>";
@@ -445,7 +449,7 @@ router.get('/interlibraryCooperation', function (req, res, next) {
 router.get('/electronic-resources', function (req, res, next) {
   if (req.query.tab === '1') {
     e2.frontend(r => {
-      res.render('resource', Object.assign( {
+      res.render('resource', Object.assign({
         title: '電子資源',
         e2: r.s,
         emt: 'tab1',

@@ -73,10 +73,6 @@ block content
               a.menu-box-tab(href='/main/home')
                 sapn.icon.entypo-chart-line.scnd-font-color
                 | 編輯移除最新消息
-            li
-              a.menu-box-tab(href='/main/administrativeDocumentEditing')
-                sapn.icon.entypo-chart-line.scnd-font-color
-                | 行政服務文件
             //li
               a.menu-box-tab(href='/main/interlibraryCooperation')
                 sapn.icon.entypo-chart-line.scnd-font-color
@@ -122,6 +118,7 @@ block content
               a.menu-box-tab(href='/main/interlibraryCooperation')
                 sapn.icon.entypo-switch.scnd-font-color
                 | 編輯館際合作頁面
+                .menu-box-number 可編輯
             //li
               a.menu-box-tab(href='/main/AddElectronicResources')
                 sapn.icon.entypo-chart-line.scnd-font-color
@@ -492,27 +489,20 @@ block content
                 span.icon.entypo-sweden.scnd-font-color
                 | 期刊管理/編輯
                 //-.menu-box-number 5
-            //li
-              a.menu-box-tab(href='/main/swipeEDIT')
-                span.icon.entypo-cog.scnd-font-color
-                | 首頁動畫編輯(未開放)
-                .menu-box-number X
-            //li
-              a.menu-box-tab(href='/main/docxUpload')
+        .menu-box.block
+          // MENU BOX (LEFT-CONTAINER)
+          h2.titular 首頁側欄群
+          ul.menu-box-menu
+            li
+              a.menu-box-tab(href='/main/administrativeDocumentEditing')
                 sapn.icon.entypo-chart-line.scnd-font-color
-                | 添加最新消息
-            //li
-              a.menu-box-tab(href='/main/interlibraryCooperation')
-                sapn.icon.entypo-chart-line.scnd-font-color
-                | 編輯館際合作頁面
-            //li
-              a.menu-box-tab(href='/main/AddElectronicResources')
-                sapn.icon.entypo-chart-line.scnd-font-color
-                | 新增電子資源
-            //li
-              a.menu-box-tab(href='/main/swipeEDIT')
-                sapn.icon.entypo-chart-line.scnd-font-color
-                | 編輯首頁投影片
+                | 行政服務文件
+                .menu-box-number 可編輯
+            li
+              a.menu-box-tab(href='/main/time')
+                span.icon.entypo-sweden.scnd-font-color
+                | 開館時間
+                .menu-box-number 可編輯
         //.join-newsletter.block
           //- JOIN NEWSLETTER (RIGHT-CONTAINER)
           h2.titular JOIN THE NEWSLETTER
