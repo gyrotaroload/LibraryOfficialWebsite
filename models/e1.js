@@ -1,26 +1,7 @@
 var mongoose = require('mongoose');
-/*sn: '123',
-  osn: '123',
-  provider: '1',
-  c: '清單',
-  Textafterexternallinkother: '1',
-  yPublished_External: '1',
-  mPublished_External: '1',
-  dPublished_External: '1',
-  Remarks_External: '1',
-  urle: 'http://aqwertyuikl.345678.com',
-  submit2: '送出
-  
-   {
-  no: '23',
-  name: '123qwe',
-  url: 'https://github.com/andythebreaker/2020arduino.git',
-  submit: '送出'
-}
-
-*/
+//often used link
 var e1Schema = mongoose.Schema({
-    //Boolean
+
     new_date: {
         type: Date
     },
@@ -32,7 +13,10 @@ var e1Schema = mongoose.Schema({
     },
     url: {
         type: String
-    }
+    },
+	class_type:{
+		type:String
+	}
 });
 
 //export JournalInformation schema
@@ -74,9 +58,6 @@ module.exports.getMaxIndex = function (callback) {
         if (err) {
             console.log(err);
         }
-        //console.log(SearchResult[0].no);
-        //console.log(SearchResult.length > 0);
-        //console.log((SearchResult.length > 0) ? SearchResult[0].no : -1);
-        callback((SearchResult.length > 0) ? SearchResult[0].no+1 : -1);
+              callback((SearchResult.length > 0) ? SearchResult[0].no+1 : -1);
     });
 }
