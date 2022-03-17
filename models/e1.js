@@ -14,9 +14,9 @@ var e1Schema = mongoose.Schema({
     url: {
         type: String
     },
-	subcategory:{
-		type:String
-	}
+    subcategory: {
+        type: String
+    }
 });
 
 //export JournalInformation schema
@@ -58,10 +58,10 @@ module.exports.getMaxIndex = function (callback) {
         if (err) {
             console.log(err);
         }
-              callback((SearchResult.length > 0) ? SearchResult[0].no+1 : 0);
+        callback((SearchResult.length > 0) ? SearchResult[0].no + 1 : 1);
     });
 }
 
 module.exports.delById = function (MODid, callback) {
-    e1.findByIdAndDelete({$eq:MODid}, (err, doc) => callback(err, doc));
+    e1.findByIdAndDelete({ $eq: MODid }, (err, doc) => callback(err, doc));
 };

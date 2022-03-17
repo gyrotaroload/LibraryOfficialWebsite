@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var hash = require('object-hash');
+
 var e3Schema = mongoose.Schema({
     new_date: {
         type: Date
@@ -31,7 +33,9 @@ var e3Schema = mongoose.Schema({
         type: String
     }, file: {
         type: Buffer
-    }, sub: {
+    }, sub: {//副檔名
+        type: String
+    }, objhash: {
         type: String
     }
 });
@@ -41,6 +45,7 @@ var e3 = module.exports = mongoose.model('e3', e3Schema);
 
 //function
 module.exports.add = function (newOBJ, callback) {
+    newOBJ.objhash = hash({ file: newOBJ.file });
     newOBJ.save((e, r) => {
         if (e) {
             console.log(e);
@@ -77,10 +82,27 @@ module.exports.getMaxIndex = function (callback) {
         if (err) {
             console.log(err);
         }
-        callback((SearchResult.length > 0) ? SearchResult[0].sn2 + 1 : 0);
+        callback((SearchResult.length > 0) ? SearchResult[0].sn2 + 1 : 1);
     });
 }
 
 module.exports.delById = function (MODid, callback) {
     e3.findByIdAndDelete({ $eq: MODid }, (err, doc) => callback(err, doc));
 };
+
+module.exports.fileById = function (req_id, Ahash, callback) {
+    e3.findById({ $eq: req_id }, function (err, adventure) {
+        if (err) {
+            console.log("可忽略的警告");
+            console.log(err);
+            callback(null);
+        } else {
+            if (adventure.objhash === Ahash) {
+                callback((adventure.file && adventure.sub) ? { f: adventure.file, s: adventure.sub } : null);
+            } else {
+                console.log("hash of file is not same");
+                callback(null);
+            }
+        }
+    });
+}
