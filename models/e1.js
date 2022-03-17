@@ -14,7 +14,7 @@ var e1Schema = mongoose.Schema({
     url: {
         type: String
     },
-	class_type:{
+	subcategory:{
 		type:String
 	}
 });

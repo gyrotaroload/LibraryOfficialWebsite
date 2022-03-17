@@ -84,6 +84,7 @@ block content
                     tr
                         th(scope='col') 流水號
                         th(scope='col') 網站名稱
+                        th(scope='col') 分類
                         th(scope='col') 超連結
                 else
                     tr
@@ -133,6 +134,7 @@ block content
                                 b= index+1
                                 //.tm-status-circle.pending
                             td= eo.name
+                            td= eo.subcategory
                             td
                                 .tm-status-circle.moving
                                 a.ui.button(href=`${eo.url}` target='_blank')
