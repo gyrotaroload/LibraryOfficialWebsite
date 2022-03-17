@@ -1041,6 +1041,57 @@ router.get('/time', ensureAuthenticated, function (req, res, next) {
     }
 });
 
+router.get('/editR', ensureAuthenticated, function (req, res, next) {
+    if (req.query.tab === '1') {
+        e2.frontend(r => {
+            res.render('https___technext_github_io_product_admin_index_html', {
+                title: '電子資源',
+                e2: r.s,
+                emt: 'tab1',
+                ly: r.r
+            });
+        });
+    } else if (req.query.tab === '2') {
+        e1.frontend(r => {
+            res.render('https___technext_github_io_product_admin_index_html', {
+                title: '電子資源',
+                e1: r.s,
+                emt: 'tab2',
+                ly: r.r
+            });
+        });
+    } else {
+        e3.frontend(r => {
+            res.render('https___technext_github_io_product_admin_index_html', {
+                title: '電子資源',
+                e3: r.s,
+                emt: 'tab0',
+                ly: r.r
+            });
+        });
+    }
+});
+
+//=================電子資源刪除api====================區段註解起始================================
+//常用連結
+router.delete('/frequentlyUsedLinks', ensureAuthenticated, function (req, res, next) {
+    function res_default() {
+        res.status(200).send(form_callback_page("成功"));
+    }
+    if (req.query.id) {
+        e1.delById(req.query.id, (e, r) => {
+            if (e) {
+                res.status(500).send(form_callback_page("錯誤"));
+            } else {
+                res_default();
+            }
+        });
+    } else {
+        res_default();
+    }
+});
+//=================電子資源刪除api====================區段註解結束================================
+
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();

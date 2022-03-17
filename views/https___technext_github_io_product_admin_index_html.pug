@@ -271,7 +271,7 @@ block content
                       th(scope='col') 資源類型
                       th(scope='col') 發布時間
                       th(scope='col') 備註
-                      th(scope='col') 檔案
+                      th(scope='col') 操作
                   else if emt==="tab1"
                     tr
                       th(scope='col') 流水號
@@ -280,12 +280,13 @@ block content
                       th(scope='col') 類型
                       th(scope='col') 發布時間
                       th(scope='col') 備註
-                      th(scope='col') 超連結
+                      th(scope='col') 操作
                   else if emt==="tab2"
                     tr
                       th(scope='col') 流水號
                       th(scope='col') 網站名稱
-                      th(scope='col') 超連結
+                      th(scope='col') 分類
+                      th(scope='col') 操作
                   else
                     tr
                       th error!
@@ -334,11 +335,12 @@ block content
                           b= index+1
                           //.tm-status-circle.pending
                         td= eo.name
+                        td= eo.subcategory
                         td
                           .tm-status-circle.moving
-                          a.ui.button(href=`${eo.url}` target='_blank')
+                          a.ui.button(href="#" onclick=`$.ajax({url: 'frequentlyUsedLinks?id=${eo.id||'-1'}',type: 'DELETE',success: function(result) { window.location.href='/main/editR'},error:function(result) { Swal.fire({  title: 'Error!',  text: 'Do you want to continue',  icon: 'error',  confirmButtonText: 'Cool'});}});`)
                             i.external.alternate.icon
-                            |   開啟
+                            |   刪除
                   else
                     tr
                       th error!
@@ -380,3 +382,5 @@ block content
       updateBarChart();
       });
       })
+    script(src='//cdn.jsdelivr.net/npm/sweetalert2@11')
+

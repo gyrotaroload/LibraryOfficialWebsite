@@ -61,3 +61,7 @@ module.exports.getMaxIndex = function (callback) {
               callback((SearchResult.length > 0) ? SearchResult[0].no+1 : -1);
     });
 }
+
+module.exports.delById = function (MODid, callback) {
+    e1.findByIdAndDelete({$eq:MODid}, (err, doc) => callback(err, doc));
+};
