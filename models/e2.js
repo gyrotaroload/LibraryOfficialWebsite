@@ -95,7 +95,7 @@ module.exports.lastTime = function (callback) {
 
 module.exports.update_url = function (id, uri, callback) {
     //console.log(id, uri);
-    e2.findById({$eq:id}, function (err, contact) {
+    e2.findById({ $eq: id }, function (err, contact) {
         if (!err) {
             if (contact) {
                 //console.log(contact.bts);
@@ -116,7 +116,7 @@ module.exports.update_url = function (id, uri, callback) {
 }
 
 module.exports.getById = function (id, callback) {
-    e2.findById({$eq:id}, function (err, adventure) {
+    e2.findById({ $eq: id }, function (err, adventure) {
         if (err) {
             console.log("可忽略的警告");
             console.log(err);
@@ -132,9 +132,10 @@ module.exports.getMaxIndex = function (callback) {
         if (err) {
             console.log(err);
         }
-        //console.log(SearchResult[0].sn);
-        //console.log(SearchResult.length > 0);
-        //console.log((SearchResult.length > 0) ? SearchResult[0].sn : -1);
-        callback((SearchResult.length > 0) ? SearchResult[0].sn+1 : -1);
+        callback((SearchResult.length > 0) ? SearchResult[0].sn + 1 : 0);
     });
 }
+
+module.exports.delById = function (MODid, callback) {
+    e2.findByIdAndDelete({ $eq: MODid }, (err, doc) => callback(err, doc));
+};

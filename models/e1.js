@@ -58,7 +58,7 @@ module.exports.getMaxIndex = function (callback) {
         if (err) {
             console.log(err);
         }
-              callback((SearchResult.length > 0) ? SearchResult[0].no+1 : -1);
+              callback((SearchResult.length > 0) ? SearchResult[0].no+1 : 0);
     });
 }
 

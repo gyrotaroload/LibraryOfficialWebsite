@@ -1090,6 +1090,40 @@ router.delete('/frequentlyUsedLinks', ensureAuthenticated, function (req, res, n
         res_default();
     }
 });
+//On-Campus Resources
+router.delete('/ocr', ensureAuthenticated, function (req, res, next) {
+    function res_default() {
+        res.status(200).send(form_callback_page("成功"));
+    }
+    if (req.query.id) {
+        e3.delById(req.query.id, (e, r) => {
+            if (e) {
+                res.status(500).send(form_callback_page("錯誤"));
+            } else {
+                res_default();
+            }
+        });
+    } else {
+        res_default();
+    }
+});
+//off-Campus Resources
+router.delete('/fcr', ensureAuthenticated, function (req, res, next) {
+    function res_default() {
+        res.status(200).send(form_callback_page("成功"));
+    }
+    if (req.query.id) {
+        e2.delById(req.query.id, (e, r) => {
+            if (e) {
+                res.status(500).send(form_callback_page("錯誤"));
+            } else {
+                res_default();
+            }
+        });
+    } else {
+        res_default();
+    }
+});
 //=================電子資源刪除api====================區段註解結束================================
 
 function ensureAuthenticated(req, res, next) {

@@ -77,9 +77,10 @@ module.exports.getMaxIndex = function (callback) {
         if (err) {
             console.log(err);
         }
-        //console.log(SearchResult[0].sn2);
-        //console.log(SearchResult.length > 0);
-        //console.log((SearchResult.length > 0) ? SearchResult[0].sn2 : -1);
-        callback((SearchResult.length > 0) ? SearchResult[0].sn2+1 : -1);
+        callback((SearchResult.length > 0) ? SearchResult[0].sn2 + 1 : 0);
     });
 }
+
+module.exports.delById = function (MODid, callback) {
+    e3.findByIdAndDelete({ $eq: MODid }, (err, doc) => callback(err, doc));
+};

@@ -293,7 +293,7 @@ block content
                 tbody
                   if emt==="tab0"
                     each eo, index in e3
-                      tr
+                      tr(data-dbno=eo.sn2)
                         th(scope='row')
                           b= index+1
                         td= eo.osn2
@@ -306,12 +306,12 @@ block content
                         td= eo.Remarks_External2
                         td
                           .tm-status-circle.moving
-                          button.ui.button(onclick=`function base64ToArrayBuffer(base64) { var binaryString = window.atob(base64); var binaryLen = binaryString.length; var bytes = new Uint8Array(binaryLen); for (var i = 0; i < binaryLen; i++) { var ascii = binaryString.charCodeAt(i); bytes[i] = ascii;}return bytes;}function saveByteArray(reportName, byte) {var blob = new Blob([byte], {type: "${eo.sub}"});var link = document.createElement('a');link.href = window.URL.createObjectURL(blob); var fileName = reportName;link.download = fileName;link.click();};var sampleArr = base64ToArrayBuffer('${eo.file.toString('base64')}');saveByteArray('${eo.osn2}', sampleArr);`)
+                          button.ui.button(href="#" onclick=`$.ajax({url: 'ocr?id=${eo.id||'-1'}',type: 'DELETE',success: function(result) { window.location.href='/main/editR?tab=0'},error:function(result) { Swal.fire({  title: '錯誤!',  text: result,  icon: 'error',  confirmButtonText: 'Cool'});}});`)
                             i.save.icon
-                            |   下載
+                            |   刪除
                   else if emt==="tab1"
                     each eo, index in e2
-                      tr
+                      tr(data-dbno=eo.sn)
                         th(scope='row')
                           b= index+1
                           //.tm-status-circle.pending
@@ -325,12 +325,12 @@ block content
                         td= eo.Remarks_External
                         td
                           .tm-status-circle.moving
-                          a.ui.button(href=`${eo.urle}` target='_blank')
+                          a.ui.button(href="#" onclick=`$.ajax({url: 'fcr?id=${eo.id||'-1'}',type: 'DELETE',success: function(result) { window.location.href='/main/editR?tab=1'},error:function(result) { Swal.fire({  title: '錯誤',  text: result,  icon: 'error',  confirmButtonText: 'Cool'});}});`)
                             i.external.alternate.icon
-                            |   開啟
+                            |   刪除
                   else if emt==="tab2"
                     each eo, index in e1
-                      tr
+                      tr(data-dbno=eo.no)
                         th(scope='row')
                           b= index+1
                           //.tm-status-circle.pending
@@ -338,7 +338,7 @@ block content
                         td= eo.subcategory
                         td
                           .tm-status-circle.moving
-                          a.ui.button(href="#" onclick=`$.ajax({url: 'frequentlyUsedLinks?id=${eo.id||'-1'}',type: 'DELETE',success: function(result) { window.location.href='/main/editR'},error:function(result) { Swal.fire({  title: 'Error!',  text: 'Do you want to continue',  icon: 'error',  confirmButtonText: 'Cool'});}});`)
+                          a.ui.button(href="#" onclick=`$.ajax({url: 'frequentlyUsedLinks?id=${eo.id||'-1'}',type: 'DELETE',success: function(result) { window.location.href='/main/editR?tab=2'},error:function(result) { Swal.fire({  title: '錯誤',  text: result,  icon: 'error',  confirmButtonText: 'Cool'});}});`)
                             i.external.alternate.icon
                             |   刪除
                   else
