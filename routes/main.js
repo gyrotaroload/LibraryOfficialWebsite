@@ -257,7 +257,7 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
     var INLIVx = req.body.LIVx;
     var INeissn = req.body.eissn;
     var INhistory = [];
-    console.log("dats->");
+    /*console.log("dats->");
     console.log(INframeNumber);
     console.log(INISSN);
     console.log(INSTAT);
@@ -267,7 +267,7 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
     console.log(INREMK);
     console.log(INLIVstart);
     console.log(INLIVend);
-    console.log(INLIVx);
+    console.log(INLIVx);*/
 
     /*var DEFAULTframeNumber = 'Z99999';
     var DEFAULTISSN = '12345-678910';
@@ -508,11 +508,11 @@ router.get('/delJ', ensureAuthenticated, function (req, res, next) {
     });
 });
 
-router.get('/infoJ', ensureAuthenticated, function (req, res, next) {
+/*router.get('/infoJ', ensureAuthenticated, function (req, res, next) {
     JournalInformation.gethis(req.query.id, (stuff) => {
         res.status(200).send(stuff);
     });
-});
+});*/
 
 //最新消息add
 router.get('/docxUpload', ensureAuthenticated, function (req, res, next) {
