@@ -213,7 +213,7 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: false,
+                    sortable: true, searchable: false,formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }
                 , {
