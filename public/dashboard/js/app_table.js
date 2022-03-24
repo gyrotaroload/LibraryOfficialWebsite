@@ -97,7 +97,11 @@ function LinkFormatter(value, row, index) {
     }
 
     function reg_step_2(ins) {
-        const regex = /@href@([^:|@]*)@text@(http[s]?:\/\/.*?\/[a-zA-Z-_]+[^@]*)@url@/gm;
+         const regex = /@href@([^:|@]*)@text@(http[s]?:\/\/.?www\.?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b[-a-zA-Z0-9@:%_\+.~#?&//=]*)@url@/img;
+        //const regex = /@href@([^:|@]*)@text@(http[s]?:\/\/.*?\/[a-zA-Z-_]+[^@]*)@url@/gm;
+        //hotfix220324
+        //using https://regexr.com/3e6m0
+        //not working https://pastebin.com/9i7FSQ23、https://pastebin.com/raw/qyv6gmQe
         const str = ins;//`qwdewfr@href@電子期@text@http://intlpress.com/site/pub/pages/journals/items/cjm/content/vols/index.html@url@wqdefewfrwr@href@電子期@text@http://intlpress.com/site/pub/pages/journals/items/cjm/content/vols/index.html@url@448pijij`;
         const subst = `$\`<a href='$2'>$1</a>$'`;
 
