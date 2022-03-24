@@ -97,7 +97,7 @@ function LinkFormatter(value, row, index) {
     }
 
     function reg_step_2(ins) {
-         const regex = /@href@([^:|@]*)@text@(http[s]?:\/\/.?www\.?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b[-a-zA-Z0-9@:%_\+.~#?&//=]*)@url@/img;
+         const regex = /@href@([^:|@]*)@text@(http[s]?:\/\/.?[www]?\.?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b[-a-zA-Z0-9@:%_\+.~#?&//=]*)@url@/img;
         //const regex = /@href@([^:|@]*)@text@(http[s]?:\/\/.*?\/[a-zA-Z-_]+[^@]*)@url@/gm;
         //hotfix220324
         //using https://regexr.com/3e6m0
