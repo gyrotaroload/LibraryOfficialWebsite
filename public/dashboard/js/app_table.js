@@ -144,6 +144,7 @@ function initTable() {
                     valign: 'middle',
                     sortable: true,
                     searchable: true,
+                    formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }
                 , {
@@ -152,7 +153,7 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: true,
+                    sortable: true, searchable: true,formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }, {
                     title: 'E-ISSN',
@@ -160,7 +161,7 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: true,
+                    sortable: true, searchable: true,formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }, {
                     title: '刊名',
@@ -169,7 +170,7 @@ function initTable() {
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    searchable: true,
+                    searchable: true,formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }, {
                     title: '狀況',
@@ -177,7 +178,7 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: false,
+                    sortable: true, searchable: false,formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }, {
                     title: '電子資源',
@@ -194,7 +195,7 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: false,
+                    sortable: true, searchable: false,formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }
                 //, {
@@ -203,7 +204,7 @@ function initTable() {
                 //        rowspan: 2,
                 //      align: 'center',
                 //    valign: 'middle',
-                //  sortable: true,
+                //  sortable: true,formatter: LinkFormatter
                 //-footerFormatter: totalTextFormatter
                 //}
                 , {
@@ -219,7 +220,8 @@ function initTable() {
                     title: '資料細節',
                     colspan: 4,
                     align: 'center',
-                    visible: (document.getElementById('isUSER').innerText === 'no') ? true : false
+                    visible: (document.getElementById('isUSER').innerText === 'no') ? true : false,
+                    formatter: LinkFormatter
                 }],
             [{
                 field: 'updateTime',
