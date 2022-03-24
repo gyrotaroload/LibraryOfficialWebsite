@@ -14,6 +14,14 @@ const SocketServer = require('ws').Server;
 const robots = require('express-robots-txt');
 var minifyHTML = require('express-minify-html-2');
 
+/********************* */
+var Grid = require('gridfs-stream'),
+    upload = require('jquery-file-upload-gridfs-middleware');
+    var    Db = require('mongodb').Db;
+    var   Server = require('mongodb').Server;
+    var   MongoClient = require('mongodb').MongoClient;
+    /////////////////////////////////////////////////
+
 //add new module
 var flash = require('connect-flash');
 var mongo = require('mongodb');
@@ -31,7 +39,6 @@ var usersRouter = require('./routes/users');
 var mainRouter = require('./routes/main');
 var toolRouter = require('./routes/tool');
 var uploadRouter = require('./routes/upload');
-var mp4U=require('./routes/mp4');
 
 var app = express();
 
@@ -81,7 +88,63 @@ app.use('/users', usersRouter);
 app.use('/main', mainRouter);
 app.use('/tool', toolRouter);
 app.use('/upload', uploadRouter);
-app.use('/mp4', mp4U);
+
+/**********************copy from models users.js************************** */
+const mongoDBuserName = "linjsing";
+const mongoDBpsw = process.env.linjsing;
+const mongoDBdataBaseName = "maindb";
+const uri = process.env.DBurl || `mongodb+srv://${mongoDBuserName}:${mongoDBpsw}@cluster0.iupxg.mongodb.net/${mongoDBdataBaseName}?retryWrites=true&w=majority`;
+/**********************copy from models users.js************************** */var b = uri.split('/');
+var c = ''; b.forEach((o, i) => { if (i !== b.length - 1) { c += o; } if (i === 1) { c += '//'; } }); console.log(c);
+var gfs =null;
+MongoClient.connect( uri, function (err, client) {
+    console.log(err);
+    // Select the database by name
+    const db = client.db(c[c.length - 1]);console.log("1");
+ gfs = Grid(db, mongo);
+    console.log("2");
+
+});
+upload.configure({
+  uploadDir: __dirname + '/public/uploads',
+  mongoGfs: gfs,
+  imageVersions: {
+      thumbnail: {
+          width: 80,
+          height: 80
+      }
+  }
+});upload.on('begin', function (fileInfo, req, res) { 
+  console.log(fileInfo);
+});
+upload.on('abort', function (fileInfo, req, res) { 
+  console.log(fileInfo);
+});
+upload.on('end', function (fileInfo, req, res) { 
+  console.log(fileInfo);
+});
+upload.on('delete', function (fileInfo, req, res) { 
+  console.log(fileInfo);
+});
+upload.on('error', function (e, req, res) {
+  console.log(e.message);
+});
+app.use('/upload', function (req, res, next) {
+  // Connect using MongoClient
+  console.log("3");
+      upload.fileHandler({
+          uploadDir: function () {
+              console.log("3");
+              return '/public/uploads';
+          },
+          uploadUrl: function () {
+              console.log("4");
+              return '/uploads';
+          }
+      })(req, res, next);
+  
+
+});
 
 app.use(robots({
   UserAgent: '*',

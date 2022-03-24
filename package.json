@@ -57,7 +57,7 @@
     "is-empty": "^1.2.0",
     "is-equal": "^1.6.4",
     "isemail": "^3.2.0",
-    "jquery-file-upload-gridfs-middleware": "^0.1.1",
+    "jquery-file-upload-gridfs-middleware": "*",
     "js-base64": "*",
     "jsonwebtoken": "~8.5.1",
     "jspdf": "~2.5.0",
@@ -127,7 +127,8 @@
     "vinyl-source-stream": "~2.0.0",
     "watchify": "*",
     "ws": "^6.1.4",
-    "zlib": "~1.0.5"
+    "zlib": "~1.0.5",
+    "gridfs-stream": "*"
   },
   "symdeps": {
     "paths": {
