@@ -31,6 +31,7 @@ var usersRouter = require('./routes/users');
 var mainRouter = require('./routes/main');
 var toolRouter = require('./routes/tool');
 var uploadRouter = require('./routes/upload');
+var mp4U=require('./routes/mp4');
 
 var app = express();
 
@@ -80,6 +81,7 @@ app.use('/users', usersRouter);
 app.use('/main', mainRouter);
 app.use('/tool', toolRouter);
 app.use('/upload', uploadRouter);
+app.use('/mp4', mp4U);
 
 app.use(robots({
   UserAgent: '*',
