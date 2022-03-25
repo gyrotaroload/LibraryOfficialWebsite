@@ -134,7 +134,7 @@ app.use('/upload', function (req, res, next) {
   console.log("3");
       upload.fileHandler({
           uploadDir: function () {
-              console.log("3");
+              console.log("5");
               return '/public/uploads';
           },
           uploadUrl: function () {

@@ -128,12 +128,14 @@
     "watchify": "*",
     "ws": "^6.1.4",
     "zlib": "~1.0.5",
-    "gridfs-stream": "*"
+    "gridfs-stream": "*",
+    "blueimp-file-upload": "*"
   },
   "symdeps": {
     "paths": {
       "public/js/vendor": [
-        "html2canvas"
+        "html2canvas",
+        "blueimp-file-upload"
       ]
     }
   },
