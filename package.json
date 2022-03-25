@@ -22,6 +22,8 @@
     "base64-arraybuffer": "~1.0.2",
     "bcryptjs": "^2.4.3",
     "blob-stream": "*",
+    "blueimp-file-upload": "*",
+    "body-parser": "^1.19.2",
     "browserify": "*",
     "browserslist": "*",
     "canvas": "*",
@@ -43,6 +45,7 @@
     "express-validator": "*",
     "fix-esm": "*",
     "font-list": "*",
+    "gridfs-stream": "*",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-clean-css": "^4.3.0",
@@ -127,9 +130,7 @@
     "vinyl-source-stream": "~2.0.0",
     "watchify": "*",
     "ws": "^6.1.4",
-    "zlib": "~1.0.5",
-    "gridfs-stream": "*",
-    "blueimp-file-upload": "*"
+    "zlib": "~1.0.5"
   },
   "symdeps": {
     "paths": {

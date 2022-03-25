@@ -106,7 +106,7 @@ MongoClient.connect( uri, function (err, client) {
 
 });
 upload.configure({
-  uploadDir: __dirname + '/public/uploads',
+  uploadDir: '/public/uploads',
   mongoGfs: gfs,
   imageVersions: {
       thumbnail: {
@@ -114,37 +114,11 @@ upload.configure({
           height: 80
       }
   }
-});upload.on('begin', function (fileInfo, req, res) { 
-  console.log(fileInfo);
 });
-upload.on('abort', function (fileInfo, req, res) { 
-  console.log(fileInfo);
-});
-upload.on('end', function (fileInfo, req, res) { 
-  console.log(fileInfo);
-});
-upload.on('delete', function (fileInfo, req, res) { 
-  console.log(fileInfo);
-});
-upload.on('error', function (e, req, res) {
-  console.log(e.message);
-});
-app.use('/upload', function (req, res, next) {
-  // Connect using MongoClient
-  console.log("3");
-      upload.fileHandler({
-          uploadDir: function () {
-              console.log("5");
-              return '/public/uploads';
-          },
-          uploadUrl: function () {
-              console.log("4");
-              return '/uploads';
-          }
-      })(req, res, next);
-  
-
-});
+app.use('/upload', 
+      upload.fileHandler());
+      var bodyParser = require('body-parser')
+      app.use(bodyParser);
 
 app.use(robots({
   UserAgent: '*',

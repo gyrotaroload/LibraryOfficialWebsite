@@ -294,18 +294,19 @@ html.pintura-editor-validated(lang='en')
       // import Pintura Image Editor functionality:
       import { openDefaultEditor } from 'https://cdn.jsdelivr.net/gh/blueimp/jQuery-File-Upload@gh-pages/js/vendor/pintura.min.js';
       $(function () {
+      console.log('????????????????????????');
       $('#fileupload').fileupload('option', {
       // When editing a file use Pintura Image Editor:
-      edit: function (file) {
-      return new Promise((resolve, reject) => {
+      edit: function (file) {console.log(file);
+      return new Promise((resolve, reject) => {console.log(resolve);console.log(reject);
       const editor = openDefaultEditor({
       src: file,
       imageCropAspectRatio: 1,
       });
-      editor.on('process', ({ dest }) => {
+      editor.on('process', ({ dest }) => {console.log(dest);
       resolve(dest);
       });
-      editor.on('close', () => {
+      editor.on('close', () => {console.log(file);
       resolve(file);
       });
       });

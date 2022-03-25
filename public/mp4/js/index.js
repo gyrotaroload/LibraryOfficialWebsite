@@ -15,6 +15,7 @@ $(function () {
     'use strict';
   
     // Initialize the jQuery File Upload widget:
+    console.log("📢[index.js:19]: ", $('#fileupload'));
     $('#fileupload').fileupload({
       // Uncomment the following to send cross-domain cookies:
       //xhrFields: {withCredentials: true},
@@ -22,14 +23,15 @@ $(function () {
     });
   
     // Enable iframe cross-domain access via redirect option:
-    $('#fileupload').fileupload(
+   /* $('#fileupload').fileupload(
       'option',
       'redirect',
       window.location.href.replace(/\/[^/]*$/, '/cors/result.html?%s')
-    );
+    );*/
   
-    if (window.location.hostname === 'blueimp.github.io') {
-      // Demo settings:
+    //if (window.location.hostname === 'blueimp.github.io') {
+    console.log("📢[index.js:33]: ", window.location.hostname);
+    // Demo settings:
       $('#fileupload').fileupload('option', {
         url: '/upload',
         // Enable image resizing, except for Android and Opera,
@@ -43,18 +45,22 @@ $(function () {
       });
       // Upload server status check for browsers with CORS support:
       if ($.support.cors) {
+          console.log("📢[index.js:48]: ", $.support.cors);
         $.ajax({
           url: '/upload',
           type: 'HEAD'
         }).fail(function () {
+          console.log("📢[index.js:54]: ", $('<div class="alert alert-danger"></div>'));
           $('<div class="alert alert-danger"></div>')
             .text('Upload server currently unavailable - ' + new Date())
             .appendTo('#fileupload');
         });
       }
-    } else {
+    /*} else {
+        console.log("📢[index.js:57]: ", $('#fileupload')[0]);
       // Load existing files:
       $('#fileupload').addClass('fileupload-processing');
+      console.log("📢[index.js:66]: ", $('#fileupload'));
       $.ajax({
         // Uncomment the following to send cross-domain cookies:
         //xhrFields: {withCredentials: true},
@@ -71,5 +77,5 @@ $(function () {
             // eslint-disable-next-line new-cap
             .call(this, $.Event('done'), { result: result });
         });
-    }
+    }*/
   });
