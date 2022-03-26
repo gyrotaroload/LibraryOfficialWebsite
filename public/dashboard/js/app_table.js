@@ -103,7 +103,7 @@ function LinkFormatter(value, row, index) {
         //using https://regexr.com/3e6m0
         //not working https://pastebin.com/9i7FSQ23、https://pastebin.com/raw/qyv6gmQe
         const str = ins;//`qwdewfr@href@電子期@text@http://intlpress.com/site/pub/pages/journals/items/cjm/content/vols/index.html@url@wqdefewfrwr@href@電子期@text@http://intlpress.com/site/pub/pages/journals/items/cjm/content/vols/index.html@url@448pijij`;
-        const subst = `$\`<a href='$2'>$1</a>$'`;
+        const subst = `<a href='$2'>$1</a>`;
 
         // The substituted value will be contained in the result variable
         const result = str.replace(regex, subst);
