@@ -88,6 +88,7 @@ app.use('/users', usersRouter);
 app.use('/main', mainRouter);
 app.use('/tool', toolRouter);
 app.use('/upload', uploadRouter);
+<<<<<<< HEAD
 
 /**********************copy from models users.js************************** */
 const mongoDBuserName = "linjsing";
@@ -119,6 +120,8 @@ app.use('/upload',
       upload.fileHandler());
       var bodyParser = require('body-parser')
       app.use(bodyParser);
+=======
+>>>>>>> parent of 855fe37... tmp_mp4
 
 app.use(robots({
   UserAgent: '*',
