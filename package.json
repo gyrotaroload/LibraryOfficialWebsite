@@ -54,9 +54,7 @@
     "is-empty": "^1.2.0",
     "is-equal": "^1.6.4",
     "isemail": "^3.2.0",
-
     "jquery-file-upload-gridfs-middleware": "*",
-
     "js-base64": "*",
     "jspdf": "~2.5.0",
     "katex": "^0.15.1",
