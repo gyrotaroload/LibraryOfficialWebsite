@@ -144,12 +144,12 @@ app.use(function (err, req, res, next) {
 debug('started app');
 
 ///////////////////WS area////////////////////////////
-var ws_go=null;
-app.myLibrary=function (ws_go_mjs){
-  ws_go=ws_go_mjs;
+var ws_go = null;
+app.myLibrary = function (ws_go_mjs) {
+  ws_go = ws_go_mjs;
 };
 //指定開啟的 port
-const PORT13030 =process.env.wsPORT|| 13030;
+const PORT13030 = process.env.wsPORT || 13030;
 
 //創建 express 的物件，並綁定及監聽 3000 port ，且設定開啟後在 console 中提示
 const server = express()
@@ -250,6 +250,7 @@ wss.on('connection', ws => {
                 }
               })
             */} else {
+              console.log(decoded.stuff);
               try {
                 ws.send(ws_go(decoded.stuff));
               } catch (error_of_ws) {

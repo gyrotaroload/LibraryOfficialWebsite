@@ -130,7 +130,8 @@
     "url-parse": "~1.5.10",
     "moment-timezone": "*",
     "keep-in-range": "1.0.0",
-    "object-hash": "3.0.0"
+    "object-hash": "3.0.0",
+    "console-table-printer": "*"
   },
   "symdeps": {
     "paths": {

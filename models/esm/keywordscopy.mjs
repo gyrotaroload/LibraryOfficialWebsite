@@ -78,74 +78,76 @@ wss.on('connection', ws => {
             //console.log(decoded);
             if (tf && decoded.stuff === ht) {//TODO iat/exp
 */
-              ///////////////////////////////////////////////////////////pdf/////////////////////////////////////
-      var ws_msg_income_obj=     function ws_msg_income(ws_msg)  { pdf.create(decoded.stuff).toBuffer(function (err, buffer) {
-                //console.log('This is a buffer:', b64a.encode(buffer));
-                if (!err && Buffer.isBuffer(buffer)) {
-                  try {
-                    return(b64a.encode(buffer));
-                  } catch (error_of_ws) {
-                    console.log(error_of_ws);
-                  }
-                } else {
-                  try {
-                    return('pdf||');
-                  } catch (error_of_ws) {
-                    console.log(error_of_ws);
-                  }
-                  console.log(err);
-                }
-              });
-              ////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////pdf/////////////////////////////////////
+var ws_msg_income_obj = function ws_msg_income(ws_msg) {
+  pdf.create(decoded.stuff).toBuffer(function (err, buffer) {
+    //console.log('This is a buffer:', b64a.encode(buffer));
+    if (!err && Buffer.isBuffer(buffer)) {
+      try {
+        return (b64a.encode(buffer));
+      } catch (error_of_ws) {
+        console.log(error_of_ws);
+      }
+    } else {
+      try {
+        return ('pdf||');
+      } catch (error_of_ws) {
+        console.log(error_of_ws);
+      }
+      console.log(err);
+    }
+  });
+  ////////////////////////////////////////////////////////////////////////////////////////////////
 
-              var pt = parse(ht);
-              translate(pt.text, { to: 'en' }).then(res => {//TODO 翻譯功能要換掉 https://github.com/shikar/NODE_GOOGLE_TRANSLATE/issues/7
-                //TypeError: Cannot read property '1' of null
-                //Url: https://translate.google.com/_/TranslateWebserverUi/data/batchexecute?rpcids=MkEWBc&f.sid=9118077551142346777&bl=boq_translate-webserver_20220206.16_p0&hl=en-US&soc-app=1&soc-platform=1&soc-device=1&_reqid=4040&rt=c
-                //at D:~/code\LibraryOfficialWebsiteNew\LibraryOfficialWebsite\node_modules\translate-google\index.js:179:15
-                //at processTicksAndRejections (internal/process/task_queues.js:93:5) {
-                //code: 'BAD_NETWORK'
-                //}
-                debug(res);
-                if (res) {
+  var pt = parse(ht);
+  translate(pt.text, { to: 'en' }).then(res => {//TODO 翻譯功能要換掉 https://github.com/shikar/NODE_GOOGLE_TRANSLATE/issues/7
+    //TypeError: Cannot read property '1' of null
+    //Url: https://translate.google.com/_/TranslateWebserverUi/data/batchexecute?rpcids=MkEWBc&f.sid=9118077551142346777&bl=boq_translate-webserver_20220206.16_p0&hl=en-US&soc-app=1&soc-platform=1&soc-device=1&_reqid=4040&rt=c
+    //at D:~/code\LibraryOfficialWebsiteNew\LibraryOfficialWebsite\node_modules\translate-google\index.js:179:15
+    //at processTicksAndRejections (internal/process/task_queues.js:93:5) {
+    //code: 'BAD_NETWORK'
+    //}
+    debug(res);
+    if (res) {
 
-                  kw(res, ka => {
-                    translate(ka, { to: 'zh-tw' }).then(restw => {
-                      debug(restw);
-                      var JSON_stringify_restw_items = restw.Keywords.concat(restw.Keyphrases);
-                      debug(JSON_stringify_restw_items);
-                      var JSON_stringify_restw_unique = [...new Set(JSON_stringify_restw_items)];
-                      try {
-                        return(JSON.stringify(JSON_stringify_restw_unique));
-                      } catch (error_of_ws) {
-                        console.log(error_of_ws);
-                      }
+      kw(res, ka => {
+        translate(ka, { to: 'zh-tw' }).then(restw => {
+          debug(restw);
+          var JSON_stringify_restw_items = restw.Keywords.concat(restw.Keyphrases);
+          debug(JSON_stringify_restw_items);
+          var JSON_stringify_restw_unique = [...new Set(JSON_stringify_restw_items)];
+          try {
+            return (JSON.stringify(JSON_stringify_restw_unique));
+          } catch (error_of_ws) {
+            console.log(error_of_ws);
+          }
 
-                    }).catch(errtw => {
-                      console.log(errtw);
-                      try {
-                        return('解析失敗!');
-                      } catch (error_of_ws) {
-                        console.log(error_of_ws);
-                      }
-                    })
-                  })
-                } else {
-                  try {
-                    return('解析失敗!');
-                  } catch (error_of_ws) {
-                    console.log(error_of_ws);
-                  }
-                }
-              }).catch(err => {
-                console.log(err);
-                try {
-                  return('解析失敗!');
-                } catch (error_of_ws) {
-                  console.log(error_of_ws);
-                }
-              })
-            }/* } else {
+        }).catch(errtw => {
+          console.log(errtw);
+          try {
+            return ('解析失敗!');
+          } catch (error_of_ws) {
+            console.log(error_of_ws);
+          }
+        })
+      })
+    } else {
+      try {
+        return ('解析失敗!');
+      } catch (error_of_ws) {
+        console.log(error_of_ws);
+      }
+    }
+  }).catch(err => {
+    console.log(err);
+    try {
+      return ('解析失敗!');
+    } catch (error_of_ws) {
+      console.log(error_of_ws);
+    }
+  })
+}
+/* } else {
               try {
                 ws.send('解析失敗!');
               } catch (error_of_ws) {
