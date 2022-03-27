@@ -8,7 +8,7 @@ process.env.token_defaults_secret = randomstring.generate();
 var debug = require('debug')('libraryofficialwebsite:server');
 debug(process.env.token_defaults_secret);
 import app from "../app.js";
-import "../models/esm/keywordscopy.mjs";
+import ws_msg_income_obj from "../models/esm/keywordscopy.mjs";
 var http = require('http');
 
 /**
@@ -17,7 +17,7 @@ var http = require('http');
 
 var port = normalizePort(process.env.PORT || '18787');
 app.set('port', port);
-
+app.myLibrary(ws_msg_income_obj);
 /**
  * Create HTTP server.
  */

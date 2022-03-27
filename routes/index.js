@@ -1,4 +1,5 @@
 var express = require('express');
+var createError = require('http-errors');
 var nckulib = require('nckulib');
 var debug = require('debug')('libraryofficialwebsite:router');
 var router = express.Router();
@@ -63,7 +64,7 @@ router.get('/', function (req, res, next) {
             addZero: addZero,
             ade: ade.e ? 'error' : ade.r,
             isHome: true,
-            ot:ot.ary
+            ot: ot.ary
           }
           res.render('index', Object.assign(homeinfo, header_link));
         });
@@ -475,6 +476,17 @@ router.get('/electronic-resources', function (req, res, next) {
       }, header_link));
     });
   }
+});
+
+router.get('/oc-ebook', function (req, res, next) {
+  e3.fileById(req.query.id, req.query.h, (r) => {
+    if (r) {
+      res.set('Content-Type', r.s);
+      res.send(r.f);
+    } else {
+      next(createError(404));
+    }
+  });
 });
 
 router.get('/sitemap.xml', function (req, res) {

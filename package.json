@@ -20,6 +20,8 @@
     "babelify": "*",
     "bcryptjs": "^2.4.3",
     "blob-stream": "*",
+    "blueimp-file-upload": "*",
+    "body-parser": "^1.19.2",
     "browserify": "*",
     "browserslist": "*",
     "canvas": "*",
@@ -37,6 +39,7 @@
     "express-validator": "*",
     "fix-esm": "*",
     "font-list": "*",
+    "gridfs-stream": "*",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-clean-css": "^4.3.0",
@@ -51,6 +54,7 @@
     "is-empty": "^1.2.0",
     "is-equal": "^1.6.4",
     "isemail": "^3.2.0",
+    "jquery-file-upload-gridfs-middleware": "*",
     "js-base64": "*",
     "jspdf": "~2.5.0",
     "katex": "^0.15.1",
@@ -125,12 +129,14 @@
     "express-minify-html-2": "~1.0.1",
     "url-parse": "~1.5.10",
     "moment-timezone": "*",
-    "keep-in-range": "1.0.0"
+    "keep-in-range": "1.0.0",
+    "object-hash": "3.0.0"
   },
   "symdeps": {
     "paths": {
       "public/js/vendor": [
-        "html2canvas"
+        "html2canvas",
+        "blueimp-file-upload"
       ]
     }
   },

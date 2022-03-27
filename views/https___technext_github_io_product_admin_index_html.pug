@@ -271,7 +271,7 @@ block content
                       th(scope='col') 資源類型
                       th(scope='col') 發布時間
                       th(scope='col') 備註
-                      th(scope='col') 檔案
+                      th(scope='col') 操作
                   else if emt==="tab1"
                     tr
                       th(scope='col') 流水號
@@ -280,37 +280,83 @@ block content
                       th(scope='col') 類型
                       th(scope='col') 發布時間
                       th(scope='col') 備註
-                      th(scope='col') 超連結
+                      th(scope='col') 操作
                   else if emt==="tab2"
                     tr
                       th(scope='col') 流水號
                       th(scope='col') 網站名稱
-                      th(scope='col') 超連結
+                      th(scope='col') 分類
+                      th(scope='col') 操作
                   else
                     tr
                       th error!
                 tbody
                   if emt==="tab0"
                     each eo, index in e3
-                      tr
+                      tr(data-dbno=eo.sn2)
+                            //如果編輯要重傳檔案，就直接重新增一份，把原本的刪掉，不然要重hash，不太合理
                         th(scope='row')
                           b= index+1
-                        td= eo.osn2
                         td
-                          b= eo.provider2
+                          input.form-control(type="text" value=eo.osn2)
                         td
-                          b= String(eo.c2)+' '+String(eo.Textafterexternallinkother2)
+                          input.form-control(type="text" value=eo.provider2)
                         td
-                          b= String(eo.yPublished_External2)+'年'+String(eo.mPublished_External2)+'月'+String(eo.dPublished_External2)+'日'
-                        td= eo.Remarks_External2
+                          // Button trigger modal
+                          button.btn.btn-primary(type='button' data-toggle='modal' data-target='#exampleModal')= String(eo.c2)+' '+String(eo.Textafterexternallinkother2)
+
+                          // Modal
+                          #exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+                            .modal-dialog(role='document')
+                              .modal-content.text-dark
+                                .modal-header
+                                  h5#exampleModalLabel.modal-title Modal title
+                                  button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                    span(aria-hidden='true') ×
+                                .modal-body
+                                  .input-group.mb-3
+                                    .input-group-append
+                                      span#basic-addon2.input-group-text 主類別
+                                    input.form-control.w-50(type="text" value=String(eo.c2))
+                                  .input-group.mb-3
+                                    .input-group-append
+                                      span#basic-addon2.input-group-text 子類別
+                                    input.form-control.w-50(type="text" value=String(eo.Textafterexternallinkother2))
+                                .modal-footer
+                                  button.btn.btn-secondary(type='button' data-dismiss='modal') 關閉
+                                  button.btn.btn-primary(type='button') 暫存
+
+                        td
+                          button.btn.btn-secondary(type='button' data-container='body' data-toggle='popover' data-placement='top' data-idonfly=`popover${index}`)= String(eo.yPublished_External2)+'年'+String(eo.mPublished_External2)+'月'+String(eo.dPublished_External2)+'日'
+                          .d-none.datetimesetbox
+                            .input-group.mb-3
+                              //這是一個泡泡展開，需要這個html末端的泡泡fucn
+                              input.form-control.w-50(type="text" value=String(eo.yPublished_External2))
+                              .input-group-append
+                                span#basic-addon2.input-group-text 年
+                            .input-group.mb-3
+                              input.form-control.w-50(type="text" value=String(eo.mPublished_External2))
+                              .input-group-append
+                                span#basic-addon2.input-group-text 月
+                            .input-group.mb-3
+                              input.form-control.w-50(type="text" value=String(eo.dPublished_External2))
+                              .input-group-append
+                                span#basic-addon2.input-group-text 日
+                            .d-flex.bd-highlight.mb-3
+                              .p-2.flex-fill.bd-highlight
+                                button.btn.btn-secondary(type='button' onclick=`$('button[data-idonfly=popover${index}]').click()`) 關閉
+                              .p-2.flex-fill.bd-highlight
+                                button.btn.btn-primary(type='button') 暫存
+                        td
+                          input.form-control(type="text" value=eo.Remarks_External2)
                         td
                           .tm-status-circle.moving
-                          button.ui.button(onclick=`function base64ToArrayBuffer(base64) { var binaryString = window.atob(base64); var binaryLen = binaryString.length; var bytes = new Uint8Array(binaryLen); for (var i = 0; i < binaryLen; i++) { var ascii = binaryString.charCodeAt(i); bytes[i] = ascii;}return bytes;}function saveByteArray(reportName, byte) {var blob = new Blob([byte], {type: "${eo.sub}"});var link = document.createElement('a');link.href = window.URL.createObjectURL(blob); var fileName = reportName;link.download = fileName;link.click();};var sampleArr = base64ToArrayBuffer('${eo.file.toString('base64')}');saveByteArray('${eo.osn2}', sampleArr);`)
+                          button.ui.button(href="#" onclick=`$.ajax({url: 'ocr?id=${eo.id||'-1'}',type: 'DELETE',success: function(result) { window.location.href='/main/editR?tab=0'},error:function(result) { Swal.fire({  title: '錯誤!',  text: result,  icon: 'error',  confirmButtonText: 'Cool'});}});`)
                             i.save.icon
-                            |   下載
+                            |   刪除
                   else if emt==="tab1"
                     each eo, index in e2
-                      tr
+                      tr(data-dbno=eo.sn)
                         th(scope='row')
                           b= index+1
                           //.tm-status-circle.pending
@@ -324,21 +370,22 @@ block content
                         td= eo.Remarks_External
                         td
                           .tm-status-circle.moving
-                          a.ui.button(href=`${eo.urle}` target='_blank')
+                          a.ui.button(href="#" onclick=`$.ajax({url: 'fcr?id=${eo.id||'-1'}',type: 'DELETE',success: function(result) { window.location.href='/main/editR?tab=1'},error:function(result) { Swal.fire({  title: '錯誤',  text: result,  icon: 'error',  confirmButtonText: 'Cool'});}});`)
                             i.external.alternate.icon
-                            |   開啟
+                            |   刪除
                   else if emt==="tab2"
                     each eo, index in e1
-                      tr
+                      tr(data-dbno=eo.no)
                         th(scope='row')
                           b= index+1
                           //.tm-status-circle.pending
                         td= eo.name
+                        td= eo.subcategory
                         td
                           .tm-status-circle.moving
-                          a.ui.button(href=`${eo.url}` target='_blank')
+                          a.ui.button(href="#" onclick=`$.ajax({url: 'frequentlyUsedLinks?id=${eo.id||'-1'}',type: 'DELETE',success: function(result) { window.location.href='/main/editR?tab=2'},error:function(result) { Swal.fire({  title: '錯誤',  text: result,  icon: 'error',  confirmButtonText: 'Cool'});}});`)
                             i.external.alternate.icon
-                            |   開啟
+                            |   刪除
                   else
                     tr
                       th error!
@@ -354,6 +401,8 @@ block content
     // https://momentjs.com/
     script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js' integrity='sha512-GsqF810cNwHMCDELTwi3YgWIBwKYQlvC1WTAJ6fk80rtB6zN3IWdpoQujBQCuOMOxXXksEWwE0k4Lrb+N87DZQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
     // http://www.chartjs.org/docs/latest/
+    script(src='https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js')
+    //2.11.4not ok(https://getbootstrap.com/docs/4.1/components/popovers/)
     script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy' crossorigin='anonymous')
     // https://getbootstrap.com/
     script(src='https://cdn.jsdelivr.net/gh/technext/product-admin/js/tooplate-scripts.js')
@@ -379,4 +428,15 @@ block content
       updateLineChart();
       updateBarChart();
       });
-      })
+      });
+      $(function () {//https://getbootstrap.com/docs/4.1/components/popovers/
+      //泡泡fucn
+      $('[data-toggle="popover"]').popover({
+      html: true,
+      content:function (){var stuff = $( this ).parent().children('.datetimesetbox');var tmp=stuff[0].innerHTML;return tmp;
+      }
+      });
+      });
+    script(src='//cdn.jsdelivr.net/npm/sweetalert2@11')
+
+

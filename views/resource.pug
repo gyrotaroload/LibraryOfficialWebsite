@@ -84,6 +84,7 @@ block content
                     tr
                         th(scope='col') 流水號
                         th(scope='col') 網站名稱
+                        th(scope='col') 分類
                         th(scope='col') 超連結
                 else
                     tr
@@ -104,7 +105,11 @@ block content
                             td= eo.Remarks_External2
                             td
                                 .tm-status-circle.moving
-                                button.ui.button(onclick=`function base64ToArrayBuffer(base64) { var binaryString = window.atob(base64); var binaryLen = binaryString.length; var bytes = new Uint8Array(binaryLen); for (var i = 0; i < binaryLen; i++) { var ascii = binaryString.charCodeAt(i); bytes[i] = ascii;}return bytes;}function saveByteArray(reportName, byte) {var blob = new Blob([byte], {type: "${eo.sub}"});var link = document.createElement('a');link.href = window.URL.createObjectURL(blob); var fileName = reportName;link.download = fileName;link.click();};var sampleArr = base64ToArrayBuffer('${eo.file.toString('base64')}');saveByteArray('${eo.osn2}', sampleArr);`)
+                                a.ui.button(href=`/oc-ebook?id=${eo.id}&h=${eo.objhash}` target="_blank")
+                                    i.save.icon
+                                    |   開啟
+                                //按客戶要求，不提供使用者下載，但下方那個下載按鈕是好的(22.03.17)
+                                //button.ui.button(onclick=`function base64ToArrayBuffer(base64) { var binaryString = window.atob(base64); var binaryLen = binaryString.length; var bytes = new Uint8Array(binaryLen); for (var i = 0; i < binaryLen; i++) { var ascii = binaryString.charCodeAt(i); bytes[i] = ascii;}return bytes;}function saveByteArray(reportName, byte) {var blob = new Blob([byte], {type: "${eo.sub}"});var link = document.createElement('a');link.href = window.URL.createObjectURL(blob); var fileName = reportName;link.download = fileName;link.click();};var sampleArr = base64ToArrayBuffer('${eo.file.toString('base64')}');saveByteArray('${eo.osn2}', sampleArr);`)
                                     i.save.icon
                                     |   下載
                 else if emt==="tab1"
@@ -133,6 +138,7 @@ block content
                                 b= index+1
                                 //.tm-status-circle.pending
                             td= eo.name
+                            td= eo.subcategory
                             td
                                 .tm-status-circle.moving
                                 a.ui.button(href=`${eo.url}` target='_blank')

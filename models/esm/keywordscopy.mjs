@@ -5,9 +5,12 @@ import retextPos from 'retext-pos'
 import retextKeywords from 'retext-keywords'
 var debug = require('debug')('libraryofficialwebsite:ws');
 const translate = require('translate-google')
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
+///////////////////////////////
+/*var createError = require('http-errors');
+//////////////////////////////////
+var express = require('express');*/
+////////////////////////////////////////
+/*var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var sassMiddleware = require('node-sass-middleware');
@@ -16,13 +19,16 @@ var LocalStrategy = require('passport-local').Strategy;
 var RateLimit = require('express-rate-limit');
 var session = require('express-session');
 var randomstring = require("randomstring");
-const { body, validationResult } = require('express-validator');
-const SocketServer = require('ws').Server;
+const { body, validationResult } = require('express-validator');*/
+//////////////////////////////////////////////
+/*const SocketServer = require('ws').Server;
 const { Base64 } = require('js-base64');
+////////////////////////////
 //add new module
 var flash = require('connect-flash');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+////////////////////////////
 var token = require('token');
 const jsonwebtoken = require('jsonwebtoken');
 import { parse } from 'node-html-parser';
@@ -71,19 +77,19 @@ wss.on('connection', ws => {
           .then(decoded => {
             //console.log(decoded);
             if (tf && decoded.stuff === ht) {//TODO iat/exp
-
+*/
               ///////////////////////////////////////////////////////////pdf/////////////////////////////////////
-              pdf.create(decoded.stuff).toBuffer(function (err, buffer) {
+      var ws_msg_income_obj=     function ws_msg_income(ws_msg)  { pdf.create(decoded.stuff).toBuffer(function (err, buffer) {
                 //console.log('This is a buffer:', b64a.encode(buffer));
                 if (!err && Buffer.isBuffer(buffer)) {
                   try {
-                    ws.send(b64a.encode(buffer));
+                    return(b64a.encode(buffer));
                   } catch (error_of_ws) {
                     console.log(error_of_ws);
                   }
                 } else {
                   try {
-                    ws.send('pdf||');
+                    return('pdf||');
                   } catch (error_of_ws) {
                     console.log(error_of_ws);
                   }
@@ -110,7 +116,7 @@ wss.on('connection', ws => {
                       debug(JSON_stringify_restw_items);
                       var JSON_stringify_restw_unique = [...new Set(JSON_stringify_restw_items)];
                       try {
-                        ws.send(JSON.stringify(JSON_stringify_restw_unique));
+                        return(JSON.stringify(JSON_stringify_restw_unique));
                       } catch (error_of_ws) {
                         console.log(error_of_ws);
                       }
@@ -118,7 +124,7 @@ wss.on('connection', ws => {
                     }).catch(errtw => {
                       console.log(errtw);
                       try {
-                        ws.send('解析失敗!');
+                        return('解析失敗!');
                       } catch (error_of_ws) {
                         console.log(error_of_ws);
                       }
@@ -126,7 +132,7 @@ wss.on('connection', ws => {
                   })
                 } else {
                   try {
-                    ws.send('解析失敗!');
+                    return('解析失敗!');
                   } catch (error_of_ws) {
                     console.log(error_of_ws);
                   }
@@ -134,12 +140,12 @@ wss.on('connection', ws => {
               }).catch(err => {
                 console.log(err);
                 try {
-                  ws.send('解析失敗!');
+                  return('解析失敗!');
                 } catch (error_of_ws) {
                   console.log(error_of_ws);
                 }
               })
-            } else {
+            }/* } else {
               try {
                 ws.send('解析失敗!');
               } catch (error_of_ws) {
@@ -177,7 +183,7 @@ wss.on('connection', ws => {
   })
 })
 //////////////////////////////////ws//////////////////////////////////////////
-
+*/
 
 function kw(txt, cb) {
   retext()
@@ -201,4 +207,4 @@ function kw(txt, cb) {
       cb(ka);
     })
 }
-export default { kw }
+export default { ws_msg_income_obj }
