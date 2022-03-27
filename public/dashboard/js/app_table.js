@@ -97,9 +97,13 @@ function LinkFormatter(value, row, index) {
     }
 
     function reg_step_2(ins) {
-        const regex = /@href@([^:|@]*)@text@(http[s]?:\/\/.*?\/[a-zA-Z-_]+[^@]*)@url@/gm;
+         const regex =/@href@([^:|@]*)@text@(http[s]?:\/\/.?[www]?\.?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b[-a-zA-Z0-9@:%_\+.~#?&//=*]*)@url@/img;
+        //const regex = /@href@([^:|@]*)@text@(http[s]?:\/\/.*?\/[a-zA-Z-_]+[^@]*)@url@/gm;
+        //hotfix220324
+        //using https://regexr.com/3e6m0
+        //not working https://pastebin.com/9i7FSQ23、https://pastebin.com/raw/qyv6gmQe
         const str = ins;//`qwdewfr@href@電子期@text@http://intlpress.com/site/pub/pages/journals/items/cjm/content/vols/index.html@url@wqdefewfrwr@href@電子期@text@http://intlpress.com/site/pub/pages/journals/items/cjm/content/vols/index.html@url@448pijij`;
-        const subst = `$\`<a href='$2'>$1</a>$'`;
+        const subst = `<a href='$2'>$1</a>`;
 
         // The substituted value will be contained in the result variable
         const result = str.replace(regex, subst);
@@ -140,6 +144,7 @@ function initTable() {
                     valign: 'middle',
                     sortable: true,
                     searchable: true,
+                    formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }
                 , {
@@ -148,7 +153,7 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: true,
+                    sortable: true, searchable: true,formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }, {
                     title: 'E-ISSN',
@@ -156,7 +161,7 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: true,
+                    sortable: true, searchable: true,formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }, {
                     title: '刊名',
@@ -165,7 +170,7 @@ function initTable() {
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    searchable: true,
+                    searchable: true,formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }, {
                     title: '狀況',
@@ -173,7 +178,7 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: false,
+                    sortable: true, searchable: false,formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }, {
                     title: '電子資源',
@@ -190,7 +195,7 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: false,
+                    sortable: true, searchable: false,formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }
                 //, {
@@ -199,7 +204,7 @@ function initTable() {
                 //        rowspan: 2,
                 //      align: 'center',
                 //    valign: 'middle',
-                //  sortable: true,
+                //  sortable: true,formatter: LinkFormatter
                 //-footerFormatter: totalTextFormatter
                 //}
                 , {
@@ -208,14 +213,15 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: false,
+                    sortable: true, searchable: false,formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }
                 , {
                     title: '資料細節',
                     colspan: 4,
                     align: 'center',
-                    visible: (document.getElementById('isUSER').innerText === 'no') ? true : false
+                    visible: (document.getElementById('isUSER').innerText === 'no') ? true : false,
+                    formatter: LinkFormatter
                 }],
             [{
                 field: 'updateTime',
