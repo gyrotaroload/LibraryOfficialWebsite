@@ -54,10 +54,9 @@
     "is-empty": "^1.2.0",
     "is-equal": "^1.6.4",
     "isemail": "^3.2.0",
-<<<<<<< HEAD
+
     "jquery-file-upload-gridfs-middleware": "*",
-=======
->>>>>>> parent of 855fe37... tmp_mp4
+
     "js-base64": "*",
     "jspdf": "~2.5.0",
     "katex": "^0.15.1",
