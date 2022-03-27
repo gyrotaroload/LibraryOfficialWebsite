@@ -12,14 +12,11 @@ debug(process.env.token_defaults_secret);
 /**
  * Module dependencies.
  */
-var http = require('http');
-const WebSocket = require('ws');
 const { Base64 } = require('js-base64');
 const { printTable } = require('console-table-printer');
 var token = require('token');
 const jsonwebtoken = require('jsonwebtoken');
-var b64a = require('base64-arraybuffer');
-var pdf = require('html-pdf');
+
 
 /**
  * Custom Dependent Modules
@@ -81,7 +78,7 @@ wss.on('connection', ws => {
   console.log('Client connected')
 
   //對 message 設定監聽，接收從 Client 發送的訊息
-  var ws_debug_220328 = false;
+  var ws_debug_220328 = true;
   function ws_debug_BruteForceTest(params) {
     if (ws_debug_220328) {
       //Create a table
@@ -100,11 +97,11 @@ wss.on('connection', ws => {
         ws_debug_BruteForceTest(`try {`);
         //data 為 Client 發送的訊息，現在將訊息原封不動發送出去
         var dd = Base64.decode(data);
-        ws_debug_BruteForceTest(dd);
+        ws_debug_BruteForceTest(`var dd = Base64.decode(data);`);
         var try_catch_F_go = true;
+        var sd = null;
         try {
-
-          var sd = JSON.parse(dd);
+          sd = JSON.parse(dd);
         } catch (JSON_parse_error) {
           //Create a table
           const err_msg = [
@@ -115,20 +112,22 @@ wss.on('connection', ws => {
           try_catch_F_go = false;
         } finally {
           if (try_catch_F_go) {
-            ws_debug_BruteForceTest(sd);
+            ws_debug_BruteForceTest(`sd`);
             var tf = token.verify(sd.id + '|' + sd.role, sd.auth);
-            ws_debug_BruteForceTest(tf);
+            ws_debug_BruteForceTest(`tf`);
             var ht = Base64.decode(sd.id);
-            ws_debug_BruteForceTest(ht);
+            ws_debug_BruteForceTest(`ht`);
             var tm = Base64.decode(sd.role);
-            ws_debug_BruteForceTest(tm);
+            ws_debug_BruteForceTest(`tm`);
             verifyJWT(tm)
               .then(decoded => {
                 ws_debug_BruteForceTest(`verifyJWT(tm)            .then(decoded => {`);
                 if (tf && decoded.stuff === ht) {
-                  ws_debug_BruteForceTest(decoded.stuff);
+                  ws_debug_BruteForceTest(`decoded.stuff`);
                   try {
-                    ws.send(ws_go(decoded.stuff));
+                    ws_msg_income_obj.ws_msg_income_obj(decoded.stuff, (the_return_object_of_the_module_that_actually_handles_the_WS) => {
+                      ws.send(the_return_object_of_the_module_that_actually_handles_the_WS);
+                    });
                   } catch (error_of_ws) {
                     console.log(error_of_ws);
                   }
