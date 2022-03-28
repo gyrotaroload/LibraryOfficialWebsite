@@ -47,52 +47,46 @@ async function verifyJWT(jwt) {
 * Express and WebSocket listening on the same port
 * https://stackoverflow.com/questions/34808925/express-and-websocket-listening-on-the-same-port/34838031#34838031
 */
-let WSServer = require('ws').Server;
-let server = require('http').createServer();
+//let WSServer = require('ws').Server;
+//let server = require('http').createServer(app);
+
+app.listen(port);
 
 // Create web socket server on top of a regular http server
-let wss = new WSServer({
+/*let wss = new WSServer({
   server: server
   ,
   verifyClient: (info, done) => {
-    console.log("🚀 ~ file: wwwcopy.mjs ~ line 58 ~ info", info)
     session_parser(info.req, {}, function () {
       console.log('VERIFY ', info.req.session);
       // allow connection only if session is valid and a user is logged in
-      console.log("info.req.session.passport.user.id", info.req.session.passport.user.id)
-      console.log("🚀 ~ file: wwwcopy.mjs ~ line 63 ~ self.session_parser ~ info.req.session", info.req.session)
-      console.log("🚀 ~ file: wwwcopy.mjs ~ line 65 ~ self.session_parser ~ info.req.session.passport.user", info.req.session.passport.user)
-      console.log("🚀 ~ file: wwwcopy.mjs ~ line 66 ~ self.session_parser ~ info.req.session.passport", info.req.session.passport)
       done(info.req.session && info.req.session.passport &&
         info.req.session.passport.user &&
         info.req.session.passport.user.id);
     });
-    /*sessionParser(info.req, {}, () => {
-      console.log("🚀 ~ file: wwwcopy.mjs ~ line 59 ~ sessionParser ~ info.req", info.req)
-      done(info.req.session)
-    })*/
+    
   }
-});
+});*/
 
 // Also mount the app here
-server.on('request', app);
-console.log("🚀 ~ file: wwwcopy.mjs ~ line 79 ~ app", app)
+//server.on('request', app);
+//server.on('connection', app);
 
 /**
  * START ALL server.
  */
-server.listen(port, function () {
+/*server.listen(port, function () {
   //Create a table
   const success_MSG = [
     { success_MSG: `http/ws start success on port ${port}` }];
 
   //print
   printTable(success_MSG);
-});
+});*/
 
 
 //當 WebSocket 從外部連結時執行
-wss.on('connection', ws => {
+/*wss.on('connection', ws => {
 
   //連結時執行此 console 提示
   console.log('Client connected')
@@ -111,12 +105,6 @@ wss.on('connection', ws => {
   }
   ws.on('message', data => {
     ws_debug_BruteForceTest(`ws.on('message', data => {`);
-    console.log("🚀 ~ file: wwwcopy.mjs ~ line 112 ~ self.session_parser ~ info.req.session.passport.user.id", info.req.session.passport.user.id)
-    console.log("🚀 ~ file: wwwcopy.mjs ~ line 112 ~ self.session_parser ~ info.req.session.passport.user.id", info.req.session.passport.user.id)
-    console.log("🚀 ~ file: wwwcopy.mjs ~ line 112 ~ self.session_parser ~  info.req.session.passport.user.id", info.req.session.passport.user.id)
-    console.log("🚀 ~ file: wwwcopy.mjs ~ line 112 ~ self.session_parser ~ info.req.session.passport.user.id", info.req.session.passport.user.id)
-    console.log("🚀 ~ file: wwwcopy.mjs ~ line 112 ~ self.session_parser ~ info.req.session.passport.user.id", info.req.session.passport.user.id)
-    console.log("🚀 ~ file: wwwcopy.mjs ~ line 112 ~ self.session_parser ~ info.req.session.passport.user.id", info.req.session.passport.user.id)
     if (data) {
       ws_debug_BruteForceTest(`if (data) {`);
       try {
@@ -191,10 +179,10 @@ wss.on('connection', ws => {
   ws.on('close', () => {
     console.log('Close connected');
   });
-});
+});*/
 
 
-server.on('error', onError);
+//server.on('error', onError);
 
 /**
  * Normalize a port into a number, string, or false.
@@ -220,7 +208,7 @@ function normalizePort(val) {
  * Event listener for HTTP server "error" event.
  */
 
-function onError(error) {
+/*function onError(error) {
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -242,4 +230,4 @@ function onError(error) {
     default:
       throw error;
   }
-}
+}*/

@@ -131,7 +131,8 @@
     "moment-timezone": "~0.5.34",
     "keep-in-range": "~1.0.0",
     "object-hash": "~3.0.0",
-    "console-table-printer": "~2.10.0"
+    "console-table-printer": "~2.10.0",
+    "express-ws": "~5.0.2"
   },
   "symdeps": {
     "paths": {

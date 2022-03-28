@@ -17,7 +17,6 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var debug = require('debug')('libraryofficialwebsite:app');
 
-
 var limiter = RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 60 * 1000 * 1000 //1000*1000/1sec max
@@ -30,6 +29,7 @@ var toolRouter = require('./routes/tool');
 var uploadRouter = require('./routes/upload');
 
 var app = express();
+var expressWs = require('express-ws')(app);
 //console.log(app);
 
 // view engine setup
@@ -72,6 +72,27 @@ app.use(minifyHTML({
     minifyJS: true
   }
 }));
+
+
+app.use(function (req, res, next) {
+  console.log('middleware');
+  req.testing = 'testing';
+  next();
+});
+
+app.ws('/websocket', function (ws, req) {
+  console.log("🚀 ~ file: app.js ~ line 130 ~ req", req)
+  ws.on('message', function (msg) {
+    //Create a table
+    const ws_income_msg = [
+      { ws_income_msg: String(msg) }];
+
+    //print
+    printTable(ws_income_msg);
+    ws.send("李栗栗好可愛");
+  });
+  console.log('socket', req.testing);
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
