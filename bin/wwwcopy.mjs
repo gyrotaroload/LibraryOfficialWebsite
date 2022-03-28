@@ -17,7 +17,6 @@ const { printTable } = require('console-table-printer');
 var token = require('token');
 const jsonwebtoken = require('jsonwebtoken');
 
-
 /**
  * Custom Dependent Modules
  */
@@ -29,19 +28,7 @@ import ws_msg_income_obj from "../models/esm/keywordscopy.mjs";
  */
 var port = normalizePort(process.env.PORT || '18787');
 app.set('port', port);
-
-/**
- * Random Security Code Generation Calculation
- */
-token.defaults.secret = process.env.token_defaults_secret;
-token.defaults.timeStep = 5 * 60; //5min
-async function verifyJWT(jwt) {
-  if (!jwt) {
-    return Promise.reject(new Error('No JWT'));
-  }
-  const decoded = jsonwebtoken.verify(jwt, process.env.token_defaults_secret);
-  return decoded;
-}
+app.set_ws_implement(ws_msg_income_obj);
 
 /**
  * The main starting point, which is the beginning of the universe
@@ -66,3 +53,10 @@ function normalizePort(val) {
 
   return false;
 }
+
+//Create a table
+const start_msg = [
+  { port_listening: port }];
+
+//print
+printTable(start_msg);
