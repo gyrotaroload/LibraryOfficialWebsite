@@ -106,78 +106,103 @@ function ws_debug_BruteForceTest(params) {
     printTable(err_msg);
   }
 }
+var mp4upload = require('./models/mp4upload');
 app.ws('/websocket', function (ws, req) {
-  ws_debug_BruteForceTest(req.isAuthenticated());
-  ws.on('message', function (data) {
-    if (data) {
-
+  if (req.isAuthenticated()) {
+    ws.on('message', function (data) {
       try {
+        
+      } catch (error) {
+        
+      }
+      var tmpobj = new mp4upload({
+        new_date: Date.now(),
+        frameNumber: INframeNumber,
+        ISSN: INISSN,
+        bookName: INbookName,
+        STAT: INSTAT,
+        ES: INES,
+        PS: INPS,
+        Volume: INVolume,
+        REMK: INREMK,
+        LIVstart: /*parseInt(*/INLIVstart/*, 10)*/,
+        LIVend: /*parseInt(*/INLIVend/*, 10)*/,
+        LIVx: INLIVxARRAY,
+        eissn: INeissn,
+        history: stuff || INhistory
+      });
+      JournalInformation.warehousing(tmpobj, function (stuff) {
 
-        //data 為 Client 發送的訊息，現在將訊息原封不動發送出去
-        var dd = Base64.decode(data);
-
-        var try_catch_F_go = true;
-        var sd = null;
+      });
+    });
+  } else {
+    ws.on('message', function (data) {
+      if (data) {
         try {
-          sd = JSON.parse(dd);
-        } catch (JSON_parse_error) {
-          //Create a table
-          const err_msg = [
-            { mistake: '148@bin/wwwcopy.mjs', message: String(JSON_parse_error), handled_properly: "You don't need to worry about this error" }];
+          var dd = Base64.decode(data);
+          var try_catch_F_go = true;
+          var sd = null;
+          try {
+            sd = JSON.parse(dd);
+          } catch (JSON_parse_error) {
+            //Create a table
+            const err_msg = [
+              { mistake: '148@bin/wwwcopy.mjs', message: String(JSON_parse_error), handled_properly: "You don't need to worry about this error" }];
+            //print
+            printTable(err_msg);
+            try_catch_F_go = false;
+          } finally {
+            if (try_catch_F_go) {
 
-          //print
-          printTable(err_msg);
-          try_catch_F_go = false;
-        } finally {
-          if (try_catch_F_go) {
+              var tf = token.verify(sd.id + '|' + sd.role, sd.auth);
 
-            var tf = token.verify(sd.id + '|' + sd.role, sd.auth);
+              var ht = Base64.decode(sd.id);
 
-            var ht = Base64.decode(sd.id);
+              var tm = Base64.decode(sd.role);
 
-            var tm = Base64.decode(sd.role);
+              verifyJWT(tm)
+                .then(decoded => {
 
-            verifyJWT(tm)
-              .then(decoded => {
+                  if (tf && decoded.stuff === ht) {
 
-                if (tf && decoded.stuff === ht) {
-
+                    try {
+                      //這一行的前後都是依些驗證的東西，主邏輯是這行
+                      ws_implement.ws_msg_income_obj(decoded.stuff, (the_return_object_of_the_module_that_actually_handles_the_WS) => {
+                        ws.send(the_return_object_of_the_module_that_actually_handles_the_WS);
+                      });
+                    } catch (error_of_ws) {
+                      console.log(error_of_ws);
+                    }
+                  }
+                })
+                .catch(() => {
                   try {
-                    ws_implement.ws_msg_income_obj(decoded.stuff, (the_return_object_of_the_module_that_actually_handles_the_WS) => {
-                      ws.send(the_return_object_of_the_module_that_actually_handles_the_WS);
-                    });
+                    ws.send('解析失敗!');
                   } catch (error_of_ws) {
                     console.log(error_of_ws);
                   }
-                }
-              })
-              .catch(() => {
-                try {
-                  ws.send('解析失敗!');
-                } catch (error_of_ws) {
-                  console.log(error_of_ws);
-                }
-              });
-          } else {
+                });
+            } else {
 
+            }
+          }
+        } catch (error) {
+          console.log(error);
+          try {
+            ws.send('解析失敗!');
+          } catch (error_of_ws) {
+            console.log(error_of_ws);
           }
         }
-      } catch (error) {
-        console.log(error);
+      } else {
         try {
           ws.send('解析失敗!');
         } catch (error_of_ws) {
           console.log(error_of_ws);
         }
       }
-    } else {
-      try {
-        ws.send('解析失敗!');
-      } catch (error_of_ws) {
-        console.log(error_of_ws);
-      }
-    }
-  });
+    });
+  }
 });
 
 app.use('/', indexRouter);
