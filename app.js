@@ -81,14 +81,8 @@ app.use(function (req, res, next) {
 });
 
 app.ws('/websocket', function (ws, req) {
-  console.log("🚀 ~ file: app.js ~ line 130 ~ req", req)
   ws.on('message', function (msg) {
-    //Create a table
-    const ws_income_msg = [
-      { ws_income_msg: String(msg) }];
-
-    //print
-    printTable(ws_income_msg);
+    console.log('websocket', msg);
     ws.send("李栗栗好可愛");
   });
   console.log('socket', req.testing);
