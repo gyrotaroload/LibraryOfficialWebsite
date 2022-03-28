@@ -116,6 +116,7 @@ app.ws('/websocket', function (ws, req) {
         });
       } catch (error) {
         ws.send(error);
+        ws.close();
       }
     });
   } else {
