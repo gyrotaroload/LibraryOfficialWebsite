@@ -106,34 +106,17 @@ function ws_debug_BruteForceTest(params) {
     printTable(err_msg);
   }
 }
-var mp4upload = require('./models/mp4upload');
+var mp4upload = require('./models/mp4Ulogic');
 app.ws('/websocket', function (ws, req) {
   if (req.isAuthenticated()) {
     ws.on('message', function (data) {
       try {
-        
+        mp4upload.input(data, (stuff) => {
+          ws.send(stuff);
+        });
       } catch (error) {
-        
+        ws.send(error);
       }
-      var tmpobj = new mp4upload({
-        new_date: Date.now(),
-        frameNumber: INframeNumber,
-        ISSN: INISSN,
-        bookName: INbookName,
-        STAT: INSTAT,
-        ES: INES,
-        PS: INPS,
-        Volume: INVolume,
-        REMK: INREMK,
-        LIVstart: /*parseInt(*/INLIVstart/*, 10)*/,
-        LIVend: /*parseInt(*/INLIVend/*, 10)*/,
-        LIVx: INLIVxARRAY,
-        eissn: INeissn,
-        history: stuff || INhistory
-      });
-      JournalInformation.warehousing(tmpobj, function (stuff) {
-
-      });
     });
   } else {
     ws.on('message', function (data) {

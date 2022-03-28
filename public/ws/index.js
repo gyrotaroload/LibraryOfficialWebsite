@@ -38,7 +38,7 @@ function base64ToArrayBuffer(data) {
 };
 
 //使用 WebSocket 的網址向 Server 開啟連結
-let ws = new WebSocket(`ws${(location.protocol !== 'https:') ? '' : 's'}://${window.location.hostname}${window.location.hostname === 'localhost' ? '5000' : ''}/websocket`);
+let ws = new WebSocket(`ws${(location.protocol !== 'https:') ? '' : 's'}://${window.location.hostname}${window.location.hostname === 'localhost' ? ':5000' : ''}/websocket`);
 
 var pdf_b64 = "";
 function downpdf() {
@@ -80,4 +80,3 @@ ws.onmessage = event => {
     }
 
 }
-
