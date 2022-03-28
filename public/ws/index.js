@@ -37,8 +37,6 @@ function base64ToArrayBuffer(data) {
     return bytes;
 };
 
-
-
 //使用 WebSocket 的網址向 Server 開啟連結
 // let ws = new WebSocket(`${(document.getElementById('wsport')&&document.getElementById('wsport').innerText)?'wss':'ws'}://${window.location.hostname}:${(document.getElementById('wsport')&&document.getElementById('wsport').innerText)?document.getElementById('wsport').innerText:'13030'}`);
 //let ws = new WebSocket(`wss://${window.location.hostname}/websocket`);

@@ -53,10 +53,30 @@ let server = require('http').createServer();
 // Create web socket server on top of a regular http server
 let wss = new WSServer({
   server: server
+  ,
+  verifyClient: (info, done) => {
+    console.log("🚀 ~ file: wwwcopy.mjs ~ line 58 ~ info", info)
+    session_parser(info.req, {}, function () {
+      console.log('VERIFY ', info.req.session);
+      // allow connection only if session is valid and a user is logged in
+      console.log("info.req.session.passport.user.id", info.req.session.passport.user.id)
+      console.log("🚀 ~ file: wwwcopy.mjs ~ line 63 ~ self.session_parser ~ info.req.session", info.req.session)
+      console.log("🚀 ~ file: wwwcopy.mjs ~ line 65 ~ self.session_parser ~ info.req.session.passport.user", info.req.session.passport.user)
+      console.log("🚀 ~ file: wwwcopy.mjs ~ line 66 ~ self.session_parser ~ info.req.session.passport", info.req.session.passport)
+      done(info.req.session && info.req.session.passport &&
+        info.req.session.passport.user &&
+        info.req.session.passport.user.id);
+    });
+    /*sessionParser(info.req, {}, () => {
+      console.log("🚀 ~ file: wwwcopy.mjs ~ line 59 ~ sessionParser ~ info.req", info.req)
+      done(info.req.session)
+    })*/
+  }
 });
 
 // Also mount the app here
 server.on('request', app);
+console.log("🚀 ~ file: wwwcopy.mjs ~ line 79 ~ app", app)
 
 /**
  * START ALL server.
@@ -91,6 +111,12 @@ wss.on('connection', ws => {
   }
   ws.on('message', data => {
     ws_debug_BruteForceTest(`ws.on('message', data => {`);
+    console.log("🚀 ~ file: wwwcopy.mjs ~ line 112 ~ self.session_parser ~ info.req.session.passport.user.id", info.req.session.passport.user.id)
+    console.log("🚀 ~ file: wwwcopy.mjs ~ line 112 ~ self.session_parser ~ info.req.session.passport.user.id", info.req.session.passport.user.id)
+    console.log("🚀 ~ file: wwwcopy.mjs ~ line 112 ~ self.session_parser ~  info.req.session.passport.user.id", info.req.session.passport.user.id)
+    console.log("🚀 ~ file: wwwcopy.mjs ~ line 112 ~ self.session_parser ~ info.req.session.passport.user.id", info.req.session.passport.user.id)
+    console.log("🚀 ~ file: wwwcopy.mjs ~ line 112 ~ self.session_parser ~ info.req.session.passport.user.id", info.req.session.passport.user.id)
+    console.log("🚀 ~ file: wwwcopy.mjs ~ line 112 ~ self.session_parser ~ info.req.session.passport.user.id", info.req.session.passport.user.id)
     if (data) {
       ws_debug_BruteForceTest(`if (data) {`);
       try {
