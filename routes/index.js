@@ -489,6 +489,19 @@ router.get('/oc-ebook', function (req, res, next) {
   });
 });
 
+router.get('/video/:id/:part', function (req, res, next) {
+  console.log(req)
+  res.send('123')
+});
+
+
+router.get('/video/:id', function (req, res, next) {
+  console.log(req)
+  res.render('video', {
+    ... header_link,
+  });
+});
+
 router.get('/sitemap.xml', function (req, res) {
   //TODO:fix site map
   res.header('Content-Type', 'application/xml');

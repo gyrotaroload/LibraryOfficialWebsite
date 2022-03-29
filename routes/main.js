@@ -243,6 +243,11 @@ router.get('/add_periodical', ensureAuthenticated, function (req, res, next) {
     });
 });
 
+router.get('/mp4upload', ensureAuthenticated, function (req, res, next) {
+    res.render('NO_LAYOUT_mp4upload', {
+    });
+});
+
 router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
     var INframeNumber = req.body.frameNumber;
     var INISSN = req.body.ISSN;

@@ -38,9 +38,7 @@ function base64ToArrayBuffer(data) {
 };
 
 //使用 WebSocket 的網址向 Server 開啟連結
-// let ws = new WebSocket(`${(document.getElementById('wsport')&&document.getElementById('wsport').innerText)?'wss':'ws'}://${window.location.hostname}:${(document.getElementById('wsport')&&document.getElementById('wsport').innerText)?document.getElementById('wsport').innerText:'13030'}`);
-//let ws = new WebSocket(`wss://${window.location.hostname}/websocket`);
-let ws = new WebSocket(`wss://${window.location.hostname}`);
+let ws = new WebSocket(`ws${(location.protocol !== 'https:') ? '' : 's'}://${window.location.hostname}${window.location.hostname === 'localhost' ? ':5000' : ''}/websocket`);
 
 var pdf_b64 = "";
 function downpdf() {
@@ -63,7 +61,7 @@ ws.onmessage = event => {
     if (event.data === "解析失敗!") {
         if (document.getElementById('wslab')) {
             document.getElementById('wslab').innerHTML = `<div class="ui label"><a href="https://cse.google.com/cse?cx=d613870f87198941e&q=解析失敗" target="_blank">解析失敗!</a></div>`;
-        //TODO cse.google.com
+            //TODO cse.google.com
         }
 
     } else if (event.data.startsWith('pdf||')) {
@@ -82,4 +80,3 @@ ws.onmessage = event => {
     }
 
 }
-

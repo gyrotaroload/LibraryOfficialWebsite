@@ -16,190 +16,30 @@ const { Base64 } = require('js-base64');
 const { printTable } = require('console-table-printer');
 var token = require('token');
 const jsonwebtoken = require('jsonwebtoken');
-
+import tempy from 'tempy';
 
 /**
  * Custom Dependent Modules
  */
 import app from "../app.js";
 import ws_msg_income_obj from "../models/esm/keywordscopy.mjs";
+import mp4Ulogic from "../models/mp4Ulogic.js";
 
 /**
  * Get port from environment and store in Express.
  */
 var port = normalizePort(process.env.PORT || '18787');
 app.set('port', port);
+app.set_ws_implement(ws_msg_income_obj);
 
 /**
- * Random Security Code Generation Calculation
+ * The main starting point, which is the beginning of the universe
  */
-token.defaults.secret = process.env.token_defaults_secret;
-token.defaults.timeStep = 5 * 60; //5min
-async function verifyJWT(jwt) {
-  if (!jwt) {
-    return Promise.reject(new Error('No JWT'));
-  }
-  const decoded = jsonwebtoken.verify(jwt, process.env.token_defaults_secret);
-  return decoded;
-}
-
-/**
-* Express and WebSocket listening on the same port
-* https://stackoverflow.com/questions/34808925/express-and-websocket-listening-on-the-same-port/34838031#34838031
-*/
-let WSServer = require('ws').Server;
-let server = require('http').createServer();
-
-// Create web socket server on top of a regular http server
-let wss = new WSServer({
-  server: server
-  ,
-  verifyClient: (info, done) => {
-    console.log("🚀 ~ file: wwwcopy.mjs ~ line 58 ~ info", info)
-    session_parser(info.req, {}, function () {
-      console.log('VERIFY ', info.req.session);
-      // allow connection only if session is valid and a user is logged in
-      console.log("info.req.session.passport.user.id", info.req.session.passport.user.id)
-      console.log("🚀 ~ file: wwwcopy.mjs ~ line 63 ~ self.session_parser ~ info.req.session", info.req.session)
-      console.log("🚀 ~ file: wwwcopy.mjs ~ line 65 ~ self.session_parser ~ info.req.session.passport.user", info.req.session.passport.user)
-      console.log("🚀 ~ file: wwwcopy.mjs ~ line 66 ~ self.session_parser ~ info.req.session.passport", info.req.session.passport)
-      done(info.req.session && info.req.session.passport &&
-        info.req.session.passport.user &&
-        info.req.session.passport.user.id);
-    });
-    /*sessionParser(info.req, {}, () => {
-      console.log("🚀 ~ file: wwwcopy.mjs ~ line 59 ~ sessionParser ~ info.req", info.req)
-      done(info.req.session)
-    })*/
-  }
-});
-
-// Also mount the app here
-server.on('request', app);
-console.log("🚀 ~ file: wwwcopy.mjs ~ line 79 ~ app", app)
-
-/**
- * START ALL server.
- */
-server.listen(port, function () {
-  //Create a table
-  const success_MSG = [
-    { success_MSG: `http/ws start success on port ${port}` }];
-
-  //print
-  printTable(success_MSG);
-});
-
-
-//當 WebSocket 從外部連結時執行
-wss.on('connection', ws => {
-
-  //連結時執行此 console 提示
-  console.log('Client connected')
-
-  //對 message 設定監聽，接收從 Client 發送的訊息
-  var ws_debug_220328 = true;
-  function ws_debug_BruteForceTest(params) {
-    if (ws_debug_220328) {
-      //Create a table
-      const err_msg = [
-        { ws_debug_220328: String(params) }];
-
-      //print
-      printTable(err_msg);
-    }
-  }
-  ws.on('message', data => {
-    ws_debug_BruteForceTest(`ws.on('message', data => {`);
-    console.log("🚀 ~ file: wwwcopy.mjs ~ line 112 ~ self.session_parser ~ info.req.session.passport.user.id", info.req.session.passport.user.id)
-    console.log("🚀 ~ file: wwwcopy.mjs ~ line 112 ~ self.session_parser ~ info.req.session.passport.user.id", info.req.session.passport.user.id)
-    console.log("🚀 ~ file: wwwcopy.mjs ~ line 112 ~ self.session_parser ~  info.req.session.passport.user.id", info.req.session.passport.user.id)
-    console.log("🚀 ~ file: wwwcopy.mjs ~ line 112 ~ self.session_parser ~ info.req.session.passport.user.id", info.req.session.passport.user.id)
-    console.log("🚀 ~ file: wwwcopy.mjs ~ line 112 ~ self.session_parser ~ info.req.session.passport.user.id", info.req.session.passport.user.id)
-    console.log("🚀 ~ file: wwwcopy.mjs ~ line 112 ~ self.session_parser ~ info.req.session.passport.user.id", info.req.session.passport.user.id)
-    if (data) {
-      ws_debug_BruteForceTest(`if (data) {`);
-      try {
-        ws_debug_BruteForceTest(`try {`);
-        //data 為 Client 發送的訊息，現在將訊息原封不動發送出去
-        var dd = Base64.decode(data);
-        ws_debug_BruteForceTest(`var dd = Base64.decode(data);`);
-        var try_catch_F_go = true;
-        var sd = null;
-        try {
-          sd = JSON.parse(dd);
-        } catch (JSON_parse_error) {
-          //Create a table
-          const err_msg = [
-            { mistake: '148@bin/wwwcopy.mjs', message: String(JSON_parse_error), handled_properly: "You don't need to worry about this error" }];
-
-          //print
-          printTable(err_msg);
-          try_catch_F_go = false;
-        } finally {
-          if (try_catch_F_go) {
-            ws_debug_BruteForceTest(`sd`);
-            var tf = token.verify(sd.id + '|' + sd.role, sd.auth);
-            ws_debug_BruteForceTest(`tf`);
-            var ht = Base64.decode(sd.id);
-            ws_debug_BruteForceTest(`ht`);
-            var tm = Base64.decode(sd.role);
-            ws_debug_BruteForceTest(`tm`);
-            verifyJWT(tm)
-              .then(decoded => {
-                ws_debug_BruteForceTest(`verifyJWT(tm)            .then(decoded => {`);
-                if (tf && decoded.stuff === ht) {
-                  ws_debug_BruteForceTest(`decoded.stuff`);
-                  try {
-                    ws_msg_income_obj.ws_msg_income_obj(decoded.stuff, (the_return_object_of_the_module_that_actually_handles_the_WS) => {
-                      ws.send(the_return_object_of_the_module_that_actually_handles_the_WS);
-                    });
-                  } catch (error_of_ws) {
-                    console.log(error_of_ws);
-                  }
-                }
-              })
-              .catch(() => {
-                try {
-                  ws.send('解析失敗!');
-                } catch (error_of_ws) {
-                  console.log(error_of_ws);
-                }
-              });
-          } else {
-            ws_debug_BruteForceTest('安全隔離');
-          }
-        }
-      } catch (error) {
-        console.log(error);
-        try {
-          ws.send('解析失敗!');
-        } catch (error_of_ws) {
-          console.log(error_of_ws);
-        }
-      }
-    } else {
-      try {
-        ws.send('解析失敗!');
-      } catch (error_of_ws) {
-        console.log(error_of_ws);
-      }
-    }
-  });
-
-  //當 WebSocket 的連線關閉時執行
-  ws.on('close', () => {
-    console.log('Close connected');
-  });
-});
-
-
-server.on('error', onError);
+app.listen(port);
 
 /**
  * Normalize a port into a number, string, or false.
  */
-
 function normalizePort(val) {
   var port = parseInt(val, 10);
 
@@ -217,29 +57,13 @@ function normalizePort(val) {
 }
 
 /**
- * Event listener for HTTP server "error" event.
+ * Handover of old and new modules
  */
+mp4Ulogic.tempy_esm_include(tempy);
 
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
+//Create a table
+const start_msg = [
+  { port_listening: port }];
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
-
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
+//print
+printTable(start_msg);
