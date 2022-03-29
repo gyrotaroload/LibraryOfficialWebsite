@@ -16,12 +16,14 @@ const { Base64 } = require('js-base64');
 const { printTable } = require('console-table-printer');
 var token = require('token');
 const jsonwebtoken = require('jsonwebtoken');
+import tempy from 'tempy';
 
 /**
  * Custom Dependent Modules
  */
 import app from "../app.js";
 import ws_msg_income_obj from "../models/esm/keywordscopy.mjs";
+import mp4Ulogic from "../models/mp4Ulogic.js";
 
 /**
  * Get port from environment and store in Express.
@@ -53,6 +55,11 @@ function normalizePort(val) {
 
   return false;
 }
+
+/**
+ * Handover of old and new modules
+ */
+mp4Ulogic.tempy_esm_include(tempy);
 
 //Create a table
 const start_msg = [
