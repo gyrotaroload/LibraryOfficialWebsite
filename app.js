@@ -115,6 +115,7 @@ app.ws('/websocket', function (ws, req) {
           ws.send(stuff);
         });
       } catch (error) {
+        console.log("🚀 ~ file: app.js ~ line 118 ~ error", error)
         ws.send(error);
         ws.close();
       }

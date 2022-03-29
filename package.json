@@ -136,7 +136,8 @@
     "isbuffer": "~0.0.0",
     "fluent-ffmpeg": "~2.1.2",
     "socket.io": "4.4.1",
-    "tempy": "2.0.0"
+    "tempy": "2.0.0",
+    "@ffmpeg-installer/ffmpeg": "1.1.0"
   },
   "symdeps": {
     "paths": {

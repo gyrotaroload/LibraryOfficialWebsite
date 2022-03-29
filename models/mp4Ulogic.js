@@ -1,14 +1,18 @@
 var isBuffer = require('isbuffer');
 const { printTable } = require('console-table-printer');
 var isempty = require('is-empty');
-const fs = require('fs');
-let FFmpeg = require('fluent-ffmpeg');
+const vid2hls = require('./vid2hls');
 
 var mp4wsobj = {
     name: 'n/a',
     info: 'n/a',
-    index: 0,
+    index: 0, v2h: null,
     fsLoc: null, tempy: null, tempy_esm_include: function (stuff) {
+        /**
+         * you need to call in www.mjs   ;
+         * import tempy from 'tempy';
+         * mp4Ulogic.tempy_esm_include(tempy);
+         */
         this.tempy = stuff;
     },
     input: function (data, callback) {
@@ -23,14 +27,12 @@ var mp4wsobj = {
             if (isBuffer(data)) {
                 this.index++;
                 var Parent_object_child_object_connection = this.index;
-                fs.appendFile(this.fsLoc, data, function (err) {
-                    if (err) {
-                        callback('[ERROR] Data table header declared empty, the request is forbidden');
+                this.v2h.app_buff(data, (errv2h) => {
+                    if (errv2h) {
+                        callback(String(errv2h));
+                    } else {
+                        callback(Parent_object_child_object_connection);
                     }
-                    console.log("The file was saved!");
-
-                    console.log("🚀 ~ file: mp4Ulogic.js ~ line 22 ~ this.fsLoc", this.fsLoc)
-                    callback(Parent_object_child_object_connection);
                 });
             } else {
                 try {
@@ -41,19 +43,14 @@ var mp4wsobj = {
                         } else {
                             if (!isempty(dadaP.info) && !isempty(dadaP.info)) {
                                 this.index = 0;
-                                this.fsLoc = this.tempy.file({ extension: 'mp4' });
-                                console.log("🚀 ~ file: mp4Ulogic.js ~ line 40 ~ this.fsLoc", this.fsLoc)
-                                var Parent_object_child_object_connection = this.index;
-                                fs.open(this.fsLoc, "wx", function (err1, fd) {
-                                    // handle error
-                                    if (err1) callback(String(err1));
-                                    fs.close(fd, function (err2) {
-                                        // handle error
-                                        if (err2) { callback(String(err2)); } else {
-                                            callback(Parent_object_child_object_connection);
-
-                                        }
-                                    });
+                                var tmp_i = this.index;
+                                ///////////////////////////////////////////////////////////////////////////
+                                this.v2h = new vid2hls(this.tempy, (tf) => {
+                                    if (!tf) {
+                                        callback(tmp_i);
+                                    } else {
+                                        callback(String(tf));
+                                    }
                                 });
                             } else {
                                 callback('[ERROR] Data table header declared empty, the request is forbidden');
@@ -70,7 +67,7 @@ var mp4wsobj = {
                                     { ffmpeg_msg: 'trans. success' }];
                                 //print
                                 printTable(ffmpeg_msg);
-
+                                this.v2h.end_trans();
                             } else {
                                 callback('[ERROR] Data table end declared empty, the request is forbidden');
                             }
