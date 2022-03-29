@@ -133,7 +133,10 @@
     "object-hash": "~3.0.0",
     "console-table-printer": "~2.10.0",
     "express-ws": "~5.0.2",
-    "isbuffer": "~0.0.0"
+    "isbuffer": "~0.0.0",
+    "fluent-ffmpeg": "~2.1.2",
+    "socket.io": "4.4.1",
+    "tempy": "2.0.0"
   },
   "symdeps": {
     "paths": {

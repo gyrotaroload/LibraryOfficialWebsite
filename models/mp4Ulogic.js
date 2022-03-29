@@ -1,6 +1,19 @@
 var isBuffer = require('isbuffer');
 const { printTable } = require('console-table-printer');
 var isempty = require('is-empty');
+const fs = require('fs');
+let FFmpeg = require('fluent-ffmpeg');
+let bufferStream = new stream.PassThrough();
+
+// Read the passthrough stream
+const buffers = [];
+bufferStream.on('data', function (buf) {
+  buffers.push(buf);
+});
+bufferStream.on('end', function () {
+  const outputBuffer = Buffer.concat(buffers);
+  // use outputBuffer
+});
 
 var mp4wsobj = {
     name: 'n/a',
@@ -33,7 +46,7 @@ var mp4wsobj = {
                     if (dadaP.endindex === 'n/a') {
                         callback('[ERROR] Data table end declared empty, the request is forbidden');
                     } else {
-                        
+
                         if (!isempty(dadaP.endindex) && !isNaN(parseInt(dadaP.endindex, 10)) && parseInt(dadaP.endindex, 10) === this.index) {
                             // Create a table
                             const ffmpeg_msg = [
