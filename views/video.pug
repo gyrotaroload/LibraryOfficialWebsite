@@ -11,11 +11,35 @@ block contentHEAD
   link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/share_btns.css' type='text/css')
   link(rel='stylesheet' href='/jumbotron/stylesheets/index.css')
   link(rel='stylesheet' href='/stylesheets/External_embedded_search_box.css' type='text/css')
+  link(href='https://vjs.zencdn.net/7.18.1/video-js.css' rel='stylesheet')
   style.
     @import url('/jumbotron/stylesheets/customStyle.css');
 
 block content
   include includes/navbar
+  .ui.main.container
+    .ui.segments
+      .ui.segment.placeholder.center.aligned  
+        video#my-video.video-js.vjs-16-9(controls='' preload='auto' poster='MY_VIDEO_POSTER.jpg' data-setup='{}')
+          source(src='https://multiplatform-f.akamaihd.net/i/multi/will/bunny/big_buck_bunny_,640x360_400,640x360_700,640x360_1000,950x540_1500,.f4v.csmil/master.m3u8' type='application/x-mpegURL')
+          source(src='MY_VIDEO.webm' type='video/webm')
+          p.vjs-no-js
+            | To view this video please enable JavaScript, and consider upgrading to a
+            | web browser that
+            a(href='https://videojs.com/html5-video-support/' target='_blank') supports HTML5 video 
+      .ui.segment
+        .ui.circular.segment.right.floated
+          h6.ui.header
+            | 上傳日期 
+            .sub.header 1999.12.24
+        h1.ui.header
+          .sub.header 影片標題
+          | 影片標題...........
+      .ui.segment 
+        h3.ui.header 影片說明
+        .ui.segment.raised 影片說明........
+
   script(crossorigin="anonymous" src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
   script(crossorigin="anonymous" src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
   script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js' integrity='sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script(src='https://vjs.zencdn.net/7.18.1/video.min.js')
