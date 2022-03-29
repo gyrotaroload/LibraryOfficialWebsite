@@ -2,6 +2,13 @@ var isBuffer = require('isbuffer');
 const { printTable } = require('console-table-printer');
 var isempty = require('is-empty');
 const vid2hls = require('./vid2hls');
+const mp4upload = require('./mp4upload');
+
+var relayW=function(stuff,stuff_callback){
+    mp4upload.warehousing(stuff,stuff_callback);
+    //if callback send null => error occurs
+}
+
 
 var mp4wsobj = {
     name: 'n/a',
@@ -67,7 +74,9 @@ var mp4wsobj = {
                                     { ffmpeg_msg: 'trans. success' }];
                                 //print
                                 printTable(ffmpeg_msg);
-                                this.v2h.end_trans();
+                                this.v2h.end_trans(relayW,(mustbefinish)=>{
+                                    console.log("🚀 ~ file: mp4Ulogic.js ~ line 77 ~ this.v2h.end_trans ~ mustbefinish", mustbefinish)
+                                    callback("[SUCCESS] File conversion and database writing succeeded")});
                             } else {
                                 callback('[ERROR] Data table end declared empty, the request is forbidden');
                             }

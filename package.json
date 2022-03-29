@@ -137,7 +137,10 @@
     "fluent-ffmpeg": "~2.1.2",
     "socket.io": "4.4.1",
     "tempy": "2.0.0",
-    "@ffmpeg-installer/ffmpeg": "1.1.0"
+    "@ffmpeg-installer/ffmpeg": "1.1.0",
+    "directory-tree": "3.2.2",
+    "prettysize": "2.0.0",
+    "file-extension": "4.0.5"
   },
   "symdeps": {
     "paths": {
