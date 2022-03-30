@@ -491,11 +491,15 @@ router.get('/oc-ebook', function (req, res, next) {
 });
 
 router.get('/video/:id/:part', function (req, res, next) {
-  console.log(req)
+  console.log(req.params)
   mp4up.getByFileName(req.params.id, req.params.part, (r) => {
-    res.status('200').set('Content-Type', (r.file_extension === 'ts') ?
-      'video/MP2T' :
-      'application/x-mpegURL').send(r.data);
+    if (r && r.file_extension) {
+      res.status('200').set('Content-Type', (r.file_extension === 'ts') ?
+        'video/MP2T' :
+        'application/x-mpegURL').send(r.data);
+    } else {
+      res.status(500).end();
+    }
   });
 });
 
@@ -503,7 +507,7 @@ router.get('/video/:id/:part', function (req, res, next) {
 router.get('/video/:id', function (req, res, next) {
   console.log(req)
   res.render('video', {
-    ...header_link,
+    ...header_link,cid:req.params.id
   });
 });
 

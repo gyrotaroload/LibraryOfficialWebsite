@@ -10,6 +10,9 @@ const dirTree = require('directory-tree');
 const pretty = require('prettysize');
 var fileExtension = require('file-extension');
 var basename = require('basename');
+const del = require('del');
+var beep = require('beepbeep')
+
 
 class vid2hls {
     constructor(tempy, custom_video_id, custom_video_extension, callback) {
@@ -20,10 +23,10 @@ class vid2hls {
         this.custom_video_id = custom_video_id;
         fs.open(this.fsLoc, "wx", function (err1, fd) {
             // handle error
-            if (err1) callback(err1);
+            if (err1) callback(`[ERROR] unable to create server-side temporary video file, at start-up @ ${err1}`);
             fs.close(fd, function (err2) {
                 // handle error
-                if (err2) { callback(err2); } else {
+                if (err2) { callback(`[ERROR] unable to create server-side temporary video file, at end-stage @ ${err2}`); } else {
                     callback(null);
                 }
             });
@@ -73,7 +76,9 @@ class vid2hls {
                     });
             });
         } else {
-            finish(null);
+            del([fileList.children[idx-1]?fileList.children[idx-1].name:'']).then(() => {
+                finish(null);
+            });
         }
     }
 
@@ -108,9 +113,10 @@ class vid2hls {
     }
 
     end_trans(pt1, pt2) {
+        var relay_this_fsDir = this.fsDir;
         ffmpeg(this.fsLoc).addOptions([ //360
             '-profile:v main',
-            '-vf scale=w=640:h=360:force_original_aspect_ratio=decrease',
+            '-vf pad=(iw/2)*2:(ih/2)*2:0:0,scale=w=640:h=360:force_original_aspect_ratio=decrease',
             '-c:a aac',
             '-ar 48000',
             '-b:a 96k',
@@ -130,11 +136,16 @@ class vid2hls {
 
             console.log("ffmpeg stdout:\n" + stdout);
             console.log("ffmpeg stderr:\n" + stderr);
+        }).on('error', function (err, stdout, stderr) {
+            beep(3, 1000)
+
+            console.log("ffmpeg stdout:\n" + stdout);
+            console.log("ffmpeg stderr:\n" + stderr);
         }).run()
 
         ffmpeg(this.fsLoc).addOptions([ //480
             '-profile:v main',
-            '-vf scale=w=842:h=480:force_original_aspect_ratio=decrease',
+            '-vf pad=(iw/2)*2:(ih/2)*2:0:0,scale=w=842:h=480:force_original_aspect_ratio=decrease',
             '-c:a aac',
             '-ar 48000',
             '-b:a 128k',
@@ -154,11 +165,15 @@ class vid2hls {
 
             console.log("ffmpeg stdout:\n" + stdout);
             console.log("ffmpeg stderr:\n" + stderr);
+        }).on('error', function (err, stdout, stderr) {beep(3, 1000)
+
+            console.log("ffmpeg stdout:\n" + stdout);
+            console.log("ffmpeg stderr:\n" + stderr);
         }).run()
 
         ffmpeg(this.fsLoc).addOptions([ //720
             '-profile:v main',
-            '-vf scale=w=1280:h=720:force_original_aspect_ratio=decrease',
+            '-vf pad=(iw/2)*2:(ih/2)*2:0:0,scale=w=1280:h=720:force_original_aspect_ratio=decrease',
             '-c:a aac',
             '-ar 48000',
             '-b:a 128k',
@@ -174,7 +189,13 @@ class vid2hls {
             `-hls_segment_filename ${this.fsDir}/720p_%05d.ts`,
             '-hls_playlist_type vod',
             '-f hls'
-        ]).output(this.fsDir + '/720p.m3u8').on('end', () => { this.multi_resolution_synthesis(pt1, pt2) }).on('error', function (err, stdout, stderr) {
+        ]).output(this.fsDir + '/720p.m3u8').on('end', () => {
+            this.multi_resolution_synthesis(pt1, pt2);
+            del([relay_this_fsDir]).then(() => {
+                console.log('OK')    //TODO tell user that it is ok
+            });
+        }).on('error', function (err, stdout, stderr) {
+            beep(3, 1000)
 
             console.log("ffmpeg stdout:\n" + stdout);
             console.log("ffmpeg stderr:\n" + stderr);

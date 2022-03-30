@@ -22,7 +22,7 @@ block content
       .ui.segment.placeholder.center.aligned  
         video#my-video.video-js.vjs-16-9(controls='' preload='auto' poster='MY_VIDEO_POSTER.jpg')
           //put data-setup='{}' above to auto load video with out js, due to we need use muti-res., we use js to load vid.
-          source(src='http://localhost:5000/video/1JKk92Estonu7CGAkDOiJGH2PHXKXqWj/index.m3u8' type='application/x-mpegURL')
+          source(src=`/video/${cid}/index.m3u8` type='application/x-mpegURL')
           p.vjs-no-js
             | To view this video please enable JavaScript, and consider upgrading to a
             | web browser that
