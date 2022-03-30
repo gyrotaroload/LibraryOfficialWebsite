@@ -33,6 +33,7 @@ var e1 = require('../models/e1');
 var swipe_edit = require('../models/swipe_edit');
 var administrativeDocumentEditing = require('../models/administrativeDocumentEditing');
 var opentime = require('../models/opentime');
+var mp4up = require('../models/mp4upload');
 
 
 var header_link = {
@@ -491,14 +492,18 @@ router.get('/oc-ebook', function (req, res, next) {
 
 router.get('/video/:id/:part', function (req, res, next) {
   console.log(req)
-  res.send('123')
+  mp4up.getByFileName(req.params.id, req.params.part, (r) => {
+    res.status('200').set('Content-Type', (r.file_extension === 'ts') ?
+      'video/MP2T' :
+      'application/x-mpegURL').send(r.data);
+  });
 });
 
 
 router.get('/video/:id', function (req, res, next) {
   console.log(req)
   res.render('video', {
-    ... header_link,
+    ...header_link,
   });
 });
 

@@ -138,7 +138,8 @@ var e3 = require('../models/OnCampusElectronicResourceFiles');
 var least = require('../models/least');
 var administrativeDocumentEditing = require('../models/administrativeDocumentEditing');
 var opentime = require('../models/opentime');
-
+var mp4up = require('../models/mp4upload');
+var mp4id = require('../models/mp4index');
 
 //const
 var IclassMap = new Map();
@@ -244,7 +245,15 @@ router.get('/add_periodical', ensureAuthenticated, function (req, res, next) {
 });
 
 router.get('/mp4upload', ensureAuthenticated, function (req, res, next) {
-    res.render('NO_LAYOUT_mp4upload', {
+    mp4id.all((r) => {
+        res.render('NO_LAYOUT_mp4upload', {
+            mp4list: JSON.stringify(r)
+        });
+    });
+});
+router.delete('/mp4upload/del', ensureAuthenticated, function (req, res, next) {
+    mp4up.delall(() => {
+        res.status(200).send(form_callback_page("已收到指令"));
     });
 });
 

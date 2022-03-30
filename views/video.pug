@@ -11,11 +11,40 @@ block contentHEAD
   link(crossorigin="anonymous" rel='stylesheet' href='/stylesheets/share_btns.css' type='text/css')
   link(rel='stylesheet' href='/jumbotron/stylesheets/index.css')
   link(rel='stylesheet' href='/stylesheets/External_embedded_search_box.css' type='text/css')
+  link(href='https://vjs.zencdn.net/7.18.1/video-js.css' rel='stylesheet')
   style.
     @import url('/jumbotron/stylesheets/customStyle.css');
 
 block content
   include includes/navbar
-  script(crossorigin="anonymous" src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+  .ui.main.container
+    .ui.segments
+      .ui.segment.placeholder.center.aligned  
+        video#my-video.video-js.vjs-16-9(controls='' preload='auto' poster='MY_VIDEO_POSTER.jpg')
+          //put data-setup='{}' above to auto load video with out js, due to we need use muti-res., we use js to load vid.
+          source(src='http://localhost:5000/video/1JKk92Estonu7CGAkDOiJGH2PHXKXqWj/index.m3u8' type='application/x-mpegURL')
+          p.vjs-no-js
+            | To view this video please enable JavaScript, and consider upgrading to a
+            | web browser that
+            a(href='https://videojs.com/html5-video-support/' target='_blank') supports HTML5 video 
+      .ui.segment
+        .ui.circular.segment.right.floated
+          h6.ui.header
+            | 上傳日期 
+            .sub.header 1999.12.24
+        h1.ui.header
+          .sub.header 影片標題
+          | 影片標題...........
+      .ui.segment 
+        h3.ui.header 影片說明
+        .ui.segment.raised 影片說明........
+  script(src='https://code.jquery.com/jquery-3.6.0.min.js' integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous')
   script(crossorigin="anonymous" src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
   script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js' integrity='sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script(src='https://vjs.zencdn.net/7.18.1/video.min.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-quality-levels/2.1.0/videojs-contrib-quality-levels.min.js' integrity='sha512-IcVOuK95FI0jeody1nzu8wg/n+PtQtxy93L8irm+TwKfORimcB2g4GSHdc0CvsK8gt1yJSbO6fCtZggBvLDDAQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script(src='https://cdn.jsdelivr.net/npm/videojs-hls-quality-selector@1.1.4/dist/videojs-hls-quality-selector.min.js' integrity='sha256-w+fwLRFQiSpGdlZsW8GKqHPYFgJN7qux+BCn1ZZtJUM=' crossorigin='anonymous')
+  script.
+    var my_vid=videojs('my-video');
+    my_vid.hlsQualitySelector();
+

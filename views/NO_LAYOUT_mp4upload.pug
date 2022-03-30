@@ -26,12 +26,12 @@ html(lang='en')
           li.nav-item
             a.nav-link(href='#') Link
           li.nav-item.dropdown
-            a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')  Dropdown 
+            a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false') 危險區域 
             .dropdown-menu(aria-labelledby='navbarDropdown')
-              a.dropdown-item(href='#') Action
-              a.dropdown-item(href='#') Another action
-              .dropdown-divider
-              a.dropdown-item(href='#') Something else here
+              a.dropdown-item(href='#' onclick=`$.ajax({url:"/main/mp4upload/del",type:"DELETE",success:function(i){window.location.href="/main/mp4upload"},error:function(i){Swal.fire('錯誤',i,'error')}})`) 刪除全部的影片檔案
+              //a.dropdown-item(href='#') Another action
+              //.dropdown-divider
+              //a.dropdown-item(href='#') Something else here
           li.nav-item
             a.nav-link.disabled(href='#') Disabled
         form.form-inline.my-2.my-lg-0
@@ -123,7 +123,7 @@ html(lang='en')
               a.btn.btn-link(href='http://www.adobe.com') View details »
         .row
           .col-sm-12.mt-4.mb-2.text-center
-            h2 TESTIMONIALS
+            h2=mp4list
         .row
           .col-sm-6.col-lg-6
             blockquote.blockquote
@@ -187,8 +187,9 @@ html(lang='en')
     // Include all compiled plugins (below), or include individual files as needed
     //script(src='js/popper.min.js')
     //script(src='js/bootstrap-4.3.1.js')
-    script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous')
+  script(src='https://code.jquery.com/jquery-3.6.0.min.js' integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous')
     script(src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
     script(src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js' integrity='sha512-szJ5FSo9hEmXXe7b5AUVtn/WnL8a5VofnFeYC2i2z03uS2LhAch7ewNLbl5flsEmTTimMN0enBZg/3sQ+YOSzQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
     script(src='/ws/mp4upload.js')
+    script(src='https://cdn.jsdelivr.net/npm/sweetalert2@11.4.8/dist/sweetalert2.all.min.js' integrity='sha256-aHuHTU7SdMUuRBFzJX+PRkbfy9kd0uGHS8uc4M/NVBo=' crossorigin='anonymous')

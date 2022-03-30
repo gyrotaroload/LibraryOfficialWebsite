@@ -38,9 +38,8 @@ var mp4in = module.exports = mongoose.model('mp4in', mp4Schema);
 //function
 module.exports.warehousing = function (incomeJSON, callback) {
     var nobj = new mp4in({
-        incomeJSON
+        ... incomeJSON,
     });
-    console.log("🚀 ~ file: mp4upload.js ~ line 43 ~ nobj", nobj)
     nobj.save((e, r) => {
         if (e) {
             console.log(e);
@@ -51,5 +50,16 @@ module.exports.warehousing = function (incomeJSON, callback) {
     });
 }
 
+module.exports.getByFileName = function (id, filename, callback) {
+    const filter = {$and:[{file_name:{$eq:filename}},{custom_video_id:{$eq:id}}]};
+    mp4in.find(filter).sort({ date_time: 'ascending' }).limit(1).exec((err, SearchResult) => {
+        if (err&&SearchResult.length<1) {
+            console.log(err);
+            console.log("cant find stuff");//TODO ER
+        }
+        callback(SearchResult[0]);
+    });
+}
 
-module.exports.delall = function (cb) { mp4in.deleteMany({}, callback) }
+
+module.exports.delall = function (callback) { mp4in.deleteMany({}, callback) }
