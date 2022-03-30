@@ -20,9 +20,9 @@ block content
   .ui.main.container
     .ui.segments
       .ui.segment.placeholder.center.aligned  
-        video#my-video.video-js.vjs-16-9(controls='' preload='auto' poster='MY_VIDEO_POSTER.jpg' data-setup='{}')
+        video#my-video.video-js.vjs-16-9(controls='' preload='auto' poster='MY_VIDEO_POSTER.jpg')
+          //put data-setup='{}' above to auto load video with out js, due to we need use muti-res., we use js to load vid.
           source(src='http://localhost:5000/video/1JKk92Estonu7CGAkDOiJGH2PHXKXqWj/index.m3u8' type='application/x-mpegURL')
-          source(src='MY_VIDEO.webm' type='video/webm')
           p.vjs-no-js
             | To view this video please enable JavaScript, and consider upgrading to a
             | web browser that
@@ -42,3 +42,9 @@ block content
   script(crossorigin="anonymous" src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
   script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js' integrity='sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
   script(src='https://vjs.zencdn.net/7.18.1/video.min.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-quality-levels/2.1.0/videojs-contrib-quality-levels.min.js' integrity='sha512-IcVOuK95FI0jeody1nzu8wg/n+PtQtxy93L8irm+TwKfORimcB2g4GSHdc0CvsK8gt1yJSbO6fCtZggBvLDDAQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script(src='https://cdn.jsdelivr.net/npm/videojs-hls-quality-selector@1.1.4/dist/videojs-hls-quality-selector.min.js' integrity='sha256-w+fwLRFQiSpGdlZsW8GKqHPYFgJN7qux+BCn1ZZtJUM=' crossorigin='anonymous')
+  script.
+    var my_vid=videojs('my-video');
+    my_vid.hlsQualitySelector();
+
