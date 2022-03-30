@@ -116,7 +116,7 @@ class vid2hls {
         var relay_this_fsDir = this.fsDir;
         ffmpeg(this.fsLoc).addOptions([ //360
             '-profile:v main',
-            '-vf pad=(iw/2)*2:(ih/2)*2:0:0,scale=w=640:h=360:force_original_aspect_ratio=decrease',
+            '-vf pad=(iw/2)*2:(ih/2)*2:0:0,scale=trunc(oh/a/2)*2:360',
             '-c:a aac',
             '-ar 48000',
             '-b:a 96k',
@@ -145,7 +145,7 @@ class vid2hls {
 
         ffmpeg(this.fsLoc).addOptions([ //480
             '-profile:v main',
-            '-vf pad=(iw/2)*2:(ih/2)*2:0:0,scale=w=842:h=480:force_original_aspect_ratio=decrease',
+            '-vf pad=(iw/2)*2:(ih/2)*2:0:0,scale=trunc(oh/a/2)*2:480',
             '-c:a aac',
             '-ar 48000',
             '-b:a 128k',
@@ -173,7 +173,7 @@ class vid2hls {
 
         ffmpeg(this.fsLoc).addOptions([ //720
             '-profile:v main',
-            '-vf pad=(iw/2)*2:(ih/2)*2:0:0,scale=w=1280:h=720:force_original_aspect_ratio=decrease',
+            '-vf pad=(iw/2)*2:(ih/2)*2:0:0,scale=trunc(oh/a/2)*2:720',
             '-c:a aac',
             '-ar 48000',
             '-b:a 128k',
