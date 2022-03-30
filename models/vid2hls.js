@@ -9,12 +9,15 @@ const PATH = require('path');
 const dirTree = require('directory-tree');
 const pretty = require('prettysize');
 var fileExtension = require('file-extension');
+var basename = require('basename');
 
 class vid2hls {
-    constructor(tempy, callback) {
+    constructor(tempy, custom_video_id, custom_video_extension, callback) {
         this.tempy = tempy;
-        this.fsLoc = this.tempy.file({ extension: 'mp4' });
+        this.custom_video_extension = custom_video_extension;
+        this.fsLoc = this.tempy.file({ extension: custom_video_extension });
         this.fsDir = this.tempy.directory();
+        this.custom_video_id = custom_video_id;
         fs.open(this.fsLoc, "wx", function (err1, fd) {
             // handle error
             if (err1) callback(err1);
@@ -37,31 +40,37 @@ class vid2hls {
         });
     }
 
-    warehouse(idx, fileList, finish, warehousing, relay_this_warehouse) {
+    warehouse(idx, fileList, finish, warehousing, relay_this_warehouse,
+        relay_this_fsLoc, relay_this_custom_video_extension, relay_this_custom_video_id) {
         console.log("🚀 ~ file: vid2hls.js ~ line 41 ~ vid2hls ~ warehouse ~ idx", idx)
         if (idx < fileList.children.length) {
             fs.readFile(fileList.children[idx].path, function (err, data) {
                 if (err) {
                     throw err;//TODO EH
                 }
-                warehousing({
+
+                var toW = {
                     date_time: Date.now(),
                     file_name: fileList.children[idx].name,
                     file_extension: fileExtension(fileList.children[idx].name),
                     file_dir: fileList.name,
-                    custom_video_title: 'TBD',
-                    custom_video_info: 'TBD',
-                    custom_video_id: 'TBD'
+                    custom_video_title: basename(relay_this_fsLoc),
+                    custom_video_info: relay_this_custom_video_extension,
+                    custom_video_id: relay_this_custom_video_id
                     , support_resolution: ['TBD', 'TBD', 'TBD'],
                     file_size: Buffer.byteLength(data)
                     , data: data, file_size_pretty: pretty(Buffer.byteLength(data))
-                }, (tf) => {
-                    if (tf) {
-                        relay_this_warehouse(idx + 1, fileList, finish, warehousing, relay_this_warehouse);
-                    } else {
-                        console.log("[ERROR] Custom data processing return value display error")//TODO EH
-                    }
-                });
+                };
+                console.log("🚀 ~ file: vid2hls.js ~ line 64 ~ vid2hls ~ toW", toW)
+                warehousing(toW
+                    , (tf) => {
+                        if (tf) {
+                            relay_this_warehouse(idx + 1, fileList, finish, warehousing, relay_this_warehouse,
+                                relay_this_fsLoc, relay_this_custom_video_extension, relay_this_custom_video_id);
+                        } else {
+                            console.log("[ERROR] Custom data processing return value display error")//TODO EH
+                        }
+                    });
             });
         } else {
             finish(null);
@@ -71,35 +80,15 @@ class vid2hls {
     multi_resolution_synthesis(warehousing, finish) { // do something when encoding is done 
         var FWD_fsDir = this.fsDir;
         var relay_this_warehouse = this.warehouse;
+        var relay_this_fsLoc = this.fsLoc;
+        var relay_this_custom_video_extension = this.custom_video_extension;
+        var relay_this_custom_video_id = this.custom_video_id;
         fs.writeFile(`${this.fsDir}/index.m3u8`, '#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:BANDWIDTH=800000,RESOLUTION=640x360\n360p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=1400000,RESOLUTION=842x480\n480p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=2800000,RESOLUTION=1280x720\n720p.m3u8', function (err) {
             if (err) {
                 return console.log(err);
             }
             console.log("The file was saved!");
             // Loop through all the files in the temp directory
-            /*fs.readdir(FWD_fsDir, function (err, files) {
-                if (err) {
-                    console.error("Could not list the directory.", err);
-                    process.exit(1);//TODO NOP
-                }
-
-                files.forEach(function (file, index) {
-                    // Make one pass and make the file complete
-                    var fromPath = path.join(moveFrom, file);
-
-                    fs.stat(fromPath, function (error, stat) {
-                        if (error) {
-                            console.error("Error stating file.", error);
-                            return;//TODO DOERR
-                        }
-
-                        if (stat.isFile())
-                            console.log("'%s' is a file.", fromPath);
-                        else if (stat.isDirectory())
-                            console.log("'%s' is a directory.", fromPath);
-                    });
-                });
-            });*/
             dirTree(FWD_fsDir, {
                 extensions: /\.(ts|m3u8)$/
             }, () => {
@@ -111,7 +100,8 @@ class vid2hls {
 
             }, (item, PATH, stats) => {
                 //console.log(item);
-                relay_this_warehouse(0, item, finish, warehousing, relay_this_warehouse);
+                relay_this_warehouse(0, item, finish, warehousing, relay_this_warehouse,
+                    relay_this_fsLoc, relay_this_custom_video_extension, relay_this_custom_video_id);
             });
 
         })

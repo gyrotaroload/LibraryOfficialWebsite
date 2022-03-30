@@ -140,7 +140,8 @@
     "@ffmpeg-installer/ffmpeg": "1.1.0",
     "directory-tree": "3.2.2",
     "prettysize": "2.0.0",
-    "file-extension": "4.0.5"
+    "file-extension": "4.0.5",
+    "basename": "0.1.2"
   },
   "symdeps": {
     "paths": {
