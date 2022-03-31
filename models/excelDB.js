@@ -191,5 +191,5 @@ module.exports.MODFup = function (MODid, callback) {//L側板上升
 };
 
 module.exports.delById = function (MODid, callback) {//L側板上升
-    excelData.findByIdAndDelete({ eq: MODid }, callback);
+    excelData.findByIdAndDelete({ $eq: MODid }, callback);
 };

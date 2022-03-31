@@ -283,7 +283,7 @@ class vid2hls {
                                                     : Math.abs(Math.round(cpus().length / 2))
                     : 1
                 : 1
-            }}`
+            }`
         ]).output(p0 + '/1080p.m3u8').on('end', () => {
             console.log("ffmpeg1080");
 
