@@ -75,19 +75,18 @@ class vid2hls {
                     });
             });
         } else {
-            del([fileList.children[idx-1]?fileList.children[idx-1].name:'']).then(() => {
+            del([fileList.children[idx - 1] ? fileList.children[idx - 1].name : '']).then(() => {
                 finish(null);
             });
         }
     }
 
-    multi_resolution_synthesis(warehousing, finish) { // do something when encoding is done 
-        var FWD_fsDir = this.fsDir;
-        var relay_this_warehouse = this.warehouse;
-        var relay_this_fsLoc = this.fsLoc;
-        var relay_this_custom_video_extension = this.custom_video_extension;
-        var relay_this_custom_video_id = this.custom_video_id;
-        fs.writeFile(`${this.fsDir}/index.m3u8`, '#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:BANDWIDTH=800000,RESOLUTION=640x360\n360p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=1400000,RESOLUTION=842x480\n480p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=2800000,RESOLUTION=1280x720\n720p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=6000000,RESOLUTION=1920x1080\n1080p.m3u8', function (err) {
+    multi_resolution_synthesis(warehousing, finish, relay_this_fsDir, relay_this_fsLoc, mrs_head_obj) { // do something when encoding is done 
+        var FWD_fsDir = relay_this_fsDir;
+        var relay_this_warehouse = mrs_head_obj.warehouse;
+        var relay_this_custom_video_extension = mrs_head_obj.custom_video_extension;
+        var relay_this_custom_video_id = mrs_head_obj.custom_video_id;
+        fs.writeFile(`${FWD_fsDir}/index.m3u8`, '#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:BANDWIDTH=800000,RESOLUTION=640x360\n360p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=1400000,RESOLUTION=842x480\n480p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=2800000,RESOLUTION=1280x720\n720p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=6000000,RESOLUTION=1920x1080\n1080p.m3u8', function (err) {
             if (err) {
                 return console.log(err);
             }
@@ -103,7 +102,7 @@ class vid2hls {
                 //printTable(dir_tree);
 
             }, (item, PATH, stats) => {
-                //console.log(item);
+                console.log(item);
                 relay_this_warehouse(0, item, finish, warehousing, relay_this_warehouse,
                     relay_this_fsLoc, relay_this_custom_video_extension, relay_this_custom_video_id);
             });
@@ -111,14 +110,8 @@ class vid2hls {
         })
     }
 
-    ff360(){}
-    ff480(){}
-    ff720(){}
-    ff1080(){}
-
-    end_trans(pt1, pt2) {
-        var relay_this_fsDir = this.fsDir;
-        ffmpeg(this.fsLoc).addOptions([ //360
+    ff360(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback) {
+        ffmpeg(p3).addOptions([ //360
             '-profile:v main',
             '-vf pad=(iw/2)*2:(ih/2)*2:0:0,scale=trunc(oh/a/2)*2:360',
             '-c:a aac',
@@ -133,10 +126,10 @@ class vid2hls {
             '-maxrate 856k',
             '-bufsize 1200k',
             '-hls_time 10',
-            `-hls_segment_filename ${this.fsDir}/360p_%05d.ts`,
+            `-hls_segment_filename ${p0}/360p_%05d.ts`,
             '-hls_playlist_type vod',
             '-f hls'
-        ]).output(this.fsDir + '/360p.m3u8').on('error', function (err, stdout, stderr) {
+        ]).output(p0 + '/360p.m3u8').on('error', function (err, stdout, stderr) {
 
             console.log("ffmpeg stdout:\n" + stdout);
             console.log("ffmpeg stderr:\n" + stderr);
@@ -144,9 +137,13 @@ class vid2hls {
 
             console.log("ffmpeg stdout:\n" + stdout);
             console.log("ffmpeg stderr:\n" + stderr);
+        }).on('end', () => {
+            this.ff480(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback);
+            console.log("ffmpeg360");
         }).run()
-
-        ffmpeg(this.fsLoc).addOptions([ //480
+    }
+    ff480(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback) {
+        ffmpeg(p3).addOptions([ //480
             '-profile:v main',
             '-vf pad=(iw/2)*2:(ih/2)*2:0:0,scale=trunc(oh/a/2)*2:480',
             '-c:a aac',
@@ -161,10 +158,10 @@ class vid2hls {
             '-maxrate 1498k',//273
             '-bufsize 2100k',//195
             '-hls_time 10',
-            `-hls_segment_filename ${this.fsDir}/480p_%05d.ts`,
+            `-hls_segment_filename ${p0}/480p_%05d.ts`,
             '-hls_playlist_type vod',
             '-f hls'
-        ]).output(this.fsDir + '/480p.m3u8').on('error', function (err, stdout, stderr) {
+        ]).output(p0 + '/480p.m3u8').on('error', function (err, stdout, stderr) {
 
             console.log("ffmpeg stdout:\n" + stdout);
             console.log("ffmpeg stderr:\n" + stderr);
@@ -172,9 +169,13 @@ class vid2hls {
 
             console.log("ffmpeg stdout:\n" + stdout);
             console.log("ffmpeg stderr:\n" + stderr);
+        }).on('end', () => {
+            this.ff720(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback);
+            console.log("ffmpeg480");
         }).run()
-
-        ffmpeg(this.fsLoc).addOptions([ //720
+    }
+    ff720(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback) {
+        ffmpeg(p3).addOptions([ //720
             '-profile:v main',
             '-vf pad=(iw/2)*2:(ih/2)*2:0:0,scale=trunc(oh/a/2)*2:720',
             '-c:a aac',
@@ -189,17 +190,21 @@ class vid2hls {
             '-maxrate 2996k',//307.61
             '-bufsize 4200k',//219.42
             '-hls_time 10',
-            `-hls_segment_filename ${this.fsDir}/720p_%05d.ts`,
+            `-hls_segment_filename ${p0}/720p_%05d.ts`,
             '-hls_playlist_type vod',
             '-f hls'
-        ]).output(this.fsDir + '/720p.m3u8').on('error', function (err, stdout, stderr) {
+        ]).output(p0 + '/720p.m3u8').on('error', function (err, stdout, stderr) {
 
             console.log("ffmpeg stdout:\n" + stdout);
             console.log("ffmpeg stderr:\n" + stderr);
+        }).on('end', () => {
+            this.ff1080(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback);
+            console.log("ffmpeg720");
         }).run()
-
-        ffmpeg(this.fsLoc).addOptions([ //1080
-        //TODO其實我不知道1080的參數要怎麼設
+    }
+    ff1080(p0, p1, p2, p3, mrs, mrs_head_obj, callback) {
+        ffmpeg(p3).addOptions([ //1080
+            //TODO其實我不知道1080的參數要怎麼設
             '-profile:v main',
             '-vf pad=(iw/2)*2:(ih/2)*2:0:0,scale=trunc(oh/a/2)*2:1080',
             '-c:a aac',
@@ -214,19 +219,39 @@ class vid2hls {
             '-maxrate 6900k',
             '-bufsize 9400k',
             '-hls_time 7',
-            `-hls_segment_filename ${this.fsDir}/1080p_%05d.ts`,
+            `-hls_segment_filename ${p0}/1080p_%05d.ts`,
             '-hls_playlist_type vod',
             '-f hls'
-        ]).output(this.fsDir + '/1080p.m3u8').on('end', () => {
-            this.multi_resolution_synthesis(pt1, pt2);
-            del([relay_this_fsDir]).then(() => {
-                console.log('OK')    //TODO tell user that it is ok
-            });
+        ]).output(p0 + '/1080p.m3u8').on('end', () => {
+            console.log("ffmpeg1080");
+
+            callback(p0, p1, p2, p3, mrs, mrs_head_obj);
+
         }).on('error', function (err, stdout, stderr) {
 
             console.log("ffmpeg stdout:\n" + stdout);
             console.log("ffmpeg stderr:\n" + stderr);
         }).run()
+    }
+
+    end_trans(pt1, pt2) {
+        var relay_this_fsDir = this.fsDir;
+        var relay_this_fsLoc = this.fsLoc;
+        var relay_this_warehouse = this.warehouse;
+        var relay_this_custom_video_extension = this.custom_video_extension;
+        var relay_this_custom_video_id = this.custom_video_id;
+        var mrs_head_obj = {
+            warehouse: relay_this_warehouse,
+            custom_video_extension: relay_this_custom_video_extension,
+            custom_video_id: relay_this_custom_video_id
+        }
+        var relay_this_mrs = this.multi_resolution_synthesis;
+        this.ff360(relay_this_fsDir, pt1, pt2, relay_this_fsLoc, relay_this_mrs, mrs_head_obj, (p0, p1, p2, p3, mrs, mrs_head_obj) => {
+            mrs(p1, p2, p0, p3, mrs_head_obj);
+            del([p3]).then(() => {//TODO wtf
+                console.log('OK')    //TODO tell user that it is ok
+            });
+        });
 
     }
 }
