@@ -15,7 +15,7 @@ document.getElementById('checkvidinfo').addEventListener('click', () => {
 
     //關閉後執行的動作，指定一個 function 會在連結中斷後執行
     ws.onclose = () => {
-        console.log('close connection');
+        console.log('close connection');$('#stp1').text('伺服器離線或連線逾時');
     }
 
     var stream = null;

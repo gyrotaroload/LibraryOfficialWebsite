@@ -46,6 +46,10 @@ var mp4wsobj = {
          */
         this.tempy = stuff;
     },
+    ffmpegRP: function (Cid,msg){
+        mp4id.appffmpeg(Cid,msg,()=>{})
+    }
+    ,
     input: function (data, callback) {
         if (!this.tempy && typeof this.tempy != "undefined" && this.tempy != 0) {
             callback('[ERROR] tempy is not defined, You need to call modern mods to use this feature. More info @ https://www.npmjs.com/package/tempy');
@@ -79,7 +83,7 @@ var mp4wsobj = {
                                 this.info = dadaP.info;
                                 var tmp_i = this.index;
                                 ///////////////////////////////////////////////////////////////////////////
-                                this.v2h = new vid2hls(this.tempy, this.cid, 'mp4', (tf) => {
+                                this.v2h = new vid2hls(this.ffmpegRP,this.tempy, this.cid, 'mp4', (tf) => {
                                     if (!tf) {
                                         callback(tmp_i);
                                     } else {

@@ -179,6 +179,8 @@ html(lang='en')
                             a.prurl(style="color:white;") #{item.cid}
                           td 
                             a.btn.btn-outline-danger(type='button' href=`/main/delVidById?id=${item.id}`) 刪除
+                            button.btn.btn-outline-info(type='button' onclick=`Swal.fire({icon: 'info',title: '轉檔資訊',text: '${nqT(JSON.stringify(item.ffmpeginfo?item.ffmpeginfo:'n/a'))}',footer: '最後更新時間:${INFOTIME}，重新整理此頁以收集最新資訊'})`) 轉檔情報
+
 
                 //- CONTACT FORM https://github.com/jonmbake/bootstrap3-contact-form
                 //form#feedbackForm.text-center

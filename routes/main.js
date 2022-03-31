@@ -140,6 +140,7 @@ var administrativeDocumentEditing = require('../models/administrativeDocumentEdi
 var opentime = require('../models/opentime');
 var mp4up = require('../models/mp4upload');
 var mp4id = require('../models/mp4index');
+var nqT = require('../models/MD_no_q');
 
 //const
 var IclassMap = new Map();
@@ -247,7 +248,9 @@ router.get('/add_periodical', ensureAuthenticated, function (req, res, next) {
 router.get('/mp4upload', ensureAuthenticated, function (req, res, next) {
     mp4id.all((r) => {
         res.render('NO_LAYOUT_mp4upload', {
-            mp4list: r
+            mp4list: r,
+            INFOTIME:momentTZ().tz("Asia/Taipei").format('YYYY年MM月DD日HH時mm分ss秒(台北時間)'),
+            nqT:function(tt){console.log(tt);return nqT.doall(tt,'~')}
         });
     });
 });
