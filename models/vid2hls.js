@@ -11,7 +11,6 @@ const pretty = require('prettysize');
 var fileExtension = require('file-extension');
 var basename = require('basename');
 const del = require('del');
-var beep = require('beepbeep')
 
 
 class vid2hls {
@@ -88,7 +87,7 @@ class vid2hls {
         var relay_this_fsLoc = this.fsLoc;
         var relay_this_custom_video_extension = this.custom_video_extension;
         var relay_this_custom_video_id = this.custom_video_id;
-        fs.writeFile(`${this.fsDir}/index.m3u8`, '#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:BANDWIDTH=800000,RESOLUTION=640x360\n360p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=1400000,RESOLUTION=842x480\n480p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=2800000,RESOLUTION=1280x720\n720p.m3u8', function (err) {
+        fs.writeFile(`${this.fsDir}/index.m3u8`, '#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:BANDWIDTH=800000,RESOLUTION=640x360\n360p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=1400000,RESOLUTION=842x480\n480p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=2800000,RESOLUTION=1280x720\n720p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=6000000,RESOLUTION=1920x1080\n1080p.m3u8', function (err) {
             if (err) {
                 return console.log(err);
             }
@@ -111,6 +110,11 @@ class vid2hls {
 
         })
     }
+
+    ff360(){}
+    ff480(){}
+    ff720(){}
+    ff1080(){}
 
     end_trans(pt1, pt2) {
         var relay_this_fsDir = this.fsDir;
@@ -137,7 +141,6 @@ class vid2hls {
             console.log("ffmpeg stdout:\n" + stdout);
             console.log("ffmpeg stderr:\n" + stderr);
         }).on('error', function (err, stdout, stderr) {
-            beep(3, 1000)
 
             console.log("ffmpeg stdout:\n" + stdout);
             console.log("ffmpeg stderr:\n" + stderr);
@@ -154,9 +157,9 @@ class vid2hls {
             '-g 48',
             '-keyint_min 48',
             '-sc_threshold 0',
-            '-b:v 1400k',
-            '-maxrate 1498k',
-            '-bufsize 2100k',
+            '-b:v 1400k',//292
+            '-maxrate 1498k',//273
+            '-bufsize 2100k',//195
             '-hls_time 10',
             `-hls_segment_filename ${this.fsDir}/480p_%05d.ts`,
             '-hls_playlist_type vod',
@@ -165,7 +168,7 @@ class vid2hls {
 
             console.log("ffmpeg stdout:\n" + stdout);
             console.log("ffmpeg stderr:\n" + stderr);
-        }).on('error', function (err, stdout, stderr) {beep(3, 1000)
+        }).on('error', function (err, stdout, stderr) {
 
             console.log("ffmpeg stdout:\n" + stdout);
             console.log("ffmpeg stderr:\n" + stderr);
@@ -182,20 +185,44 @@ class vid2hls {
             '-g 48',
             '-keyint_min 48',
             '-sc_threshold 0',
-            '-b:v 2800k',
-            '-maxrate 2996k',
-            '-bufsize 4200k',
+            '-b:v 2800k',//329.14
+            '-maxrate 2996k',//307.61
+            '-bufsize 4200k',//219.42
             '-hls_time 10',
             `-hls_segment_filename ${this.fsDir}/720p_%05d.ts`,
             '-hls_playlist_type vod',
             '-f hls'
-        ]).output(this.fsDir + '/720p.m3u8').on('end', () => {
+        ]).output(this.fsDir + '/720p.m3u8').on('error', function (err, stdout, stderr) {
+
+            console.log("ffmpeg stdout:\n" + stdout);
+            console.log("ffmpeg stderr:\n" + stderr);
+        }).run()
+
+        ffmpeg(this.fsLoc).addOptions([ //1080
+        //TODO其實我不知道1080的參數要怎麼設
+            '-profile:v main',
+            '-vf pad=(iw/2)*2:(ih/2)*2:0:0,scale=trunc(oh/a/2)*2:1080',
+            '-c:a aac',
+            '-ar 48000',
+            '-b:a 128k',
+            '-c:v h264',
+            '-crf 20',
+            '-g 48',
+            '-keyint_min 48',
+            '-sc_threshold 0',
+            '-b:v 6000k',
+            '-maxrate 6900k',
+            '-bufsize 9400k',
+            '-hls_time 7',
+            `-hls_segment_filename ${this.fsDir}/1080p_%05d.ts`,
+            '-hls_playlist_type vod',
+            '-f hls'
+        ]).output(this.fsDir + '/1080p.m3u8').on('end', () => {
             this.multi_resolution_synthesis(pt1, pt2);
             del([relay_this_fsDir]).then(() => {
                 console.log('OK')    //TODO tell user that it is ok
             });
         }).on('error', function (err, stdout, stderr) {
-            beep(3, 1000)
 
             console.log("ffmpeg stdout:\n" + stdout);
             console.log("ffmpeg stderr:\n" + stderr);
