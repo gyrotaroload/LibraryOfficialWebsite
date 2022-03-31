@@ -5,6 +5,8 @@ var isempty = require('is-empty');
 const vid2hls = require('./vid2hls');
 const mp4upload = require('./mp4upload');
 const mp4id = require('./mp4index');
+var isJSON = require('is-json');
+
 
 var relayW = function (stuff, stuff_callback) {
     mp4upload.warehousing(stuff, stuff_callback);

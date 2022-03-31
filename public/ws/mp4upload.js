@@ -23,6 +23,7 @@ document.getElementById('checkvidinfo').addEventListener('click', () => {
     var file_stream_index = 0;
     var pro_bar = 0;
     var file_size = null;
+    var WSmod = 0;
     //var go_next_block = true;
 
     function Client_cargo_sequence_self_check(check_index) {
@@ -51,12 +52,16 @@ document.getElementById('checkvidinfo').addEventListener('click', () => {
 
     //接收 Server 發送的訊息
     ws.onmessage = async (event) => {
+        //if (WSmod === 1) { 
+
+        // } else {
         console.log(event.data);
         if (Client_cargo_sequence_self_check(event.data)) {
 
             var { done, value } = await reader.read();
             if (done) {
                 console.log("all finish...");
+                $('#stp4').text('傳輸成功');// WSmod = 1;
                 var tmp_end = JSON.stringify({
                     endindex: file_stream_index
                 });
@@ -86,7 +91,7 @@ document.getElementById('checkvidinfo').addEventListener('click', () => {
                     });
                 }
 
-                const regex2 = /success/gmi;
+                const regex2 = /error/gmi;
                 const str2 = String(event.data);
                 let m2;
 
@@ -108,13 +113,14 @@ document.getElementById('checkvidinfo').addEventListener('click', () => {
             }
             console.log("sequence error...");
         }
+        //   }
     }
 
     try {
         stream = null;
         reader = null;
         file_stream_index = 0;
-        go_next_block = true; pro_bar = 0; file_size = 0;
+        go_next_block = true; pro_bar = 0; file_size = 0;// WSmod = 0;
         inp.onchange = async (evt) => {
             file_size = inp.files[0].size;
             stream = inp.files[0].stream();
