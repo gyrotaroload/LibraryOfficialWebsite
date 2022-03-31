@@ -174,6 +174,7 @@ class vid2hls {
             console.log("ffmpeg480");
         }).run()
     }
+    //https://github.com/atomdeniz/nodejs-mp4-to-hls
     ff720(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback) {
         ffmpeg(p3).addOptions([ //720
             '-profile:v main',
@@ -217,7 +218,7 @@ class vid2hls {
             '-sc_threshold 0',
             '-b:v 17500k',
             '-maxrate 18000k',//https://www.mobile01.com/topicdetail.php?f=510&t=4500233
-            '-bufsize 25200',
+            '-bufsize 25200k',
             '-hls_time 7',
             `-hls_segment_filename ${p0}/1080p_%05d.ts`,
             '-hls_playlist_type vod',
