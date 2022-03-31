@@ -327,7 +327,9 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
     }
 
     JournalInformation.gethis(req.body.id, (stuff) => {
-
+        /**
+         * 期刊本來就沒有編輯後資料會重複的問題，我剛開始是設計得很好的，是使用者操作不當才會造成錯誤，查超久，結果不是我的鍋......andythebreaker
+         */
         JournalInformation.del(req.body.id, (stuff2) => {
 
             var newJournalInformation = new JournalInformation({
@@ -536,7 +538,7 @@ router.get('/journals', ensureAuthenticated, function (req, res, next) {
         isUSER: 'no',
         jjsonURL: (req.query.alpha) ? ("/jjson?alpha=" + req.query.alpha) : "/jjson",
         a2z: generator('@', ['A-Z']),
-        alpha: req.query.alpha?req.query.alpha:'0',
+        alpha: req.query.alpha ? req.query.alpha : '0',
         window_location_href_main: 'yes'
     });
 });
