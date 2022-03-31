@@ -212,6 +212,7 @@ router.get('/home/del', ensureAuthenticated, function (req, res, next) {//這個
 
     least.delById(req.query.id, (err, doc) => {
         if (err) {
+            console.log("🚀 ~ file: main.js ~ line 215 ~ least.delById ~ err", err)
             res.status(500).send(form_callback_page("錯誤"));
         } else {
             res.status(200).send(form_callback_page("成功"));
