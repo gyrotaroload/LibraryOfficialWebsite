@@ -11,6 +11,24 @@ var relayW = function (stuff, stuff_callback) {
     //if callback send null => error occurs
 }
 
+/**
+ * TODO
+ * 這裡有一個嚴重的邏輯問題
+ * 但是在少數編輯者狀態下
+ * 不會發生
+ * =================================================================
+ * 這段的說明，使用者指的都是有admin權限的編輯者，aka進得去/main的人
+ * ====================================
+ * 
+ * 說明如下
+ * 當A使用者WS開啟通訊
+ * 開始上傳後到傳輸完成前
+ * 如果有
+ * 任何第二個使用者要上傳
+ * 整個程式應該會爛掉
+ * 
+ * 需要做分別不同使用者
+ */
 
 var mp4wsobj = {
     name: 'n/a',
@@ -48,7 +66,7 @@ var mp4wsobj = {
             } else {
                 try {
                     var dadaP = JSON.parse(data);
-                    if (dadaP && dadaP.info && dadaP.name && !dadaP.endindex) {
+                    if (dadaP && dadaP.info && dadaP.name && dadaP.file_extension && !dadaP.endindex) {
                         if (dadaP.info === 'n/a' && dadaP.name === 'n/a') {
                             callback('[ERROR] Data table header declared empty, the request is forbidden');
                         } else {
@@ -59,7 +77,7 @@ var mp4wsobj = {
                                 this.info = dadaP.info;
                                 var tmp_i = this.index;
                                 ///////////////////////////////////////////////////////////////////////////
-                                this.v2h = new vid2hls(this.tempy, this.cid,'mp4', (tf) => {
+                                this.v2h = new vid2hls(this.tempy, this.cid, 'mp4', (tf) => {
                                     if (!tf) {
                                         callback(tmp_i);
                                     } else {
@@ -70,7 +88,7 @@ var mp4wsobj = {
                                 callback('[ERROR] Data table header declared empty, the request is forbidden');
                             }
                         }
-                    } else if (dadaP && dadaP.endindex && !dadaP.name && !dadaP.info) {
+                    } else if (dadaP && dadaP.endindex && !dadaP.name && !dadaP.info && !dadaP.file_extension) {
                         if (dadaP.endindex === 'n/a') {
                             callback('[ERROR] Data table end declared empty, the request is forbidden');
                         } else {
