@@ -34,7 +34,7 @@ var swipe_edit = require('../models/swipe_edit');
 var administrativeDocumentEditing = require('../models/administrativeDocumentEditing');
 var opentime = require('../models/opentime');
 var mp4up = require('../models/mp4upload');
-
+var mp4id = require('../models/mp4index');
 
 var header_link = {
   browseHyperlinkedObjectsHorizontally1T: '成大首頁',
@@ -498,16 +498,19 @@ router.get('/video/:id/:part', function (req, res, next) {
         'video/MP2T' :
         'application/x-mpegURL').send(r.data);
     } else {
-      res.status(500).end();
+      res.status(404).end();
     }
   });
 });
 
 
 router.get('/video/:id', function (req, res, next) {
-  console.log(req)
-  res.render('video', {
-    ...header_link,cid:req.params.id
+  mp4id.getByCid(req.params.id,(r)=>{
+    res.render('video', {
+      ...header_link,cid:req.params.id,
+      vif:r?r:{date_time:Date.now(),name:'404無法找到這個影片',info:'你來到了一個荒蕪的草原...'},
+      momentTZ:momentTZ
+    });
   });
 });
 

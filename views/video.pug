@@ -31,13 +31,13 @@ block content
         .ui.circular.segment.right.floated
           h6.ui.header
             | 上傳日期 
-            .sub.header 1999.12.24
+            .sub.header #{vif.date_time?momentTZ(vif.date_time).tz("Asia/Taipei").format('YYYY年MM月DD日HH時mm分ss秒'):momentTZ().tz("Asia/Taipei").format('YYYY年MM月DD日HH時mm分ss秒')}
         h1.ui.header
           .sub.header 影片標題
-          | 影片標題...........
+          | #{vif.name?vif.name:"404找不到影片"}
       .ui.segment 
         h3.ui.header 影片說明
-        .ui.segment.raised 影片說明........
+        .ui.segment.raised #{vif.info?vif.info:"很抱歉，找不到您需要的影片..."}
   script(src='https://code.jquery.com/jquery-3.6.0.min.js' integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous')
   script(crossorigin="anonymous" src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
   script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js' integrity='sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
