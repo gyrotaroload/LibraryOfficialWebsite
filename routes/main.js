@@ -249,8 +249,8 @@ router.get('/mp4upload', ensureAuthenticated, function (req, res, next) {
     mp4id.all((r) => {
         res.render('NO_LAYOUT_mp4upload', {
             mp4list: r,
-            INFOTIME:momentTZ().tz("Asia/Taipei").format('YYYY年MM月DD日HH時mm分ss秒(台北時間)'),
-            nqT:function(tt){console.log(tt);return nqT.doall(tt,'~')}
+            INFOTIME: momentTZ().tz("Asia/Taipei").format('YYYY年MM月DD日HH時mm分ss秒(台北時間)'),
+            nqT: function (tt) { console.log(tt); return nqT.doall(tt, '~') }
         });
     });
 });
@@ -526,12 +526,17 @@ router.get('/swipeEDIT', ensureAuthenticated, function (req, res, next) {
 });
 
 router.get('/journals', ensureAuthenticated, function (req, res, next) {
+    /**
+     * alpha參數，若為數字，1~3有意義，會導入現期期刊、歷史期刊、紙本期刊搜尋，此功能API已實作，UI在後台前台都拿掉了，如果客戶突然要加回功能，實作UI就好
+     * alpha參數，若為英文，為起始搜尋，前後台API皆實作
+     * alpha參數，若為
+     */
     res.render('dashboard', {
         title: '成大數學系圖書館',
         isUSER: 'no',
-        jjsonURL: "/jjson",
+        jjsonURL: (req.query.alpha) ? ("/jjson?alpha=" + req.query.alpha) : "/jjson",
         a2z: generator('@', ['A-Z']),
-        alpha: '0',
+        alpha: req.query.alpha?req.query.alpha:'0',
         window_location_href_main: 'yes'
     });
 });

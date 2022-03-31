@@ -147,15 +147,105 @@ router.get(('/ero'), function (req, res, next) {
 
 router.get('/jjson', function (req, res, next) {
   if (req.query.alpha) {
-    ji.getByNameStartFormat(req.query.alpha, (d) => {
-      ///////////區間複製起點
-      res.status(200).json({
-        "total": d.length,
-        "totalNotFiltered": d.length,
-        "rows": d
+    if (req.query.alpha === 'duplicate0') {
+      ji.findDuplicate0((da) => {
+        if (da) {
+          ji.FDpostProcessing0(da, (d) => {
+            ///////////區間複製起點
+            res.status(200).json({
+              "total": d ? d.length : 0,
+              "totalNotFiltered": d ? d.length : 0,
+              "rows": d ? d : []
+            });
+            ///////////區間複製宗典
+          });
+        } else {
+          ///////////區間複製起點
+          res.status(200).json({
+            "total": 0,
+            "totalNotFiltered": 0,
+            "rows": []
+          });
+          ///////////區間複製宗典
+        }
       });
-      ///////////區間複製宗典
-    });
+    } else if (req.query.alpha === 'duplicate1') {
+      ji.findDuplicate1((da) => {
+        if (da) {
+          ji.FDpostProcessing1(da, (d) => {
+            ///////////區間複製起點
+            res.status(200).json({
+              "total": d ? d.length : 0,
+              "totalNotFiltered": d ? d.length : 0,
+              "rows": d ? d : []
+            });
+            ///////////區間複製宗典
+          });
+        } else {
+          ///////////區間複製起點
+          res.status(200).json({
+            "total": 0,
+            "totalNotFiltered": 0,
+            "rows": []
+          });
+          ///////////區間複製宗典
+        }
+      });
+    } else if (req.query.alpha === 'duplicate2') {
+      ji.findDuplicate2((da) => {
+        if (da) {
+          ji.FDpostProcessing2(da, (d) => {
+            ///////////區間複製起點
+            res.status(200).json({
+              "total": d ? d.length : 0,
+              "totalNotFiltered": d ? d.length : 0,
+              "rows": d ? d : []
+            });
+            ///////////區間複製宗典
+          });
+        } else {
+          ///////////區間複製起點
+          res.status(200).json({
+            "total": 0,
+            "totalNotFiltered": 0,
+            "rows": []
+          });
+          ///////////區間複製宗典
+        }
+      });
+    } else if (req.query.alpha === 'duplicate3') {
+      ji.findDuplicate3((da) => {
+        if (da) {
+          ji.FDpostProcessing3(da, (d) => {
+            ///////////區間複製起點
+            res.status(200).json({
+              "total": d ? d.length : 0,
+              "totalNotFiltered": d ? d.length : 0,
+              "rows": d ? d : []
+            });
+            ///////////區間複製宗典
+          });
+        } else {
+          ///////////區間複製起點
+          res.status(200).json({
+            "total": 0,
+            "totalNotFiltered": 0,
+            "rows": []
+          });
+          ///////////區間複製宗典
+        }
+      });
+    } else {
+      ji.getByNameStartFormat(req.query.alpha, (d) => {
+        ///////////區間複製起點
+        res.status(200).json({
+          "total": d.length,
+          "totalNotFiltered": d.length,
+          "rows": d
+        });
+        ///////////區間複製宗典
+      });
+    }
   } else {
     ji.getAllFormat((d) => {
       res.status(200).json({

@@ -50,17 +50,44 @@ window.operateEvents = {
         fetch(`/main/delJ?id=${row.id}`)
             .then((r) => { return r.text() })
             .then((t) => {
-                $('#quickPOPUPtopic').text('操作完成');
-                $('#quickPOPUPinfo').text(t ? '狀態:成功~' : `錯誤說明:${t}`);
-                $('#quickPOPUPyes').text('(按我!按我!)重新整理');
-                $('#quickPOPUPyes').on("click", function () {
-                    $('.ui.button[name="refresh"]').click();
-                    $('#sidebar').hide();
-                });
-                $('#quickPOPUPno').text('不重新整理就繼續(不建議但較快)');
-                $('#quickPOPUP')
-                    .modal('show')
-                    ;
+                /* $('#quickPOPUPtopic').text('操作完成');
+                 $('#quickPOPUPinfo').text(t ? '狀態:成功~' : `錯誤說明:${t}`);
+                 $('#quickPOPUPyes').text('(按我!按我!)重新整理');
+                 $('#quickPOPUPyes').on("click", function () {
+                     $('.ui.button[name="refresh"]').click();
+                     $('#sidebar').hide();
+                 });
+                 $('#quickPOPUPno').text('不重新整理就繼續(不建議但較快)');
+                 $('#quickPOPUP')
+                     .modal('show')
+                     ;*/
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'ui button green btn btn-success large',
+                        cancelButton: 'ui button red btn btn-danger large'
+                    },
+                    buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                    title: '操作完成',
+                    text: t ? `錯誤說明:${t}` : '狀態:成功~',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: '好',
+                    cancelButtonText: '重新整理',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('.ui.button[name="refresh"]').click();
+                        $('#sidebar').hide();
+                    } else if (
+                        /* Read more about handling dismissals below */
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        location.reload();
+                    }
+                })
             });
     }
 }
@@ -97,7 +124,7 @@ function LinkFormatter(value, row, index) {
     }
 
     function reg_step_2(ins) {
-         const regex =/@href@([^:|@]*)@text@(http[s]?:\/\/.?[www]?\.?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b[-a-zA-Z0-9@:%_\+.~#?&//=*]*)@url@/img;
+        const regex = /@href@([^:|@]*)@text@(http[s]?:\/\/.?[www]?\.?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b[-a-zA-Z0-9@:%_\+.~#?&//=*]*)@url@/img;
         //const regex = /@href@([^:|@]*)@text@(http[s]?:\/\/.*?\/[a-zA-Z-_]+[^@]*)@url@/gm;
         //hotfix220324
         //using https://regexr.com/3e6m0
@@ -124,10 +151,10 @@ function LinkFormatter(value, row, index) {
 
 function initTable() {
     $table.bootstrapTable('destroy').bootstrapTable({
-        height: 0.8*vh,search:true,
+        height: 0.8 * vh, search: true,
         locale: $('#locale').val(),
-        sortOrder:'asc',
-        sortName:'placeNumber',
+        sortOrder: 'asc',
+        sortName: 'placeNumber',
         columns: [
             [//{
                 // field: 'state',
@@ -153,7 +180,7 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: true,formatter: LinkFormatter
+                    sortable: true, searchable: true, formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }, {
                     title: 'E-ISSN',
@@ -161,7 +188,7 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: true,formatter: LinkFormatter
+                    sortable: true, searchable: true, formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }, {
                     title: '刊名',
@@ -170,7 +197,7 @@ function initTable() {
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    searchable: true,formatter: LinkFormatter
+                    searchable: true, formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }, {
                     title: '狀況',
@@ -178,7 +205,7 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: false,formatter: LinkFormatter
+                    sortable: true, searchable: false, formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }, {
                     title: '電子資源',
@@ -195,7 +222,7 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: false,formatter: LinkFormatter
+                    sortable: true, searchable: false, formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }
                 //, {
@@ -213,7 +240,7 @@ function initTable() {
                     rowspan: 2,
                     align: 'center',
                     valign: 'middle',
-                    sortable: true, searchable: false,formatter: LinkFormatter
+                    sortable: true, searchable: false, formatter: LinkFormatter
                     //footerFormatter: totalTextFormatter
                 }
                 , {
@@ -284,7 +311,7 @@ function initTable() {
         //console.log("load-success.bs.table");
         if (document.querySelector(".bootstrap-table.semantic")) {
             document.querySelector(".bootstrap-table.semantic").setAttribute("style", "width:100%;");
-            
+
             if (document.getElementsByClassName("fixed-table-toolbar")) {
                 //document.getElementsByClassName("fixed-table-toolbar")[0].classList.add("ui");
                 //document.getElementsByClassName("fixed-table-toolbar")[0].classList.add("menu");
