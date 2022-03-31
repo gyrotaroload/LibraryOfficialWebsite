@@ -571,7 +571,8 @@ router.get('/docxUpload', ensureAuthenticated, function (req, res, next) {
                     ab: s.ab,
                     lab: s.lab,
                     uri: s.uri,
-                    editable: ss
+                    editable: ss,
+                    delOLDid: req.query.delOLDid ? req.query.delOLDid : 'no'
                 });
             });
         });
@@ -580,6 +581,7 @@ router.get('/docxUpload', ensureAuthenticated, function (req, res, next) {
             title: 'docx upload 2',
             moment: require('moment'),
             window_location_href_main: 'yes',
+            delOLDid: req.query.delOLDid ? req.query.delOLDid : 'no'
         });
     }
 });
@@ -692,11 +694,17 @@ router.get('/link', ensureAuthenticated, function (req, res, next) {//connect do
     if (req.query.ic === 'l') {
         least.SETuri(req.query.lid, req.query.docid, r => {
             if (r === 'yes') {
-                res.status(200).send(form_callback_page("成功"));
+                least.delById(req.query.delOLDid, () => {
+                    /**
+                     * 基本上在這裡不去確認舊資料是否被刪除
+                     */
+                    res.status(200).send(form_callback_page("成功"));
+                });
             }
             else {
                 res.status(404).send(form_callback_page("失敗"));
             }
+
         });
     } else if (req.query.ic === 'g') {
         gh.SETinnerdocID(req.query.lid, req.query.docid, r => {
