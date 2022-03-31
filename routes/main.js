@@ -654,7 +654,19 @@ router.post('/docx', ensureAuthenticated, upload.single('docxPayload'), function
                         res.status(404).send(sol);
                     }
                 });
-            });
+            });//TODO:這裡會丟出錯誤，導致程式崩潰，如下，我猜是套件的郭，我先前端UI限制副檔名
+        /**
+         * POST /main/docx 400 21.016 ms - 22
+Fatal TypeError: Cannot read property 'children' of undefined
+at Object.convertXmlToDocument (F:\andy\code\LIBWWW\LibraryOfficialWebsite\node_modules\mammoth\lib\docx\document-xml-reader.js:13:54)
+at F:\andy\code\LIBWWW\LibraryOfficialWebsite\node_modules\mammoth\lib\docx\docx-reader.js:80:35
+at Result.flatMap (F:\andy\code\LIBWWW\LibraryOfficialWebsite\node_modules\mammoth\lib\results.js:20:22)
+at F:\andy\code\LIBWWW\LibraryOfficialWebsite\node_modules\mammoth\lib\docx\docx-reader.js:74:40
+at Result.flatMap (F:\andy\code\LIBWWW\LibraryOfficialWebsite\node_modules\mammoth\lib\results.js:20:22)
+at F:\andy\code\LIBWWW\LibraryOfficialWebsite\node_modules\mammoth\lib\docx\docx-reader.js:73:33
+at F:\andy\code\LIBWWW\LibraryOfficialWebsite\node_modules\mammoth\lib\docx\docx-reader.js:184:24
+         */
+
     }
     catch (e) {
         res.status(400).send('word檔案解析失敗');
@@ -672,7 +684,7 @@ router.get('/docx', ensureAuthenticated, function (req, res, next) {
         urls: null,
         ttp: "編輯",//公告
         tp: "按下右側「上傳」按鈕以上傳docx檔案",
-        alpha: { txt: "提交", uri: `/main/link?ic=${req.query.ic}&lid=${req.query.id}&` },//for logic -> see get-/link
+        alpha: { txt: "提交", uri: `/main/link?delOLDid=${req.query.delOLDid?req.query.delOLDid:'no'}&ic=${req.query.ic}&lid=${req.query.id}&` },//for logic -> see get-/link
         moment: require('moment'),
         wsport: process.env.wsPORT,
         window_location_href_main: 'yes',
@@ -876,7 +888,8 @@ router.get('/editmd', ensureAuthenticated, function (req, res, next) {
                 req_query_id: req.query.id//,算了這個功能不做了
                 //defaultMDtextValue: req.query.defaultMDtextValue
                 , window_location_href_main: 'yes',
-                defaultvalue: s
+                defaultvalue: s,
+                delOLDid: req.query.delOLDid ? req.query.delOLDid : 'no',
             });
         });
     } else {
@@ -888,6 +901,7 @@ router.get('/editmd', ensureAuthenticated, function (req, res, next) {
             req_query_id: req.query.id//,算了這個功能不做了
             //defaultMDtextValue: req.query.defaultMDtextValue
             , window_location_href_main: 'yes',
+            delOLDid: req.query.delOLDid ? req.query.delOLDid : 'no',
         });
     }
 });
