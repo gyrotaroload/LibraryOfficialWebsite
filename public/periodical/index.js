@@ -55,17 +55,49 @@ document.getElementById('submit').addEventListener('click', function () {
         id: (document.getElementById('EDITid')) ? document.getElementById('EDITid').innerText : null
     }, (res) => {
         if (res.status === 200) {
-            document.getElementById("quickPOPUPtopic").innerText = "成功☆請重新整理這個網頁";
+         /*   document.getElementById("quickPOPUPtopic").innerText = "成功☆請重新整理這個網頁";
             document.getElementById("quickPOPUPinfo").innerText = "請點選下方任意按鈕離開";
             $('#quickPOPUP')
                 .modal('show')
-                ;
+                ;*/
+                Swal.fire({
+                    title: "成功☆請重新整理這個網頁",
+                    showDenyButton: true,
+                    showCancelButton: false,
+                    confirmButtonText: "請點選紅色按鈕離開",
+                    denyButtonText: '好',
+                  }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        window.location.href = "/main";
+
+                    } else if (result.isDenied) {
+                        window.location.href = "/main";
+
+                    }
+                  })
         } else {
-            document.getElementById("quickPOPUPtopic").innerText = "成功☆請「關閉」這個網頁";
+         /*   document.getElementById("quickPOPUPtopic").innerText = "成功☆請「關閉」這個網頁";
             document.getElementById("quickPOPUPinfo").innerText = "請點選下方任意按鈕離開";
             $('#quickPOPUP')
                 .modal('show')
-                ;
+                ;*/
+                Swal.fire({
+                    title: "成功☆請「關閉」這個網頁",
+                    showDenyButton: true,
+                    showCancelButton: false,
+                    confirmButtonText: "請點選紅色按鈕離開",
+                    denyButtonText:'好' ,
+                  }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        window.location.href = "/main";
+
+                    } else if (result.isDenied) {
+                        window.location.href = "/main";
+
+                    }
+                  })
         }
     });
 });
