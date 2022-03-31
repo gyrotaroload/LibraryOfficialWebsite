@@ -123,7 +123,6 @@ html(lang='en')
               a.btn.btn-link(href='http://www.adobe.com') View details »
         .row
           .col-sm-12.mt-4.mb-2.text-center
-            h2=mp4list
             h2 傳輸細節
         .row
           .col-sm-6.col-lg-6.border.border-dark
@@ -150,16 +149,39 @@ html(lang='en')
               small.blockquote-footer
                 | 步驟 
                 cite(title='4') 4
-    //.container
+    .container
       .row
-        .col-12.col-md-8.mx-auto
+        .col-12.col-md-12.mx-auto
           .jumbotron
             .row.text-center
               .text-center.col-12
-                h2 Request a free quote
+                h2.ui.header 所有影片
+                  h6.sub.header 請複製連結到任何您需要用這個影片的地方
               .text-center.col-12
+                table.table.table-striped.table-dark.table-hover.table-responsive
+                  thead
+                    tr
+                      th(scope='col') #{mp4list.length}
+                      th(scope='col') 上傳日期時間
+                      th(scope='col') 名稱
+                      th(scope='col') 說明
+                      th(scope='col') 超連結
+                      th(scope='col') 操作
+                  tbody
+                    each item, index in mp4list
+                      if item.id
+                        tr
+                          th(scope='row') #{index}
+                          td #{item.date_time}
+                          td #{item.name}
+                          td #{item.info}
+                          td 
+                            a.prurl(style="color:white;") #{item.cid}
+                          td 
+                            a.btn.btn-outline-danger(type='button' href=`/main/delVidById?id=${item.id}`) 刪除
+
                 //- CONTACT FORM https://github.com/jonmbake/bootstrap3-contact-form
-                form#feedbackForm.text-center
+                //form#feedbackForm.text-center
                   .form-group
                     label(for='name') Name
                     input#name.form-control(type='text' name='name' placeholder='Name' aria-describedby='nameHelp')
@@ -194,3 +216,13 @@ html(lang='en')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js' integrity='sha512-szJ5FSo9hEmXXe7b5AUVtn/WnL8a5VofnFeYC2i2z03uS2LhAch7ewNLbl5flsEmTTimMN0enBZg/3sQ+YOSzQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
     script(src='/ws/mp4upload.js')
     script(src='https://cdn.jsdelivr.net/npm/sweetalert2@11.4.8/dist/sweetalert2.all.min.js' integrity='sha256-aHuHTU7SdMUuRBFzJX+PRkbfy9kd0uGHS8uc4M/NVBo=' crossorigin='anonymous')
+
+  script.
+    var full = location.protocol + '//' + location.host+'/video/';
+    var pru = document.getElementsByClassName('prurl');
+    if(pru&&pru.length>0){
+      for(var i=0; i <pru.length;i++){
+        pru[i].href=full+pru[i].innerText;
+        pru[i].innerHTML=full+"<br>"+pru[i].innerText;
+      }
+    }

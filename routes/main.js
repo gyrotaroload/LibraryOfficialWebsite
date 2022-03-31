@@ -247,7 +247,7 @@ router.get('/add_periodical', ensureAuthenticated, function (req, res, next) {
 router.get('/mp4upload', ensureAuthenticated, function (req, res, next) {
     mp4id.all((r) => {
         res.render('NO_LAYOUT_mp4upload', {
-            mp4list: JSON.stringify(r)
+            mp4list: r
         });
     });
 });
@@ -416,6 +416,23 @@ router.get(('/addNewBooks'), ensureAuthenticated, function (req, res, next) {
             });
         });
     });
+});
+
+router.get(('/delVidById'), ensureAuthenticated, function (req, res, next) {
+    if (req.query.id) {
+        mp4id.delById(req.query.id, (a, b) => {
+            if (a && !b) {
+                res.status(500).send(form_callback_page("錯誤"));
+            }
+            else if (!a && b) {
+                res.status(200).send(form_callback_page('成功'));
+            } else {
+                res.status(500).send(form_callback_page("錯誤"));//impossable
+            }
+        });
+    } else {
+        res.status(500).send(form_callback_page("錯誤"));
+    }
 });
 
 router.get(('/ero'), ensureAuthenticated, function (req, res, next) {

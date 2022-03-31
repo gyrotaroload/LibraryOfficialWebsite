@@ -55,3 +55,7 @@ module.exports.all = function (callback) {
     });
 };
 
+module.exports.delById = function (MODid, callback) {
+console.log("🚀 ~ file: mp4index.js ~ line 59 ~ MODid", MODid)
+    mp4index.findByIdAndDelete({ $eq: MODid }, callback);
+};
