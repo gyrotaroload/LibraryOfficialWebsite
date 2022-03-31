@@ -286,6 +286,7 @@ block content
                       th(scope='col') 流水號
                       th(scope='col') 網站名稱
                       th(scope='col') 分類
+                      th(scope='col') 超連結
                       th(scope='col') 操作
                   else
                     tr
@@ -354,6 +355,9 @@ block content
                           button.ui.button(href="#" onclick=`$.ajax({url: 'ocr?id=${eo.id||'-1'}',type: 'DELETE',success: function(result) { window.location.href='/main/editR?tab=0'},error:function(result) { Swal.fire({  title: '錯誤!',  text: result,  icon: 'error',  confirmButtonText: 'Cool'});}});`)
                             i.save.icon
                             |   刪除
+                          button.ui.button(href="#" onclick='')
+                            i.save.icon
+                            |   編輯
                   else if emt==="tab1"
                     each eo, index in e2
                       tr(data-dbno=eo.sn)
@@ -379,13 +383,20 @@ block content
                         th(scope='row')
                           b= index+1
                           //.tm-status-circle.pending
-                        td= eo.name
-                        td= eo.subcategory
+                        td
+                          input.form-control(id=`erl${index}db1` type="text" value=eo.name) 
+                        td
+                          input.form-control(id=`erl${index}db2` type="text" value=eo.subcategory)
+                        td
+                          input.form-control(id=`erl${index}db3` type="text" value=eo.url)
                         td
                           .tm-status-circle.moving
-                          a.ui.button(href="#" onclick=`$.ajax({url: 'frequentlyUsedLinks?id=${eo.id||'-1'}',type: 'DELETE',success: function(result) { window.location.href='/main/editR?tab=2'},error:function(result) { Swal.fire({  title: '錯誤',  text: result,  icon: 'error',  confirmButtonText: 'Cool'});}});`)
+                          a.ui.button(id=`erl${index}db0` href="#" onclick=`$.ajax({url: 'frequentlyUsedLinks?id=${eo.id||'-1'}',type: 'DELETE',success: function(result) { window.location.href='/main/editR?tab=2'},error:function(result) { Swal.fire({  title: '錯誤',  text: result,  icon: 'error',  confirmButtonText: 'Cool'});}});`)
                             i.external.alternate.icon
                             |   刪除
+                          a.ui.button(href="#" onclick=` $.post("/main/e1", {no: '${eo.no}',name: $('#erl${index}db1').val(),subcategory: $('#erl${index}db2').val(),url: $('#erl${index}db3').val(),submit: '送出'}, (res) => {if (res.includes('資料寫入成功!')) {console.log('OK');document.getElementById('erl${index}db0').click();} else {console.log('X');Swal.fire('錯誤','資料寫入錯誤,保持原始狀態','error');} });`)
+                            i.external.alternate.icon
+                            |   編輯
                   else
                     tr
                       th error!
@@ -438,5 +449,7 @@ block content
       });
       });
     script(src='//cdn.jsdelivr.net/npm/sweetalert2@11')
+    script(src='https://cdn.jsdelivr.net/npm/sweetalert2@11.4.8/dist/sweetalert2.all.min.js' integrity='sha256-aHuHTU7SdMUuRBFzJX+PRkbfy9kd0uGHS8uc4M/NVBo=' crossorigin='anonymous')
+    script(src='/rs/index.js')
 
 

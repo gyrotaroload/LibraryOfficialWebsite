@@ -54,7 +54,7 @@ document.getElementById('submit').addEventListener('click', function () {
         eissn: INeissn,
         id: (document.getElementById('EDITid')) ? document.getElementById('EDITid').innerText : null
     }, (res) => {
-        if (res.status === 200) {
+        if (res.status === 200) {//TODO BUG RES會回傳html文字而不含status
          /*   document.getElementById("quickPOPUPtopic").innerText = "成功☆請重新整理這個網頁";
             document.getElementById("quickPOPUPinfo").innerText = "請點選下方任意按鈕離開";
             $('#quickPOPUP')
