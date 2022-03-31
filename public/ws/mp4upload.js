@@ -127,8 +127,9 @@ document.getElementById('checkvidinfo').addEventListener('click', () => {
             $('#stp2').text('已經開始傳送');
         };
     } catch (error) {
-        console.log("This is a bug that doesn't need to be noticed");
+        //console.log("This is a bug that doesn't need to be noticed");
         console.log(error);
+        $('#stp2').text('無法開始傳送');
     }
 
 
