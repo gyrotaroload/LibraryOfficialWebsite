@@ -113,7 +113,7 @@ class vid2hls {
     ff360(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback) {
         ffmpeg(p3).addOptions([ //360
             '-profile:v main',
-            '-vf pad=(iw/2)*2:(ih/2)*2:0:0,scale=trunc(oh/a/2)*2:360',
+            "-vf scale='w=min(640,trunc((360*dar)/2+0.5)*2):h=min(360,trunc((640/dar)/2+0.5)*2)',pad='w=640:h=360:x=(ow-iw)/2:y=(oh-ih)/2',setsar='sar=1/1'",
             '-c:a aac',
             '-ar 48000',
             '-b:a 96k',
@@ -145,7 +145,7 @@ class vid2hls {
     ff480(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback) {
         ffmpeg(p3).addOptions([ //480
             '-profile:v main',
-            '-vf pad=(iw/2)*2:(ih/2)*2:0:0,scale=trunc(oh/a/2)*2:480',
+            "-vf scale='w=min(842,trunc((480*dar)/2+0.5)*2):h=min(480,trunc((842/dar)/2+0.5)*2)',pad='w=842:h=480:x=(ow-iw)/2:y=(oh-ih)/2',setsar='sar=1/1'",//why on earth is 842???
             '-c:a aac',
             '-ar 48000',
             '-b:a 128k',
@@ -177,7 +177,7 @@ class vid2hls {
     ff720(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback) {
         ffmpeg(p3).addOptions([ //720
             '-profile:v main',
-            '-vf pad=(iw/2)*2:(ih/2)*2:0:0,scale=trunc(oh/a/2)*2:720',
+            "-vf scale='w=min(1280,trunc((720*dar)/2+0.5)*2):h=min(720,trunc((1280/dar)/2+0.5)*2)',pad='w=1280:h=720:x=(ow-iw)/2:y=(oh-ih)/2',setsar='sar=1/1'",
             '-c:a aac',
             '-ar 48000',
             '-b:a 128k',
@@ -204,20 +204,20 @@ class vid2hls {
     }
     ff1080(p0, p1, p2, p3, mrs, mrs_head_obj, callback) {
         ffmpeg(p3).addOptions([ //1080
-            //TODO其實我不知道1080的參數要怎麼設
+            //TODO其實我不知道1080的參數要怎麼設，scale 這個設定黨應該是對的
             '-profile:v main',
-            '-vf pad=(iw/2)*2:(ih/2)*2:0:0,scale=trunc(oh/a/2)*2:1080',
+            "-vf scale='w=min(1920,trunc((1080*dar)/2+0.5)*2):h=min(1080,trunc((1920/dar)/2+0.5)*2)',pad='w=1920:h=1080:x=(ow-iw)/2:y=(oh-ih)/2',setsar='sar=1/1'",//https://www.mobile01.com/topicdetail.php?f=510&t=3782292
             '-c:a aac',
             '-ar 48000',
             '-b:a 128k',
             '-c:v h264',
-            '-crf 20',
+            '-crf 18',
             '-g 48',
             '-keyint_min 48',
             '-sc_threshold 0',
-            '-b:v 6000k',
-            '-maxrate 6900k',
-            '-bufsize 9400k',
+            '-b:v 17500k',
+            '-maxrate 18000k',//https://www.mobile01.com/topicdetail.php?f=510&t=4500233
+            '-bufsize 25200',
             '-hls_time 7',
             `-hls_segment_filename ${p0}/1080p_%05d.ts`,
             '-hls_playlist_type vod',
