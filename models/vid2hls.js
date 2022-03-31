@@ -15,7 +15,8 @@ var cpus = require('cpus')
 
 
 class vid2hls {
-    constructor(tempy, custom_video_id, custom_video_extension, callback) {
+    constructor(ffmpegRP, tempy, custom_video_id, custom_video_extension, callback) {
+        this.ffmpegRP = ffmpegRP;
         this.tempy = tempy;
         this.custom_video_extension = custom_video_extension;
         this.fsLoc = this.tempy.file({ extension: custom_video_extension });
@@ -43,40 +44,46 @@ class vid2hls {
         });
     }
 
-    warehouse(idx, fileList, finish, warehousing, relay_this_warehouse,
+    warehouse(ffmpegRP, idx, fileList, finish, warehousing, relay_this_warehouse,
         relay_this_fsLoc, relay_this_custom_video_extension, relay_this_custom_video_id) {
+        ffmpegRP(relay_this_custom_video_id, `HLS file database upload, index number:${idx}`)
         console.log("🚀 ~ file: vid2hls.js ~ line 41 ~ vid2hls ~ warehouse ~ idx", idx)
         if (idx < fileList.children.length) {
             fs.readFile(fileList.children[idx].path, function (err, data) {
                 if (err) {
-                    throw err;//TODO EH
-                }
+                    ffmpegRP(relay_this_custom_video_id, `Error, Unable to read HLS segment file while database is populated:${err}`)
+                    finish(err);
+                } else {
 
-                var toW = {
-                    date_time: Date.now(),
-                    file_name: fileList.children[idx].name,
-                    file_extension: fileExtension(fileList.children[idx].name),
-                    file_dir: fileList.name,
-                    custom_video_title: basename(relay_this_fsLoc),
-                    custom_video_info: relay_this_custom_video_extension,
-                    custom_video_id: relay_this_custom_video_id
-                    , support_resolution: ['TBD', 'TBD', 'TBD'],
-                    file_size: Buffer.byteLength(data)
-                    , data: data, file_size_pretty: pretty(Buffer.byteLength(data))
-                };
-                console.log("🚀 ~ file: vid2hls.js ~ line 64 ~ vid2hls ~ toW", toW)
-                warehousing(toW
-                    , (tf) => {
-                        if (tf) {
-                            relay_this_warehouse(idx + 1, fileList, finish, warehousing, relay_this_warehouse,
-                                relay_this_fsLoc, relay_this_custom_video_extension, relay_this_custom_video_id);
-                        } else {
-                            console.log("[ERROR] Custom data processing return value display error")//TODO EH
-                        }
-                    });
+                    var toW = {
+                        date_time: Date.now(),
+                        file_name: fileList.children[idx].name,
+                        file_extension: fileExtension(fileList.children[idx].name),
+                        file_dir: fileList.name,
+                        custom_video_title: basename(relay_this_fsLoc),
+                        custom_video_info: relay_this_custom_video_extension,
+                        custom_video_id: relay_this_custom_video_id
+                        , support_resolution: ['TBD', 'TBD', 'TBD'],
+                        file_size: Buffer.byteLength(data)
+                        , data: data, file_size_pretty: pretty(Buffer.byteLength(data))
+                    };
+                    console.log("🚀 ~ file: vid2hls.js ~ line 64 ~ vid2hls ~ toW", toW)
+                    ffmpegRP(relay_this_custom_video_id, `Progress report, fill data into the database, the current time is:${toW.date_time}`)
+                    warehousing(toW
+                        , (tf) => {
+                            if (tf) {
+                                relay_this_warehouse(ffmpegRP, idx + 1, fileList, finish, warehousing, relay_this_warehouse,
+                                    relay_this_fsLoc, relay_this_custom_video_extension, relay_this_custom_video_id);
+                            } else {
+                                console.log("[ERROR] Custom data processing return value display error")
+                                ffmpegRP(relay_this_custom_video_id, `[ERROR] Custom data processing return value display error`)
+                            }
+                        });
+                }
             });
         } else {
-            del([fileList.children[idx - 1] ? fileList.children[idx - 1].name : '']).then(() => {
+            del([fileList.children[idx - 1] ? fileList.children[idx - 1].name : ''],{force:true}).then(() => {
+                ffmpegRP(relay_this_custom_video_id, `Congrats, all work done`)
                 finish(null);
             });
         }
@@ -89,25 +96,28 @@ class vid2hls {
         var relay_this_custom_video_id = mrs_head_obj.custom_video_id;
         fs.writeFile(`${FWD_fsDir}/index.m3u8`, '#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:BANDWIDTH=800000,RESOLUTION=640x360\n360p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=1400000,RESOLUTION=842x480\n480p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=2800000,RESOLUTION=1280x720\n720p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=6000000,RESOLUTION=1920x1080\n1080p.m3u8', function (err) {
             if (err) {
-                return console.log(err);
+                mrs_head_obj.this_ffmpegRP(relay_this_custom_video_id, `Error, unable to synthesize multi-resolution index, ${err}`)
+                finish(err);
+            } else {
+                console.log("The file was saved!");
+                mrs_head_obj.this_ffmpegRP(relay_this_custom_video_id, 'Progress report, Multi-resolution synthesis completed...')
+                // Loop through all the files in the temp directory
+                dirTree(FWD_fsDir, {
+                    extensions: /\.(ts|m3u8)$/
+                }, () => {
+                    // Create a table
+                    //const dir_tree = [
+                    //    { dir_tree: 'MID~~' }];
+                    //print
+                    //printTable(dir_tree);
+                    mrs_head_obj.this_ffmpegRP(relay_this_custom_video_id, 'Progress report, file transfer completed, reading HLS file tree...')
+                }, (item, PATH, stats) => {
+                    mrs_head_obj.this_ffmpegRP(relay_this_custom_video_id, `Progress report, ${JSON.stringify(item)}, end of progress report...`)
+                    console.log(item);
+                    relay_this_warehouse(mrs_head_obj.this_ffmpegRP, 0, item, finish, warehousing, relay_this_warehouse,
+                        relay_this_fsLoc, relay_this_custom_video_extension, relay_this_custom_video_id);
+                });
             }
-            console.log("The file was saved!");
-            // Loop through all the files in the temp directory
-            dirTree(FWD_fsDir, {
-                extensions: /\.(ts|m3u8)$/
-            }, () => {
-                // Create a table
-                //const dir_tree = [
-                //    { dir_tree: 'MID~~' }];
-                //print
-                //printTable(dir_tree);
-
-            }, (item, PATH, stats) => {
-                console.log(item);
-                relay_this_warehouse(0, item, finish, warehousing, relay_this_warehouse,
-                    relay_this_fsLoc, relay_this_custom_video_extension, relay_this_custom_video_id);
-            });
-
         })
     }
 
@@ -146,14 +156,12 @@ class vid2hls {
                 : 1
             }`
         ]).output(p0 + '/360p.m3u8').on('error', function (err, stdout, stderr) {
-
-            console.log("ffmpeg stdout:\n" + stdout);
-            console.log("ffmpeg stderr:\n" + stderr);
-        }).on('error', function (err, stdout, stderr) {
-
+            mrs_head_obj.this_ffmpegRP(mrs_head_obj.custom_video_id, `FFMPEG!!!ERROR!!!, ${stdout}`)
+            mrs_head_obj.this_ffmpegRP(mrs_head_obj.custom_video_id, `FFMPEG!!!ERROR!!!, ${stderr}`)
             console.log("ffmpeg stdout:\n" + stdout);
             console.log("ffmpeg stderr:\n" + stderr);
         }).on('end', () => {
+            mrs_head_obj.this_ffmpegRP(mrs_head_obj.custom_video_id, `Progress report, some halfway announcements, FFMPEG conversion has been partially completed, 360`)
             this.ff480(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback);
             console.log("ffmpeg360");
         }).run()
@@ -193,14 +201,12 @@ class vid2hls {
                 : 1
             }`
         ]).output(p0 + '/480p.m3u8').on('error', function (err, stdout, stderr) {
-
-            console.log("ffmpeg stdout:\n" + stdout);
-            console.log("ffmpeg stderr:\n" + stderr);
-        }).on('error', function (err, stdout, stderr) {
-
+            mrs_head_obj.this_ffmpegRP(mrs_head_obj.custom_video_id, `FFMPEG!!!ERROR!!!, ${stdout}`)
+            mrs_head_obj.this_ffmpegRP(mrs_head_obj.custom_video_id, `FFMPEG!!!ERROR!!!, ${stderr}`)
             console.log("ffmpeg stdout:\n" + stdout);
             console.log("ffmpeg stderr:\n" + stderr);
         }).on('end', () => {
+            mrs_head_obj.this_ffmpegRP(mrs_head_obj.custom_video_id, `Progress report, some halfway announcements, FFMPEG conversion has been partially completed, 480`)
             this.ff720(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback);
             console.log("ffmpeg480");
         }).run()
@@ -241,10 +247,12 @@ class vid2hls {
                 : 1
             }`
         ]).output(p0 + '/720p.m3u8').on('error', function (err, stdout, stderr) {
-
+            mrs_head_obj.this_ffmpegRP(mrs_head_obj.custom_video_id, `FFMPEG!!!ERROR!!!, ${stdout}`)
+            mrs_head_obj.this_ffmpegRP(mrs_head_obj.custom_video_id, `FFMPEG!!!ERROR!!!, ${stderr}`)
             console.log("ffmpeg stdout:\n" + stdout);
             console.log("ffmpeg stderr:\n" + stderr);
         }).on('end', () => {
+            mrs_head_obj.this_ffmpegRP(mrs_head_obj.custom_video_id, `Progress report, some halfway announcements, FFMPEG conversion has been partially completed, 720`)
             this.ff1080(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback);
             console.log("ffmpeg720");
         }).run()
@@ -286,23 +294,26 @@ class vid2hls {
             }`
         ]).output(p0 + '/1080p.m3u8').on('end', () => {
             console.log("ffmpeg1080");
-
+            mrs_head_obj.this_ffmpegRP(mrs_head_obj.custom_video_id, `Progress report, some halfway announcements, FFMPEG conversion has been partially completed, 1080`)
             callback(p0, p1, p2, p3, mrs, mrs_head_obj);
 
         }).on('error', function (err, stdout, stderr) {
-
+            mrs_head_obj.this_ffmpegRP(mrs_head_obj.custom_video_id, `FFMPEG!!!ERROR!!!, ${stdout}`)
+            mrs_head_obj.this_ffmpegRP(mrs_head_obj.custom_video_id, `FFMPEG!!!ERROR!!!, ${stderr}`)
             console.log("ffmpeg stdout:\n" + stdout);
             console.log("ffmpeg stderr:\n" + stderr);
         }).run()
     }
 
     end_trans(pt1, pt2) {
+        var this_ffmpegRP = this.ffmpegRP;
         var relay_this_fsDir = this.fsDir;
         var relay_this_fsLoc = this.fsLoc;
         var relay_this_warehouse = this.warehouse;
         var relay_this_custom_video_extension = this.custom_video_extension;
         var relay_this_custom_video_id = this.custom_video_id;
         var mrs_head_obj = {
+            this_ffmpegRP: this_ffmpegRP,
             warehouse: relay_this_warehouse,
             custom_video_extension: relay_this_custom_video_extension,
             custom_video_id: relay_this_custom_video_id
@@ -310,8 +321,9 @@ class vid2hls {
         var relay_this_mrs = this.multi_resolution_synthesis;
         this.ff360(relay_this_fsDir, pt1, pt2, relay_this_fsLoc, relay_this_mrs, mrs_head_obj, (p0, p1, p2, p3, mrs, mrs_head_obj) => {
             mrs(p1, p2, p0, p3, mrs_head_obj);
-            del([p3]).then(() => {//TODO wtf
+            del([p3],{force:true}).then(() => {//TODO wtf
                 console.log('OK')    //TODO tell user that it is ok
+                this_ffmpegRP(relay_this_custom_video_id, "Progress report, halfway announcement, FFMPEG conversion completed and original file deleted")
             });
         });
 

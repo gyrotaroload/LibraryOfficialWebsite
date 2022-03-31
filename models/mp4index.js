@@ -5,7 +5,8 @@ const mp4upload = require('./mp4upload');
 var mp4indexSchema = mongoose.Schema({
     date_time: {
         type: Date
-    }, cid: {
+    },
+    cid: {
         type: String
     },
     name: {
@@ -19,7 +20,7 @@ var mp4indexSchema = mongoose.Schema({
     },
     pub: {
         type: Boolean
-    }
+    }, ffmpeginfo: { type: Array }
 });
 
 //export JournalInformation schema
@@ -76,4 +77,18 @@ module.exports.delById = function (MODid, callback) {
         }
     });
 
+};
+
+module.exports.appffmpeg = function (MODid, appinfo, callback) {//這是上升
+
+    const filter = { cid: { $eq: MODid } };
+    const update = { $push: { ffmpeginfo: String(appinfo) } };
+
+    mp4index.findOneAndUpdate(filter, update, (e, d) => {
+        if (e) {
+            console.log('error occurs when we try to report ffmpeg info')
+            console.log(e)
+        }
+        callback();
+    });
 };
