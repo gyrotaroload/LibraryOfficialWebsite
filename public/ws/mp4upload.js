@@ -10,6 +10,7 @@ document.getElementById('checkvidinfo').addEventListener('click', () => {
     ws.onopen = () => {
         console.log('open connection');
         //ws.send(head_obj_str);
+        $('#stp1').text('伺服器上線');
     }
 
     //關閉後執行的動作，指定一個 function 會在連結中斷後執行
@@ -67,6 +68,44 @@ document.getElementById('checkvidinfo').addEventListener('click', () => {
             }
 
         } else {
+            if (event.data) {
+                const regex1 = /success/gmi;
+                const str1 = String(event.data);
+                let m1;
+
+                while ((m1 = regex1.exec(str1)) !== null) {
+                    // This is necessary to avoid infinite loops with zero-width matches
+                    if (m1.index === regex1.lastIndex) {
+                        regex1.lastIndex++;
+                    }
+
+                    // The result can be accessed through the `m`-variable.
+                    m1.forEach((match, groupIndex) => {
+                        console.log(`Found match, group ${groupIndex}: ${match}`);
+                        $('#stp4').text('傳輸成功');
+                    });
+                }
+
+                const regex2 = /success/gmi;
+                const str2 = String(event.data);
+                let m2;
+
+                while ((m2 = regex2.exec(str2)) !== null) {
+                    // This is necessary to avoid infinite loops with zero-width matches
+                    if (m2.index === regex2.lastIndex) {
+                        regex2.lastIndex++;
+                    }
+
+                    // The result can be accessed through the `m`-variable.
+                    m2.forEach((match, groupIndex) => {
+                        console.log(`Found match, group ${groupIndex}: ${match}`);
+                        $('#stp3').text('傳輸過程發生錯誤');
+                    });
+                }
+
+            } else {
+                $('#stp3').text('傳輸過程發生錯誤');
+            }
             console.log("sequence error...");
         }
     }
@@ -85,6 +124,7 @@ document.getElementById('checkvidinfo').addEventListener('click', () => {
                 file_extension: getFileNameWithExt(evt)
             }));
             console.log("stream file start...");
+            $('#stp2').text('已經開始傳送');
         };
     } catch (error) {
         console.log("This is a bug that doesn't need to be noticed");

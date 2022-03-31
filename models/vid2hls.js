@@ -174,7 +174,7 @@ class vid2hls {
             // '-b:v 1400k',//292
             // '-maxrate 1498k',//273
             // '-bufsize 2100k',//195
-            '-hls_time 10',
+            '-hls_time 7',
             `-hls_segment_filename ${p0}/480p_%05d.ts`,
             '-hls_playlist_type vod',
             '-f hls',
@@ -222,7 +222,7 @@ class vid2hls {
             //'-b:v 2800k',//329.14
             //'-maxrate 2996k',//307.61
             //'-bufsize 4200k',//219.42
-            '-hls_time 10',
+            '-hls_time 5',
             `-hls_segment_filename ${p0}/720p_%05d.ts`,
             '-hls_playlist_type vod',
             '-f hls',
@@ -266,7 +266,7 @@ class vid2hls {
             // '-b:v 17500k',
             // '-maxrate 18000k',//https://www.mobile01.com/topicdetail.php?f=510&t=4500233
             // '-bufsize 25200k',
-            '-hls_time 7',
+            '-hls_time 3',
             `-hls_segment_filename ${p0}/1080p_%05d.ts`,
             '-hls_playlist_type vod',
             '-f hls',
