@@ -187,3 +187,15 @@ module.exports.gethis = function (id2del, callback) {
 module.exports.del = function (id2del, callback) {
     JournalInformation.findByIdAndDelete({ $eq: id2del }, callback);
 }
+
+module.exports.findDuplicate = function (callback) {
+    JournalInformation.aggregate([
+        { "$group": { "_id": "$frameNumber", "count": { "$sum": 1 } } },
+        { "$match": { "_id": { "$ne": null }, "count": { "$gt": 1 } } },
+        { "$sort": { "count": -1 } },
+        { "$project": { "frameNumber": "$_id", "_id": 0 } }
+    ]).exec((err, SearchResult) => {
+        if (err) { console.warn(err) }
+        callback(SearchResult)
+    });
+}
