@@ -10,6 +10,9 @@ const dirTree = require('directory-tree');
 const pretty = require('prettysize');
 var fileExtension = require('file-extension');
 var basename = require('basename');
+const del = require('del');
+var cpus = require('cpus')
+
 
 class vid2hls {
     constructor(tempy, custom_video_id, custom_video_extension, callback) {
@@ -20,10 +23,10 @@ class vid2hls {
         this.custom_video_id = custom_video_id;
         fs.open(this.fsLoc, "wx", function (err1, fd) {
             // handle error
-            if (err1) callback(err1);
+            if (err1) callback(`[ERROR] unable to create server-side temporary video file, at start-up @ ${err1}`);
             fs.close(fd, function (err2) {
                 // handle error
-                if (err2) { callback(err2); } else {
+                if (err2) { callback(`[ERROR] unable to create server-side temporary video file, at end-stage @ ${err2}`); } else {
                     callback(null);
                 }
             });
@@ -73,17 +76,18 @@ class vid2hls {
                     });
             });
         } else {
-            finish(null);
+            del([fileList.children[idx - 1] ? fileList.children[idx - 1].name : '']).then(() => {
+                finish(null);
+            });
         }
     }
 
-    multi_resolution_synthesis(warehousing, finish) { // do something when encoding is done 
-        var FWD_fsDir = this.fsDir;
-        var relay_this_warehouse = this.warehouse;
-        var relay_this_fsLoc = this.fsLoc;
-        var relay_this_custom_video_extension = this.custom_video_extension;
-        var relay_this_custom_video_id = this.custom_video_id;
-        fs.writeFile(`${this.fsDir}/index.m3u8`, '#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:BANDWIDTH=800000,RESOLUTION=640x360\n360p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=1400000,RESOLUTION=842x480\n480p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=2800000,RESOLUTION=1280x720\n720p.m3u8', function (err) {
+    multi_resolution_synthesis(warehousing, finish, relay_this_fsDir, relay_this_fsLoc, mrs_head_obj) { // do something when encoding is done 
+        var FWD_fsDir = relay_this_fsDir;
+        var relay_this_warehouse = mrs_head_obj.warehouse;
+        var relay_this_custom_video_extension = mrs_head_obj.custom_video_extension;
+        var relay_this_custom_video_id = mrs_head_obj.custom_video_id;
+        fs.writeFile(`${FWD_fsDir}/index.m3u8`, '#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:BANDWIDTH=800000,RESOLUTION=640x360\n360p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=1400000,RESOLUTION=842x480\n480p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=2800000,RESOLUTION=1280x720\n720p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=6000000,RESOLUTION=1920x1080\n1080p.m3u8', function (err) {
             if (err) {
                 return console.log(err);
             }
@@ -99,7 +103,7 @@ class vid2hls {
                 //printTable(dir_tree);
 
             }, (item, PATH, stats) => {
-                //console.log(item);
+                console.log(item);
                 relay_this_warehouse(0, item, finish, warehousing, relay_this_warehouse,
                     relay_this_fsLoc, relay_this_custom_video_extension, relay_this_custom_video_id);
             });
@@ -107,78 +111,209 @@ class vid2hls {
         })
     }
 
+    ff360(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback) {
+        ffmpeg(p3).addOptions([ //360
+            // '-profile:v main',
+            "-vf scale='w=min(640,trunc((360*dar)/2+0.5)*2):h=min(360,trunc((640/dar)/2+0.5)*2)',pad='w=640:h=360:x=(ow-iw)/2:y=(oh-ih)/2',setsar='sar=1/1'",
+            '-c:a aac',
+            "-preset:v veryslow",
+            // '-ar 48000',
+            // '-b:a 96k',
+            '-c:v h264',
+            '-crf 20',
+            // '-g 48',
+            // '-keyint_min 48',
+            // '-sc_threshold 0',
+            // '-b:v 800k',
+            // '-maxrate 856k',
+            // '-bufsize 1200k',
+            '-hls_time 10',
+            `-hls_segment_filename ${p0}/360p_%05d.ts`,
+            '-hls_playlist_type vod',
+            '-f hls',
+            `-threads ${(cpus()) ?
+                (cpus().length && cpus().length > 0) ?
+                    (cpus().length === 1) ?
+                        1 : (cpus().length === 2) ?
+                            1 : (cpus().length === 3) ?
+                                2 : (cpus().length === 4) ?
+                                    3 : (cpus().length === 5) ?
+                                        3 : (cpus().length === 6) ?
+                                            4 : (cpus().length === 7) ?
+                                                4 : (cpus().length === 8) ? 4
+                                                    : Math.abs(Math.round(cpus().length / 2))
+                    : 1
+                : 1
+            }`
+        ]).output(p0 + '/360p.m3u8').on('error', function (err, stdout, stderr) {
+
+            console.log("ffmpeg stdout:\n" + stdout);
+            console.log("ffmpeg stderr:\n" + stderr);
+        }).on('error', function (err, stdout, stderr) {
+
+            console.log("ffmpeg stdout:\n" + stdout);
+            console.log("ffmpeg stderr:\n" + stderr);
+        }).on('end', () => {
+            this.ff480(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback);
+            console.log("ffmpeg360");
+        }).run()
+    }
+    ff480(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback) {
+        ffmpeg(p3).addOptions([ //480
+            // '-profile:v main',
+            "-vf scale='w=min(842,trunc((480*dar)/2+0.5)*2):h=min(480,trunc((842/dar)/2+0.5)*2)',pad='w=842:h=480:x=(ow-iw)/2:y=(oh-ih)/2',setsar='sar=1/1'",//why on earth is 842???
+            '-c:a aac',
+            "-preset:v veryslow",
+            // '-ar 48000',
+            // '-b:a 128k',
+            '-c:v h264',
+            '-crf 20',
+            // '-g 48',
+            // '-keyint_min 48',
+            // '-sc_threshold 0',
+            // '-b:v 1400k',//292
+            // '-maxrate 1498k',//273
+            // '-bufsize 2100k',//195
+            '-hls_time 7',
+            `-hls_segment_filename ${p0}/480p_%05d.ts`,
+            '-hls_playlist_type vod',
+            '-f hls',
+            `-threads ${(cpus()) ?
+                (cpus().length && cpus().length > 0) ?
+                    (cpus().length === 1) ?
+                        1 : (cpus().length === 2) ?
+                            1 : (cpus().length === 3) ?
+                                2 : (cpus().length === 4) ?
+                                    3 : (cpus().length === 5) ?
+                                        3 : (cpus().length === 6) ?
+                                            4 : (cpus().length === 7) ?
+                                                4 : (cpus().length === 8) ? 4
+                                                    : Math.abs(Math.round(cpus().length / 2))
+                    : 1
+                : 1
+            }`
+        ]).output(p0 + '/480p.m3u8').on('error', function (err, stdout, stderr) {
+
+            console.log("ffmpeg stdout:\n" + stdout);
+            console.log("ffmpeg stderr:\n" + stderr);
+        }).on('error', function (err, stdout, stderr) {
+
+            console.log("ffmpeg stdout:\n" + stdout);
+            console.log("ffmpeg stderr:\n" + stderr);
+        }).on('end', () => {
+            this.ff720(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback);
+            console.log("ffmpeg480");
+        }).run()
+    }
+    //https://github.com/atomdeniz/nodejs-mp4-to-hls
+    ff720(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback) {
+        ffmpeg(p3).addOptions([ //720
+            // '-profile:v main',
+            "-vf scale='w=min(1280,trunc((720*dar)/2+0.5)*2):h=min(720,trunc((1280/dar)/2+0.5)*2)',pad='w=1280:h=720:x=(ow-iw)/2:y=(oh-ih)/2',setsar='sar=1/1'",
+            '-c:a aac',
+            "-preset:v veryslow",
+            // '-ar 48000',
+            // '-b:a 128k',
+            '-c:v h264',
+            '-crf 20',
+            //'-g 48',
+            //'-keyint_min 48',
+            //'-sc_threshold 0',
+            //'-b:v 2800k',//329.14
+            //'-maxrate 2996k',//307.61
+            //'-bufsize 4200k',//219.42
+            '-hls_time 5',
+            `-hls_segment_filename ${p0}/720p_%05d.ts`,
+            '-hls_playlist_type vod',
+            '-f hls',
+            `-threads ${(cpus()) ?
+                (cpus().length && cpus().length > 0) ?
+                    (cpus().length === 1) ?
+                        1 : (cpus().length === 2) ?
+                            1 : (cpus().length === 3) ?
+                                2 : (cpus().length === 4) ?
+                                    3 : (cpus().length === 5) ?
+                                        3 : (cpus().length === 6) ?
+                                            4 : (cpus().length === 7) ?
+                                                4 : (cpus().length === 8) ? 4
+                                                    : Math.abs(Math.round(cpus().length / 2))
+                    : 1
+                : 1
+            }`
+        ]).output(p0 + '/720p.m3u8').on('error', function (err, stdout, stderr) {
+
+            console.log("ffmpeg stdout:\n" + stdout);
+            console.log("ffmpeg stderr:\n" + stderr);
+        }).on('end', () => {
+            this.ff1080(p0, p1, p2, p3, relay_this_mrs, mrs_head_obj, callback);
+            console.log("ffmpeg720");
+        }).run()
+    }
+    ff1080(p0, p1, p2, p3, mrs, mrs_head_obj, callback) {
+        ffmpeg(p3).addOptions([ //1080
+            //TODO其實我不知道1080的參數要怎麼設，scale 這個設定黨應該是對的
+            // '-profile:v main',
+            "-preset:v veryslow",
+            "-vf scale='w=min(1920,trunc((1080*dar)/2+0.5)*2):h=min(1080,trunc((1920/dar)/2+0.5)*2)',pad='w=1920:h=1080:x=(ow-iw)/2:y=(oh-ih)/2',setsar='sar=1/1'",//https://www.mobile01.com/topicdetail.php?f=510&t=3782292
+            '-c:a aac',
+            // '-ar 48000',
+            // '-b:a 128k',
+            '-c:v h264',
+            '-crf 20',
+            // '-g 48',
+            // '-keyint_min 48',
+            // '-sc_threshold 0',
+            // '-b:v 17500k',
+            // '-maxrate 18000k',//https://www.mobile01.com/topicdetail.php?f=510&t=4500233
+            // '-bufsize 25200k',
+            '-hls_time 3',
+            `-hls_segment_filename ${p0}/1080p_%05d.ts`,
+            '-hls_playlist_type vod',
+            '-f hls',
+            `-threads ${(cpus()) ?
+                (cpus().length && cpus().length > 0) ?
+                    (cpus().length === 1) ?
+                        1 : (cpus().length === 2) ?
+                            1 : (cpus().length === 3) ?
+                                2 : (cpus().length === 4) ?
+                                    3 : (cpus().length === 5) ?
+                                        3 : (cpus().length === 6) ?
+                                            4 : (cpus().length === 7) ?
+                                                4 : (cpus().length === 8) ? 4
+                                                    : Math.abs(Math.round(cpus().length / 2))
+                    : 1
+                : 1
+            }}`
+        ]).output(p0 + '/1080p.m3u8').on('end', () => {
+            console.log("ffmpeg1080");
+
+            callback(p0, p1, p2, p3, mrs, mrs_head_obj);
+
+        }).on('error', function (err, stdout, stderr) {
+
+            console.log("ffmpeg stdout:\n" + stdout);
+            console.log("ffmpeg stderr:\n" + stderr);
+        }).run()
+    }
+
     end_trans(pt1, pt2) {
-        ffmpeg(this.fsLoc).addOptions([ //360
-            '-profile:v main',
-            '-vf scale=w=640:h=360:force_original_aspect_ratio=decrease',
-            '-c:a aac',
-            '-ar 48000',
-            '-b:a 96k',
-            '-c:v h264',
-            '-crf 20',
-            '-g 48',
-            '-keyint_min 48',
-            '-sc_threshold 0',
-            '-b:v 800k',
-            '-maxrate 856k',
-            '-bufsize 1200k',
-            '-hls_time 10',
-            `-hls_segment_filename ${this.fsDir}/360p_%05d.ts`,
-            '-hls_playlist_type vod',
-            '-f hls'
-        ]).output(this.fsDir + '/360p.m3u8').on('error', function (err, stdout, stderr) {
-
-            console.log("ffmpeg stdout:\n" + stdout);
-            console.log("ffmpeg stderr:\n" + stderr);
-        }).run()
-
-        ffmpeg(this.fsLoc).addOptions([ //480
-            '-profile:v main',
-            '-vf scale=w=842:h=480:force_original_aspect_ratio=decrease',
-            '-c:a aac',
-            '-ar 48000',
-            '-b:a 128k',
-            '-c:v h264',
-            '-crf 20',
-            '-g 48',
-            '-keyint_min 48',
-            '-sc_threshold 0',
-            '-b:v 1400k',
-            '-maxrate 1498k',
-            '-bufsize 2100k',
-            '-hls_time 10',
-            `-hls_segment_filename ${this.fsDir}/480p_%05d.ts`,
-            '-hls_playlist_type vod',
-            '-f hls'
-        ]).output(this.fsDir + '/480p.m3u8').on('error', function (err, stdout, stderr) {
-
-            console.log("ffmpeg stdout:\n" + stdout);
-            console.log("ffmpeg stderr:\n" + stderr);
-        }).run()
-
-        ffmpeg(this.fsLoc).addOptions([ //720
-            '-profile:v main',
-            '-vf scale=w=1280:h=720:force_original_aspect_ratio=decrease',
-            '-c:a aac',
-            '-ar 48000',
-            '-b:a 128k',
-            '-c:v h264',
-            '-crf 20',
-            '-g 48',
-            '-keyint_min 48',
-            '-sc_threshold 0',
-            '-b:v 2800k',
-            '-maxrate 2996k',
-            '-bufsize 4200k',
-            '-hls_time 10',
-            `-hls_segment_filename ${this.fsDir}/720p_%05d.ts`,
-            '-hls_playlist_type vod',
-            '-f hls'
-        ]).output(this.fsDir + '/720p.m3u8').on('end', () => { this.multi_resolution_synthesis(pt1, pt2) }).on('error', function (err, stdout, stderr) {
-
-            console.log("ffmpeg stdout:\n" + stdout);
-            console.log("ffmpeg stderr:\n" + stderr);
-        }).run()
+        var relay_this_fsDir = this.fsDir;
+        var relay_this_fsLoc = this.fsLoc;
+        var relay_this_warehouse = this.warehouse;
+        var relay_this_custom_video_extension = this.custom_video_extension;
+        var relay_this_custom_video_id = this.custom_video_id;
+        var mrs_head_obj = {
+            warehouse: relay_this_warehouse,
+            custom_video_extension: relay_this_custom_video_extension,
+            custom_video_id: relay_this_custom_video_id
+        }
+        var relay_this_mrs = this.multi_resolution_synthesis;
+        this.ff360(relay_this_fsDir, pt1, pt2, relay_this_fsLoc, relay_this_mrs, mrs_head_obj, (p0, p1, p2, p3, mrs, mrs_head_obj) => {
+            mrs(p1, p2, p0, p3, mrs_head_obj);
+            del([p3]).then(() => {//TODO wtf
+                console.log('OK')    //TODO tell user that it is ok
+            });
+        });
 
     }
 }
