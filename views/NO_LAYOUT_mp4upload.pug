@@ -14,16 +14,16 @@ html(lang='en')
       }
   body
     nav.navbar.navbar-expand-lg.navbar-light.bg-light
-      a.navbar-brand(href='#') Navbar
+      a.navbar-brand(href='#') 成大數學系圖書館後台
       button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
         span.navbar-toggler-icon
       #navbarSupportedContent.collapse.navbar-collapse
         ul.navbar-nav.mr-auto
           li.nav-item.active
-            a.nav-link(href='#')
-              | Home 
+            a.nav-link(href='/main')
+              | 影片上傳與管理
               span.sr-only (current)
-          li.nav-item
+          //li.nav-item
             a.nav-link(href='#') Link
           li.nav-item.dropdown
             a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false') 危險區域 
@@ -32,7 +32,7 @@ html(lang='en')
               //a.dropdown-item(href='#') Another action
               //.dropdown-divider
               //a.dropdown-item(href='#') Something else here
-          li.nav-item
+          //li.nav-item
             a.nav-link.disabled(href='#') Disabled
         form.form-inline.my-2.my-lg-0
     header
@@ -124,33 +124,33 @@ html(lang='en')
         .row
           .col-sm-12.mt-4.mb-2.text-center
             h2=mp4list
-            h2 影片處理細節
+            h2 傳輸細節
         .row
-          .col-sm-6.col-lg-6
+          .col-sm-6.col-lg-6.border.border-dark
             blockquote.blockquote
               p#stp1.mb-0 伺服器下線
               small.blockquote-footer
                 | 步驟 
                 cite(title='1') 1
-          .col-sm-6.col-lg-6
+          .col-sm-6.col-lg-6.border.border-dark
             blockquote.blockquote
               p#stp2.mb-0 尚未開始傳送
               small.blockquote-footer
                 | 步驟 
                 cite(title='2') 2
-          .col-sm-6.col-lg-6
+          .col-sm-6.col-lg-6.border.border-dark
             blockquote.blockquote
               p#stp3.mb-0 傳輸過程沒有發生錯誤
               small.blockquote-footer
                 | 步驟 
                 cite(title='3') 3
-          .col-sm-6.col-lg-6
+          .col-sm-6.col-lg-6.border.border-dark
             blockquote.blockquote
               p#stp4.mb-0 傳送尚未終了
               small.blockquote-footer
                 | 步驟 
                 cite(title='4') 4
-    .container
+    //.container
       .row
         .col-12.col-md-8.mx-auto
           .jumbotron
@@ -158,7 +158,7 @@ html(lang='en')
               .text-center.col-12
                 h2 Request a free quote
               .text-center.col-12
-                // CONTACT FORM https://github.com/jonmbake/bootstrap3-contact-form
+                //- CONTACT FORM https://github.com/jonmbake/bootstrap3-contact-form
                 form#feedbackForm.text-center
                   .form-group
                     label(for='name') Name
@@ -173,11 +173,16 @@ html(lang='en')
                     textarea#message.form-control(rows='10' cols='100' name='message' placeholder='Message' aria-describedby='messageHelp')
                     span#messageHelp.form-text.text-muted(style='display: none;') Please enter a message.
                   button#feedbackSubmit.btn.btn-primary.btn-lg(type='submit')  Send
+    hr
     footer.text-center
       .container
         .row
           .col-12
-            p Copyright © MyWebsite. All rights reserved.
+            p
+              | 成大數學系圖書館後台
+              //| 影片轉換使用
+              //a(href="https://github.com/andythebreaker/vid2hls") https://github.com/andythebreaker/vid2hls
+              //| 套件
     // jQuery (necessary for Bootstrap's JavaScript plugins)
     //script(src='js/jquery-3.3.1.min.js')
     // Include all compiled plugins (below), or include individual files as needed
