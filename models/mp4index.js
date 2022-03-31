@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+const mp4upload = require('./mp4upload');
+
 
 var mp4indexSchema = mongoose.Schema({
     date_time: {
@@ -25,7 +27,7 @@ var mp4index = module.exports = mongoose.model('mp4index', mp4indexSchema);
 
 //function
 module.exports.add = function (incomeJSON, callback) {
-console.log("🚀 ~ file: mp4index.js ~ line 28 ~ incomeJSON", incomeJSON)
+    console.log("🚀 ~ file: mp4index.js ~ line 28 ~ incomeJSON", incomeJSON)
     var nobj = new mp4index({
         ...incomeJSON,
         pub: true,//TODO 這裡留了一個欄位可以選擇是否公開影片，並未實作此功能
@@ -56,6 +58,22 @@ module.exports.all = function (callback) {
 };
 
 module.exports.delById = function (MODid, callback) {
-console.log("🚀 ~ file: mp4index.js ~ line 59 ~ MODid", MODid)
-    mp4index.findByIdAndDelete({ $eq: MODid }, callback);
+    mp4index.findById({ $eq: MODid }, (e, ans) => {
+        if (e) {//error occurs
+            callback(e, null);
+        } else {
+            if (ans) {
+                mp4upload.deleteMany({ custom_video_id: { $eq: ans.cid } }).then(function () {
+                    mp4index.findByIdAndDelete({ $eq: MODid }, (a, b) => {//a is error b is success
+                        callback(a, b);
+                    });
+                }).catch(function (error) {
+                    callback(error, null); // Failure
+                });
+            } else {
+                callback('no this id, peace out!', null);
+            }
+        }
+    });
+
 };
