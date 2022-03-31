@@ -1112,7 +1112,8 @@ router.get('/editR', ensureAuthenticated, function (req, res, next) {
                 title: '電子資源',
                 e2: r.s,
                 emt: 'tab1',
-                ly: r.r
+                ly: r.r,
+                nqT: function (tt) { console.log(tt); return nqT.doall(tt, '~') }
             });
         });
     } else if (req.query.tab === '2') {
@@ -1121,7 +1122,8 @@ router.get('/editR', ensureAuthenticated, function (req, res, next) {
                 title: '電子資源',
                 e1: r.s,
                 emt: 'tab2',
-                ly: r.r
+                ly: r.r,
+                nqT: function (tt) { console.log(tt); return nqT.doall(tt, '~') }
             });
         });
     } else {
@@ -1130,7 +1132,8 @@ router.get('/editR', ensureAuthenticated, function (req, res, next) {
                 title: '電子資源',
                 e3: r.s,
                 emt: 'tab0',
-                ly: r.r
+                ly: r.r,
+                nqT: function (tt) { console.log(tt); return nqT.doall(tt, '~') }
             });
         });
     }
