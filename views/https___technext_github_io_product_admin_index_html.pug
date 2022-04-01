@@ -12,6 +12,7 @@ block contentHEAD
     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css' type='text/css')
     link(rel='stylesheet' href='https://unpkg.com/bootstrap-table@1.18.3/dist/themes/semantic/bootstrap-table-semantic.min.css' type='text/css')
     link(rel='stylesheet' href='/dashboard/stylesheets/index.css' type='text/css')
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.css' integrity='sha512-YdYyWQf8AS4WSB0WWdc3FbQ3Ypdm0QCWD2k4hgfqbQbRCJBEgX0iAegkl2S1Evma5ImaVXLBeUkIlP6hQ1eYKQ==' crossorigin='anonymous' referrerpolicy='no-referrer')
     link(rel='stylesheet' href='/stylesheets/bbwizerd.css' type='text/css')
     meta(http-equiv='X-UA-Compatible' content='ie=edge')
     title Product Admin - Dashboard HTML Template
@@ -277,9 +278,10 @@ block content
                       th(scope='col') 流水號
                       th(scope='col') 名稱
                       th(scope='col') 提供者
-                      th(scope='col') 類型
+                      th#ht2fr(scope='col') 類型
                       th(scope='col') 發布時間
                       th(scope='col') 備註
+                      th(scope='col') 附加檔案/超連結
                       th(scope='col') 操作
                   else if emt==="tab2"
                     tr
@@ -361,22 +363,66 @@ block content
                   else if emt==="tab1"
                     each eo, index in e2
                       tr(data-dbno=eo.sn)
+                        //-索引區
                         th(scope='row')
                           b= index+1
                           //.tm-status-circle.pending
-                        td= eo.osn
+                          .pop2class(id=`pop2class${index}` style="display:none;")
+                            //TODO這裡有羅及BUG，因為alert會讀這裡的HTML，但是值是寫死的，所以使用者如果改2次，他會覺得好像沒改道，但是資料有變......"UI-DATA不同步"     但是反正預覽資料是對的，我就不改了        /**記得用https://www.w3schools.com/jsref/prop_text_defaultvalue.asp   **/
+                            h4.ui.teal.message 主類型
+                            input.form-control(class=`pop2class${index}da` value=eo.c)
+                            h4.ui.teal.message 子類型
+                            input.form-control(class=`pop2class${index}db` value=eo.Textafterexternallinkother)
+                            .pop2classsub(id=`pop2class${index}sub` style="display:none;")
+                              i.check.circle.icon
+                              p 暫存
+                        //-名稱~a1~$('DVP2A1T9${index}S1').val()
                         td
-                          b= eo.provider
+                          input.form-control(id=`DVP2A1T9${index}S1` value=eo.osn)
+                        //-提供者~a2~$('DVP2A1T9${index}S2').val()
                         td
-                          b= String(eo.c)+' '+String(eo.Textafterexternallinkother)
+                          input.form-control(id=`DVP2A1T9${index}S2` value=eo.provider)
+                        //-類別~a3、a4~document.getElementById('C2ABD${index}').dataset.ca、document.getElementById('C2ABD${index}').dataset.cb
+                        td(data-ca=eo.c data-cb=eo.Textafterexternallinkother id=`C2ABD${index}`)
+                          button.ui.button(id=`pop2class${index}d0` onclick=`Swal.fire({title: document.getElementById('ht2fr').innerHTML,icon: 'info',html:document.getElementById('pop2class${index}').innerHTML,showCloseButton: true,showCancelButton: false,focusConfirm: true,confirmButtonText:document.getElementById('pop2class${index}sub').innerHTML,confirmButtonAriaLabel: '暫存'}).then((result) => {/* Read more about isConfirmed, isDenied below */if (result.isConfirmed) {console.log('checkpoint');document.getElementById('C2ABD${index}').dataset.ca=$('.pop2class${index}da').last().val();document.getElementById('C2ABD${index}').dataset.cb=$('.pop2class${index}db').last().val();$('#pop2class${index}d0').text(String($('.pop2class${index}da').last().val())+' '+String($('.pop2class${index}db').last().val()));}/* else if (result.isDenied) {Swal.fire('Changes are not saved', '', 'info')}*/})`)
+                            | #{`${String(eo.c)+' '+String(eo.Textafterexternallinkother)}`}
+                        //-日期~a5、6、7~py($('D2F${index}').val())、pm($('D2F${index}').val())、pd($('D2F${index}').val())
                         td
-                          b= String(eo.yPublished_External)+'年'+String(eo.mPublished_External)+'月'+String(eo.dPublished_External)+'日'
-                        td= eo.Remarks_External
+                          //本來是附加到底下的行value=`${String(eo.yPublished_External)+'年'+String(eo.mPublished_External)+'月'+String(eo.dPublished_External)+'日'}` 
+                          textarea.ui.button(id=`D2F${index}` oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' style='padding:0px 0px 0px 0px; width :3vw; height: 100%; ' data-toggle=`datepicker${index}`)
+                          //| #{`${String(eo.yPublished_External)+'年\n'+String(eo.mPublished_External)+'月\n'+String(eo.dPublished_External)+'日\n'}`}
+                          .initDateF2(id=`D2F${index}data` data-inittovalue=`${String(eo.yPublished_External)+'年'+String(eo.mPublished_External)+'月'+String(eo.dPublished_External)+'日'}` data-idfa=eo.yPublished_External data-idfb=eo.mPublished_External data-idfc=eo.dPublished_External data-toggle=`datepicker${index}`)
+                        //-附註~a8~$('DVP2A1T9${index}S3').val()
                         td
+                          input.form-control(id=`DVP2A1T9${index}S3` value=eo.Remarks_External)
+                        //-URL/DOCX/ECLX/~a9~W/PRAM!!!!!!!!!!!!!document.getElementById('fireMODurlDEC1P${index}')?'&a9='+String(document.getElementById('DVP2A1T9${index}S4').dataset.urle):''
+                        td(id=`DVP2A1T9${index}S4` data-urle=eo.urle)
                           .tm-status-circle.moving
+                          if eo.urle.includes("://")
+                            .card(id=`fireMODurlDEC1P${index}` style="display:none;")
+                              .card(id=`fireMODurlDEC2P${index}` style="display:none;")
+                                i.close.icon
+                                |     關閉
+                              .ui.action.input
+                                input(class=`DVP2A1T9${index}S5` type='url' value=eo.urle)
+                                button.ui.teal.right.labeled.icon.button(onclick=`document.getElementsByClassName('DVP2A1T9${index}S5')[0].defaultValue=$('.DVP2A1T9${index}S5').last().val();$('.DVP2A1T9${index}S5').first().prop('value',$('.DVP2A1T9${index}S5').last().val());document.getElementById('DVP2A1T9${index}S4').dataset.urle=$('.DVP2A1T9${index}S5').last().val();`)
+                                  i.hdd.icon
+                                  |     暫存
+                            a.ui.button(id=`fireMODurlDEC0P${index}` href="#" onclick=`Swal.fire({title: document.getElementById('fireMODurlDEC0P${index}').innerHTML,icon: 'info',html:document.getElementById('fireMODurlDEC1P${index}').innerHTML,showCloseButton: false,showCancelButton: false,focusConfirm: true,confirmButtonText:document.getElementById('fireMODurlDEC2P${index}').innerHTML,confirmButtonAriaLabel: '關閉!',})`)
+                              i.linkify.icon
+                              |   編輯外部超連結
+                          else
+                            a.ui.button(href="#" onclick=``)
+                                //TODO
+                                i.external.alternate.icon
+                                |   編輯內部附加文件
+                        td
                           a.ui.button(href="#" onclick=`$.ajax({url: 'fcr?id=${eo.id||'-1'}',type: 'DELETE',success: function(result) { window.location.href='/main/editR?tab=1'},error:function(result) { Swal.fire({  title: '錯誤',  text: result,  icon: 'error',  confirmButtonText: 'Cool'});}});`)
                             i.external.alternate.icon
                             |   刪除
+                          button.ui.button(onclick=`var u='/main/P2Ee?id=${eo.id}&a1=';u+=SimpleAndSecureURLByValueConversion($('#DVP2A1T9${index}S1').val())+'&a2=';u+=SimpleAndSecureURLByValueConversion($('#DVP2A1T9${index}S2').val())+'&a3='+SimpleAndSecureURLByValueConversion(document.getElementById('C2ABD${index}').dataset.ca)+'&a4='+SimpleAndSecureURLByValueConversion(document.getElementById('C2ABD${index}').dataset.cb)+'&a5='+py($('#D2F${index}').val())+'&a6='+pm($('#D2F${index}').val())+'&a7='+pd($('#D2F${index}').val())+'&a8='+SimpleAndSecureURLByValueConversion($('#DVP2A1T9${index}S3').val())+(document.getElementById('fireMODurlDEC1P${index}')?'&a9='+SimpleAndSecureURLByValueConversion(String(document.getElementById('DVP2A1T9${index}S4').dataset.urle)):'');console.log(u);window.location.href = u;`)  
+                            i.save.icon
+                            |   編輯
                   else if emt==="tab2"
                     each eo, index in e1
                       tr(data-dbno=eo.no)
@@ -400,6 +446,9 @@ block content
                   else
                     tr
                       th error!
+      //input#zzz(data-toggle='datepicker')
+      //textarea(data-toggle='datepicker')
+      //div(data-toggle='datepicker')
       footer.tm-footer.row.tm-mt-small
         .col-12.font-weight-light
           p.text-center.text-white.mb-0.px-4.small
@@ -451,5 +500,89 @@ block content
     script(src='//cdn.jsdelivr.net/npm/sweetalert2@11')
     script(src='https://cdn.jsdelivr.net/npm/sweetalert2@11.4.8/dist/sweetalert2.all.min.js' integrity='sha256-aHuHTU7SdMUuRBFzJX+PRkbfy9kd0uGHS8uc4M/NVBo=' crossorigin='anonymous')
     script(src='/rs/index.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.js' integrity='sha512-RCgrAvvoLpP7KVgTkTctrUdv7C6t7Un3p1iaoPr1++3pybCyCsCZZN7QEHMZTcJTmcJ7jzexTO+eFpHk4OCFAg==' crossorigin='anonymous' referrerpolicy='no-referrer')
 
+    script.
+      function setKeywordText(domobjSEL,text) {
+      //$(`#${domobjSEL}`).trigger('keypress');
+      var el = document.getElementById(domobjSEL);
+      el.value = text;
+      el.style.height = "";el.style.height = el.scrollHeight + "px"
+      var evt = document.createEvent("Events");
+      evt.initEvent("change", true, true);
+      el.dispatchEvent(evt);
+      }
+      var aidf=document.getElementsByClassName("initDateF2");
+      for (var i=0; i<aidf.length;i++){
+      $(`[data-toggle="datepicker${i}"]`).datepicker({
+      format: 'yyyy年mm月dd日',date: new Date(aidf[i].dataset.idfa, aidf[i].dataset.idfb, aidf[i].dataset.idfc) // Or '02/14/2014'
+      });
+      setKeywordText(`D2F${i}`,document.getElementById(`D2F${i}data`).dataset.inittovalue);
+      }
+      function py(st){
+      const regex = /^(\d{2,4})年/g;
+      const str = st;
+      let m;
+      while ((m = regex.exec(str)) !== null) {
+      // This is necessary to avoid infinite loops with zero-width matches
+      if (m.index === regex.lastIndex) {
+      regex.lastIndex++;
+      }
+      var tmp_m="";
+      // The result can be accessed through the `m`-variable.
+      m.forEach((match, groupIndex) => {
+      console.log(`Found match, group ${groupIndex}: ${match}`);
+      tmp_m= match;
+      });
+      return tmp_m;
+      }
+      }
+      function pm(st){
+      const regex = /年(\d{1,2})月/g;
+      const str = st;
+      let m;
+      while ((m = regex.exec(str)) !== null) {
+      // This is necessary to avoid infinite loops with zero-width matches
+      if (m.index === regex.lastIndex) {
+      regex.lastIndex++;
+      }
+      // The result can be accessed through the `m`-variable.
+      m.forEach((match, groupIndex) => {
+      console.log(`Found match, group ${groupIndex}: ${match}`);
+      tmp_m= match;
+      });
+      return tmp_m;
+      }
+      }
+      function pd(st){
+      const regex = /(\d{1,2})日$/g;
+      const str = st;
+      let m;
+      while ((m = regex.exec(str)) !== null) {
+      // This is necessary to avoid infinite loops with zero-width matches
+      if (m.index === regex.lastIndex) {
+      regex.lastIndex++;
+      }
+      // The result can be accessed through the `m`-variable.
+      m.forEach((match, groupIndex) => {
+      console.log(`Found match, group ${groupIndex}: ${match}`);
+      tmp_m= match;
+      });
+      return tmp_m;
+      }
+      }
+      function SimpleAndSecureURLByValueConversion(strii){
+      console.log(strii);
+      const regex = /[\?\=\&]/g;
+      const subst = ` `;
+      var stri=String(strii);
+      var str=stri?stri:"";
+      // The substituted value will be contained in the result variable
+      const result = str.replace(regex, subst);
+      console.log('Substitution result: ', result);
+      return result;
+      }
+      /**TODO
+      * 補充一點，這一頁要新增所有項目順序調整的功能，這部分尚未實作!!
+      */
 

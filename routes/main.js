@@ -1210,6 +1210,24 @@ router.get('/ocrE', ensureAuthenticated, function (req, res, next) {
     }
 });
 
+//校外P2 Resources-更新(欄位部分)
+router.get('/P2Ee', ensureAuthenticated, function (req, res, next) {
+    function res_default() {
+        res.status(200).send(form_callback_page("成功"));
+    }
+    if (req.query.id) {
+        e2.upd(req.query.id, req.query.a1, req.query.a2, req.query.a3, req.query.a4, req.query.a5, req.query.a6, req.query.a7, req.query.a8, req.query.a9, (e, r) => {
+            if (e) {
+                res.status(500).send(form_callback_page("錯誤"));
+            } else {
+                res_default();
+            }
+        });
+    } else {
+        res.status(500).send(form_callback_page("錯誤"));
+    }
+});
+
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
