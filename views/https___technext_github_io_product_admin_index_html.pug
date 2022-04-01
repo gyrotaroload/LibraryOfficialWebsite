@@ -109,7 +109,7 @@ block content
                 a.nav-link.d-block(href='/')
                   | &emsp;
                   b 回首頁
-      .container
+      .container.ui.fluid(style="margin-right:3vw;margin-left:3vw;")
         .row
           .col
             p.text-white.mt-1.mb-1
@@ -257,7 +257,7 @@ block content
               if emt==="tab0"
                 h2.tm-block-title 校內資源 (有關編輯:編輯只能編輯「欄位」部分，檔案部分請一律重新上傳再刪除原本的東西)
               else if emt==="tab1"
-                h2.tm-block-title 校外資源
+                h2.tm-block-title 校外資源 (有關編輯:對於所有列，若流水號為粉紅色，該列之「附加檔案/超連結」為可直接編輯，請填寫完所有需求項目後，按下編輯鍵，這將會提交。若該列流水號非粉紅色，請填寫除了「附加檔案/超連結」的其他目標異動項目，再點擊編輯鍵，這將會提交除了「附加檔案/超連結」的項目。__若要編輯「附加檔案/超連結」項目，點擊該按鈕後進入文件上傳頁面，文件將複寫。)
               else if emt==="tab2"
                 h2.tm-block-title 常用連結
               else
@@ -365,7 +365,10 @@ block content
                       tr(data-dbno=eo.sn)
                         //-索引區
                         th(scope='row')
-                          b= index+1
+                          if eo.urle.includes("://")
+                            b.ui.pink.message= index+1
+                          else
+                            b= index+1
                           //.tm-status-circle.pending
                           .pop2class(id=`pop2class${index}` style="display:none;")
                             //TODO這裡有羅及BUG，因為alert會讀這裡的HTML，但是值是寫死的，所以使用者如果改2次，他會覺得好像沒改道，但是資料有變......"UI-DATA不同步"     但是反正預覽資料是對的，我就不改了        /**記得用https://www.w3schools.com/jsref/prop_text_defaultvalue.asp   **/
