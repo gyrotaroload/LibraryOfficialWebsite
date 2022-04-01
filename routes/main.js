@@ -684,7 +684,7 @@ router.get('/docx', ensureAuthenticated, function (req, res, next) {
         urls: null,
         ttp: "編輯",//公告
         tp: "按下右側「上傳」按鈕以上傳docx檔案",
-        alpha: { txt: "提交", uri: `/main/link?delOLDid=${req.query.delOLDid?req.query.delOLDid:'no'}&ic=${req.query.ic}&lid=${req.query.id}&` },//for logic -> see get-/link
+        alpha: { txt: "提交", uri: `/main/link?delOLDid=${req.query.delOLDid ? req.query.delOLDid : 'no'}&ic=${req.query.ic}&lid=${req.query.id}&` },//for logic -> see get-/link
         moment: require('moment'),
         wsport: process.env.wsPORT,
         window_location_href_main: 'yes',
@@ -1192,6 +1192,23 @@ router.delete('/fcr', ensureAuthenticated, function (req, res, next) {
     }
 });
 //=================電子資源刪除api====================區段註解結束================================
+//On-Campus Resources-更新(欄位部分)
+router.get('/ocrE', ensureAuthenticated, function (req, res, next) {
+    function res_default() {
+        res.status(200).send(form_callback_page("成功"));
+    }
+    if (req.query.id) {
+        e3.upd(req.query.id, req.query.a1, req.query.a2, req.query.a3, req.query.a4, req.query.a5, req.query.a6, req.query.a7, req.query.a8, (e, r) => {
+            if (e) {
+                res.status(500).send(form_callback_page("錯誤"));
+            } else {
+                res_default();
+            }
+        });
+    } else {
+        res.status(500).send(form_callback_page("錯誤"));
+    }
+});
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {

@@ -254,7 +254,7 @@ block content
           .col-12.tm-block-col
             .tm-bg-primary-dark.tm-block.tm-block-taller.tm-block-scroll(style='max-height:80vh')
               if emt==="tab0"
-                h2.tm-block-title 校內資源
+                h2.tm-block-title 校內資源 (有關編輯:編輯只能編輯「欄位」部分，檔案部分請一律重新上傳再刪除原本的東西)
               else if emt==="tab1"
                 h2.tm-block-title 校外資源
               else if emt==="tab2"
@@ -299,9 +299,9 @@ block content
                         th(scope='row')
                           b= index+1
                         td
-                          input.form-control(type="text" value=eo.osn2)
+                          input.form-control(id=`k${index}db1` type="text" value=eo.osn2)
                         td
-                          input.form-control(type="text" value=eo.provider2)
+                          input.form-control(id=`k${index}db2` type="text" value=eo.provider2)
                         td
                           // Button trigger modal
                           button.btn.btn-primary(id=`exampleModal${index}bton` type='button' data-toggle='modal' data-target=`#exampleModal${index}` data-firstclass=nqT(String(eo.c2)) data-secclass=nqT(String(eo.Textafterexternallinkother2)))= String(eo.c2)+' '+String(eo.Textafterexternallinkother2)
@@ -349,13 +349,13 @@ block content
                               .p-2.flex-fill.bd-highlight
                                 button.btn.btn-primary(type='button' onclick=`var t=document.getElementById('d${index}b');t.dataset.db1=$('.d${index}b1').last().val();t.dataset.db2=$('.d${index}b2').last().val();t.dataset.db3=$('.d${index}b3').last().val();t.innerText=$('.d${index}b1').last().val()+'年'+$('.d${index}b2').last().val()+'月'+$('.d${index}b3').last().val()+'日'`) 暫存
                         td
-                          input.form-control(type="text" value=eo.Remarks_External2)
+                          input.form-control(id=`k${index}db3` type="text" value=eo.Remarks_External2)
                         td
                           .tm-status-circle.moving
                           button.ui.button(href="#" onclick=`$.ajax({url: 'ocr?id=${eo.id||'-1'}',type: 'DELETE',success: function(result) { window.location.href='/main/editR?tab=0'},error:function(result) { Swal.fire({  title: '錯誤!',  text: result,  icon: 'error',  confirmButtonText: 'Cool'});}});`)
                             i.save.icon
                             |   刪除
-                          button.ui.button(href="#" onclick='')
+                          button.ui.button(onclick=`var u='/main/ocrE?id=${eo.id}&a1=';u+=$('#k${index}db1').val()+'&a2=';u+=$('#k${index}db2').val()+'&a3='+document.getElementById('exampleModal${index}bton').dataset.firstclass+'&a4='+document.getElementById('exampleModal${index}bton').dataset.secclass+'&a5='+document.getElementById('d${index}b').dataset.db1+'&a6='+document.getElementById('d${index}b').dataset.db2+'&a7='+document.getElementById('d${index}b').dataset.db3+'&a8='+$('#k${index}db3').val();console.log(u);window.location.href = u;`)
                             i.save.icon
                             |   編輯
                   else if emt==="tab1"
