@@ -80,6 +80,7 @@ block content
               input(placeholder='Search...')
     .ui.padded.grid
       if isUSER!=='no'
+        //^^^^^^^^^^^^^^^^^^這代表:是不一個管理員帳號
         #sidebar.two.wide.tablet.only.two.wide.computer.only.column(style="overflow-y:scroll;")
           .ui.vertical.borderless.fluid.text.menu
             // show all...etc
@@ -104,57 +105,42 @@ block content
       #content.seventeen.wide.mobile.fourteen.wide.tablet.fourteen.wide.computer.right.floated.column
         .ui.padded.grid
           //20220310更，按客戶需求VVVVVVVVVVVVVVVVVVVVV
-          .Viewbycategory.row(style='display:none;')
-            h1.ui.huge.dividing.header 期刊資料分類
-          .Viewbycategory.bb-wizard.center.aligned.row(style='display:none;')
+          #VD1.Viewbycategory.row(style='display:none;')
+            h1.ui.huge.dividing.header 重複資料分析
+          #VD2.Viewbycategory.bb-wizard.center.aligned.row(style='display:none;')
             .containter
               ul#bb-wizard-steps.bb-wizard-steps.markers.bb-justified
-                li(class=alpha === "1" ? "active" : "")
-                  a(data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=1`")
+                li(class=alpha === "duplicate0" ? "active" : "")
+                  a(data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=duplicate0`")
                     label
-                      h4 現期期刊
-                      span 資料將展示於下方表格
+                      h4 架號重複
+                      //span 資料將展示於下方表格
                 //li.active
                   a(data-toggle='tab' href='#wiz-page-2')
                     label
                       h4 歷史期刊
                       | 資料將展示於下方表格
-                li(class=alpha === "0" ? "active" : "")
-                  a(data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]")
+                li(class=alpha === "duplicate1" ? "active" : "")
+                  a(data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=duplicate1`")
                     label
-                      h4 所有期刊
-                      | 資料將展示於下方表格
-                li(class=alpha === "2" ? "active" : "")
-                  a(data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=2`")
+                      h4 ISSN重複
+                      //| 資料將展示於下方表格
+                li(class=alpha === "duplicate2" ? "active" : "")
+                  a(data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=duplicate2`")
                     label
-                      h4 電子期刊
-                      | 資料將展示於下方表格
-                li(class=alpha === "3" ? "active" : "")
-                  a(data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=3`")
+                      h4 E-ISSN重複
+                      //| 資料將展示於下方表格
+                li(class=alpha === "duplicate3" ? "active" : "")
+                  a(data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=duplicate3`")
                     label
-                      h4 紙本期刊
-                      | 資料將展示於下方表格
-          //.center.aligned.row
-            .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
-              img.ui.centered.small.circular.image(src='/dashboard/static/images/wireframe/square-image.png')
-              .ui.large.basic.label 現期期刊
-              p Something else
-            .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
-              img.ui.centered.small.circular.image(src='/dashboard/static/images/wireframe/square-image.png')
-              .ui.large.basic.label 歷史期刊
-              p Something else
-            .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
-              img.ui.centered.small.circular.image(src='/dashboard/static/images/wireframe/square-image.png')
-              .ui.large.basic.label 所有期刊
-              p Something else
-            .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
-              img.ui.centered.small.circular.image(src='/dashboard/static/images/wireframe/square-image.png')
-              .ui.large.basic.label Label
-              p Something else
+                      h4 刊名重複
+                      //| 資料將展示於下方表格
           //20220310更，按客戶需求VVVVVVVVVVVVVVVVVVVVV
           .Viewbycategory.ui.hidden.section.divider(style='display:none;')
           .row
             h1.ui.huge.dividing.header 所有期刊
+              button.ui.button.yellow(onclick="$('.Viewbycategory').show();Swal.fire({showDenyButton: true,showCancelButton: false,confirmButtonText: '好',denyButtonText: `取消分析模式(顯示全部資料)`,width: 0.75*vw,title: document.getElementById('VD1').innerHTML,icon: 'info',html: document.getElementById('VD2').innerHTML}).then((result) => {/* Read more about isConfirmed, isDenied below */if (result.isConfirmed) {console.log('no action')} else if (result.isDenied) {window.location.href = '/main/journals';}});$('.Viewbycategory').hide();")
+                | #{`顯示重複資料分析 目前分析模式:${(alpha === "duplicate0") ? '架號重複':(alpha === "duplicate1") ? 'ISSN重複':(alpha === "duplicate2") ? 'ISSN重複':(alpha === "duplicate3") ? 'E-ISSN重複':'全部(無分析)'}模式`}
           .row
             // 底下這坨東西是設定表格應用程式的語言，消失吧!
             .select
@@ -226,6 +212,7 @@ block content
       script(src='https://cdn.jsdelivr.net/npm/js-base64@3.7.2/base64.min.js')
       script(src='/dashboard/js/app_table.js')
       script(src='/dashboard/js/index.js')
+      script(src='https://cdn.jsdelivr.net/npm/sweetalert2@11.4.8/dist/sweetalert2.all.min.js' integrity='sha256-aHuHTU7SdMUuRBFzJX+PRkbfy9kd0uGHS8uc4M/NVBo=' crossorigin='anonymous')
       script.
         function table_user(){
         if(document.getElementById('isUSER').innerText==='yes'){

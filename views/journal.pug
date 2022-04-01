@@ -89,54 +89,6 @@ block content
         #content.sixteen.wide.mobile.fourteen.wide.tablet.fourteen.wide.computer.right.floated.column
           .ui.padded.grid
             //20220310更，按客戶需求VVVVVVVVVVVVVVVVVVVVV
-            .Viewbycategory.row(style='display:none;')
-              h1.ui.huge.dividing.header 期刊資料分類
-            .Viewbycategory.bb-wizard.center.aligned.row(style='display:none;')
-              .containter
-                ul#bb-wizard-steps.bb-wizard-steps.markers.bb-justified
-                  li(class=alpha === "1" ? "active" : "")
-                    a(data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=1`")
-                      label
-                        h4 現期期刊
-                        span 資料將展示於下方表格
-                  //li.active
-                    a(data-toggle='tab' href='#wiz-page-2')
-                      label
-                        h4 歷史期刊
-                        | 資料將展示於下方表格
-                  li(class=alpha === "0" ? "active" : "")
-                    a(data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]")
-                      label
-                        h4 所有期刊
-                        | 資料將展示於下方表格
-                  li(class=alpha === "2" ? "active" : "")
-                    a(data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=2`")
-                      label
-                        h4 電子期刊
-                        | 資料將展示於下方表格
-                  li(class=alpha === "3" ? "active" : "")
-                    a(data-toggle='tab' onclick="window.location.href=window.location.href.split( '?' )[0]+`?alpha=3`")
-                      label
-                        h4 紙本期刊
-                        | 資料將展示於下方表格
-            //.center.aligned.row
-              .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
-                img.ui.centered.small.circular.image(src='/dashboard/static/images/wireframe/square-image.png')
-                .ui.large.basic.label 現期期刊
-                p Something else
-              .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
-                img.ui.centered.small.circular.image(src='/dashboard/static/images/wireframe/square-image.png')
-                .ui.large.basic.label 歷史期刊
-                p Something else
-              .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
-                img.ui.centered.small.circular.image(src='/dashboard/static/images/wireframe/square-image.png')
-                .ui.large.basic.label 所有期刊
-                p Something else
-              .eight.wide.mobile.four.wide.tablet.four.wide.computer.column
-                img.ui.centered.small.circular.image(src='/dashboard/static/images/wireframe/square-image.png')
-                .ui.large.basic.label Label
-                p Something else
-            //20220310更，按客戶需求VVVVVVVVVVVVVVVVVVVVV
             .Viewbycategory.ui.hidden.section.divider(style='display:none;')
             .row
               h1.ui.huge.dividing.header 所有期刊

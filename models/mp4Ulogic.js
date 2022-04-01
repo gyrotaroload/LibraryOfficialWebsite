@@ -6,7 +6,12 @@ const vid2hls = require('./vid2hls');
 const mp4upload = require('./mp4upload');
 const mp4id = require('./mp4index');
 var isJSON = require('is-json');
-
+/**
+ * TODO
+ * 要在轉檔完後更新mp4index來讓使用者一目了然到底轉完黨沒
+ * @param {*} stuff 
+ * @param {*} stuff_callback 
+ */
 
 var relayW = function (stuff, stuff_callback) {
     mp4upload.warehousing(stuff, stuff_callback);

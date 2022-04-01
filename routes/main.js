@@ -212,6 +212,7 @@ router.get('/home/del', ensureAuthenticated, function (req, res, next) {//這個
 
     least.delById(req.query.id, (err, doc) => {
         if (err) {
+            console.log("🚀 ~ file: main.js ~ line 215 ~ least.delById ~ err", err)
             res.status(500).send(form_callback_page("錯誤"));
         } else {
             res.status(200).send(form_callback_page("成功"));
@@ -249,8 +250,8 @@ router.get('/mp4upload', ensureAuthenticated, function (req, res, next) {
     mp4id.all((r) => {
         res.render('NO_LAYOUT_mp4upload', {
             mp4list: r,
-            INFOTIME:momentTZ().tz("Asia/Taipei").format('YYYY年MM月DD日HH時mm分ss秒(台北時間)'),
-            nqT:function(tt){console.log(tt);return nqT.doall(tt,'~')}
+            INFOTIME: momentTZ().tz("Asia/Taipei").format('YYYY年MM月DD日HH時mm分ss秒(台北時間)'),
+            nqT: function (tt) { console.log(tt); return nqT.doall(tt, '~') }
         });
     });
 });
@@ -327,7 +328,9 @@ router.post('/add_periodical', ensureAuthenticated, function (req, res, next) {
     }
 
     JournalInformation.gethis(req.body.id, (stuff) => {
-
+        /**
+         * 期刊本來就沒有編輯後資料會重複的問題，我剛開始是設計得很好的，是使用者操作不當才會造成錯誤，查超久，結果不是我的鍋......andythebreaker
+         */
         JournalInformation.del(req.body.id, (stuff2) => {
 
             var newJournalInformation = new JournalInformation({
@@ -526,12 +529,17 @@ router.get('/swipeEDIT', ensureAuthenticated, function (req, res, next) {
 });
 
 router.get('/journals', ensureAuthenticated, function (req, res, next) {
+    /**
+     * alpha參數，若為數字，1~3有意義，會導入現期期刊、歷史期刊、紙本期刊搜尋，此功能API已實作，UI在後台前台都拿掉了，如果客戶突然要加回功能，實作UI就好
+     * alpha參數，若為英文，為起始搜尋，前後台API皆實作
+     * alpha參數，若為
+     */
     res.render('dashboard', {
         title: '成大數學系圖書館',
         isUSER: 'no',
-        jjsonURL: "/jjson",
+        jjsonURL: (req.query.alpha) ? ("/jjson?alpha=" + req.query.alpha) : "/jjson",
         a2z: generator('@', ['A-Z']),
-        alpha: '0',
+        alpha: req.query.alpha ? req.query.alpha : '0',
         window_location_href_main: 'yes'
     });
 });
@@ -563,7 +571,8 @@ router.get('/docxUpload', ensureAuthenticated, function (req, res, next) {
                     ab: s.ab,
                     lab: s.lab,
                     uri: s.uri,
-                    editable: ss
+                    editable: ss,
+                    delOLDid: req.query.delOLDid ? req.query.delOLDid : 'no'
                 });
             });
         });
@@ -572,6 +581,7 @@ router.get('/docxUpload', ensureAuthenticated, function (req, res, next) {
             title: 'docx upload 2',
             moment: require('moment'),
             window_location_href_main: 'yes',
+            delOLDid: req.query.delOLDid ? req.query.delOLDid : 'no'
         });
     }
 });
@@ -644,7 +654,19 @@ router.post('/docx', ensureAuthenticated, upload.single('docxPayload'), function
                         res.status(404).send(sol);
                     }
                 });
-            });
+            });//TODO:這裡會丟出錯誤，導致程式崩潰，如下，我猜是套件的郭，我先前端UI限制副檔名
+        /**
+         * POST /main/docx 400 21.016 ms - 22
+Fatal TypeError: Cannot read property 'children' of undefined
+at Object.convertXmlToDocument (F:\andy\code\LIBWWW\LibraryOfficialWebsite\node_modules\mammoth\lib\docx\document-xml-reader.js:13:54)
+at F:\andy\code\LIBWWW\LibraryOfficialWebsite\node_modules\mammoth\lib\docx\docx-reader.js:80:35
+at Result.flatMap (F:\andy\code\LIBWWW\LibraryOfficialWebsite\node_modules\mammoth\lib\results.js:20:22)
+at F:\andy\code\LIBWWW\LibraryOfficialWebsite\node_modules\mammoth\lib\docx\docx-reader.js:74:40
+at Result.flatMap (F:\andy\code\LIBWWW\LibraryOfficialWebsite\node_modules\mammoth\lib\results.js:20:22)
+at F:\andy\code\LIBWWW\LibraryOfficialWebsite\node_modules\mammoth\lib\docx\docx-reader.js:73:33
+at F:\andy\code\LIBWWW\LibraryOfficialWebsite\node_modules\mammoth\lib\docx\docx-reader.js:184:24
+         */
+
     }
     catch (e) {
         res.status(400).send('word檔案解析失敗');
@@ -662,7 +684,7 @@ router.get('/docx', ensureAuthenticated, function (req, res, next) {
         urls: null,
         ttp: "編輯",//公告
         tp: "按下右側「上傳」按鈕以上傳docx檔案",
-        alpha: { txt: "提交", uri: `/main/link?ic=${req.query.ic}&lid=${req.query.id}&` },//for logic -> see get-/link
+        alpha: { txt: "提交", uri: `/main/link?delOLDid=${req.query.delOLDid ? req.query.delOLDid : 'no'}&ic=${req.query.ic}&lid=${req.query.id}&` },//for logic -> see get-/link
         moment: require('moment'),
         wsport: process.env.wsPORT,
         window_location_href_main: 'yes',
@@ -684,11 +706,17 @@ router.get('/link', ensureAuthenticated, function (req, res, next) {//connect do
     if (req.query.ic === 'l') {
         least.SETuri(req.query.lid, req.query.docid, r => {
             if (r === 'yes') {
-                res.status(200).send(form_callback_page("成功"));
+                least.delById(req.query.delOLDid, () => {
+                    /**
+                     * 基本上在這裡不去確認舊資料是否被刪除
+                     */
+                    res.status(200).send(form_callback_page("成功"));
+                });
             }
             else {
                 res.status(404).send(form_callback_page("失敗"));
             }
+
         });
     } else if (req.query.ic === 'g') {
         gh.SETinnerdocID(req.query.lid, req.query.docid, r => {
@@ -860,7 +888,8 @@ router.get('/editmd', ensureAuthenticated, function (req, res, next) {
                 req_query_id: req.query.id//,算了這個功能不做了
                 //defaultMDtextValue: req.query.defaultMDtextValue
                 , window_location_href_main: 'yes',
-                defaultvalue: s
+                defaultvalue: s,
+                delOLDid: req.query.delOLDid ? req.query.delOLDid : 'no',
             });
         });
     } else {
@@ -872,6 +901,7 @@ router.get('/editmd', ensureAuthenticated, function (req, res, next) {
             req_query_id: req.query.id//,算了這個功能不做了
             //defaultMDtextValue: req.query.defaultMDtextValue
             , window_location_href_main: 'yes',
+            delOLDid: req.query.delOLDid ? req.query.delOLDid : 'no',
         });
     }
 });
@@ -1082,7 +1112,8 @@ router.get('/editR', ensureAuthenticated, function (req, res, next) {
                 title: '電子資源',
                 e2: r.s,
                 emt: 'tab1',
-                ly: r.r
+                ly: r.r,
+                nqT: function (tt) { console.log(tt); return nqT.doall(tt, '~') }
             });
         });
     } else if (req.query.tab === '2') {
@@ -1091,7 +1122,8 @@ router.get('/editR', ensureAuthenticated, function (req, res, next) {
                 title: '電子資源',
                 e1: r.s,
                 emt: 'tab2',
-                ly: r.r
+                ly: r.r,
+                nqT: function (tt) { console.log(tt); return nqT.doall(tt, '~') }
             });
         });
     } else {
@@ -1100,7 +1132,8 @@ router.get('/editR', ensureAuthenticated, function (req, res, next) {
                 title: '電子資源',
                 e3: r.s,
                 emt: 'tab0',
-                ly: r.r
+                ly: r.r,
+                nqT: function (tt) { console.log(tt); return nqT.doall(tt, '~') }
             });
         });
     }
@@ -1159,6 +1192,41 @@ router.delete('/fcr', ensureAuthenticated, function (req, res, next) {
     }
 });
 //=================電子資源刪除api====================區段註解結束================================
+//On-Campus Resources-更新(欄位部分)
+router.get('/ocrE', ensureAuthenticated, function (req, res, next) {
+    function res_default() {
+        res.status(200).send(form_callback_page("成功"));
+    }
+    if (req.query.id) {
+        e3.upd(req.query.id, req.query.a1, req.query.a2, req.query.a3, req.query.a4, req.query.a5, req.query.a6, req.query.a7, req.query.a8, (e, r) => {
+            if (e) {
+                res.status(500).send(form_callback_page("錯誤"));
+            } else {
+                res_default();
+            }
+        });
+    } else {
+        res.status(500).send(form_callback_page("錯誤"));
+    }
+});
+
+//校外P2 Resources-更新(欄位部分)
+router.get('/P2Ee', ensureAuthenticated, function (req, res, next) {
+    function res_default() {
+        res.status(200).send(form_callback_page("成功"));
+    }
+    if (req.query.id) {
+        e2.upd(req.query.id, req.query.a1, req.query.a2, req.query.a3, req.query.a4, req.query.a5, req.query.a6, req.query.a7, req.query.a8, req.query.a9, (e, r) => {
+            if (e) {
+                res.status(500).send(form_callback_page("錯誤"));
+            } else {
+                res_default();
+            }
+        });
+    } else {
+        res.status(500).send(form_callback_page("錯誤"));
+    }
+});
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {

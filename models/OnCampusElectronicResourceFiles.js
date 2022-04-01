@@ -106,3 +106,27 @@ module.exports.fileById = function (req_id, Ahash, callback) {
         }
     });
 }
+
+module.exports.upd = function (MODid, a1, a2, a3, a4, a5, a6, a7, a8, callback) {
+
+    const filter = { $eq: MODid };
+    const update = {
+        osn2: a1,
+        provider2: a2,
+        c2: a3,
+        Textafterexternallinkother2: a4,
+        yPublished_External2: a5,
+        mPublished_External2: a6,
+        dPublished_External2: a7,
+        Remarks_External2: a8
+    };
+
+    e3.findByIdAndUpdate(filter, update, (e, d) => {
+        if (e) {
+            console.log('error occurs when we try to report update')
+            console.log(e); callback(e);
+        } else {
+            callback(null);
+        }
+    });
+};

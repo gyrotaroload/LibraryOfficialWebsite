@@ -93,7 +93,7 @@ module.exports.getByNameStart = function (headALPHA, callback) {
     } else if (headALPHA === "3") {//紙本
         ft = { PS: { $ne: '無' } };
     } else {
-        ft = { bookName: { $regex: "^" + headALPHA, $options: 'i' } };
+        ft = { bookName: { $regex: "^" + headALPHA, $options: 'i' } };//TODO資安問題
     }
     JournalInformation.find(ft).sort({ frameNumber: 'descending' }).exec((err, SearchResult) => {
         if (err) {
@@ -104,29 +104,33 @@ module.exports.getByNameStart = function (headALPHA, callback) {
     });
 }
 
+module.exports.FormatER = function (d) {
+    var rowsDATA = [];
+    d.forEach(element => {
+        var tmpobj = {};
+        tmpobj.id = element.id;
+        tmpobj.placeNumber = element.frameNumber;
+        tmpobj.issn = element.ISSN;
+        tmpobj.mainName = element.bookName;
+        tmpobj.stat = element.STAT;
+        tmpobj.eSource = element.ES;
+        tmpobj.pSource = element.PS;
+        tmpobj.datas = element.Volume;
+        tmpobj.someStuff = element.REMK;
+        tmpobj.existTime = `起始:${element.LIVstart};終止:${element.LIVend};停定年分(負面表列):${element.LIVx};`;
+        tmpobj.updateTime = element.new_date;
+        tmpobj.eissn = element.eissn;
+        tmpobj.TIMEs = element.LIVstart;
+        tmpobj.TIMEe = element.LIVend;
+        tmpobj.TIMEn = JSON.stringify(element.LIVx).replace('[', '').replace(']', '');
+        rowsDATA.push(tmpobj);
+    });
+    return rowsDATA;
+}
+
 module.exports.getAllFormat = function (callback) {
     JournalInformation.getAll((d) => {
-        var rowsDATA = [];
-        d.forEach(element => {
-            var tmpobj = {};
-            tmpobj.id = element.id;
-            tmpobj.placeNumber = element.frameNumber;
-            tmpobj.issn = element.ISSN;
-            tmpobj.mainName = element.bookName;
-            tmpobj.stat = element.STAT;
-            tmpobj.eSource = element.ES;
-            tmpobj.pSource = element.PS;
-            tmpobj.datas = element.Volume;
-            tmpobj.someStuff = element.REMK;
-            tmpobj.existTime = `起始:${element.LIVstart};終止:${element.LIVend};停定年分(負面表列):${element.LIVx};`;
-            tmpobj.updateTime = element.new_date;
-            tmpobj.eissn = element.eissn;
-            tmpobj.TIMEs = element.LIVstart;
-            tmpobj.TIMEe = element.LIVend;
-            tmpobj.TIMEn = JSON.stringify(element.LIVx).replace('[', '').replace(']', '');
-            rowsDATA.push(tmpobj);
-        });
-        callback(rowsDATA);
+        callback(JournalInformation.FormatER(d));
     });
 }
 
@@ -137,29 +141,7 @@ module.exports.getByYear = function (callback) {
 
 module.exports.getByNameStartFormat = function (headALPHA, callback) {
     JournalInformation.getByNameStart(headALPHA, (d) => {
-        ///////////////////////////////////////copy start/////////////////////////
-        var rowsDATA = [];
-        d.forEach(element => {
-            var tmpobj = {};
-            tmpobj.id = element.id;
-            tmpobj.placeNumber = element.frameNumber;
-            tmpobj.issn = element.ISSN;
-            tmpobj.mainName = element.bookName;
-            tmpobj.stat = element.STAT;
-            tmpobj.eSource = element.ES;
-            tmpobj.pSource = element.PS;
-            tmpobj.datas = element.Volume;
-            tmpobj.someStuff = element.REMK;
-            tmpobj.existTime = `起始:${element.LIVstart};終止:${element.LIVend};停定年分(負面表列):${element.LIVx};`;
-            tmpobj.updateTime = element.new_date;
-            tmpobj.eissn = element.eissn;
-            tmpobj.TIMEs = element.LIVstart;
-            tmpobj.TIMEe = element.LIVend;
-            tmpobj.TIMEn = JSON.stringify(element.LIVx).replace('[', '').replace(']', '');
-            rowsDATA.push(tmpobj);
-        });
-        callback(rowsDATA);
-        ///////////////end of copy//////////////////////
+        callback(JournalInformation.FormatER(d));
     });
 
 }
@@ -186,4 +168,168 @@ module.exports.gethis = function (id2del, callback) {
 
 module.exports.del = function (id2del, callback) {
     JournalInformation.findByIdAndDelete({ $eq: id2del }, callback);
+}
+
+module.exports.findDuplicate0 = function (callback) {
+    JournalInformation.aggregate([
+        { "$group": { "_id": "$frameNumber", "count": { "$sum": 1 } } },
+        { "$match": { "_id": { "$ne": null }, "count": { "$gt": 1 } } },
+        { "$sort": { "count": -1 } },
+        { "$project": { "frameNumber": "$_id", "_id": 0 } }
+    ]).exec((err, SearchResult) => {
+        if (err) { console.warn(err) }
+        callback(SearchResult)
+    });
+}
+
+module.exports.findDuplicate1 = function (callback) {
+    JournalInformation.aggregate([
+        { "$group": { "_id": "$ISSN", "count": { "$sum": 1 } } },
+        { "$match": { "_id": { "$ne": null }, "count": { "$gt": 1 } } },
+        { "$sort": { "count": -1 } },
+        { "$project": { "ISSN": "$_id", "_id": 0 } }
+    ]).exec((err, SearchResult) => {
+        if (err) {
+            console.warn(err);
+            callback(null)
+        } else {
+
+            callback(SearchResult)
+        }
+    });
+}
+
+module.exports.findDuplicate2 = function (callback) {
+    JournalInformation.aggregate([
+        { "$group": { "_id": "$eissn", "count": { "$sum": 1 } } },
+        { "$match": { "_id": { "$ne": null }, "count": { "$gt": 1 } } },
+        { "$sort": { "count": -1 } },
+        { "$project": { "eissn": "$_id", "_id": 0 } }
+    ]).exec((err, SearchResult) => {
+        if (err) {
+            console.warn(err);
+            callback(null)
+        } else {
+
+            callback(SearchResult)
+        }
+    });
+}
+
+module.exports.findDuplicate3 = function (callback) {
+    JournalInformation.aggregate([
+        { "$group": { "_id": "$bookName", "count": { "$sum": 1 } } },
+        { "$match": { "_id": { "$ne": null }, "count": { "$gt": 1 } } },
+        { "$sort": { "count": -1 } },
+        { "$project": { "bookName": "$_id", "_id": 0 } }
+    ]).exec((err, SearchResult) => {
+        if (err) {
+            console.warn(err);
+            callback(null)
+        } else {
+
+            callback(SearchResult)
+        }
+    });
+}
+/**
+ * FDpostProcessing都是格式化過的
+ * @param {*} preP 
+ * @param {*} callback 
+ */
+module.exports.FDpostProcessing0 = function (preP, callback) {
+    if (preP && preP.length > 0) {
+        var tmpA = [];
+        function findinner(i) {
+            if (i < preP.length) {
+                var ft = { frameNumber: { $eq: preP[i].frameNumber } };
+                JournalInformation.find(ft).sort({ frameNumber: 'descending' }).exec((err, SearchResult) => {
+                    if (err) {
+                        console.log(err);
+                        callback(null);
+                    } else {
+                        tmpA = tmpA.concat(SearchResult);
+                        findinner(i + 1);
+                    }
+                });
+            } else {
+                callback(JournalInformation.FormatER(tmpA));
+            }
+        }
+        findinner(0);
+    } else {
+        callback(null);
+    }
+}
+module.exports.FDpostProcessing1 = function (preP, callback) {
+    if (preP && preP.length > 0) {
+        var tmpA = [];
+        function findinner(i) {
+            if (i < preP.length) {
+                var ft = { ISSN: { $eq: preP[i].ISSN } };
+                JournalInformation.find(ft).sort({ ISSN: 'descending' }).exec((err, SearchResult) => {
+                    if (err) {
+                        console.log(err);
+                        callback(null);
+                    } else {
+                        tmpA = tmpA.concat(SearchResult);
+                        findinner(i + 1);
+                    }
+                });
+            } else {
+                callback(JournalInformation.FormatER(tmpA));
+            }
+        }
+        findinner(0);
+    } else {
+        callback(null);
+    }
+}
+module.exports.FDpostProcessing2 = function (preP, callback) {
+    if (preP && preP.length > 0) {
+        var tmpA = [];
+        function findinner(i) {
+            if (i < preP.length) {
+                var ft = { eissn: { $eq: preP[i].eissn } };
+                JournalInformation.find(ft).sort({ eissn: 'descending' }).exec((err, SearchResult) => {
+                    if (err) {
+                        console.log(err);
+                        callback(null);
+                    } else {
+                        tmpA = tmpA.concat(SearchResult);
+                        findinner(i + 1);
+                    }
+                });
+            } else {
+                callback(JournalInformation.FormatER(tmpA));
+            }
+        }
+        findinner(0);
+    } else {
+        callback(null);
+    }
+}
+module.exports.FDpostProcessing3 = function (preP, callback) {
+    if (preP && preP.length > 0) {
+        var tmpA = [];
+        function findinner(i) {
+            if (i < preP.length) {
+                var ft = { bookName: { $eq: preP[i].bookName } };
+                JournalInformation.find(ft).sort({ bookName: 'descending' }).exec((err, SearchResult) => {
+                    if (err) {
+                        console.log(err);
+                        callback(null);
+                    } else {
+                        tmpA = tmpA.concat(SearchResult);
+                        findinner(i + 1);
+                    }
+                });
+            } else {
+                callback(JournalInformation.FormatER(tmpA));
+            }
+        }
+        findinner(0);
+    } else {
+        callback(null);
+    }
 }

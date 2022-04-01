@@ -139,3 +139,44 @@ module.exports.getMaxIndex = function (callback) {
 module.exports.delById = function (MODid, callback) {
     e2.findByIdAndDelete({ $eq: MODid }, (err, doc) => callback(err, doc));
 };
+
+module.exports.upd = function (MODid, a1, a2, a3, a4, a5, a6, a7, a8, a9, callback) {
+
+    const filter = { $eq: MODid };
+    var update = null;
+
+    if (a9) {
+        update = {
+            osn: a1,
+            provider: a2,
+            c: a3,
+            Textafterexternallinkother: a4,
+            yPublished_External: a5,
+            mPublished_External: a6,
+            dPublished_External: a7,
+            Remarks_External: a8,
+            urle: a9
+        }
+    } else {
+        update = {
+            osn: a1,
+            provider: a2,
+            c: a3,
+            Textafterexternallinkother: a4,
+            yPublished_External: a5,
+            mPublished_External: a6,
+            dPublished_External: a7,
+            Remarks_External: a8
+        }
+    }
+
+   
+    e2.findByIdAndUpdate(filter, update, (e, d) => {
+        if (e) {
+            console.log('error occurs when we try to report update')
+            console.log(e); callback(e);
+        } else {
+            callback(null);
+        }
+    });
+};

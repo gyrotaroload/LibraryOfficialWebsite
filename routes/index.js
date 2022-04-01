@@ -146,72 +146,115 @@ router.get(('/ero'), function (req, res, next) {
 });
 
 router.get('/jjson', function (req, res, next) {
-  console.log(req.query.alpha);
   if (req.query.alpha) {
-
-    ji.getByNameStartFormat(req.query.alpha, (d) => {
-      ///////////區間複製起點
+    if (req.query.alpha === 'duplicate0') {
+      ji.findDuplicate0((da) => {
+        if (da) {
+          ji.FDpostProcessing0(da, (d) => {
+            ///////////區間複製起點
+            res.status(200).json({
+              "total": d ? d.length : 0,
+              "totalNotFiltered": d ? d.length : 0,
+              "rows": d ? d : []
+            });
+            ///////////區間複製宗典
+          });
+        } else {
+          ///////////區間複製起點
+          res.status(200).json({
+            "total": 0,
+            "totalNotFiltered": 0,
+            "rows": []
+          });
+          ///////////區間複製宗典
+        }
+      });
+    } else if (req.query.alpha === 'duplicate1') {
+      ji.findDuplicate1((da) => {
+        if (da) {
+          ji.FDpostProcessing1(da, (d) => {
+            ///////////區間複製起點
+            res.status(200).json({
+              "total": d ? d.length : 0,
+              "totalNotFiltered": d ? d.length : 0,
+              "rows": d ? d : []
+            });
+            ///////////區間複製宗典
+          });
+        } else {
+          ///////////區間複製起點
+          res.status(200).json({
+            "total": 0,
+            "totalNotFiltered": 0,
+            "rows": []
+          });
+          ///////////區間複製宗典
+        }
+      });
+    } else if (req.query.alpha === 'duplicate2') {
+      ji.findDuplicate2((da) => {
+        if (da) {
+          ji.FDpostProcessing2(da, (d) => {
+            ///////////區間複製起點
+            res.status(200).json({
+              "total": d ? d.length : 0,
+              "totalNotFiltered": d ? d.length : 0,
+              "rows": d ? d : []
+            });
+            ///////////區間複製宗典
+          });
+        } else {
+          ///////////區間複製起點
+          res.status(200).json({
+            "total": 0,
+            "totalNotFiltered": 0,
+            "rows": []
+          });
+          ///////////區間複製宗典
+        }
+      });
+    } else if (req.query.alpha === 'duplicate3') {
+      ji.findDuplicate3((da) => {
+        if (da) {
+          ji.FDpostProcessing3(da, (d) => {
+            ///////////區間複製起點
+            res.status(200).json({
+              "total": d ? d.length : 0,
+              "totalNotFiltered": d ? d.length : 0,
+              "rows": d ? d : []
+            });
+            ///////////區間複製宗典
+          });
+        } else {
+          ///////////區間複製起點
+          res.status(200).json({
+            "total": 0,
+            "totalNotFiltered": 0,
+            "rows": []
+          });
+          ///////////區間複製宗典
+        }
+      });
+    } else {
+      ji.getByNameStartFormat(req.query.alpha, (d) => {
+        ///////////區間複製起點
+        res.status(200).json({
+          "total": d.length,
+          "totalNotFiltered": d.length,
+          "rows": d
+        });
+        ///////////區間複製宗典
+      });
+    }
+  } else {
+    ji.getAllFormat((d) => {
       res.status(200).json({
         "total": d.length,
         "totalNotFiltered": d.length,
         "rows": d
       });
-      ///////////區間複製宗典
-    });
-  } else {
-    ji.getAllFormat((d) => {/*
-  
-      var rowsDATA = [];
-      d.forEach(element => {
-        var tmpobj = {};
-        tmpobj.placeNumber = element.frameNumber;
-        tmpobj.issn = element.ISSN;
-        tmpobj.mainName = element.bookName;
-        tmpobj.stat = element.STAT;
-        tmpobj.eSource = element.ES;
-        tmpobj.pSource = element.PS;
-        tmpobj.datas = element.Volume;
-        tmpobj.someStuff = element.REMK;
-        tmpobj.existTime = element.LIVstart;
-        tmpobj.updateTime = element.new_date;
-        rowsDATA.push(tmpobj);
-  
-      });*/
-
-      res.status(200).json({
-        "total": d.length,
-        "totalNotFiltered": d.length,
-        "rows": d/*rowsDATA*//*[
-  
-          {
-            "placeNumber": "a",
-            "issn": "b",
-            "mainName": "c",
-            "stat": "d",
-            "eSource": "e",
-            "pSource": "f",
-            "datas": "g",
-            "someStuff": "h",
-            "updateTime": "i",
-            "existTime": "j"
-          },
-          {
-            "placeNumber": "a",
-            "issn": "b",
-            "mainName": "c",
-            "stat": "d",
-            "eSource": "e",
-            "pSource": "f",
-            "datas": "g",
-            "someStuff": "h",
-            "updateTime": "i",
-            "existTime": "j"
-          },
-        ]*/
-      });
     });
   }
-
 });
 
 router.get('/inner', function (req, res, next) {
@@ -505,11 +548,11 @@ router.get('/video/:id/:part', function (req, res, next) {
 
 
 router.get('/video/:id', function (req, res, next) {
-  mp4id.getByCid(req.params.id,(r)=>{
+  mp4id.getByCid(req.params.id, (r) => {
     res.render('video', {
-      ...header_link,cid:req.params.id,
-      vif:r?r:{date_time:Date.now(),name:'404無法找到這個影片',info:'你來到了一個荒蕪的草原...'},
-      momentTZ:momentTZ
+      ...header_link, cid: req.params.id,
+      vif: r ? r : { date_time: Date.now(), name: '404無法找到這個影片', info: '你來到了一個荒蕪的草原...' },
+      momentTZ: momentTZ
     });
   });
 });

@@ -211,7 +211,8 @@ block content
         h4= labSW||'標籤'
         if labSW
           label.ui.primary.button
-            input(type='file' style='display:none;')
+            //TODO input check and security should always be implemented on the server side. The accept feature exists only to help users quickly filter relevant files and not having to sift through thousands of irrelevant files.
+            input(type='file' style='display:none;' accept=".docx")
             span.zocial-windows
             |  上傳word檔
         else

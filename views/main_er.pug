@@ -2371,6 +2371,17 @@ block content
         button.ui.bottom.attached.button(onclick="if(event.target.value!=='1'){event.target.value='1';event.target.innerHTML=`<i class='cubes icon'></i>使用簡易檔案類型`;document.getElementById('s2').value=1;document.getElementById('sub1').disabled = false;document.getElementById('sub0').disabled = true;}else{event.target.value='0';event.target.innerHTML=`<i class='cubes icon'></i>使用iana進階檔案類型`;document.getElementById('sub1').disabled = true;document.getElementById('sub0').disabled = false;document.getElementById('s2').value=0;}" value='0')
           i.cubes.icon
           |   使用iana進階檔案類型
+    
+      .card 
+        .content.inverted
+
+          .header 若要在校內資源區域使用超連結
+          .ui.violet.message 請在下方輸入超連結，並按下下載，這會幫您下載一個檔案。請按一般程序填寫校內資源表單，並且檔案部分上傳方才下載的檔案，附檔名選擇HTML 
+        .ui.action.input.attached
+          input#urlhack(type='text' placeholder='超連結...')
+          button.ui.button.brown(onclick="Durl($('#urlhack').val())") 下載
+
+        
     p &emsp;
     script(src='https://code.jquery.com/jquery-3.6.0.min.js' integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js' integrity='sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==' crossorigin='anonymous' referrerpolicy='no-referrer')
@@ -2395,4 +2406,27 @@ block content
     script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/transition.min.js' integrity='sha512-MCuLP92THkMwq8xkT2cQg5YpF30l3qzJuBRf/KsbQP1czFkRYkr2dSkCHmdJETqVmvIq5Y4AOVE//Su+cH+8QA==' crossorigin='anonymous' referrerpolicy='no-referrer')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/video.min.js' integrity='sha512-ebgtEARHrY0ZrnNu7UG+/AyZo7Zl4RZOE/TIi4AqnPXwk/5MLKhHiSemsrheRV7ZbeLW1m2TqBzdSyEpjJcSLA==' crossorigin='anonymous' referrerpolicy='no-referrer')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/visibility.min.js' integrity='sha512-pcX/bEmbHWxW0fvRU70A6UqVXm0Z1tBJTwSLHE3hE8AAhG4hDL8R19Oho4DmdCNNYrgDSyHhH+ALNg5d5SFxxw==' crossorigin='anonymous' referrerpolicy='no-referrer')
-
+    script.
+      var download=function(filename, text) {
+      var element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+      element.setAttribute('download', filename);
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+      }
+      var Durl=function(du){
+      download('超連結.html',`<html>
+      <head>
+      <meta http-equiv="refresh" content="0; url=${du}" />
+      </head>
+      <body>
+      <p>
+      <a href="${du}">
+      Redirect
+      </a>
+      </p>
+      </body>
+      </html>`);
+      }
