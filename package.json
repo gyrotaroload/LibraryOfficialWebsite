@@ -73,7 +73,7 @@
     "isemail": "^3.2.0",
     "jquery-file-upload-gridfs-middleware": "~0.1.1",
     "js-base64": "~3.7.2",
-    "jsonwebtoken": "~8.5.1",
+    "jsonwebtoken": "~9.0.0",
     "jspdf": "~2.5.1",
     "katex": "^0.15.3",
     "keep-in-range": "~1.0.0",
